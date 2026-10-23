@@ -1,5 +1,6 @@
 "use client";
 
+import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Slot } from "radix-ui";
 import {
   createContext,
@@ -82,7 +83,7 @@ export function AppShell({ skipLinkLabel = "Pular para o conteúdo", mainId = "c
         >
           <a
             href={`#${mainId}`}
-            className="sr-only z-50 bg-accent px-4 py-3 font-semibold text-on-accent focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+            className="sr-only z-tooltip bg-accent px-4 py-3 font-semibold text-on-accent focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
           >
             {skipLinkLabel}
           </a>
@@ -116,7 +117,7 @@ export function AppShellSidebar({ brand, footer, mobileTitle = "Menu", className
         id={shell.sidebarId}
         data-slot="app-shell-sidebar"
         className={cn(
-          "sticky top-0 hidden h-dvh shrink-0 flex-col border-r border-line bg-band transition-[width] duration-200 ease-out motion-reduce:transition-none lg:flex",
+          "sticky top-0 hidden h-dvh shrink-0 flex-col border-r border-line bg-band transition-[width] duration-base ease-standard motion-reduce:transition-none lg:flex",
           shell.collapsed ? "w-16" : "w-64",
           className,
         )}
@@ -180,7 +181,7 @@ export function AppShellNavItem({ icon, label, active = false, badge, asChild = 
         if (inMobileSheet) setMobileOpen(false);
       }}
       className={cn(
-        "relative flex h-10 items-center gap-3 rounded-md px-3 text-sm font-medium text-ink-soft no-underline transition-colors duration-200 hover:bg-surface hover:text-ink [&_svg]:size-[18px] [&_svg]:shrink-0",
+        "relative flex h-10 items-center gap-3 rounded-control px-3 text-sm font-medium text-ink-soft no-underline transition-colors duration-base hover:bg-surface hover:text-ink [&_svg]:size-5 [&_svg]:shrink-0",
         active &&
           "bg-accent-soft text-ink before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-accent-line hover:bg-accent-soft",
         collapsed && "justify-center px-0",
@@ -228,19 +229,17 @@ export function AppShellHeader({
   ...props
 }: AppShellHeaderProps) {
   const { collapsed, setCollapsed, setMobileOpen, sidebarId } = useAppShell();
-  const iconButton =
-    "inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-md text-ink-muted transition-colors duration-200 hover:bg-surface hover:text-ink";
+  const iconButtonClass =
+    "inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-control text-ink-muted transition-colors duration-base hover:bg-surface hover:text-ink";
 
   return (
     <header
       data-slot="app-shell-header"
-      className={cn("sticky top-0 z-30 flex h-16 shrink-0 items-center gap-3 border-b border-line bg-ground px-4", className)}
+      className={cn("sticky top-0 z-sticky flex h-16 shrink-0 items-center gap-3 border-b border-line bg-ground px-4", className)}
       {...props}
     >
-      <button type="button" aria-label={menuLabel} onClick={() => setMobileOpen(true)} className={cn(iconButton, "lg:hidden")}>
-        <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" className="size-4">
-          <path d="M2.5 4h11M2.5 8h11M2.5 12h11" strokeLinecap="round" />
-        </svg>
+      <button type="button" aria-label={menuLabel} onClick={() => setMobileOpen(true)} className={cn(iconButtonClass, "lg:hidden")}>
+        <Menu aria-hidden="true" className="size-5" />
       </button>
       <button
         type="button"
@@ -248,12 +247,9 @@ export function AppShellHeader({
         aria-controls={sidebarId}
         aria-expanded={!collapsed}
         onClick={() => setCollapsed(!collapsed)}
-        className={cn(iconButton, "hidden lg:inline-flex")}
+        className={cn(iconButtonClass, "hidden lg:inline-flex")}
       >
-        <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" className="size-4">
-          <rect x="2" y="2.5" width="12" height="11" rx="1.5" />
-          <path d={collapsed ? "M6 2.5v11M8.5 6.5L10.5 8l-2 1.5" : "M6 2.5v11M10.5 6.5L8.5 8l2 1.5"} strokeLinejoin="round" strokeLinecap="round" />
-        </svg>
+        {collapsed ? <PanelLeftOpen aria-hidden="true" className="size-5" /> : <PanelLeftClose aria-hidden="true" className="size-5" />}
       </button>
       {children}
     </header>

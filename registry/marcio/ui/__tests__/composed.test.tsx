@@ -40,7 +40,7 @@ describe("Card", () => {
 
   it("renders sections with surface and hover border", () => {
     const { container } = render(card);
-    expect(container.firstElementChild).toHaveClass("bg-surface", "rounded-xl", "hover:border-accent-line");
+    expect(container.firstElementChild).toHaveClass("bg-surface", "rounded-card", "hover:border-accent-line");
     expect(screen.getByRole("heading", { level: 3, name: "ResenhaHub" })).toBeInTheDocument();
   });
 

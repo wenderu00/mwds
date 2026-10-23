@@ -10,8 +10,8 @@ export function Card({ interactive = false, className, ...props }: CardProps) {
     <div
       data-slot="card"
       className={cn(
-        "flex flex-col gap-6 rounded-xl border border-line bg-surface p-6 text-ink",
-        interactive && "transition-colors duration-200 ease-out hover:border-accent-line focus-within:border-accent-line",
+        "flex flex-col gap-6 rounded-card border border-line bg-surface p-6 text-ink",
+        interactive && "transition-colors duration-base ease-standard hover:border-accent-line focus-within:border-accent-line",
         className,
       )}
       {...props}

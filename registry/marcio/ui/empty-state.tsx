@@ -27,13 +27,13 @@ export function EmptyState({
     <div
       data-slot="empty-state"
       className={cn(
-        "relative isolate flex flex-col items-center gap-4 overflow-hidden rounded-xl border border-dashed border-line-strong px-6 py-14 text-center",
+        "relative isolate flex flex-col items-center gap-4 overflow-hidden rounded-card border border-dashed border-line-strong px-6 py-14 text-center",
         className,
       )}
       {...props}
     >
       {decorated && <DotGrid />}
-      {icon && <div className="text-accent-text [&_svg]:size-8">{icon}</div>}
+      {icon && <div className="text-accent-text [&_svg]:size-6">{icon}</div>}
       {comment && (
         <p className="font-mono text-mono-xs text-ink-muted">
           <span aria-hidden="true">{"// "}</span>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Ellipsis, Pencil } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Badge } from "@/registry/marcio/ui/badge";
 import { BreadcrumbTrail } from "@/registry/marcio/ui/breadcrumb";
@@ -277,9 +278,7 @@ export function ProjectsView() {
                               aria-label={`Editar ${project.name}`}
                               onClick={() => toast({ title: `Editar ${project.name}`, description: "Aqui abriria o formulário de edição." })}
                             >
-                              <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
-                                <path d="M10.5 2.5l3 3L6 13H3v-3z" strokeLinejoin="round" />
-                              </svg>
+                              <Pencil aria-hidden="true" />
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent>Editar</TooltipContent>
@@ -287,11 +286,7 @@ export function ProjectsView() {
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="sm" className="px-2.5" aria-label={`Mais ações para ${project.name}`}>
-                              <svg aria-hidden="true" viewBox="0 0 16 16" fill="currentColor">
-                                <circle cx="3.5" cy="8" r="1.3" />
-                                <circle cx="8" cy="8" r="1.3" />
-                                <circle cx="12.5" cy="8" r="1.3" />
-                              </svg>
+                              <Ellipsis aria-hidden="true" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>

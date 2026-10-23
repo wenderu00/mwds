@@ -4,7 +4,7 @@ import type { ComponentProps } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
 
 export const linkVariants = cva(
-  "cursor-pointer rounded-sm underline-offset-4 transition-colors duration-200 ease-out",
+  "cursor-pointer rounded-mark underline-offset-4 transition-colors duration-base ease-standard",
   {
     variants: {
       variant: {

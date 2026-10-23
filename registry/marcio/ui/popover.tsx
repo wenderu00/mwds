@@ -17,7 +17,7 @@ export function PopoverContent({ className, align = "start", sideOffset = 6, ...
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 w-72 rounded-md border border-line-strong bg-surface p-4 text-ink outline-none motion-safe:data-[state=open]:animate-mw-fade-in",
+          "z-popover w-72 rounded-control border border-line-strong bg-surface p-4 text-ink outline-none motion-safe:data-[state=open]:animate-mw-fade-in",
           className,
         )}
         {...props}

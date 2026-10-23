@@ -10,7 +10,7 @@ export function NotFoundTerminal() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="w-full max-w-xl overflow-hidden rounded-md border border-line-strong bg-surface font-mono text-mono-sm">
+      <div className="w-full max-w-xl overflow-hidden rounded-control border border-line-strong bg-surface font-mono text-mono-sm">
         <div aria-hidden="true" className="flex gap-1.5 border-b border-line px-3 py-2">
           <span className="size-2.5 rounded-full bg-line-strong" />
           <span className="size-2.5 rounded-full bg-line-strong" />

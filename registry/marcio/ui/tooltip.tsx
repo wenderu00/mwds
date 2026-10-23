@@ -21,7 +21,7 @@ export function TooltipContent({ className, sideOffset = 6, children, ...props }
         data-slot="tooltip-content"
         sideOffset={sideOffset}
         className={cn(
-          "z-50 max-w-xs rounded-md bg-ink px-2.5 py-1.5 font-mono text-mono-xs text-ground motion-safe:data-[state=delayed-open]:animate-mw-fade-in",
+          "z-tooltip max-w-xs rounded-control bg-ink px-2.5 py-1.5 font-mono text-mono-xs text-ground motion-safe:data-[state=delayed-open]:animate-mw-fade-in",
           className,
         )}
         {...props}

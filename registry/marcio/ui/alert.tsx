@@ -1,9 +1,10 @@
 import { cva, type VariantProps } from "class-variance-authority";
+import { CircleAlert, CircleCheck, CircleX, Info, X } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
 
 export const alertVariants = cva(
-  "relative grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-3 gap-y-1 rounded-md border px-4 py-3 text-ink [&>svg]:mt-0.5 [&>svg]:size-5",
+  "relative grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-3 gap-y-1 rounded-control border px-4 py-3 text-ink [&>svg]:mt-0.5 [&>svg]:size-5",
   {
     variants: {
       tone: {
@@ -19,11 +20,11 @@ export const alertVariants = cva(
 );
 
 const icons: Record<NonNullable<VariantProps<typeof alertVariants>["tone"]>, ReactNode> = {
-  neutral: <path d="M8 7.5v4M8 5v.5" strokeLinecap="round" />,
-  info: <path d="M8 7.5v4M8 5v.5" strokeLinecap="round" />,
-  success: <path d="M5 8.5l2 2 4-4.5" strokeLinecap="round" strokeLinejoin="round" />,
-  warning: <path d="M8 4.5v4.5M8 11v.5" strokeLinecap="round" />,
-  danger: <path d="M5.5 5.5l5 5M10.5 5.5l-5 5" strokeLinecap="round" />,
+  neutral: <Info aria-hidden="true" />,
+  info: <Info aria-hidden="true" />,
+  success: <CircleCheck aria-hidden="true" />,
+  warning: <CircleAlert aria-hidden="true" />,
+  danger: <CircleX aria-hidden="true" />,
 };
 
 export type AlertProps = Omit<ComponentProps<"div">, "title"> &
@@ -49,16 +50,7 @@ export function Alert({
   const resolvedTone = tone ?? "neutral";
   return (
     <div data-slot="alert" data-tone={resolvedTone} className={cn(alertVariants({ tone }), onDismiss && "pr-12", className)} {...props}>
-      {icon === false ? (
-        <span aria-hidden="true" />
-      ) : (
-        icon ?? (
-          <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
-            <circle cx="8" cy="8" r="6.5" />
-            {icons[resolvedTone]}
-          </svg>
-        )
-      )}
+      {icon === false ? <span aria-hidden="true" /> : (icon ?? icons[resolvedTone])}
       <div className="flex min-w-0 flex-col gap-1">
         {title && (
           <p data-slot="alert-title" className="font-semibold">
@@ -77,11 +69,9 @@ export function Alert({
           type="button"
           aria-label={dismissLabel}
           onClick={onDismiss}
-          className="absolute top-2 right-2 inline-flex size-8 cursor-pointer items-center justify-center rounded-md text-ink-muted transition-colors duration-200 hover:bg-ground hover:text-ink"
+          className="absolute top-2 right-2 inline-flex size-8 cursor-pointer items-center justify-center rounded-control text-ink-muted transition-colors duration-base hover:bg-ground hover:text-ink"
         >
-          <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-4">
-            <path d="M4 4l8 8M12 4l-8 8" strokeLinecap="round" />
-          </svg>
+          <X aria-hidden="true" className="size-4" />
         </button>
       )}
     </div>

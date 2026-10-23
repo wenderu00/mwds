@@ -12,7 +12,7 @@ export function DotGrid({ animated = false, className, ...props }: DotGridProps)
       data-slot="dot-grid"
       data-animated={animated || undefined}
       className={cn(
-        "mw-dot-grid pointer-events-none absolute inset-0 -z-10",
+        "mw-dot-grid pointer-events-none absolute inset-0 z-behind",
         animated && "motion-safe:animate-mw-drift",
         className,
       )}

@@ -10,6 +10,18 @@
   --mw-accent-800: #58550f;
   --mw-accent-900: #444213;
   --mw-accent-950: #29280d;
+
+  --mw-duration-fast: 100ms;
+  --mw-duration-base: 200ms;
+  --mw-duration-slow: 300ms;
+  --mw-duration-blink: 900ms;
+
+  --mw-ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --mw-ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --mw-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  --mw-control-h: 44px;
+  --mw-cell-y: 12px;
 }
 
 :root,
@@ -146,6 +158,24 @@
   --mw-scrim: #00000066;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --mw-duration-fast: 0.01ms;
+    --mw-duration-base: 0.01ms;
+    --mw-duration-slow: 0.01ms;
+  }
+}
+
+[data-density="compacta"] {
+  --mw-control-h: 36px;
+  --mw-cell-y: 8px;
+}
+
+[data-density="ampla"] {
+  --mw-control-h: 48px;
+  --mw-cell-y: 16px;
+}
+
 @theme inline {
   --color-*: initial;
   --color-transparent: transparent;
@@ -229,20 +259,53 @@
 
   --tracking-kicker: 0.04em;
 
-  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --spacing-control: var(--mw-control-h);
+  --spacing-cell-y: var(--mw-cell-y);
 
-  --animate-mw-blink: mw-blink 900ms step-end infinite;
+  --container-content: 1200px;
+  --container-measure: 680px;
+
+  --radius-*: initial;
+  --radius-mark: 4px;
+  --radius-control: 6px;
+  --radius-card: 12px;
+
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+
+  --z-index-behind: -1;
+  --z-index-base: 0;
+  --z-index-sticky: 10;
+  --z-index-sheet: 20;
+  --z-index-dialog: 30;
+  --z-index-popover: 40;
+  --z-index-toast: 50;
+  --z-index-tooltip: 60;
+
+  --transition-duration-fast: var(--mw-duration-fast);
+  --transition-duration-base: var(--mw-duration-base);
+  --transition-duration-slow: var(--mw-duration-slow);
+  --default-transition-duration: var(--mw-duration-base);
+
+  --ease-*: initial;
+  --ease-standard: var(--mw-ease-standard);
+  --ease-enter: var(--mw-ease-enter);
+  --ease-exit: var(--mw-ease-exit);
+  --default-transition-timing-function: var(--mw-ease-standard);
+
+  --animate-mw-blink: mw-blink var(--mw-duration-blink) step-end infinite;
   --animate-mw-drift: mw-drift 18s ease-in-out infinite;
   --animate-mw-glitch: mw-glitch 320ms steps(6) both;
-  --animate-mw-fade-in: mw-fade-in 160ms var(--ease-out) both;
-  --animate-mw-pop-in: mw-pop-in 200ms var(--ease-out) both;
-  --animate-mw-slide-in: mw-slide-in 240ms var(--ease-out) both;
+  --animate-mw-fade-in: mw-fade-in var(--mw-duration-base) var(--mw-ease-enter) both;
+  --animate-mw-pop-in: mw-pop-in var(--mw-duration-base) var(--mw-ease-enter) both;
+  --animate-mw-slide-in: mw-slide-in var(--mw-duration-slow) var(--mw-ease-enter) both;
   --animate-mw-pulse: mw-pulse 1.6s ease-in-out infinite;
-  --animate-mw-sheet-right: mw-sheet-right 260ms var(--ease-out) both;
-  --animate-mw-sheet-left: mw-sheet-left 260ms var(--ease-out) both;
-  --animate-mw-sheet-top: mw-sheet-top 260ms var(--ease-out) both;
-  --animate-mw-sheet-bottom: mw-sheet-bottom 260ms var(--ease-out) both;
-  --animate-mw-indeterminate: mw-indeterminate 1.4s var(--ease-out) infinite;
+  --animate-mw-sheet-right: mw-sheet-right var(--mw-duration-slow) var(--mw-ease-enter) both;
+  --animate-mw-sheet-left: mw-sheet-left var(--mw-duration-slow) var(--mw-ease-enter) both;
+  --animate-mw-sheet-top: mw-sheet-top var(--mw-duration-slow) var(--mw-ease-enter) both;
+  --animate-mw-sheet-bottom: mw-sheet-bottom var(--mw-duration-slow) var(--mw-ease-enter) both;
+  --animate-mw-indeterminate: mw-indeterminate 1.4s var(--mw-ease-standard) infinite;
 }
 
 @layer base {
@@ -279,7 +342,7 @@
   vertical-align: text-bottom;
   background: var(--color-accent-line);
   @media (prefers-reduced-motion: no-preference) {
-    animation: mw-blink 900ms step-end infinite;
+    animation: mw-blink var(--mw-duration-blink) step-end infinite;
   }
 }
 
@@ -303,7 +366,7 @@
     border-right: 0.6ch solid var(--color-accent-line);
     animation:
       mw-type var(--mw-type-duration, 1800ms) steps(var(--mw-chars)) var(--mw-type-delay, 0ms) both,
-      mw-border-blink 900ms step-end infinite;
+      mw-border-blink var(--mw-duration-blink) step-end infinite;
   }
 }
 

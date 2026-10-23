@@ -3,6 +3,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { Dialog as DialogPrimitive } from "radix-ui";
 import type { ComponentProps } from "react";
+import { X } from "lucide-react";
 import { cn } from "@/registry/marcio/lib/utils";
 import { DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogTitle } from "@/registry/marcio/ui/dialog";
 
@@ -15,7 +16,7 @@ export const SheetTitle = DialogTitle;
 export const SheetDescription = DialogDescription;
 
 export const sheetVariants = cva(
-  "fixed z-50 flex flex-col gap-6 overflow-y-auto border-line-strong bg-surface p-6 text-ink",
+  "fixed z-sheet flex flex-col gap-6 overflow-y-auto border-line-strong bg-surface p-6 text-ink",
   {
     variants: {
       side: {
@@ -38,7 +39,7 @@ export type SheetContentProps = ComponentProps<typeof DialogPrimitive.Content> &
 export function SheetContent({ side, className, children, closeLabel = "Fechar", showClose = true, ...props }: SheetContentProps) {
   return (
     <DialogPrimitive.Portal>
-      <DialogOverlay />
+      <DialogOverlay className="z-sheet" />
       <DialogPrimitive.Content
         data-slot="sheet-content"
         data-side={side ?? "right"}
@@ -49,11 +50,9 @@ export function SheetContent({ side, className, children, closeLabel = "Fechar",
         {showClose && (
           <DialogPrimitive.Close
             aria-label={closeLabel}
-            className="absolute top-4 right-4 inline-flex size-9 cursor-pointer items-center justify-center rounded-md text-ink-muted transition-colors duration-200 hover:bg-band hover:text-ink"
+            className="absolute top-4 right-4 inline-flex size-9 cursor-pointer items-center justify-center rounded-control text-ink-muted transition-colors duration-base hover:bg-band hover:text-ink"
           >
-            <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-4">
-              <path d="M4 4l8 8M12 4l-8 8" strokeLinecap="round" />
-            </svg>
+            <X aria-hidden="true" className="size-4" />
           </DialogPrimitive.Close>
         )}
       </DialogPrimitive.Content>

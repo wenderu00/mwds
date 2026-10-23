@@ -5,12 +5,20 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 ├── app/
 │   ├── layout.tsx                 # fontes, script anti-piscar do tema
 │   ├── globals.css                # importa tokens.css e tailwindcss
-│   ├── page.tsx                   # visão geral: paleta, tipografia, componentes
-│   ├── componentes/[slug]/page.tsx
+│   ├── page.tsx                   # fundação: monta as seções de _fundacao/
+│   ├── fundacao.test.tsx          # cada seção da fundação existe e mostra os dois temas
+│   ├── _fundacao/                 # uma seção por arquivo: paleta, tokens, tipografia, espaçamento,
+│   │                              # raio, elevação, movimento, camadas, layout, ícones, densidade, contraste
+│   ├── _data/                     # tokens.json e contrast.json, gerados por npm run contrast
+│   ├── componentes/
+│   │   ├── page.tsx               # catálogo
+│   │   └── [slug]/page.tsx
 │   ├── exemplos/
+│   │   ├── page.tsx
 │   │   ├── listagem/page.tsx      # filtros, tabela, paginação, estado vazio
 │   │   └── cadastro/page.tsx      # formulário com validação e toast
-│   └── _docs/                     # componentes internos do site (preview, tabela de props)
+│   ├── blocos/page.tsx            # lista dos blocos do registry
+│   └── _docs/                     # componentes internos do site (preview, catálogo, cabeçalho)
 ├── registry/
 │   └── marcio/
 │       ├── tokens.css
@@ -31,7 +39,10 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 │   ├── accent-scale.ts            # gera a escala do ADR 0004
 │   ├── build-registry.ts          # gera o registry.json (ADR 0013)
 │   └── check-colors.ts
-├── eslint-rules/no-raw-color.js
+├── eslint-rules/
+│   ├── class-context.js           # detecta strings de classe (className, cn, cva, variáveis *class*)
+│   ├── no-raw-color.js
+│   └── no-raw-token.js            # raio, duração, easing, camada, sombra e medidas soltas (ADR 0015)
 ├── docs/
 │   ├── tokens.md
 │   ├── estrutura.md
@@ -49,7 +60,7 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 | Script | Faz |
 |---|---|
 | `dev` / `build` | Site de documentação. `build` gera o registry.json e roda `shadcn build` antes do `next build` |
-| `lint` | ESLint com a regra `no-raw-color` e `check-colors` |
+| `lint` | ESLint com as regras `no-raw-color` e `no-raw-token`, e `check-colors` |
 | `test` | `contrast` e depois `vitest run` |
 | `contrast` | Valida os pares de contraste nos dois temas |
 | `registry:build` | `shadcn build` |

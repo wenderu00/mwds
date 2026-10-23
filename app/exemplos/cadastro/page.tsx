@@ -23,7 +23,7 @@ export default function SignupExample() {
           description="Leva menos de um minuto. Você pode mudar tudo depois nas configurações."
         />
         <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
-          <aside className="relative isolate flex flex-col gap-6 overflow-hidden rounded-xl border border-line bg-band p-6">
+          <aside className="relative isolate flex flex-col gap-6 overflow-hidden rounded-card border border-line bg-band p-6">
             <DotGrid />
             <CodeComment>como funciona</CodeComment>
             <ol className="flex flex-col gap-5">

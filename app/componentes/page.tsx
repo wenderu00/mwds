@@ -16,7 +16,7 @@ export default function ComponentsIndex() {
           <SectionTitle as="h1" kicker="catálogo">
             Componentes
           </SectionTitle>
-          <p className="max-w-[640px] text-lead text-ink-soft">
+          <p className="max-w-measure text-lead text-ink-soft">
             Cada página mostra o componente nos dois temas, as variantes, as props e as notas de acessibilidade.
           </p>
         </div>
@@ -33,7 +33,7 @@ export default function ComponentsIndex() {
                   <li key={doc.slug}>
                     <NextLink
                       href={`/componentes/${doc.slug}`}
-                      className="flex h-full flex-col gap-2 rounded-xl border border-line bg-surface p-5 no-underline transition-colors duration-200 hover:border-accent-line"
+                      className="flex h-full flex-col gap-2 rounded-card border border-line bg-surface p-5 no-underline transition-colors duration-base hover:border-accent-line"
                     >
                       <span className="font-display text-display-sm font-extrabold text-ink">{doc.name}</span>
                       <span className="text-base text-ink-muted">{doc.summary}</span>

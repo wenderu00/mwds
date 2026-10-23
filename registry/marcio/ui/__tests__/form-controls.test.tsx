@@ -20,7 +20,7 @@ describe("Input", () => {
     expect(input).toHaveValue("Márcio");
     expect(onChange).toHaveBeenCalled();
     expect(ref.current).toBe(input);
-    expect(input).toHaveClass("h-11", "border-line-control", "bg-ground", "max-w-xs");
+    expect(input).toHaveClass("h-control", "border-line-control", "bg-ground", "max-w-xs");
   });
 
   it("marks invalid state with the danger border", () => {

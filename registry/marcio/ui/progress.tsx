@@ -43,7 +43,7 @@ export function Progress({ value = null, max = 100, label, showValue = false, si
         <ProgressPrimitive.Indicator
           data-slot="progress-indicator"
           className={cn(
-            "h-full rounded-full bg-accent-line transition-[width] duration-300 ease-out motion-reduce:transition-none",
+            "h-full rounded-full bg-accent-line transition-[width] duration-slow ease-standard motion-reduce:transition-none",
             indeterminate && "w-2/5 motion-safe:animate-mw-indeterminate motion-reduce:w-full motion-reduce:opacity-40",
           )}
           style={indeterminate ? undefined : { width: `${percent}%` }}

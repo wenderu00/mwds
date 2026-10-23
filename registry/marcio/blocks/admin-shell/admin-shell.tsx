@@ -1,5 +1,6 @@
 "use client";
 
+import { Folder, LayoutDashboard, Settings } from "lucide-react";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
@@ -34,19 +35,13 @@ import { setTheme, useTheme, type ThemeChoice } from "@/registry/marcio/ui/theme
 
 export type AdminSection = "dashboard" | "projetos" | "configuracoes";
 
-const icon = (path: string) => (
-  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d={path} />
-  </svg>
-);
-
 const navigation: { id: AdminSection; label: string; href: string; icon: ReactNode; badge?: ReactNode }[] = [
-  { id: "dashboard", label: "Painel", href: "/dashboard", icon: icon("M2.5 2.5h4.5v5h-4.5zM9 2.5h4.5v3H9zM9 7.5h4.5v6H9zM2.5 9.5h4.5v4h-4.5z") },
+  { id: "dashboard", label: "Painel", href: "/dashboard", icon: <LayoutDashboard aria-hidden="true" /> },
   {
     id: "projetos",
     label: "Projetos",
     href: "/dashboard#atividade",
-    icon: icon("M2 4.5h4.5l1.5 1.5H14v7.5H2z"),
+    icon: <Folder aria-hidden="true" />,
     badge: (
       <Badge tone="accent" className="px-1.5">
         12
@@ -57,7 +52,7 @@ const navigation: { id: AdminSection; label: string; href: string; icon: ReactNo
     id: "configuracoes",
     label: "Configurações",
     href: "/configuracoes",
-    icon: icon("M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"),
+    icon: <Settings aria-hidden="true" />,
   },
 ];
 
