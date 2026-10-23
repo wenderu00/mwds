@@ -17,7 +17,7 @@ A fonte da verdade da identidade é o portfólio em [wenderu00.github.io](https:
 
 ## Instalar num projeto novo
 
-Requisitos: Next.js com App Router, React 19 e Tailwind CSS v4. Nos exemplos, `<url>` é o endereço onde o registry está publicado (por exemplo `http://localhost:3000` durante o desenvolvimento).
+Requisitos: Next.js com App Router, React 19 e Tailwind CSS v4. O registry está publicado em [https://wenderu00.github.io/mwds](https://wenderu00.github.io/mwds). Durante o desenvolvimento do DS, troque essa URL por `http://localhost:3000`.
 
 **1. Crie o projeto**, se ainda não existir:
 
@@ -28,7 +28,7 @@ npx create-next-app@latest meu-app --ts --tailwind --app --eslint --import-alias
 **2. Instale os tokens** (uma vez por projeto):
 
 ```bash
-npx shadcn@latest init <url>/r/marcio-tokens.json
+npx shadcn@latest init https://wenderu00.github.io/mwds/r/marcio-tokens.json
 ```
 
 Esse comando não faz perguntas. Ele:
@@ -43,7 +43,7 @@ Não rode `npx shadcn init` sem a URL antes disso: o init padrão instala o tema
 **3. Adicione componentes**, pela URL ou pelo namespace:
 
 ```bash
-npx shadcn@latest add <url>/r/button.json
+npx shadcn@latest add https://wenderu00.github.io/mwds/r/button.json
 ```
 
 ```bash
@@ -160,7 +160,7 @@ Para projetos fora do Next.js ou sem o shadcn:
 | `admin-shell` | block | Casca de painel usada por `dashboard` e `settings` |
 | `marcio-ui` | item | Todos os componentes |
 
-Exemplos, props e notas de acessibilidade de cada componente ficam em `<url>/componentes`. Telas completas de sistema estão em `<url>/exemplos`, e os blocos em `<url>/blocos`.
+Exemplos, props e notas de acessibilidade de cada componente ficam em [https://wenderu00.github.io/mwds/componentes](https://wenderu00.github.io/mwds/componentes/). Telas completas de sistema estão em [/exemplos](https://wenderu00.github.io/mwds/exemplos/), e os blocos em [/blocos](https://wenderu00.github.io/mwds/blocos/).
 
 ### Blocos
 
@@ -192,7 +192,7 @@ npm run dev
 | Script | Faz |
 |---|---|
 | `npm run dev` | Site de documentação em `http://localhost:3000`, que também serve o registry em `/r` |
-| `npm run build` | Gera o `registry.json`, roda `shadcn build` (saída em `public/r`) e o `next build` |
+| `npm run build` | Gera o `registry.json`, roda `shadcn build` (saída em `public/r`) e o `next build`, que exporta o site estático para `out/` |
 | `npm run registry:build` | Só o registry |
 | `npm run lint` | ESLint, com a regra que proíbe cores fora dos tokens, e a checagem de cores em CSS |
 | `npm run test` | Validação de contraste e testes (Vitest, Testing Library e vitest-axe) |
@@ -218,15 +218,22 @@ Rode `npm run registry:build` em outro terminal depois de mudar algo em `registr
 
 ## Publicar o registry
 
-O registry é o próprio site de documentação. Para publicar:
+O registry é o próprio site de documentação, exportado como site estático e publicado no GitHub Pages em `https://wenderu00.github.io/mwds`. Os itens ficam em `https://wenderu00.github.io/mwds/r/<item>.json`.
 
-1. Defina a URL final antes do build, porque ela entra nas dependências entre itens:
+O workflow `.github/workflows/pages.yml` publica a cada push na `main` (ou manualmente, pela aba Actions). Ele roda lint, typecheck e testes e depois faz o build com duas variáveis:
 
-   ```bash
-   REGISTRY_URL=https://seu-dominio.com npm run build
-   ```
+- `BASE_PATH=/mwds`: o subcaminho do site no GitHub Pages;
+- `REGISTRY_URL=https://wenderu00.github.io/mwds`: a URL final, que entra nas dependências entre itens.
 
-2. Publique o resultado num host de Next.js (Vercel, por exemplo). Os arquivos ficam em `https://seu-dominio.com/r/<item>.json`.
+Na primeira vez, ative o Pages em **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+Para gerar o mesmo resultado localmente:
+
+```bash
+BASE_PATH=/mwds REGISTRY_URL=https://wenderu00.github.io/mwds npm run build
+```
+
+O site sai em `out/`. Para publicar em outro host estático, ajuste as duas variáveis (sem `BASE_PATH` se o site ficar na raiz do domínio) e publique a pasta `out/`.
 
 O `registry.json` versionado usa `http://localhost:3000`. Isso não importa para quem instala: os arquivos servidos em `/r` são gerados no build com a `REGISTRY_URL` definida.
 
