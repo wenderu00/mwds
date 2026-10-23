@@ -1,0 +1,46 @@
+export type PairKind = "text" | "large-text" | "ui";
+
+export type Pair = {
+  fg: string;
+  bg: string;
+  kind: PairKind;
+  usage: string;
+};
+
+export const minimum: Record<PairKind, number> = {
+  text: 4.5,
+  "large-text": 3,
+  ui: 3,
+};
+
+const surfaces = ["ground", "band", "surface"] as const;
+const states = ["danger", "success", "warning", "info"] as const;
+
+const onSurfaces = (fg: string, kind: PairKind, usage: string): Pair[] =>
+  surfaces.map((bg) => ({ fg, bg, kind, usage }));
+
+export const pairs: Pair[] = [
+  ...onSurfaces("ink", "text", "Texto principal"),
+  ...onSurfaces("ink-soft", "text", "Texto de corpo secundário"),
+  ...onSurfaces("ink-muted", "text", "Metadados e CodeComment"),
+  ...onSurfaces("accent-text", "text", "Link, Kicker e número de seção"),
+  { fg: "accent-text", bg: "accent-soft", kind: "text", usage: "Badge suave e item selecionado" },
+  { fg: "ink", bg: "accent-soft", kind: "text", usage: "Texto em item selecionado" },
+  { fg: "ink-muted", bg: "accent-soft", kind: "text", usage: "Atalho em item destacado de menu" },
+  { fg: "accent-line", bg: "accent-soft", kind: "ui", usage: "Barra do item ativo da sidebar" },
+  { fg: "on-accent", bg: "accent", kind: "text", usage: "Botão primário, LogoBlock e seleção" },
+  { fg: "on-accent", bg: "accent-hover", kind: "text", usage: "Botão primário em hover" },
+  { fg: "on-danger", bg: "danger-hover", kind: "text", usage: "Botão danger em hover" },
+  { fg: "ground", bg: "ink", kind: "text", usage: "Tooltip invertido" },
+  ...onSurfaces("line-control", "ui", "Borda de input, checkbox e botão secundário"),
+  ...onSurfaces("accent-line", "ui", "Borda acesa no hover e aba ativa"),
+  ...onSurfaces("focus", "ui", "Outline de foco"),
+  ...states.flatMap((state): Pair[] => [
+    ...onSurfaces(`${state}-text`, "text", `Texto de ${state}`),
+    { fg: `${state}-text`, bg: `${state}-soft`, kind: "text", usage: `Badge e alerta suave de ${state}` },
+    { fg: "ink", bg: `${state}-soft`, kind: "text", usage: `Texto comum em alerta de ${state}` },
+    { fg: "ink-soft", bg: `${state}-soft`, kind: "text", usage: `Descrição do Alert de ${state}` },
+    { fg: "ink-muted", bg: `${state}-soft`, kind: "ui", usage: `Botão de fechar do Alert de ${state}` },
+    { fg: `on-${state}`, bg: state, kind: "text", usage: `Botão e badge sólido de ${state}` },
+  ]),
+];

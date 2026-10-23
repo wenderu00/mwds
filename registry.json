@@ -1,0 +1,1620 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "marcio",
+  "homepage": "http://localhost:3000",
+  "items": [
+    {
+      "name": "marcio-tokens",
+      "type": "registry:base",
+      "extends": "none",
+      "config": {
+        "style": "new-york",
+        "rsc": true,
+        "tsx": true,
+        "tailwind": {
+          "config": "",
+          "css": "app/globals.css",
+          "baseColor": "neutral",
+          "cssVariables": true
+        },
+        "aliases": {
+          "components": "@/components",
+          "ui": "@/components/ui",
+          "lib": "@/lib",
+          "utils": "@/lib/utils",
+          "hooks": "@/hooks"
+        },
+        "registries": {
+          "@marcio": "http://localhost:3000/r/{name}.json"
+        }
+      },
+      "title": "Tokens do @mw/ui",
+      "description": "Cores, tipografia, foco, seleção e utilitários de identidade, nos temas escuro e claro.",
+      "registryDependencies": [
+        "http://localhost:3000/r/font-bricolage.json",
+        "http://localhost:3000/r/font-plex-sans.json",
+        "http://localhost:3000/r/font-plex-mono.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "color-accent-50": "var(--mw-accent-50)",
+          "color-accent-100": "var(--mw-accent-100)",
+          "color-accent-200": "var(--mw-accent-200)",
+          "color-accent-300": "var(--mw-accent-300)",
+          "color-accent-400": "var(--mw-accent-400)",
+          "color-accent-500": "var(--mw-accent-500)",
+          "color-accent-600": "var(--mw-accent-600)",
+          "color-accent-700": "var(--mw-accent-700)",
+          "color-accent-800": "var(--mw-accent-800)",
+          "color-accent-900": "var(--mw-accent-900)",
+          "color-accent-950": "var(--mw-accent-950)",
+          "color-ground": "var(--mw-ground)",
+          "color-band": "var(--mw-band)",
+          "color-surface": "var(--mw-surface)",
+          "color-line": "var(--mw-line)",
+          "color-line-strong": "var(--mw-line-strong)",
+          "color-line-control": "var(--mw-line-control)",
+          "color-ink": "var(--mw-ink)",
+          "color-ink-soft": "var(--mw-ink-soft)",
+          "color-ink-muted": "var(--mw-ink-muted)",
+          "color-accent": "var(--mw-accent)",
+          "color-accent-hover": "var(--mw-accent-hover)",
+          "color-on-accent": "var(--mw-on-accent)",
+          "color-accent-text": "var(--mw-accent-text)",
+          "color-accent-line": "var(--mw-accent-line)",
+          "color-accent-soft": "var(--mw-accent-soft)",
+          "color-focus": "var(--mw-focus)",
+          "color-danger": "var(--mw-danger)",
+          "color-danger-hover": "var(--mw-danger-hover)",
+          "color-danger-soft": "var(--mw-danger-soft)",
+          "color-danger-text": "var(--mw-danger-text)",
+          "color-on-danger": "var(--mw-on-danger)",
+          "color-success": "var(--mw-success)",
+          "color-success-soft": "var(--mw-success-soft)",
+          "color-success-text": "var(--mw-success-text)",
+          "color-on-success": "var(--mw-on-success)",
+          "color-warning": "var(--mw-warning)",
+          "color-warning-soft": "var(--mw-warning-soft)",
+          "color-warning-text": "var(--mw-warning-text)",
+          "color-on-warning": "var(--mw-on-warning)",
+          "color-info": "var(--mw-info)",
+          "color-info-soft": "var(--mw-info-soft)",
+          "color-info-text": "var(--mw-info-text)",
+          "color-on-info": "var(--mw-on-info)",
+          "color-mutant": "var(--mw-mutant)",
+          "color-scrim": "var(--mw-scrim)",
+          "font-display": "var(--font-bricolage), ui-sans-serif, system-ui, sans-serif",
+          "font-sans": "var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif",
+          "font-mono": "var(--font-plex-mono), ui-monospace, monospace",
+          "text-base": "17px",
+          "text-base--line-height": "1.6",
+          "text-lead": "21px",
+          "text-lead--line-height": "1.5",
+          "text-display-xl": "clamp(48px, 7vw, 92px)",
+          "text-display-xl--line-height": "0.98",
+          "text-display-xl--letter-spacing": "-0.03em",
+          "text-display-lg": "clamp(36px, 5vw, 52px)",
+          "text-display-lg--line-height": "1.05",
+          "text-display-lg--letter-spacing": "-0.02em",
+          "text-display-md": "clamp(28px, 3.5vw, 36px)",
+          "text-display-md--line-height": "1.15",
+          "text-display-md--letter-spacing": "-0.02em",
+          "text-display-sm": "22px",
+          "text-display-sm--line-height": "1.25",
+          "text-display-sm--letter-spacing": "-0.01em",
+          "text-mono-sm": "14px",
+          "text-mono-sm--line-height": "1.5",
+          "text-mono-xs": "13px",
+          "text-mono-xs--line-height": "1.5",
+          "tracking-kicker": "0.04em",
+          "ease-out": "cubic-bezier(0.2, 0.7, 0.2, 1)",
+          "animate-mw-blink": "mw-blink 900ms step-end infinite",
+          "animate-mw-drift": "mw-drift 18s ease-in-out infinite",
+          "animate-mw-glitch": "mw-glitch 320ms steps(6) both",
+          "animate-mw-fade-in": "mw-fade-in 160ms var(--ease-out) both",
+          "animate-mw-pop-in": "mw-pop-in 200ms var(--ease-out) both",
+          "animate-mw-slide-in": "mw-slide-in 240ms var(--ease-out) both",
+          "animate-mw-pulse": "mw-pulse 1.6s ease-in-out infinite",
+          "animate-mw-sheet-right": "mw-sheet-right 260ms var(--ease-out) both",
+          "animate-mw-sheet-left": "mw-sheet-left 260ms var(--ease-out) both",
+          "animate-mw-sheet-top": "mw-sheet-top 260ms var(--ease-out) both",
+          "animate-mw-sheet-bottom": "mw-sheet-bottom 260ms var(--ease-out) both",
+          "animate-mw-indeterminate": "mw-indeterminate 1.4s var(--ease-out) infinite"
+        }
+      },
+      "css": {
+        ":root": {
+          "--mw-accent-50": "#fbfbee",
+          "--mw-accent-100": "#f9f9cc",
+          "--mw-accent-200": "#f5ee6b",
+          "--mw-accent-300": "#ece41f",
+          "--mw-accent-400": "#d2ca1a",
+          "--mw-accent-500": "#b3ad15",
+          "--mw-accent-600": "#908b0e",
+          "--mw-accent-700": "#6e6600",
+          "--mw-accent-800": "#58550f",
+          "--mw-accent-900": "#444213",
+          "--mw-accent-950": "#29280d"
+        },
+        ":root, [data-theme=\"dark\"]": {
+          "color-scheme": "dark",
+          "--mw-ground": "#000000",
+          "--mw-band": "#0a0a0a",
+          "--mw-surface": "#111111",
+          "--mw-line": "#262626",
+          "--mw-line-strong": "#3a3a3a",
+          "--mw-line-control": "#737373",
+          "--mw-ink": "#ffffff",
+          "--mw-ink-soft": "#d4d4d4",
+          "--mw-ink-muted": "#a3a3a3",
+          "--mw-accent": "var(--mw-accent-300)",
+          "--mw-accent-hover": "var(--mw-accent-200)",
+          "--mw-on-accent": "#000000",
+          "--mw-accent-text": "var(--mw-accent-300)",
+          "--mw-accent-line": "var(--mw-accent-300)",
+          "--mw-accent-soft": "var(--mw-accent-950)",
+          "--mw-focus": "var(--mw-accent-300)",
+          "--mw-danger": "#ff5c5c",
+          "--mw-danger-hover": "#ff7874",
+          "--mw-danger-soft": "#381514",
+          "--mw-danger-text": "#ff958f",
+          "--mw-on-danger": "#000000",
+          "--mw-success": "#4ade80",
+          "--mw-success-soft": "#16261a",
+          "--mw-success-text": "#47d77b",
+          "--mw-on-success": "#000000",
+          "--mw-warning": "#fb923c",
+          "--mw-warning-soft": "#2e1e12",
+          "--mw-warning-text": "#fb9e56",
+          "--mw-on-warning": "#000000",
+          "--mw-info": "#60a5fa",
+          "--mw-info-soft": "#132236",
+          "--mw-info-text": "#87bbfb",
+          "--mw-on-info": "#000000",
+          "--mw-mutant": "#c084fc",
+          "--mw-scrim": "#000000b3"
+        },
+        "@media (prefers-color-scheme: light)": {
+          ":root:not([data-theme=\"dark\"])": {
+            "color-scheme": "light",
+            "--mw-ground": "#ffffff",
+            "--mw-band": "#fafafa",
+            "--mw-surface": "#f5f5f5",
+            "--mw-line": "#e5e5e5",
+            "--mw-line-strong": "#d4d4d4",
+            "--mw-line-control": "#737373",
+            "--mw-ink": "#000000",
+            "--mw-ink-soft": "#404040",
+            "--mw-ink-muted": "#525252",
+            "--mw-accent": "var(--mw-accent-300)",
+            "--mw-accent-hover": "var(--mw-accent-400)",
+            "--mw-on-accent": "#000000",
+            "--mw-accent-text": "var(--mw-accent-700)",
+            "--mw-accent-line": "var(--mw-accent-700)",
+            "--mw-accent-soft": "var(--mw-accent-100)",
+            "--mw-focus": "var(--mw-accent-700)",
+            "--mw-danger": "#ff5c5c",
+            "--mw-danger-hover": "#e9474a",
+            "--mw-danger-soft": "#ffebe9",
+            "--mw-danger-text": "#b1001f",
+            "--mw-on-danger": "#000000",
+            "--mw-success": "#4ade80",
+            "--mw-success-soft": "#d2fddc",
+            "--mw-success-text": "#206f3d",
+            "--mw-on-success": "#000000",
+            "--mw-warning": "#fb923c",
+            "--mw-warning-soft": "#feece0",
+            "--mw-warning-text": "#8c4a0e",
+            "--mw-on-warning": "#000000",
+            "--mw-info": "#60a5fa",
+            "--mw-info-soft": "#e7f1fe",
+            "--mw-info-text": "#0f5cae",
+            "--mw-on-info": "#000000",
+            "--mw-mutant": "#7e22ce",
+            "--mw-scrim": "#00000066"
+          }
+        },
+        "[data-theme=\"light\"]": {
+          "color-scheme": "light",
+          "--mw-ground": "#ffffff",
+          "--mw-band": "#fafafa",
+          "--mw-surface": "#f5f5f5",
+          "--mw-line": "#e5e5e5",
+          "--mw-line-strong": "#d4d4d4",
+          "--mw-line-control": "#737373",
+          "--mw-ink": "#000000",
+          "--mw-ink-soft": "#404040",
+          "--mw-ink-muted": "#525252",
+          "--mw-accent": "var(--mw-accent-300)",
+          "--mw-accent-hover": "var(--mw-accent-400)",
+          "--mw-on-accent": "#000000",
+          "--mw-accent-text": "var(--mw-accent-700)",
+          "--mw-accent-line": "var(--mw-accent-700)",
+          "--mw-accent-soft": "var(--mw-accent-100)",
+          "--mw-focus": "var(--mw-accent-700)",
+          "--mw-danger": "#ff5c5c",
+          "--mw-danger-hover": "#e9474a",
+          "--mw-danger-soft": "#ffebe9",
+          "--mw-danger-text": "#b1001f",
+          "--mw-on-danger": "#000000",
+          "--mw-success": "#4ade80",
+          "--mw-success-soft": "#d2fddc",
+          "--mw-success-text": "#206f3d",
+          "--mw-on-success": "#000000",
+          "--mw-warning": "#fb923c",
+          "--mw-warning-soft": "#feece0",
+          "--mw-warning-text": "#8c4a0e",
+          "--mw-on-warning": "#000000",
+          "--mw-info": "#60a5fa",
+          "--mw-info-soft": "#e7f1fe",
+          "--mw-info-text": "#0f5cae",
+          "--mw-on-info": "#000000",
+          "--mw-mutant": "#7e22ce",
+          "--mw-scrim": "#00000066"
+        },
+        "@utility mw-caret": {
+          "display": "inline-block",
+          "width": "0.6ch",
+          "height": "1.1em",
+          "vertical-align": "text-bottom",
+          "background": "var(--color-accent-line)",
+          "@media (prefers-reduced-motion: no-preference)": {
+            "animation": "mw-blink 900ms step-end infinite"
+          }
+        },
+        "@utility mw-dot-grid": {
+          "background-image": "radial-gradient(color-mix(in srgb, var(--color-accent-line) 55%, transparent) 1.2px, transparent 1.7px)",
+          "background-size": "28px 28px",
+          "mask-image": "radial-gradient(circle, black, transparent 70%)",
+          "mask-size": "140% 140%",
+          "mask-repeat": "no-repeat",
+          "mask-position": "70% 30%"
+        },
+        "@utility mw-typing": {
+          "display": "inline-block",
+          "max-width": "100%",
+          "white-space": "nowrap",
+          "vertical-align": "bottom",
+          "@media (prefers-reduced-motion: no-preference)": {
+            "overflow": "hidden",
+            "width": "calc(var(--mw-chars) * 1ch + 0.6ch)",
+            "border-right": "0.6ch solid var(--color-accent-line)",
+            "animation": "mw-type var(--mw-type-duration, 1800ms) steps(var(--mw-chars)) var(--mw-type-delay, 0ms) both,\n      mw-border-blink 900ms step-end infinite"
+          }
+        },
+        "@keyframes mw-border-blink": {
+          "50%": {
+            "border-color": "transparent"
+          }
+        },
+        "@keyframes mw-fade-in": {
+          "from": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes mw-pop-in": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.97"
+          }
+        },
+        "@keyframes mw-slide-in": {
+          "from": {
+            "opacity": "0",
+            "translate": "0 12px"
+          }
+        },
+        "@keyframes mw-pulse": {
+          "50%": {
+            "opacity": "0.45"
+          }
+        },
+        "@keyframes mw-sheet-right": {
+          "from": {
+            "translate": "100% 0"
+          }
+        },
+        "@keyframes mw-sheet-left": {
+          "from": {
+            "translate": "-100% 0"
+          }
+        },
+        "@keyframes mw-sheet-top": {
+          "from": {
+            "translate": "0 -100%"
+          }
+        },
+        "@keyframes mw-sheet-bottom": {
+          "from": {
+            "translate": "0 100%"
+          }
+        },
+        "@keyframes mw-indeterminate": {
+          "from": {
+            "translate": "-100% 0"
+          },
+          "to": {
+            "translate": "250% 0"
+          }
+        },
+        "@keyframes mw-blink": {
+          "50%": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes mw-type": {
+          "from": {
+            "width": "0"
+          }
+        },
+        "@keyframes mw-drift": {
+          "0%, 100%": {
+            "mask-position": "70% 30%"
+          },
+          "33%": {
+            "mask-position": "20% 60%"
+          },
+          "66%": {
+            "mask-position": "55% 90%"
+          }
+        },
+        "@keyframes mw-glitch": {
+          "0%, 100%": {
+            "translate": "0",
+            "text-shadow": "none"
+          },
+          "20%": {
+            "translate": "-2px 0",
+            "text-shadow": "2px 0 var(--color-mutant), -2px 0 var(--color-accent)"
+          },
+          "40%": {
+            "translate": "2px 0",
+            "text-shadow": "-2px 0 var(--color-mutant), 2px 0 var(--color-accent)"
+          },
+          "60%": {
+            "translate": "-1px 0",
+            "text-shadow": "1px 0 var(--color-mutant)"
+          }
+        },
+        "html": {
+          "background": "var(--color-ground)",
+          "-webkit-font-smoothing": "antialiased",
+          "-moz-osx-font-smoothing": "grayscale"
+        },
+        "body": {
+          "margin": "0",
+          "background": "var(--color-ground)",
+          "color": "var(--color-ink)",
+          "font-family": "var(--font-sans)",
+          "font-size": "17px",
+          "line-height": "1.6"
+        },
+        "@layer base": {
+          "::selection": {
+            "background": "var(--color-accent)",
+            "color": "var(--color-on-accent)"
+          },
+          ":focus-visible": {
+            "outline": "3px solid var(--color-focus)",
+            "outline-offset": "3px"
+          }
+        }
+      }
+    },
+    {
+      "name": "font-bricolage",
+      "type": "registry:font",
+      "title": "Bricolage Grotesque",
+      "description": "Fonte Bricolage Grotesque via next/font, exposta em --font-bricolage.",
+      "font": {
+        "family": "Bricolage Grotesque",
+        "provider": "google",
+        "import": "Bricolage_Grotesque",
+        "variable": "--font-bricolage",
+        "weight": [
+          "500",
+          "700",
+          "800"
+        ],
+        "subsets": [
+          "latin"
+        ]
+      }
+    },
+    {
+      "name": "font-plex-sans",
+      "type": "registry:font",
+      "title": "IBM Plex Sans",
+      "description": "Fonte IBM Plex Sans via next/font, exposta em --font-plex-sans.",
+      "font": {
+        "family": "IBM Plex Sans",
+        "provider": "google",
+        "import": "IBM_Plex_Sans",
+        "variable": "--font-plex-sans",
+        "weight": [
+          "400",
+          "500",
+          "600"
+        ],
+        "subsets": [
+          "latin"
+        ]
+      }
+    },
+    {
+      "name": "font-plex-mono",
+      "type": "registry:font",
+      "title": "IBM Plex Mono",
+      "description": "Fonte IBM Plex Mono via next/font, exposta em --font-plex-mono.",
+      "font": {
+        "family": "IBM Plex Mono",
+        "provider": "google",
+        "import": "IBM_Plex_Mono",
+        "variable": "--font-plex-mono",
+        "weight": [
+          "400",
+          "500"
+        ],
+        "subsets": [
+          "latin"
+        ]
+      }
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "cn",
+      "description": "Helper cn com clsx e tailwind-merge ciente dos tamanhos de texto do @mw/ui.",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/marcio/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Aviso fixo na página, com fundo suave do estado, ícone, título, ação e fechar opcional.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "app-shell",
+      "type": "registry:ui",
+      "title": "AppShell",
+      "description": "Layout de painel: sidebar recolhível só com ícones, cabeçalho e conteúdo. No mobile, a navegação abre num Sheet.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/sheet.json",
+        "http://localhost:3000/r/tooltip.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/app-shell.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "padroes"
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "Foto da pessoa ou iniciais em mono sobre surface. Nomeado pelo nome da pessoa.",
+      "dependencies": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Etiqueta curta em mono para status e categorias. Combina tom e aparência.",
+      "dependencies": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Trilha de navegação em mono com separador /. Use BreadcrumbTrail para o caso comum.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Ação principal da interface. Primário amarelo com texto preto; secundário com borda que acende no hover.",
+      "dependencies": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/spinner.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Superfície com borda e rounded-xl, sem sombra. A versão interactive acende a borda no hover.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Caixa de marcação do Radix. Marcada, fica amarela com o check preto.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "code-comment",
+      "type": "registry:ui",
+      "title": "CodeComment",
+      "description": "Legenda em formato de comentário de código. Use para metadados, notas e estados vazios.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/code-comment.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "identidade"
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "Select com busca para listas longas. Gatilho igual ao Input, busca sem acentos, funciona com Controller.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/popover.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "command-palette",
+      "type": "registry:ui",
+      "title": "CommandPalette",
+      "description": "Busca de comandos e páginas com ⌘K ou Ctrl+K, no estilo prompt de terminal. Este site usa uma: experimente.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/dialog.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/command-palette.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "padroes"
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "Lista filtrável com busca digitada, sobre o cmdk. Ignora acentos. Base do Combobox e do Command Palette.",
+      "dependencies": [
+        "cmdk"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Janela modal do Radix sobre o scrim. Card surface, título em display e botão de fechar.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "dot-grid",
+      "type": "registry:ui",
+      "title": "DotGrid",
+      "description": "Grade de pontos em accent com máscara radial, para fundo de telas de destaque. Animação opcional.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/dot-grid.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "identidade"
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "DropdownMenu",
+      "description": "Menu de ações com atalhos em mono, submenus, itens marcáveis e item destrutivo em vermelho.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "EmptyState",
+      "description": "Estado vazio com comentário de código, título, descrição e ação. A versão decorated ganha a DotGrid.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/dot-grid.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/empty-state.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "padroes"
+      ]
+    },
+    {
+      "name": "form-field",
+      "type": "registry:ui",
+      "title": "FormField",
+      "description": "Junta Label, controle, descrição e erro. Liga os ids e atributos ARIA sozinho e funciona com React Hook Form.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/label.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/form-field.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "glitch-text",
+      "type": "registry:ui",
+      "title": "GlitchText",
+      "description": "Tremida com sombras em accent e mutant, herdada do jogo Mate o Mutante. Use com parcimônia.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/glitch-text.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "identidade"
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Campo de texto de uma linha, com fundo ground e borda line-control.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "kicker",
+      "type": "registry:ui",
+      "title": "Kicker",
+      "description": "Rótulo curto em mono, caixa alta e accent, acima de títulos. É a primeira coisa que o olho lê numa seção.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/kicker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "identidade"
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Rótulo de campo baseado no Radix Label. Clicar nele foca o controle.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/label.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "link",
+      "type": "registry:ui",
+      "title": "Link",
+      "description": "Link em accent-text. Sublinhado sempre dentro de texto; só no hover em navegação.",
+      "dependencies": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/link.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "logo-block",
+      "type": "registry:ui",
+      "title": "LogoBlock",
+      "description": "Bloco amarelo sólido com texto preto em display extrabold. Igual nos dois temas.",
+      "dependencies": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/logo-block.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "identidade"
+      ]
+    },
+    {
+      "name": "page-header",
+      "type": "registry:ui",
+      "title": "PageHeader",
+      "description": "Cabeçalho de tela de sistema: trilha, kicker, título h1, descrição e ações à direita.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/page-header.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "padroes"
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Navegação entre páginas com anterior, próxima e reticências. A página atual é o botão amarelo.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Painel flutuante ancorado num gatilho, em surface com borda. Base do Combobox.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "Barra de progresso em accent-line sobre surface, com rótulo e porcentagem. Sem valor, fica indeterminada.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "RadioGroup",
+      "description": "Escolha única com todas as opções visíveis. Marcado, o círculo fica amarelo com ponto preto.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/label.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "section-title",
+      "type": "registry:ui",
+      "title": "SectionTitle",
+      "description": "Título de seção em display extrabold, com numeração em mono e linha horizontal, como no portfólio.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/section-title.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "identidade"
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Lista de opções do Radix com gatilho no formato do Input. Item destacado em accent-soft.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Painel lateral sobre a página, para filtros e edição rápida. Abre pela direita por padrão.",
+      "dependencies": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/dialog.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/sheet.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Blocos no lugar do conteúdo enquanto ele carrega. Pulsam devagar e ficam parados com movimento reduzido.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Indicador de carregamento. Herda a cor do texto ao redor.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "Interruptor liga e desliga do Radix, para preferências com efeito imediato.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Tabela semântica com cabeçalho em mono, linhas separadas e hover em band. Rola na horizontal em telas estreitas.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Abas em mono; a ativa ganha sublinhado em accent-line.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Campo de texto de várias linhas, redimensionável na vertical.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "theme-toggle",
+      "type": "registry:ui",
+      "title": "ThemeToggle",
+      "description": "Escolha entre sistema, escuro e claro. Grava a escolha e o ThemeScript a aplica antes da primeira pintura.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/theme-toggle.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "padroes"
+      ],
+      "docs": "Coloque <ThemeScript /> dentro do <head> do layout raiz e adicione suppressHydrationWarning no <html>."
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Notificação temporária no canto inferior direito, com faixa na cor do estado. Chame toast() de qualquer lugar.",
+      "dependencies": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/toast.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ],
+      "docs": "Coloque <Toaster /> uma vez no layout raiz."
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Dica curta invertida (fundo ink) que aparece no hover e no foco. Ideal para botões só com ícone.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ],
+      "docs": "Envolva a aplicação com <TooltipProvider> no layout raiz."
+    },
+    {
+      "name": "typing-text",
+      "type": "registry:ui",
+      "title": "TypingText",
+      "description": "Texto em mono que aparece letra a letra, com cursor de terminal piscando. Para telas de destaque.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/typing-text.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "identidade"
+      ]
+    },
+    {
+      "name": "admin-shell",
+      "type": "registry:block",
+      "title": "AdminShell",
+      "description": "Casca dos painéis: AppShell com navegação, busca ⌘K, menu do usuário com tema e saída. Usado pelo Dashboard e pelas Configurações.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/app-shell.json",
+        "http://localhost:3000/r/avatar.json",
+        "http://localhost:3000/r/badge.json",
+        "http://localhost:3000/r/breadcrumb.json",
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/command-palette.json",
+        "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/dropdown-menu.json",
+        "http://localhost:3000/r/logo-block.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/theme-toggle.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/blocks/admin-shell/admin-shell.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/admin-shell/admin-shell.tsx"
+        }
+      ],
+      "categories": [
+        "blocos"
+      ],
+      "docs": "Edite a lista navigation em components/blocks/admin-shell/admin-shell.tsx com as rotas do seu sistema."
+    },
+    {
+      "name": "dashboard",
+      "type": "registry:block",
+      "title": "Dashboard",
+      "description": "Painel de gestão de projetos: alerta de atrasos, cards de métricas, atividade recente com carregamento e prazos da semana.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/admin-shell.json",
+        "http://localhost:3000/r/alert.json",
+        "http://localhost:3000/r/avatar.json",
+        "http://localhost:3000/r/badge.json",
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/card.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/page-header.json",
+        "http://localhost:3000/r/progress.json",
+        "http://localhost:3000/r/section-title.json",
+        "http://localhost:3000/r/skeleton.json",
+        "http://localhost:3000/r/table.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/blocks/dashboard/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard/data.ts"
+        },
+        {
+          "path": "registry/marcio/blocks/dashboard/metric-card.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard/metric-card.tsx"
+        },
+        {
+          "path": "registry/marcio/blocks/dashboard/page.tsx",
+          "type": "registry:page",
+          "target": "app/dashboard/page.tsx"
+        },
+        {
+          "path": "registry/marcio/blocks/dashboard/recent-activity.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard/recent-activity.tsx"
+        }
+      ],
+      "categories": [
+        "blocos"
+      ],
+      "docs": "Os dados de exemplo ficam em data.ts; troque pela sua fonte."
+    },
+    {
+      "name": "login",
+      "type": "registry:block",
+      "title": "Login",
+      "description": "Entrar com e-mail e senha. Painel de marca com DotGrid e TypingText, validação, erro em Alert e toast de boas-vindas.",
+      "dependencies": [
+        "react-hook-form"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/alert.json",
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/checkbox.json",
+        "http://localhost:3000/r/code-comment.json",
+        "http://localhost:3000/r/dot-grid.json",
+        "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/kicker.json",
+        "http://localhost:3000/r/link.json",
+        "http://localhost:3000/r/logo-block.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/toast.json",
+        "http://localhost:3000/r/typing-text.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/blocks/login/login-form.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/login/login-form.tsx"
+        },
+        {
+          "path": "registry/marcio/blocks/login/page.tsx",
+          "type": "registry:page",
+          "target": "app/login/page.tsx"
+        }
+      ],
+      "categories": [
+        "blocos"
+      ],
+      "docs": "Troque a função de demonstração passando onLogin para o LoginForm."
+    },
+    {
+      "name": "not-found",
+      "type": "registry:block",
+      "title": "404",
+      "description": "Página não encontrada com GlitchText, linha de terminal com o caminho pedido e cursor piscando.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/dot-grid.json",
+        "http://localhost:3000/r/glitch-text.json",
+        "http://localhost:3000/r/logo-block.json",
+        "http://localhost:3000/r/marcio-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/blocks/not-found/not-found-terminal.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/not-found/not-found-terminal.tsx"
+        },
+        {
+          "path": "registry/marcio/blocks/not-found/not-found.tsx",
+          "type": "registry:page",
+          "target": "app/not-found.tsx"
+        }
+      ],
+      "categories": [
+        "blocos"
+      ]
+    },
+    {
+      "name": "settings",
+      "type": "registry:block",
+      "title": "Configurações",
+      "description": "Abas de perfil (formulário validado), preferências (tema, densidade, fuso, notificações) e conta (exclusão com confirmação).",
+      "dependencies": [
+        "react-hook-form"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/admin-shell.json",
+        "http://localhost:3000/r/alert.json",
+        "http://localhost:3000/r/avatar.json",
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/card.json",
+        "http://localhost:3000/r/combobox.json",
+        "http://localhost:3000/r/dialog.json",
+        "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/page-header.json",
+        "http://localhost:3000/r/radio-group.json",
+        "http://localhost:3000/r/select.json",
+        "http://localhost:3000/r/switch.json",
+        "http://localhost:3000/r/tabs.json",
+        "http://localhost:3000/r/textarea.json",
+        "http://localhost:3000/r/theme-toggle.json",
+        "http://localhost:3000/r/toast.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/blocks/settings/page.tsx",
+          "type": "registry:page",
+          "target": "app/configuracoes/page.tsx"
+        },
+        {
+          "path": "registry/marcio/blocks/settings/settings-tabs.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/settings/settings-tabs.tsx"
+        }
+      ],
+      "categories": [
+        "blocos"
+      ]
+    },
+    {
+      "name": "marcio-ui",
+      "type": "registry:item",
+      "title": "@mw/ui completo",
+      "description": "Instala tokens, fontes e todos os componentes.",
+      "registryDependencies": [
+        "http://localhost:3000/r/alert.json",
+        "http://localhost:3000/r/app-shell.json",
+        "http://localhost:3000/r/avatar.json",
+        "http://localhost:3000/r/badge.json",
+        "http://localhost:3000/r/breadcrumb.json",
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/card.json",
+        "http://localhost:3000/r/checkbox.json",
+        "http://localhost:3000/r/code-comment.json",
+        "http://localhost:3000/r/combobox.json",
+        "http://localhost:3000/r/command-palette.json",
+        "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/dialog.json",
+        "http://localhost:3000/r/dot-grid.json",
+        "http://localhost:3000/r/dropdown-menu.json",
+        "http://localhost:3000/r/empty-state.json",
+        "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/glitch-text.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/kicker.json",
+        "http://localhost:3000/r/label.json",
+        "http://localhost:3000/r/link.json",
+        "http://localhost:3000/r/logo-block.json",
+        "http://localhost:3000/r/page-header.json",
+        "http://localhost:3000/r/pagination.json",
+        "http://localhost:3000/r/popover.json",
+        "http://localhost:3000/r/progress.json",
+        "http://localhost:3000/r/radio-group.json",
+        "http://localhost:3000/r/section-title.json",
+        "http://localhost:3000/r/select.json",
+        "http://localhost:3000/r/sheet.json",
+        "http://localhost:3000/r/skeleton.json",
+        "http://localhost:3000/r/spinner.json",
+        "http://localhost:3000/r/switch.json",
+        "http://localhost:3000/r/table.json",
+        "http://localhost:3000/r/tabs.json",
+        "http://localhost:3000/r/textarea.json",
+        "http://localhost:3000/r/theme-toggle.json",
+        "http://localhost:3000/r/toast.json",
+        "http://localhost:3000/r/tooltip.json",
+        "http://localhost:3000/r/typing-text.json"
+      ]
+    }
+  ]
+}

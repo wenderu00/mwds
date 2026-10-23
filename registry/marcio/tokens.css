@@ -1,0 +1,418 @@
+:root {
+  --mw-accent-50: #fbfbee;
+  --mw-accent-100: #f9f9cc;
+  --mw-accent-200: #f5ee6b;
+  --mw-accent-300: #ece41f;
+  --mw-accent-400: #d2ca1a;
+  --mw-accent-500: #b3ad15;
+  --mw-accent-600: #908b0e;
+  --mw-accent-700: #6e6600;
+  --mw-accent-800: #58550f;
+  --mw-accent-900: #444213;
+  --mw-accent-950: #29280d;
+}
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --mw-ground: #000000;
+  --mw-band: #0a0a0a;
+  --mw-surface: #111111;
+  --mw-line: #262626;
+  --mw-line-strong: #3a3a3a;
+  --mw-line-control: #737373;
+  --mw-ink: #ffffff;
+  --mw-ink-soft: #d4d4d4;
+  --mw-ink-muted: #a3a3a3;
+
+  --mw-accent: var(--mw-accent-300);
+  --mw-accent-hover: var(--mw-accent-200);
+  --mw-on-accent: #000000;
+  --mw-accent-text: var(--mw-accent-300);
+  --mw-accent-line: var(--mw-accent-300);
+  --mw-accent-soft: var(--mw-accent-950);
+  --mw-focus: var(--mw-accent-300);
+
+  --mw-danger: #ff5c5c;
+  --mw-danger-hover: #ff7874;
+  --mw-danger-soft: #381514;
+  --mw-danger-text: #ff958f;
+  --mw-on-danger: #000000;
+  --mw-success: #4ade80;
+  --mw-success-soft: #16261a;
+  --mw-success-text: #47d77b;
+  --mw-on-success: #000000;
+  --mw-warning: #fb923c;
+  --mw-warning-soft: #2e1e12;
+  --mw-warning-text: #fb9e56;
+  --mw-on-warning: #000000;
+  --mw-info: #60a5fa;
+  --mw-info-soft: #132236;
+  --mw-info-text: #87bbfb;
+  --mw-on-info: #000000;
+
+  --mw-mutant: #c084fc;
+
+  --mw-scrim: #000000b3;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --mw-ground: #ffffff;
+    --mw-band: #fafafa;
+    --mw-surface: #f5f5f5;
+    --mw-line: #e5e5e5;
+    --mw-line-strong: #d4d4d4;
+    --mw-line-control: #737373;
+    --mw-ink: #000000;
+    --mw-ink-soft: #404040;
+    --mw-ink-muted: #525252;
+
+    --mw-accent: var(--mw-accent-300);
+    --mw-accent-hover: var(--mw-accent-400);
+    --mw-on-accent: #000000;
+    --mw-accent-text: var(--mw-accent-700);
+    --mw-accent-line: var(--mw-accent-700);
+    --mw-accent-soft: var(--mw-accent-100);
+    --mw-focus: var(--mw-accent-700);
+
+    --mw-danger: #ff5c5c;
+
+    --mw-danger-hover: #e9474a;
+    --mw-danger-soft: #ffebe9;
+    --mw-danger-text: #b1001f;
+    --mw-on-danger: #000000;
+    --mw-success: #4ade80;
+    --mw-success-soft: #d2fddc;
+    --mw-success-text: #206f3d;
+    --mw-on-success: #000000;
+    --mw-warning: #fb923c;
+    --mw-warning-soft: #feece0;
+    --mw-warning-text: #8c4a0e;
+    --mw-on-warning: #000000;
+    --mw-info: #60a5fa;
+    --mw-info-soft: #e7f1fe;
+    --mw-info-text: #0f5cae;
+    --mw-on-info: #000000;
+
+    --mw-mutant: #7e22ce;
+
+    --mw-scrim: #00000066;
+  }
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --mw-ground: #ffffff;
+  --mw-band: #fafafa;
+  --mw-surface: #f5f5f5;
+  --mw-line: #e5e5e5;
+  --mw-line-strong: #d4d4d4;
+  --mw-line-control: #737373;
+  --mw-ink: #000000;
+  --mw-ink-soft: #404040;
+  --mw-ink-muted: #525252;
+
+  --mw-accent: var(--mw-accent-300);
+  --mw-accent-hover: var(--mw-accent-400);
+  --mw-on-accent: #000000;
+  --mw-accent-text: var(--mw-accent-700);
+  --mw-accent-line: var(--mw-accent-700);
+  --mw-accent-soft: var(--mw-accent-100);
+  --mw-focus: var(--mw-accent-700);
+
+  --mw-danger: #ff5c5c;
+
+  --mw-danger-hover: #e9474a;
+  --mw-danger-soft: #ffebe9;
+  --mw-danger-text: #b1001f;
+  --mw-on-danger: #000000;
+  --mw-success: #4ade80;
+  --mw-success-soft: #d2fddc;
+  --mw-success-text: #206f3d;
+  --mw-on-success: #000000;
+  --mw-warning: #fb923c;
+  --mw-warning-soft: #feece0;
+  --mw-warning-text: #8c4a0e;
+  --mw-on-warning: #000000;
+  --mw-info: #60a5fa;
+  --mw-info-soft: #e7f1fe;
+  --mw-info-text: #0f5cae;
+  --mw-on-info: #000000;
+
+  --mw-mutant: #7e22ce;
+
+  --mw-scrim: #00000066;
+}
+
+@theme inline {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-accent-50: var(--mw-accent-50);
+  --color-accent-100: var(--mw-accent-100);
+  --color-accent-200: var(--mw-accent-200);
+  --color-accent-300: var(--mw-accent-300);
+  --color-accent-400: var(--mw-accent-400);
+  --color-accent-500: var(--mw-accent-500);
+  --color-accent-600: var(--mw-accent-600);
+  --color-accent-700: var(--mw-accent-700);
+  --color-accent-800: var(--mw-accent-800);
+  --color-accent-900: var(--mw-accent-900);
+  --color-accent-950: var(--mw-accent-950);
+
+  --color-ground: var(--mw-ground);
+  --color-band: var(--mw-band);
+  --color-surface: var(--mw-surface);
+  --color-line: var(--mw-line);
+  --color-line-strong: var(--mw-line-strong);
+  --color-line-control: var(--mw-line-control);
+  --color-ink: var(--mw-ink);
+  --color-ink-soft: var(--mw-ink-soft);
+  --color-ink-muted: var(--mw-ink-muted);
+
+  --color-accent: var(--mw-accent);
+  --color-accent-hover: var(--mw-accent-hover);
+  --color-on-accent: var(--mw-on-accent);
+  --color-accent-text: var(--mw-accent-text);
+  --color-accent-line: var(--mw-accent-line);
+  --color-accent-soft: var(--mw-accent-soft);
+  --color-focus: var(--mw-focus);
+
+  --color-danger: var(--mw-danger);
+  --color-danger-hover: var(--mw-danger-hover);
+  --color-danger-soft: var(--mw-danger-soft);
+  --color-danger-text: var(--mw-danger-text);
+  --color-on-danger: var(--mw-on-danger);
+  --color-success: var(--mw-success);
+  --color-success-soft: var(--mw-success-soft);
+  --color-success-text: var(--mw-success-text);
+  --color-on-success: var(--mw-on-success);
+  --color-warning: var(--mw-warning);
+  --color-warning-soft: var(--mw-warning-soft);
+  --color-warning-text: var(--mw-warning-text);
+  --color-on-warning: var(--mw-on-warning);
+  --color-info: var(--mw-info);
+  --color-info-soft: var(--mw-info-soft);
+  --color-info-text: var(--mw-info-text);
+  --color-on-info: var(--mw-on-info);
+
+  --color-mutant: var(--mw-mutant);
+  --color-scrim: var(--mw-scrim);
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  --text-base: 17px;
+  --text-base--line-height: 1.6;
+  --text-lead: 21px;
+  --text-lead--line-height: 1.5;
+  --text-display-xl: clamp(48px, 7vw, 92px);
+  --text-display-xl--line-height: 0.98;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-lg: clamp(36px, 5vw, 52px);
+  --text-display-lg--line-height: 1.05;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-md: clamp(28px, 3.5vw, 36px);
+  --text-display-md--line-height: 1.15;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-display-sm: 22px;
+  --text-display-sm--line-height: 1.25;
+  --text-display-sm--letter-spacing: -0.01em;
+  --text-mono-sm: 14px;
+  --text-mono-sm--line-height: 1.5;
+  --text-mono-xs: 13px;
+  --text-mono-xs--line-height: 1.5;
+
+  --tracking-kicker: 0.04em;
+
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-mw-blink: mw-blink 900ms step-end infinite;
+  --animate-mw-drift: mw-drift 18s ease-in-out infinite;
+  --animate-mw-glitch: mw-glitch 320ms steps(6) both;
+  --animate-mw-fade-in: mw-fade-in 160ms var(--ease-out) both;
+  --animate-mw-pop-in: mw-pop-in 200ms var(--ease-out) both;
+  --animate-mw-slide-in: mw-slide-in 240ms var(--ease-out) both;
+  --animate-mw-pulse: mw-pulse 1.6s ease-in-out infinite;
+  --animate-mw-sheet-right: mw-sheet-right 260ms var(--ease-out) both;
+  --animate-mw-sheet-left: mw-sheet-left 260ms var(--ease-out) both;
+  --animate-mw-sheet-top: mw-sheet-top 260ms var(--ease-out) both;
+  --animate-mw-sheet-bottom: mw-sheet-bottom 260ms var(--ease-out) both;
+  --animate-mw-indeterminate: mw-indeterminate 1.4s var(--ease-out) infinite;
+}
+
+@layer base {
+  html {
+    background: var(--color-ground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+}
+
+@utility mw-caret {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.1em;
+  vertical-align: text-bottom;
+  background: var(--color-accent-line);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: mw-blink 900ms step-end infinite;
+  }
+}
+
+@utility mw-dot-grid {
+  background-image: radial-gradient(color-mix(in srgb, var(--color-accent-line) 55%, transparent) 1.2px, transparent 1.7px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(circle, black, transparent 70%);
+  mask-size: 140% 140%;
+  mask-repeat: no-repeat;
+  mask-position: 70% 30%;
+}
+
+@utility mw-typing {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  vertical-align: bottom;
+  @media (prefers-reduced-motion: no-preference) {
+    overflow: hidden;
+    width: calc(var(--mw-chars) * 1ch + 0.6ch);
+    border-right: 0.6ch solid var(--color-accent-line);
+    animation:
+      mw-type var(--mw-type-duration, 1800ms) steps(var(--mw-chars)) var(--mw-type-delay, 0ms) both,
+      mw-border-blink 900ms step-end infinite;
+  }
+}
+
+@keyframes mw-border-blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@keyframes mw-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes mw-pop-in {
+  from {
+    opacity: 0;
+    scale: 0.97;
+  }
+}
+
+@keyframes mw-slide-in {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+
+@keyframes mw-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes mw-sheet-right {
+  from {
+    translate: 100% 0;
+  }
+}
+
+@keyframes mw-sheet-left {
+  from {
+    translate: -100% 0;
+  }
+}
+
+@keyframes mw-sheet-top {
+  from {
+    translate: 0 -100%;
+  }
+}
+
+@keyframes mw-sheet-bottom {
+  from {
+    translate: 0 100%;
+  }
+}
+
+@keyframes mw-indeterminate {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 250% 0;
+  }
+}
+
+@keyframes mw-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes mw-type {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes mw-drift {
+  0%,
+  100% {
+    mask-position: 70% 30%;
+  }
+  33% {
+    mask-position: 20% 60%;
+  }
+  66% {
+    mask-position: 55% 90%;
+  }
+}
+
+@keyframes mw-glitch {
+  0%,
+  100% {
+    translate: 0;
+    text-shadow: none;
+  }
+  20% {
+    translate: -2px 0;
+    text-shadow: 2px 0 var(--color-mutant), -2px 0 var(--color-accent);
+  }
+  40% {
+    translate: 2px 0;
+    text-shadow: -2px 0 var(--color-mutant), 2px 0 var(--color-accent);
+  }
+  60% {
+    translate: -1px 0;
+    text-shadow: 1px 0 var(--color-mutant);
+  }
+}
