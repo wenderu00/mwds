@@ -15,7 +15,7 @@ export function SiteCommand({ entries }: { entries: SiteCommandEntry[] }) {
     <CommandPalette
       title="Buscar no @mw/ui"
       placeholder="Componente, página ou comando"
-      trigger={<CommandPaletteTrigger label="Buscar" className="hidden sm:inline-flex" />}
+      trigger={<CommandPaletteTrigger label="Buscar" className="[&_kbd]:hidden sm:[&_kbd]:inline" />}
     >
       {groups.map((group) => (
         <CommandGroup key={group} heading={group}>

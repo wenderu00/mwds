@@ -3,6 +3,7 @@ import { LogoBlock } from "@/registry/marcio/ui/logo-block";
 import { ThemeToggle } from "@/registry/marcio/ui/theme-toggle";
 import { docs, groups } from "./catalog";
 import { SiteCommand, type SiteCommandEntry } from "./site-command";
+import { SiteMenu } from "./site-menu";
 
 export const container = "mx-auto max-w-content px-6";
 
@@ -78,6 +79,8 @@ const commandEntries: SiteCommandEntry[] = [
   })),
 ];
 
+const navLinkClass = "text-ink-muted transition-colors duration-base hover:text-accent-text";
+
 export function SiteHeader() {
   return (
     <>
@@ -88,18 +91,18 @@ export function SiteHeader() {
         Pular para o conteúdo
       </a>
       <header className="sticky top-0 z-sticky border-b border-line bg-ground">
-        <div className={`${container} flex flex-wrap items-center justify-between gap-4 py-3`}>
+        <div className={`${container} flex items-center justify-between gap-4 py-3`}>
           <div className="flex items-center gap-6">
             <LogoBlock asChild>
               <NextLink href="/" aria-label="@mw/ui, início">
                 MW
               </NextLink>
             </LogoBlock>
-            <nav aria-label="Principal">
+            <nav aria-label="Principal" className="hidden lg:block">
               <ul className="flex gap-5 font-mono text-mono-sm">
                 {nav.map((item) => (
                   <li key={item.href}>
-                    <NextLink href={item.href} className="text-ink-muted transition-colors duration-base hover:text-accent-text">
+                    <NextLink href={item.href} className={navLinkClass}>
                       {item.label}
                     </NextLink>
                   </li>
@@ -109,7 +112,8 @@ export function SiteHeader() {
           </div>
           <div className="flex items-center gap-3">
             <SiteCommand entries={commandEntries} />
-            <ThemeToggle />
+            <ThemeToggle className="hidden lg:inline-flex" />
+            <SiteMenu links={nav} linkClassName={navLinkClass} className="lg:hidden" />
           </div>
         </div>
       </header>
