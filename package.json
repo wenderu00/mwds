@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm run registry:build && next build",
-    "start": "next start",
     "lint": "eslint && tsx scripts/check-colors.ts",
     "contrast": "tsx scripts/contrast.ts",
     "accent-scale": "tsx scripts/accent-scale.ts",
