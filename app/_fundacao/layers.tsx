@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { LayersDemo } from "./layers-demo";
-import { FoundationSection, ThemePair } from "./shared";
+import { FoundationSection, ThemePair } from "../_docs/section";
 
 const layers = [
   { name: "z-tooltip", value: "60", usage: "Tooltip, link de pular para o conteúdo" },

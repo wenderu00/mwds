@@ -8,6 +8,7 @@ import { SiteMenu } from "./site-menu";
 export const container = "mx-auto max-w-content px-6";
 
 const nav = [
+  { href: "/primeiros-passos", label: "primeiros passos" },
   { href: "/", label: "fundação" },
   { href: "/componentes", label: "componentes" },
   { href: "/exemplos", label: "exemplos" },
@@ -61,6 +62,7 @@ const portugueseNames: Record<string, string[]> = {
 };
 
 const commandEntries: SiteCommandEntry[] = [
+  { href: "/primeiros-passos", label: "Primeiros passos: instalar o @mw/ui num projeto", group: "Páginas", keywords: ["instalar", "instalação", "setup", "começar", "registry", "shadcn"] },
   { href: "/", label: "Fundação: cor, tipografia, espaçamento, movimento e mais", group: "Páginas", keywords: ["tokens", "cores", "raio", "camadas", "z-index", "densidade", "ícones"] },
   { href: "/componentes", label: "Catálogo de componentes", group: "Páginas" },
   { href: "/exemplos", label: "Telas de exemplo", group: "Páginas" },
@@ -98,8 +100,8 @@ export function SiteHeader() {
                 MW
               </NextLink>
             </LogoBlock>
-            <nav aria-label="Principal" className="hidden lg:block">
-              <ul className="flex gap-5 font-mono text-mono-sm">
+            <nav aria-label="Principal" className="hidden xl:block">
+              <ul className="flex gap-5 font-mono text-mono-sm whitespace-nowrap">
                 {nav.map((item) => (
                   <li key={item.href}>
                     <NextLink href={item.href} className={navLinkClass}>
@@ -112,8 +114,8 @@ export function SiteHeader() {
           </div>
           <div className="flex items-center gap-3">
             <SiteCommand entries={commandEntries} />
-            <ThemeToggle className="hidden lg:inline-flex" />
-            <SiteMenu links={nav} linkClassName={navLinkClass} className="lg:hidden" />
+            <ThemeToggle className="hidden xl:inline-flex" />
+            <SiteMenu links={nav} linkClassName={navLinkClass} className="xl:hidden" />
           </div>
         </div>
       </header>

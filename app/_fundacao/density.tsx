@@ -2,7 +2,7 @@ import { Button } from "@/registry/marcio/ui/button";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { Input } from "@/registry/marcio/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/marcio/ui/table";
-import { FoundationSection, SpecTable, ThemePair, type Theme } from "./shared";
+import { FoundationSection, SpecTable, ThemePair, type Theme } from "../_docs/section";
 
 const levels = [
   { density: "compacta", control: "36px", cell: "8px" },

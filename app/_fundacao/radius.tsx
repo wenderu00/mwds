@@ -1,4 +1,4 @@
-import { FoundationSection, ThemePair } from "./shared";
+import { FoundationSection, ThemePair } from "../_docs/section";
 
 const radii = [
   { name: "rounded-mark", value: "4px", radiusClass: "rounded-mark", usage: "checkbox, link, item de menu, tecla" },

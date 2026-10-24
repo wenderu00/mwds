@@ -3,7 +3,7 @@ import { cn } from "@/registry/marcio/lib/utils";
 import { Kicker } from "@/registry/marcio/ui/kicker";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/marcio/ui/table";
-import { container } from "../_docs/site-header";
+import { container } from "./site-header";
 
 export type Theme = "dark" | "light";
 

@@ -1,5 +1,5 @@
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
-import { FoundationSection } from "./shared";
+import { FoundationSection } from "../_docs/section";
 
 const typeSamples = [
   { label: "display-xl · 800 · -0.03em", className: "font-display text-display-xl font-extrabold", text: "Márcio Wendell" },

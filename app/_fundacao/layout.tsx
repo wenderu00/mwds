@@ -1,5 +1,5 @@
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
-import { FoundationSection, SpecTable, ThemePair } from "./shared";
+import { FoundationSection, SpecTable, ThemePair } from "../_docs/section";
 
 const breakpoints = [
   ["sm", "640px", "formulários passam a duas colunas"],

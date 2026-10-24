@@ -1,5 +1,5 @@
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
-import { FoundationSection, ThemePair } from "./shared";
+import { FoundationSection, ThemePair } from "../_docs/section";
 
 export function ElevationSection() {
   return (

@@ -1,5 +1,5 @@
 import tokens from "../_data/tokens.json";
-import { FoundationSection } from "./shared";
+import { FoundationSection } from "../_docs/section";
 
 const accentSteps = [
   { step: "50", swatchClass: "bg-accent-50" },
