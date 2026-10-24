@@ -67,6 +67,7 @@ Principais classes:
 | Accent | `bg-accent` + `text-on-accent` (preenchimento), `text-accent-text` (texto e links), `border-accent-line` (borda acesa), `bg-accent-soft` (seleção) |
 | Estados | `bg-{estado}` + `text-on-{estado}`, `bg-{estado}-soft`, `text-{estado}-text` para `danger`, `success`, `warning` e `info` |
 | Escala | `bg-accent-50` até `bg-accent-950` |
+| Gráficos | `chart-1` a `chart-8` (categórica, em ordem fixa) e `seq-1` a `seq-5` (sequencial), como `fill-chart-1` e `bg-seq-3` |
 | Tipografia | `font-display`, `font-sans`, `font-mono`, `text-display-xl` a `text-display-sm`, `text-lead`, `text-mono-sm`, `text-mono-xs`, `tracking-kicker` |
 
 A regra do amarelo: `#ece41f` é sempre preenchimento com texto preto. Quando precisa ser texto ou linha, use `accent-text` e `accent-line`, que no tema claro viram oliva (`#6e6600`), porque amarelo sobre branco dá 1,3:1.

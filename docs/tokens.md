@@ -150,3 +150,23 @@ Decisões e motivos no ADR 0015. A página de fundação mostra cada grupo nos d
 | py-cell-y | 12px; 8px compacta, 16px ampla |
 | ícones | lucide-react, `size-4` / `size-5` / `size-6` |
 | dot-grid | pontos de 1.2px, passo 28px, `accent-line` a 55%, máscara radial 70% |
+
+## 8. Gráficos
+
+A ordem é fixa e foi escolhida com o validador da skill de visualização: no pior par vizinho, a diferença com protanopia ou deuteranopia é ΔE 11,6 no escuro e 14,5 no claro (meta 8), e a diferença com visão normal é ΔE 22,8 e 24,1 (piso 15). Todas as séries passam 3:1 sobre ground, band e surface.
+
+| Série | Matiz | Escuro | Claro |
+|---|---|---|---|
+| chart-1 | accent | #908b0e (accent-600) | #6e6600 (accent-700) |
+| chart-2 | magenta | #a83876 | #c04e8a |
+| chart-3 | verde | #378a21 | #1b6700 |
+| chart-4 | azul | #0961bb | #0554a3 |
+| chart-5 | laranja | #b55508 | #863e07 |
+| chart-6 | água | #018e7d | #0c9180 |
+| chart-7 | violeta | #7250ba | #5e3ba3 |
+| chart-8 | vermelho | #c74a4d | #bd4045 |
+
+A sequencial `seq-1` a `seq-5` usa a escala do accent: 500 a 900 no claro e 700 a 300 no escuro, onde o valor alto é o mais claro. O passo mais fraco passa 2:1, o piso para rampas; abaixo de 3:1, o gráfico precisa de rótulos ou da tabela.
+
+Regras: atribua as cores na ordem, sem pular nem reciclar; a partir da nona série, use Outros; a cor segue a entidade; texto nunca na cor da série; estados só para estado; um eixo y só.
+

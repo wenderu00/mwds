@@ -27,6 +27,18 @@ const root = block(css, ":root");
 const durations = ["fast", "base", "slow"] as const;
 
 describe("tokens de fundação", () => {
+  it("tem as paletas de gráfico nos dois temas, com valores próprios no claro", () => {
+    const dark = block(css, ':root, [data-theme="dark"]');
+    const light = block(css, '[data-theme="light"]');
+    const names = [...Array.from({ length: 8 }, (_, i) => `chart-${i + 1}`), ...Array.from({ length: 5 }, (_, i) => `seq-${i + 1}`)];
+    for (const name of names) {
+      expect(theme[`color-${name}`], name).toBe(`var(--mw-${name})`);
+      expect(dark[`--mw-${name}`], `${name} escuro`).toBeTruthy();
+      expect(light[`--mw-${name}`], `${name} claro`).toBeTruthy();
+    }
+    expect(new Set(names.slice(0, 8).map((name) => dark[`--mw-${name}`])).size).toBe(8);
+  });
+
   it("empilha as camadas com flutuantes acima de modais", () => {
     const order = ["behind", "base", "sticky", "sheet", "dialog", "popover", "toast", "tooltip"];
     const values = order.map((layer) => Number(theme[`z-index-${layer}`]));

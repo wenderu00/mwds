@@ -1,4 +1,4 @@
-export type PairKind = "text" | "large-text" | "ui";
+export type PairKind = "text" | "large-text" | "ui" | "ramp";
 
 export type Pair = {
   fg: string;
@@ -11,6 +11,7 @@ export const minimum: Record<PairKind, number> = {
   text: 4.5,
   "large-text": 3,
   ui: 3,
+  ramp: 2,
 };
 
 const surfaces = ["ground", "band", "surface"] as const;
@@ -35,6 +36,10 @@ export const pairs: Pair[] = [
   ...onSurfaces("line-control", "ui", "Borda de input, checkbox e botão secundário"),
   ...onSurfaces("accent-line", "ui", "Borda acesa no hover e aba ativa"),
   ...onSurfaces("focus", "ui", "Outline de foco"),
+  ...[1, 2, 3, 4, 5, 6, 7, 8].flatMap((n) => onSurfaces(`chart-${n}`, "ui", `Série ${n} da paleta categórica de gráficos`)),
+  ...[1, 2, 3, 4, 5].flatMap((n) =>
+    onSurfaces(`seq-${n}`, "ramp", `Passo ${n} da paleta sequencial; abaixo de 3:1 o gráfico precisa de rótulos ou tabela`),
+  ),
   ...states.flatMap((state): Pair[] => [
     ...onSurfaces(`${state}-text`, "text", `Texto de ${state}`),
     { fg: `${state}-text`, bg: `${state}-soft`, kind: "text", usage: `Badge e alerta suave de ${state}` },

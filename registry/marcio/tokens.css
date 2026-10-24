@@ -68,6 +68,20 @@
 
   --mw-mutant: #c084fc;
 
+  --mw-chart-1: #908b0e;
+  --mw-chart-2: #a83876;
+  --mw-chart-3: #378a21;
+  --mw-chart-4: #0961bb;
+  --mw-chart-5: #b55508;
+  --mw-chart-6: #018e7d;
+  --mw-chart-7: #7250ba;
+  --mw-chart-8: #c74a4d;
+  --mw-seq-1: var(--mw-accent-700);
+  --mw-seq-2: var(--mw-accent-600);
+  --mw-seq-3: var(--mw-accent-500);
+  --mw-seq-4: var(--mw-accent-400);
+  --mw-seq-5: var(--mw-accent-300);
+
   --mw-scrim: #000000b3;
 }
 
@@ -113,6 +127,20 @@
 
     --mw-mutant: #7e22ce;
 
+    --mw-chart-1: #6e6600;
+    --mw-chart-2: #c04e8a;
+    --mw-chart-3: #1b6700;
+    --mw-chart-4: #0554a3;
+    --mw-chart-5: #863e07;
+    --mw-chart-6: #0c9180;
+    --mw-chart-7: #5e3ba3;
+    --mw-chart-8: #bd4045;
+    --mw-seq-1: var(--mw-accent-500);
+    --mw-seq-2: var(--mw-accent-600);
+    --mw-seq-3: var(--mw-accent-700);
+    --mw-seq-4: var(--mw-accent-800);
+    --mw-seq-5: var(--mw-accent-900);
+
     --mw-scrim: #00000066;
   }
 }
@@ -157,6 +185,20 @@
   --mw-on-info: #000000;
 
   --mw-mutant: #7e22ce;
+
+  --mw-chart-1: #6e6600;
+  --mw-chart-2: #c04e8a;
+  --mw-chart-3: #1b6700;
+  --mw-chart-4: #0554a3;
+  --mw-chart-5: #863e07;
+  --mw-chart-6: #0c9180;
+  --mw-chart-7: #5e3ba3;
+  --mw-chart-8: #bd4045;
+  --mw-seq-1: var(--mw-accent-500);
+  --mw-seq-2: var(--mw-accent-600);
+  --mw-seq-3: var(--mw-accent-700);
+  --mw-seq-4: var(--mw-accent-800);
+  --mw-seq-5: var(--mw-accent-900);
 
   --mw-scrim: #00000066;
 }
@@ -233,6 +275,19 @@
   --color-on-info: var(--mw-on-info);
 
   --color-mutant: var(--mw-mutant);
+  --color-chart-1: var(--mw-chart-1);
+  --color-chart-2: var(--mw-chart-2);
+  --color-chart-3: var(--mw-chart-3);
+  --color-chart-4: var(--mw-chart-4);
+  --color-chart-5: var(--mw-chart-5);
+  --color-chart-6: var(--mw-chart-6);
+  --color-chart-7: var(--mw-chart-7);
+  --color-chart-8: var(--mw-chart-8);
+  --color-seq-1: var(--mw-seq-1);
+  --color-seq-2: var(--mw-seq-2);
+  --color-seq-3: var(--mw-seq-3);
+  --color-seq-4: var(--mw-seq-4);
+  --color-seq-5: var(--mw-seq-5);
   --color-scrim: var(--mw-scrim);
 
   --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
