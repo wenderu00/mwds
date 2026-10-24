@@ -860,6 +860,29 @@
       ]
     },
     {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "Gráfico de barras, linha ou área sobre o Recharts, nas paletas chart-1 a chart-8 e seq-1 a seq-5, com legenda e tabela dos dados.",
+      "dependencies": [
+        "recharts"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/table.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/chart.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
@@ -2429,6 +2452,7 @@
         "http://localhost:3000/r/button.json",
         "http://localhost:3000/r/calendar.json",
         "http://localhost:3000/r/card.json",
+        "http://localhost:3000/r/chart.json",
         "http://localhost:3000/r/checkbox.json",
         "http://localhost:3000/r/code-comment.json",
         "http://localhost:3000/r/collapsible.json",
