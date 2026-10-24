@@ -46,4 +46,12 @@ export const blocks: BlockDoc[] = [
     route: "/configuracoes",
     targets: { "page.tsx": "app/configuracoes/page.tsx" },
   },
+  {
+    slug: "landing",
+    name: "Landing page",
+    summary: "Página de apresentação no estilo do portfólio: Navbar com seções, Hero com DotGrid e TypingText, FeatureGrid de serviços, stack, projetos e Footer de contato.",
+    route: "/landing",
+    targets: { "page.tsx": "app/page.tsx" },
+    setup: "O conteúdo de exemplo fica em components/blocks/landing/data.ts; troque pelo seu.",
+  },
 ];

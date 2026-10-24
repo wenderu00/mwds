@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import DashboardPage from "@/registry/marcio/blocks/dashboard/page";
+import LandingPage from "@/registry/marcio/blocks/landing/page";
 import { LoginForm } from "@/registry/marcio/blocks/login/login-form";
 import LoginPage from "@/registry/marcio/blocks/login/page";
 import NotFound from "@/registry/marcio/blocks/not-found/not-found";
@@ -182,4 +183,26 @@ describe("settings block", () => {
       unmount();
     }
   });
+});
+
+describe("landing block", () => {
+  it("has the portfolio sections in order, linked from the navbar", () => {
+    const { container } = render(<LandingPage />);
+    expect(screen.getByRole("heading", { level: 1, name: "Márcio Wendell" })).toBeInTheDocument();
+    const nav = screen.getAllByRole("navigation", { name: "Seções" })[0]!;
+    const hrefs = within(nav)
+      .getAllByRole("link")
+      .map((link) => link.getAttribute("href"));
+    expect(hrefs).toEqual(["#quem-sou", "#o-que-faco", "#stack", "#trabalhos"]);
+    for (const href of hrefs) expect(container.querySelector(href!)).not.toBeNull();
+    expect(screen.getByRole("contentinfo")).toHaveTextContent("Vamos conversar?");
+  });
+
+  it("has no axe violations", async () => {
+    for (const theme of themes) {
+      const { unmount } = renderInTheme(theme, <LandingPage />);
+      expect(await axe(document.body)).toHaveNoViolations();
+      unmount();
+    }
+  }, 20_000);
 });

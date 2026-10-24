@@ -4,6 +4,16 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.8.0] - 2026-10-24
+
+### Novo
+
+- Navbar: marca, links com `aria-current`, ações e painel lateral no celular.
+- Hero: kicker, título em display-xl, descrição, linha digitando e ações, sobre a DotGrid.
+- Footer: chamada de contato, grupos de links rotulados, copyright em CodeComment e voltar ao topo.
+- FeatureGrid: grade de recursos em cards com ícone e índice em mono.
+- Bloco `landing`, no estilo do portfólio, com rota `/landing` no site. Instala em `app/page.tsx`; o conteúdo fica em `components/blocks/landing/data.ts`.
+
 ## [0.7.0] - 2026-10-24
 
 ### Novo

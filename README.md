@@ -85,9 +85,9 @@ Todos os pares usados passam WCAG AA nos dois temas. A tabela completa está em 
 | `br` | lib | Máscaras de CPF, CNPJ, telefone, CEP e moeda; validação de CPF e CNPJ |
 | `typography`, `kicker`, `section-title`, `code-comment`, `logo-block`, `dot-grid`, `typing-text`, `glitch-text` | ui | Identidade |
 | `button`, `icon-button`, `input`, `masked-input`, `textarea`, `number-input`, `separator`, `toggle-group`, `slider`, `kbd`, `label`, `checkbox`, `switch`, `radio-group`, `badge`, `avatar`, `skeleton`, `spinner`, `link` | ui | Primitivos |
-| `form-field`, `card`, `select`, `combobox`, `calendar`, `date-picker`, `file-upload`, `accordion`, `collapsible`, `data-table`, `stat-card`, `stepper`, `command`, `popover`, `dropdown-menu`, `dialog`, `alert-dialog`, `sheet`, `toast`, `alert`, `tabs`, `table`, `pagination`, `breadcrumb`, `progress`, `tooltip` | ui | Compostos |
-| `page-header`, `empty-state`, `theme-toggle`, `command-palette`, `app-shell` | ui | Padrões |
-| `login`, `not-found`, `dashboard`, `settings` | block | Telas prontas (ver abaixo) |
+| `form-field`, `card`, `select`, `combobox`, `calendar`, `date-picker`, `file-upload`, `accordion`, `collapsible`, `data-table`, `stat-card`, `stepper`, `feature-grid`, `command`, `popover`, `dropdown-menu`, `dialog`, `alert-dialog`, `sheet`, `toast`, `alert`, `tabs`, `table`, `pagination`, `breadcrumb`, `progress`, `tooltip` | ui | Compostos |
+| `page-header`, `empty-state`, `theme-toggle`, `navbar`, `hero`, `footer`, `command-palette`, `app-shell` | ui | Padrões |
+| `login`, `not-found`, `dashboard`, `settings`, `landing` | block | Telas prontas (ver abaixo) |
 | `admin-shell` | block | Casca de painel usada por `dashboard` e `settings` |
 | `marcio-ui` | item | Todos os componentes |
 
@@ -107,6 +107,7 @@ npx shadcn@latest add @marcio/dashboard
 | `not-found` | `app/not-found.tsx` | Substitui a página 404 do projeto |
 | `dashboard` | `app/dashboard/page.tsx` | Dados de exemplo em `components/blocks/dashboard/data.ts` |
 | `settings` | `app/configuracoes/page.tsx` | Perfil, preferências (tema, densidade, fuso, notificações) e conta |
+| `landing` | `app/page.tsx` | Página no estilo do portfólio: Navbar, Hero, serviços, stack, projetos e rodapé. Conteúdo em `components/blocks/landing/data.ts` |
 
 Dashboard e Configurações instalam também o `admin-shell`. Edite a lista `navigation` dele com as rotas do seu sistema. Os blocos usam toasts, então o `<Toaster />` precisa estar no layout raiz (ver [Primeiros passos](https://wenderu00.github.io/mwds/primeiros-passos/#tema)).
 

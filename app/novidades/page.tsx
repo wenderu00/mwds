@@ -106,7 +106,8 @@ export default function ChangelogPage() {
             index={String(releases.length - i).padStart(2, "0")}
             kicker={dateFormat.format(new Date(`${release.date}T00:00:00Z`))}
             title={release.version}
-            band={i % 2 === 1}
+            // Alterna a partir da versão mais antiga, para uma versão nova não trocar o fundo das anteriores.
+            band={(releases.length - i) % 2 === 0}
           >
             <div className="flex max-w-measure flex-col gap-8">
               {release.sections.map((section) => (
