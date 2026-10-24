@@ -4,6 +4,23 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.11.0] - 2026-10-24
+
+### Novo
+
+- PasswordInput: campo de senha com botão de mostrar e ocultar (`aria-pressed`), sobre o slot `end` do Input.
+- SearchInput: busca com lupa, botão de limpar e Esc para limpar.
+- MultiSelect: várias escolhas com busca, chips removíveis e Backspace para tirar a última, a partir do Combobox.
+- DescriptionList: pares de rótulo e valor em pilha, colunas ou linhas, com `dl`, `dt` e `dd`.
+- Timeline: histórico e trâmite de processos, com passo atual, tons e datas em `time`.
+- ScrollArea: rolagem com barra nos tokens, focável pelo teclado.
+- ContextMenu: menu do botão direito com os itens e estilos do DropdownMenu.
+
+### Mudou
+
+- O bloco `login` usa o PasswordInput, e a listagem de exemplo, o SearchInput.
+- DropdownMenu exporta `menuContentClasses` e `menuItemClasses`, usadas também pelo ContextMenu.
+
 ## [0.10.0] - 2026-10-24
 
 ### Novo
