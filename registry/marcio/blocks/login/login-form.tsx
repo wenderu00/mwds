@@ -7,6 +7,7 @@ import { Button } from "@/registry/marcio/ui/button";
 import { Checkbox } from "@/registry/marcio/ui/checkbox";
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { Input } from "@/registry/marcio/ui/input";
+import { PasswordInput } from "@/registry/marcio/ui/password-input";
 import { Link } from "@/registry/marcio/ui/link";
 import { toast } from "@/registry/marcio/ui/toast";
 
@@ -67,7 +68,7 @@ export function LoginForm({ onLogin = demoLogin, forgotPasswordHref = "#" }: Log
       </FormField>
       <div className="flex flex-col gap-2">
         <FormField label="Senha" error={errors.password?.message}>
-          <Input type="password" autoComplete="current-password" {...register("password", { required: "Informe sua senha." })} />
+          <PasswordInput {...register("password", { required: "Informe sua senha." })} />
         </FormField>
         <Link href={forgotPasswordHref} variant="muted" className="self-end text-sm">
           Esqueci minha senha

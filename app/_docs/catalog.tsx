@@ -54,6 +54,13 @@ import { GlitchText } from "@/registry/marcio/ui/glitch-text";
 import { Hero } from "@/registry/marcio/ui/hero";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
 import { Input } from "@/registry/marcio/ui/input";
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "@/registry/marcio/ui/context-menu";
+import { DescriptionList } from "@/registry/marcio/ui/description-list";
+import { MultiSelect } from "@/registry/marcio/ui/multi-select";
+import { PasswordInput } from "@/registry/marcio/ui/password-input";
+import { ScrollArea } from "@/registry/marcio/ui/scroll-area";
+import { SearchInput } from "@/registry/marcio/ui/search-input";
+import { Timeline } from "@/registry/marcio/ui/timeline";
 import { Kbd } from "@/registry/marcio/ui/kbd";
 import { Kicker } from "@/registry/marcio/ui/kicker";
 import { Label } from "@/registry/marcio/ui/label";
@@ -3325,6 +3332,345 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: ["É um radiogroup: setas trocam a opção e só a marcada entra no Tab."],
+  },
+  {
+    slug: "password-input",
+    name: "PasswordInput",
+    group: "primitivos",
+    summary: "Campo de senha com botão de mostrar e ocultar, sobre o slot end do Input.",
+    file: "password-input.tsx",
+    status: "beta",
+    usage: {
+      use: ["Login, cadastro e troca de senha.", "Deixe a pessoa conferir o que digitou antes de enviar, em vez de pedir a senha duas vezes."],
+      avoid: ["Códigos de uso único: use Input com inputMode numeric e autocomplete one-time-code.", "Dados que não são segredo: use Input."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Vai do campo para o botão Mostrar senha." },
+      { keys: "Enter / Espaço", action: "No botão, mostra ou oculta a senha." },
+    ],
+    props: [
+      { name: "showLabel", type: "string", default: '"Mostrar senha"', description: "Nome do botão. O estado vem do aria-pressed." },
+      { name: "autoComplete", type: "string", default: '"current-password"', description: 'Use "new-password" em cadastro e troca de senha.' },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button e do Input." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Login e cadastro",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Senha">\n  <PasswordInput />\n</FormField>\n<FormField label="Nova senha" description="Pelo menos 8 caracteres, com um número.">\n  <PasswordInput autoComplete="new-password" />\n</FormField>`,
+        render: (theme) => (
+          <>
+            <FormField label="Senha" id={`pw-a-${theme}`}>
+              <PasswordInput defaultValue="mw-demo-123" />
+            </FormField>
+            <FormField label="Nova senha" description="Pelo menos 8 caracteres, com um número." id={`pw-b-${theme}`}>
+              <PasswordInput autoComplete="new-password" />
+            </FormField>
+          </>
+        ),
+      },
+    ],
+    a11y: [
+      "O botão é uma alternância: aria-pressed diz se a senha está visível, e o nome não muda.",
+      "Desliga correção ortográfica e maiúscula automática, que atrapalham senha no celular.",
+    ],
+  },
+  {
+    slug: "search-input",
+    name: "SearchInput",
+    group: "primitivos",
+    summary: "Campo de busca com ícone de lupa e botão de limpar, que também limpa com Esc.",
+    file: "search-input.tsx",
+    status: "beta",
+    usage: {
+      use: ["Filtrar uma listagem ou tabela pelo texto.", "Busca dentro de uma seção, perto do que ela filtra."],
+      avoid: ["Busca global com atalhos e comandos: use CommandPalette.", "Escolher um valor de uma lista conhecida: use Combobox."],
+    },
+    keyboard: [
+      { keys: "Esc", action: "Limpa o texto. Com o campo vazio, não faz nada." },
+      { keys: "Tab", action: "Vai do campo para o botão Limpar busca, quando há texto." },
+    ],
+    props: [
+      { name: "value / onValueChange", type: "string / (value) => void", description: "Uso controlado." },
+      { name: "defaultValue", type: "string", description: "Valor inicial não controlado." },
+      { name: "clearLabel", type: "string", default: '"Limpar busca"', description: "Nome do botão de limpar." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button e do Input." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Filtro de listagem",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Buscar projetos">\n  <SearchInput value={busca} onValueChange={setBusca} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Buscar projetos" id={`search-${theme}`}>
+            <SearchInput defaultValue="ouvidoria" />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "É um input type search, anunciado como campo de busca.",
+      "A lupa é decorativa; o nome vem do rótulo do FormField ou de aria-label.",
+      "Depois de limpar pelo botão, o foco volta ao campo.",
+    ],
+  },
+  {
+    slug: "scroll-area",
+    name: "ScrollArea",
+    group: "primitivos",
+    summary: "Área com rolagem própria e barra nos tokens, para listas longas dentro de Sheet, Popover e Card.",
+    file: "scroll-area.tsx",
+    status: "beta",
+    usage: {
+      use: ["Lista longa dentro de um painel com altura fixa: notificações, termos, filtros.", "Rolagem horizontal de conteúdo largo, com orientation horizontal."],
+      avoid: ["A página inteira: deixe a rolagem do navegador.", "Tabelas: o Table já rola na horizontal e entra no Tab."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Foca a área rolável." },
+      { keys: "Setas, Page Up / Page Down, Home / End", action: "Rolam a área focada." },
+    ],
+    props: [
+      { name: "orientation", type: '"vertical" | "horizontal" | "both"', default: '"vertical"', description: "Quais barras aparecem." },
+      { name: "aria-label", type: "string", description: "Nomeia a área como região. Use quando o conteúdo não tem título próprio." },
+      { name: "viewportClassName", type: "string", description: "Classes da área que rola, por exemplo um padding." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Notificações num painel",
+        code: `<ScrollArea aria-label="Notificações" className="h-56 rounded-card border border-line">\n  <ul>{notificacoes.map(...)}</ul>\n</ScrollArea>`,
+        render: () => (
+          <ScrollArea aria-label="Notificações" className="h-56 w-full rounded-card border border-line" viewportClassName="p-4">
+            <ul className="flex flex-col gap-3">
+              {Array.from({ length: 12 }, (_, index) => (
+                <li key={index} className="flex flex-col gap-0.5 border-b border-line pb-3 last:border-b-0">
+                  <span className="text-ink">Pedido {String(index + 41).padStart(4, "0")} atualizado</span>
+                  <span className="font-mono text-mono-xs text-ink-muted">{`// há ${index + 2} min`}</span>
+                </li>
+              ))}
+            </ul>
+          </ScrollArea>
+        ),
+      },
+    ],
+    a11y: [
+      "A área rolável entra no Tab, para quem usa teclado conseguir rolar.",
+      "Com aria-label, vira uma região nomeada no leitor de tela.",
+      "A barra é visual; a rolagem por toque, roda e teclado continua a do navegador.",
+    ],
+  },
+  {
+    slug: "multi-select",
+    name: "MultiSelect",
+    group: "compostos",
+    summary: "Escolha de várias opções com busca, mostradas como chips removíveis dentro do campo.",
+    file: "multi-select.tsx",
+    status: "beta",
+    usage: {
+      use: ["Filtros e categorias com várias escolhas numa lista longa.", "Até umas dez escolhas visíveis como chips."],
+      avoid: ["Até cinco opções: use Checkbox, todas visíveis.", "Uma escolha só: use Select ou Combobox."],
+    },
+    keyboard: [
+      { keys: "Enter / Espaço / seta para baixo", action: "No gatilho, abre a lista com a busca focada." },
+      { keys: "Setas", action: "Navegam nas opções." },
+      { keys: "Enter", action: "Marca ou desmarca a opção, sem fechar." },
+      { keys: "Esc", action: "Fecha e devolve o foco ao gatilho." },
+      { keys: "Backspace", action: "No gatilho, remove a última escolha." },
+    ],
+    props: [
+      { name: "options", type: "MultiSelectOption[]", description: "{ value, label, keywords?, disabled? }, o mesmo formato do Combobox." },
+      { name: "value / onValueChange", type: "string[] / (value) => void", description: "Uso controlado, na ordem em que foram escolhidas." },
+      { name: "defaultValue", type: "string[]", description: "Valor inicial não controlado." },
+      { name: "placeholder / addLabel", type: "ReactNode", default: '"Selecione" / "Adicionar"', description: "Texto do gatilho sem e com escolhas." },
+      { name: "removeLabel", type: "(label) => string", default: '"Remover <rótulo>"', description: "Nome do botão de cada chip." },
+      { name: "name", type: "string", description: "Cria um input escondido por valor escolhido." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Altura mínima; o campo cresce quando os chips quebram linha." },
+    ],
+    examples: [
+      {
+        title: "Estados atendidos",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Estados atendidos">\n  <MultiSelect options={estados} value={escolhidos} onValueChange={setEscolhidos} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Estados atendidos" id={`ms-${theme}`}>
+            <MultiSelect
+              defaultValue={["pe", "pb"]}
+              options={[
+                { value: "al", label: "Alagoas" },
+                { value: "ba", label: "Bahia" },
+                { value: "ce", label: "Ceará" },
+                { value: "pb", label: "Paraíba" },
+                { value: "pe", label: "Pernambuco" },
+                { value: "rn", label: "Rio Grande do Norte" },
+                { value: "se", label: "Sergipe" },
+              ]}
+            />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "O gatilho tem role combobox e diz quantas e quais opções estão escolhidas.",
+      "Cada opção da lista tem aria-checked, e cada chip tem um botão Remover com o rótulo.",
+      "Depois de remover um chip, o foco volta ao gatilho.",
+    ],
+  },
+  {
+    slug: "context-menu",
+    name: "ContextMenu",
+    group: "compostos",
+    summary: "Menu de ações aberto com o botão direito, com os mesmos itens e estilos do DropdownMenu.",
+    file: "context-menu.tsx",
+    status: "beta",
+    usage: {
+      use: ["Atalho para ações de uma linha de tabela ou de um card, para quem já conhece a tela."],
+      avoid: ["Ação que só existe ali: ninguém descobre o clique direito. Repita a ação num DropdownMenu ou botão visível.", "Celular: não há clique direito; use DropdownMenu."],
+    },
+    keyboard: [
+      { keys: "Shift + F10 / tecla Menu", action: "Abre o menu no elemento focado." },
+      { keys: "Setas", action: "Navegam nos itens e abrem submenus." },
+      { keys: "Enter / Espaço", action: "Executa o item." },
+      { keys: "Esc", action: "Fecha o menu." },
+    ],
+    props: [
+      { name: "ContextMenuTrigger asChild", type: "boolean", description: "Usa o filho, como uma linha de tabela, como área do clique direito." },
+      { name: "ContextMenuItem variant", type: '"default" | "danger"', default: '"default"', description: "danger para ação destrutiva." },
+      { name: "ContextMenuItem inset", type: "boolean", default: "false", description: "Alinha com itens que têm indicador." },
+      { name: "onSelect", type: "(event) => void", description: "Ação do item." },
+    ],
+    examples: [
+      {
+        title: "Ações de um registro",
+        className: "w-full",
+        code: `<ContextMenu>\n  <ContextMenuTrigger asChild>\n    <div>Pedido 0042</div>\n  </ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Abrir</ContextMenuItem>\n    <ContextMenuItem>Duplicar</ContextMenuItem>\n    <ContextMenuSeparator />\n    <ContextMenuItem variant="danger">Excluir</ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>`,
+        render: () => (
+          <ContextMenu>
+            <ContextMenuTrigger asChild>
+              <div className="flex w-full flex-col gap-1 rounded-card border border-dashed border-line-control p-5">
+                <span className="text-ink">Pedido 0042 · Portal da Transparência</span>
+                <span className="font-mono text-mono-xs text-ink-muted">{"// clique com o botão direito"}</span>
+              </div>
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+              <ContextMenuItem>
+                Abrir
+                <ContextMenuShortcut>Enter</ContextMenuShortcut>
+              </ContextMenuItem>
+              <ContextMenuItem>Duplicar</ContextMenuItem>
+              <ContextMenuSeparator />
+              <ContextMenuItem variant="danger">Excluir</ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
+        ),
+      },
+    ],
+    a11y: [
+      "O menu tem role menu, itens menuitem e navegação por setas do Radix.",
+      "Como o clique direito não aparece na tela, toda ação do ContextMenu precisa existir também num controle visível.",
+    ],
+  },
+  {
+    slug: "description-list",
+    name: "DescriptionList",
+    group: "compostos",
+    summary: "Pares de rótulo e valor para telas de detalhe, em pilha, colunas ou linhas.",
+    file: "description-list.tsx",
+    status: "beta",
+    usage: {
+      use: ["Tela de detalhe de um registro: protocolo, responsável, datas, status.", "Resumo antes de confirmar, como a revisão de um cadastro."],
+      avoid: ["Vários registros com os mesmos campos: use Table.", "Campos editáveis: use FormField."],
+    },
+    props: [
+      { name: "items", type: "{ term: ReactNode; description: ReactNode }[]", description: "Pares na ordem de leitura." },
+      { name: "orientation", type: '"vertical" | "horizontal"', default: '"vertical"', description: "Rótulo em cima do valor, ou ao lado, em linhas com divisória." },
+      { name: "columns", type: "1 | 2 | 3", default: "1", description: "Colunas no vertical, a partir de sm." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Em colunas",
+        className: "w-full",
+        code: `<DescriptionList columns={3} items={[{ term: "protocolo", description: "2026.10.0042" }, ...]} />`,
+        render: () => (
+          <DescriptionList
+            columns={3}
+            className="w-full"
+            items={[
+              { term: "protocolo", description: "2026.10.0042" },
+              { term: "aberto em", description: "21/10/2026" },
+              { term: "status", description: <Badge tone="info">em análise</Badge> },
+              { term: "responsável", description: "Márcio Wendell" },
+              { term: "órgão", description: "Secretaria de Planejamento" },
+              { term: "prazo", description: "31/10/2026" },
+            ]}
+          />
+        ),
+      },
+      {
+        title: "Em linhas",
+        className: "w-full",
+        code: `<DescriptionList orientation="horizontal" items={itens} />`,
+        render: () => (
+          <DescriptionList
+            orientation="horizontal"
+            className="w-full"
+            items={[
+              { term: "solicitante", description: "Ana Souza" },
+              { term: "e-mail", description: "ana.souza@exemplo.gov.br" },
+              { term: "assunto", description: "Acesso aos contratos de 2025" },
+            ]}
+          />
+        ),
+      },
+    ],
+    a11y: [
+      "Usa dl, dt e dd: o leitor de tela anuncia a lista de definições e liga cada valor ao rótulo.",
+      "Valor vazio deve dizer que está vazio (Não informado), não ficar em branco.",
+    ],
+  },
+  {
+    slug: "timeline",
+    name: "Timeline",
+    group: "compostos",
+    summary: "Histórico de status ou trâmite de um processo, do mais antigo ao mais novo, com o passo atual marcado.",
+    file: "timeline.tsx",
+    status: "beta",
+    usage: {
+      use: ["Trâmite de pedido, protocolo ou processo.", "Histórico de mudanças de status de um registro."],
+      avoid: ["Etapas de um formulário que a pessoa percorre: use Stepper.", "Muitos eventos com filtros e colunas: use Table."],
+    },
+    props: [
+      { name: "items", type: "TimelineItem[]", description: "{ title, description?, date?, dateTime?, status?, tone? } na ordem do tempo." },
+      { name: "status", type: '"complete" | "current" | "pending"', default: '"complete"', description: "Por item. current ganha aria-current step." },
+      { name: "tone", type: '"neutral" | "accent" | "success" | "warning" | "danger" | "info"', default: '"accent"', description: "Cor do marcador dos itens concluídos." },
+      { name: "dateTime", type: "string", description: "Data em aaaa-mm-dd para o atributo datetime do time." },
+      { name: "aria-label", type: "string", default: '"Histórico"', description: "Nome da lista." },
+    ],
+    examples: [
+      {
+        title: "Trâmite de um pedido",
+        code: `<Timeline aria-label="Trâmite do pedido" items={[{ title: "Pedido aberto", date: "21/10/2026", dateTime: "2026-10-21" }, ...]} />`,
+        render: () => (
+          <Timeline
+            aria-label="Trâmite do pedido"
+            className="w-full"
+            items={[
+              { title: "Pedido aberto", description: "Pelo portal, com 2 anexos.", date: "21/10/2026", dateTime: "2026-10-21" },
+              { title: "Encaminhado à Secretaria de Planejamento", date: "22/10/2026", dateTime: "2026-10-22", tone: "info" },
+              { title: "Prazo prorrogado", description: "Mais 10 dias, com justificativa.", date: "23/10/2026", dateTime: "2026-10-23", tone: "warning" },
+              { title: "Em análise", date: "24/10/2026", dateTime: "2026-10-24", status: "current" },
+              { title: "Resposta ao solicitante", status: "pending" },
+            ]}
+          />
+        ),
+      },
+    ],
+    a11y: [
+      "É uma lista ordenada; o item atual tem aria-current step e cada item diz o status em texto para o leitor de tela.",
+      "A data fica num time com datetime, e a cor do marcador nunca é a única informação: o título diz o que aconteceu.",
+    ],
   },
 ];
 

@@ -998,6 +998,30 @@
       ]
     },
     {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "ContextMenu",
+      "description": "Menu de ações aberto com o botão direito, com os mesmos itens e estilos do DropdownMenu.",
+      "dependencies": [
+        "lucide-react",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/dropdown-menu.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "data-table",
       "type": "registry:ui",
       "title": "DataTable",
@@ -1044,6 +1068,26 @@
       "files": [
         {
           "path": "registry/marcio/ui/date-picker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "description-list",
+      "type": "registry:ui",
+      "title": "DescriptionList",
+      "description": "Pares de rótulo e valor para telas de detalhe, em pilha, colunas ou linhas.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/description-list.tsx",
           "type": "registry:ui"
         }
       ],
@@ -1444,6 +1488,34 @@
       ]
     },
     {
+      "name": "multi-select",
+      "type": "registry:ui",
+      "title": "MultiSelect",
+      "description": "Escolha de várias opções com busca, mostradas como chips removíveis dentro do campo.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/badge.json",
+        "http://localhost:3000/r/combobox.json",
+        "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/popover.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/multi-select.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "navbar",
       "type": "registry:ui",
       "title": "Navbar",
@@ -1533,6 +1605,30 @@
       ]
     },
     {
+      "name": "password-input",
+      "type": "registry:ui",
+      "title": "PasswordInput",
+      "description": "Campo de senha com botão de mostrar e ocultar, sobre o slot end do Input.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/password-input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -1593,6 +1689,52 @@
       "files": [
         {
           "path": "registry/marcio/ui/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "ScrollArea",
+      "description": "Área com rolagem própria e barra nos tokens, para listas longas dentro de Sheet, Popover e Card.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "search-input",
+      "type": "registry:ui",
+      "title": "SearchInput",
+      "description": "Campo de busca com ícone de lupa e botão de limpar, que também limpa com Esc.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/search-input.tsx",
           "type": "registry:ui"
         }
       ],
@@ -1910,6 +2052,26 @@
       "docs": "Coloque <ThemeScript /> dentro do <head> do layout raiz e adicione suppressHydrationWarning no <html>."
     },
     {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "Histórico de status ou trâmite de um processo, do mais antigo ao mais novo, com o passo atual marcado.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/timeline.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "toast",
       "type": "registry:ui",
       "title": "Toast",
@@ -2157,6 +2319,7 @@
         "http://localhost:3000/r/link.json",
         "http://localhost:3000/r/logo-block.json",
         "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/password-input.json",
         "http://localhost:3000/r/toast.json",
         "http://localhost:3000/r/typing-text.json"
       ],
@@ -2272,8 +2435,10 @@
         "http://localhost:3000/r/combobox.json",
         "http://localhost:3000/r/command-palette.json",
         "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/context-menu.json",
         "http://localhost:3000/r/data-table.json",
         "http://localhost:3000/r/date-picker.json",
+        "http://localhost:3000/r/description-list.json",
         "http://localhost:3000/r/dialog.json",
         "http://localhost:3000/r/dot-grid.json",
         "http://localhost:3000/r/dropdown-menu.json",
@@ -2292,13 +2457,17 @@
         "http://localhost:3000/r/link.json",
         "http://localhost:3000/r/logo-block.json",
         "http://localhost:3000/r/masked-input.json",
+        "http://localhost:3000/r/multi-select.json",
         "http://localhost:3000/r/navbar.json",
         "http://localhost:3000/r/number-input.json",
         "http://localhost:3000/r/page-header.json",
         "http://localhost:3000/r/pagination.json",
+        "http://localhost:3000/r/password-input.json",
         "http://localhost:3000/r/popover.json",
         "http://localhost:3000/r/progress.json",
         "http://localhost:3000/r/radio-group.json",
+        "http://localhost:3000/r/scroll-area.json",
+        "http://localhost:3000/r/search-input.json",
         "http://localhost:3000/r/section-title.json",
         "http://localhost:3000/r/select.json",
         "http://localhost:3000/r/separator.json",
@@ -2313,6 +2482,7 @@
         "http://localhost:3000/r/tabs.json",
         "http://localhost:3000/r/textarea.json",
         "http://localhost:3000/r/theme-toggle.json",
+        "http://localhost:3000/r/timeline.json",
         "http://localhost:3000/r/toast.json",
         "http://localhost:3000/r/toggle-group.json",
         "http://localhost:3000/r/tooltip.json",

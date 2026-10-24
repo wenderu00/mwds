@@ -36,7 +36,7 @@ import {
 import { EmptyState } from "@/registry/marcio/ui/empty-state";
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
-import { Input } from "@/registry/marcio/ui/input";
+import { SearchInput } from "@/registry/marcio/ui/search-input";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { Select, SelectContent, SelectItem, SelectSeparator, SelectTrigger, SelectValue } from "@/registry/marcio/ui/select";
 import { toast } from "@/registry/marcio/ui/toast";
@@ -160,12 +160,11 @@ export function ProjectsView() {
 
       <search className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <FormField label="Buscar">
-          <Input
-            type="search"
+          <SearchInput
             placeholder="Projeto, cliente ou responsável"
             value={query}
-            onChange={(event) => {
-              setQuery(event.target.value);
+            onValueChange={(next) => {
+              setQuery(next);
               setPage(1);
             }}
           />
