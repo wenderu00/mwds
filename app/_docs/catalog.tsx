@@ -99,6 +99,7 @@ import {
   CommandPaletteDemo,
   DataTableDemo,
   DropdownMenuDemo,
+  FileUploadProgressDemo,
   PaginationDemo,
   ProgressDemo,
   StepperDemo,
@@ -2452,12 +2453,12 @@ export const docs: ComponentDoc[] = [
     slug: "file-upload",
     name: "FileUpload",
     group: "compostos",
-    summary: "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção e limites de tipo, tamanho e quantidade.",
+    summary: "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção, limites de tipo, tamanho e quantidade, e progresso e erro por arquivo.",
     file: "file-upload.tsx",
     status: "beta",
     usage: {
       use: ["Anexar arquivos num formulário, com limites claros de tipo e tamanho.", "Diga os limites no hint: tipo, tamanho e quantidade."],
-      avoid: ["Trocar a foto de perfil com recorte: o componente não edita a imagem.", "Envio de muitos arquivos grandes com progresso individual: ainda não há suporte."],
+      avoid: ["Trocar a foto de perfil com recorte: o componente não edita a imagem.", "Envio em segundo plano que continua depois de sair da página: o estado do envio vive no componente que faz o upload."],
     },
     props: [
       { name: "value / onValueChange", type: "File[] / (files) => void", description: "Uso controlado." },
@@ -2468,6 +2469,10 @@ export const docs: ComponentDoc[] = [
       { name: "onReject", type: "(rejections) => void", description: "Recebe os arquivos recusados, com motivo e mensagem." },
       { name: "title / hint", type: "ReactNode", description: "Texto principal da área e linha de apoio em mono." },
       { name: "removeLabel", type: "(file) => string", default: '"Remover <nome>"', description: "Nome do botão de remover." },
+      { name: "fileStatus", type: "(file) => { progress?: number | null; error?: ReactNode; done?: boolean }", description: "Estado do envio de cada arquivo: barra de progresso (null é indeterminado), mensagem de erro ou enviado." },
+      { name: "onRetry", type: "(file) => void", description: "Mostra o botão de enviar de novo nos arquivos com erro." },
+      { name: "progressLabel / retryLabel", type: "(file) => string", default: '"Enviando <nome>" / "Enviar <nome> de novo"', description: "Nome da barra de progresso e do botão de nova tentativa." },
+      { name: "doneLabel", type: "ReactNode", default: '"enviado"', description: "Texto ao lado do arquivo enviado." },
     ],
     examples: [
       {
@@ -2490,12 +2495,20 @@ export const docs: ComponentDoc[] = [
           </FormField>
         ),
       },
+      {
+        title: "Progresso e erro de envio",
+        description: "Quem faz o upload controla o estado de cada arquivo. Nesta demonstração o segundo arquivo falha em 60% na primeira tentativa.",
+        className: "w-full flex-col items-stretch",
+        code: `const [status, setStatus] = useState(new Map<File, FileUploadStatus>());\n\n<FileUpload\n  multiple\n  value={files}\n  onValueChange={(next) => { setFiles(next); next.forEach(enviar); }}\n  fileStatus={(file) => status.get(file)}\n  onRetry={enviar}\n/>\n\n// em enviar: { progress: 40 }, depois { done: true } ou { error: "A conexão caiu. Envie de novo." }`,
+        render: (theme) => <FileUploadProgressDemo id={`fu-c-${theme}`} />,
+      },
     ],
     a11y: [
       "A área inteira é o rótulo de um input de arquivo nativo, então funciona com clique, teclado e leitor de tela sem script extra.",
       "Arquivos recusados aparecem numa região role alert, com o nome do arquivo, o motivo e como resolver.",
       "Cada arquivo da lista tem um botão Remover com o nome do arquivo. Depois de remover, o foco volta para o campo.",
       "Arrastar não é a única forma: o texto da área sempre diz que dá para clicar.",
+      "A barra de progresso de cada arquivo é um progressbar com o nome Enviando <nome>. O erro de envio aparece em role alert, ao lado do botão Enviar <nome> de novo.",
     ],
     keyboard: [
       { keys: "Tab", action: "Foca a área (contorno de foco nela inteira) e depois cada botão Remover." },

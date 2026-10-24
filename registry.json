@@ -1149,13 +1149,14 @@
       "name": "file-upload",
       "type": "registry:ui",
       "title": "FileUpload",
-      "description": "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção e limites de tipo, tamanho e quantidade.",
+      "description": "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção, limites de tipo, tamanho e quantidade, e progresso e erro por arquivo.",
       "dependencies": [
         "lucide-react"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
         "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/progress.json",
         "http://localhost:3000/r/utils.json"
       ],
       "files": [
