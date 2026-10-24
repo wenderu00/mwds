@@ -88,4 +88,20 @@ describe("parser do CHANGELOG", () => {
       { kind: "link", value: "c", href: "https://x" },
     ]);
   });
+
+  it("leva caminhos do repositório para o arquivo no GitHub", () => {
+    expect(inline("[ADR](docs/adr/0017-contorno-do-accent.md)")).toEqual([
+      { kind: "link", value: "ADR", href: "https://github.com/wenderu00/mwds/blob/main/docs/adr/0017-contorno-do-accent.md" },
+    ]);
+    expect(inline("[topo](#v0-9-0)")[0]).toMatchObject({ href: "#v0-9-0" });
+  });
+
+  it("todo link de versão abre fora do site ou é âncora", () => {
+    for (const release of releases)
+      for (const section of release.sections)
+        for (const block of section.blocks) {
+          const texts = block.type === "list" ? block.items : block.type === "paragraph" ? [block.text] : [];
+          for (const part of texts.flatMap(inline)) if (part.kind === "link") expect(part.href, release.version).toMatch(/^(https?:|#)/);
+        }
+  });
 });

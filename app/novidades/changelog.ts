@@ -85,6 +85,13 @@ export function readChangelog() {
 
 export type InlinePart = { kind: "text" | "code" | "strong"; value: string } | { kind: "link"; value: string; href: string };
 
+const repositoryUrl = "https://github.com/wenderu00/mwds/blob/main/";
+
+// O CHANGELOG usa caminhos do repositório, que funcionam no GitHub; no site eles apontam para o arquivo no GitHub.
+export function resolveHref(href: string) {
+  return /^(https?:|mailto:|#)/.test(href) ? href : repositoryUrl + href.replace(/^\.?\//, "");
+}
+
 export function inline(text: string): InlinePart[] {
   const parts: InlinePart[] = [];
   const pattern = /`([^`]+)`|\*\*([^*]+)\*\*|\[([^\]]+)\]\(([^)]+)\)/g;
@@ -93,7 +100,7 @@ export function inline(text: string): InlinePart[] {
     if (match.index > last) parts.push({ kind: "text", value: text.slice(last, match.index) });
     if (match[1] !== undefined) parts.push({ kind: "code", value: match[1] });
     else if (match[2] !== undefined) parts.push({ kind: "strong", value: match[2] });
-    else parts.push({ kind: "link", value: match[3]!, href: match[4]! });
+    else parts.push({ kind: "link", value: match[3]!, href: resolveHref(match[4]!) });
     last = match.index + match[0].length;
   }
   if (last < text.length) parts.push({ kind: "text", value: text.slice(last) });
