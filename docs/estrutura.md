@@ -18,7 +18,10 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 │   │   ├── listagem/page.tsx      # filtros, tabela, paginação, estado vazio
 │   │   └── cadastro/page.tsx      # formulário com validação e toast
 │   ├── blocos/page.tsx            # lista dos blocos do registry
-│   └── _docs/                     # componentes internos do site (preview, catálogo, cabeçalho)
+│   ├── primeiros-passos/          # instalação do zero; o teste confere cada comando contra o registry
+│   └── _docs/                     # componentes internos do site: preview, catálogo, cabeçalho,
+│                                  # code-block (com copiar), section (seção numerada, SpecTable,
+│                                  # ThemePair) e registry-url (URL publicada)
 ├── registry/
 │   └── marcio/
 │       ├── tokens.css

@@ -7,9 +7,7 @@ A fonte da verdade da identidade é o portfólio em [wenderu00.github.io](https:
 ## Sumário
 
 - [Instalar num projeto novo](#instalar-num-projeto-novo)
-- [Configurar o layout](#configurar-o-layout)
 - [Como os tokens funcionam](#como-os-tokens-funcionam)
-- [Aplicar os tokens sem o CLI](#aplicar-os-tokens-sem-o-cli)
 - [Itens do registry](#itens-do-registry)
 - [Desenvolver o DS](#desenvolver-o-ds)
 - [Publicar o registry](#publicar-o-registry)
@@ -17,76 +15,21 @@ A fonte da verdade da identidade é o portfólio em [wenderu00.github.io](https:
 
 ## Instalar num projeto novo
 
-Requisitos: Next.js com App Router, React 19 e Tailwind CSS v4. O registry está publicado em [https://wenderu00.github.io/mwds](https://wenderu00.github.io/mwds). Durante o desenvolvimento do DS, troque essa URL por `http://localhost:3000`.
+O passo a passo completo, testado num projeto criado do zero, está em [Primeiros passos](https://wenderu00.github.io/mwds/primeiros-passos/): requisitos, tokens, tema sem piscar, primeiro componente, primeiro bloco, como atualizar e como aplicar sem o CLI.
 
-**1. Crie o projeto**, se ainda não existir:
-
-```bash
-npx create-next-app@latest meu-app --ts --tailwind --app --eslint --import-alias "@/*"
-```
-
-**2. Instale os tokens** (uma vez por projeto):
+O essencial são dois comandos. Uma vez por projeto, para criar o `components.json` com o namespace `@marcio`, as fontes, o `cn` e os tokens:
 
 ```bash
 npx shadcn@latest init https://wenderu00.github.io/mwds/r/marcio-tokens.json
 ```
 
-Esse comando não faz perguntas. Ele:
-
-- cria o `components.json` com os aliases padrão (`@/components/ui`, `@/lib/utils`) e o namespace `@marcio`;
-- adiciona Bricolage Grotesque, IBM Plex Sans e IBM Plex Mono ao `app/layout.tsx` via `next/font`;
-- cria `lib/utils.ts` com o helper `cn`;
-- escreve no `app/globals.css` as variáveis dos dois temas, o mapeamento para o Tailwind, a escala tipográfica, foco, seleção, os utilitários `mw-caret`, `mw-dot-grid` e `mw-typing` e as animações.
-
-Não rode `npx shadcn init` sem a URL antes disso: o init padrão instala o tema do shadcn, que conflita com o nosso.
-
-**3. Adicione componentes**, pela URL ou pelo namespace:
+Depois, um por componente ou bloco:
 
 ```bash
-npx shadcn@latest add https://wenderu00.github.io/mwds/r/button.json
+npx shadcn@latest add @marcio/button
 ```
 
-```bash
-npx shadcn@latest add @marcio/button @marcio/form-field @marcio/select
-```
-
-Para instalar tudo de uma vez:
-
-```bash
-npx shadcn@latest add @marcio/marcio-ui
-```
-
-Cada componente traz as dependências que usa (Radix, class-variance-authority, outros componentes). Os arquivos ficam em `components/ui/` e são seus: edite à vontade.
-
-## Configurar o layout
-
-Três componentes precisam de algo no layout raiz. O CLI também mostra essas instruções ao instalar. Mantenha no `<html>` as classes das fontes que o `init` já adicionou.
-
-```tsx
-import { ThemeScript } from "@/components/ui/theme-toggle";
-import { Toaster } from "@/components/ui/toast";
-import { TooltipProvider } from "@/components/ui/tooltip";
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <head>
-        <ThemeScript />
-      </head>
-      <body>
-        <TooltipProvider>{children}</TooltipProvider>
-        <Toaster />
-      </body>
-    </html>
-  );
-}
-```
-
-| Componente | O que colocar no layout |
-|---|---|
-| ThemeToggle | `<ThemeScript />` no `<head>` e `suppressHydrationWarning` no `<html>`, para o tema escolhido valer antes da primeira pintura |
-| Toast | `<Toaster />` uma vez; depois chame `toast({ title, tone })` de qualquer lugar |
-| Tooltip | `<TooltipProvider>` envolvendo a aplicação |
+Não rode `npx shadcn init` sem a URL: o init padrão instala o tema do shadcn, que conflita com os tokens. Todo `add` reescreve os tokens no `globals.css`; personalize num arquivo próprio importado depois dele.
 
 ### Opcional: só cores do DS
 
@@ -130,21 +73,6 @@ A regra do amarelo: `#ece41f` é sempre preenchimento com texto preto. Quando pr
 
 Todos os pares usados passam WCAG AA nos dois temas. A tabela completa está em [docs/tokens.md](docs/tokens.md) e na página inicial do site de documentação.
 
-## Aplicar os tokens sem o CLI
-
-Para projetos fora do Next.js ou sem o shadcn:
-
-1. Copie [`registry/marcio/tokens.css`](registry/marcio/tokens.css) para o projeto.
-2. Importe depois do Tailwind no CSS principal:
-
-   ```css
-   @import "tailwindcss";
-   @import "./tokens.css";
-   ```
-
-3. Carregue as fontes e exponha as variáveis `--font-bricolage`, `--font-plex-sans` e `--font-plex-mono` no `<html>`. Sem elas, os tokens caem nas fontes do sistema.
-4. Copie [`registry/marcio/lib/utils.ts`](registry/marcio/lib/utils.ts) e os componentes que quiser, ajustando os imports `@/registry/marcio/...`.
-
 ## Itens do registry
 
 | Item | Tipo | Conteúdo |
@@ -177,7 +105,7 @@ npx shadcn@latest add @marcio/dashboard
 | `dashboard` | `app/dashboard/page.tsx` | Dados de exemplo em `components/blocks/dashboard/data.ts` |
 | `settings` | `app/configuracoes/page.tsx` | Perfil, preferências (tema, densidade, fuso, notificações) e conta |
 
-Dashboard e Configurações instalam também o `admin-shell`. Edite a lista `navigation` dele com as rotas do seu sistema. Os blocos usam toasts, então o `<Toaster />` precisa estar no layout raiz (ver [Configurar o layout](#configurar-o-layout)).
+Dashboard e Configurações instalam também o `admin-shell`. Edite a lista `navigation` dele com as rotas do seu sistema. Os blocos usam toasts, então o `<Toaster />` precisa estar no layout raiz (ver [Primeiros passos](https://wenderu00.github.io/mwds/primeiros-passos/#tema)).
 
 ## Desenvolver o DS
 

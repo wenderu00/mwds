@@ -13,5 +13,5 @@ export default defineConfig([
     plugins: { mw: { rules: { "no-raw-color": noRawColor, "no-raw-token": noRawToken } } },
     rules: { "mw/no-raw-color": "error", "mw/no-raw-token": "error" },
   },
-  globalIgnores([".next/**", "out/**", "public/r/**", "next-env.d.ts"]),
+  globalIgnores([".next/**", "out/**", "public/r/**", "next-env.d.ts", ".claude/**"]),
 ]);

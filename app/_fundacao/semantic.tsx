@@ -1,7 +1,7 @@
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { LogoBlock } from "@/registry/marcio/ui/logo-block";
 import tokens from "../_data/tokens.json";
-import { FoundationSection, ThemePair } from "./shared";
+import { FoundationSection, ThemePair } from "../_docs/section";
 
 const tokenGroups: { title: string; items: { name: string; swatchClass: string }[] }[] = [
   {

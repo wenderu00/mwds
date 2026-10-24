@@ -54,6 +54,9 @@ export default function Home() {
           <TypingText text={`// ${contrastResults.length} pares de contraste verificados, ${failures} falhas`} delay={300} className="text-mono-xs text-ink-muted" />
           <div className="flex flex-wrap gap-3 pt-2">
             <Button asChild size="lg">
+              <NextLink href="/primeiros-passos">Primeiros passos</NextLink>
+            </Button>
+            <Button asChild size="lg" variant="secondary">
               <NextLink href="/componentes">Ver componentes</NextLink>
             </Button>
           </div>

@@ -1,5 +1,5 @@
 import contrastResults from "../_data/contrast.json";
-import { FoundationSection, SpecTable, type Theme } from "./shared";
+import { FoundationSection, SpecTable, type Theme } from "../_docs/section";
 
 type ContrastResult = (typeof contrastResults)[number];
 

@@ -1,7 +1,7 @@
 import { Check, ChevronDown, CircleAlert, Folder, Info, LayoutDashboard, Menu, Pencil, Settings, X } from "lucide-react";
 import { Button } from "@/registry/marcio/ui/button";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
-import { FoundationSection, SpecTable, ThemePair } from "./shared";
+import { FoundationSection, SpecTable, ThemePair } from "../_docs/section";
 
 const sample = [Check, X, ChevronDown, Info, CircleAlert, Pencil, Menu, LayoutDashboard, Folder, Settings];
 

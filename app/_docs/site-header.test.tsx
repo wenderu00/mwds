@@ -9,7 +9,7 @@ vi.mock("next/navigation", () => ({
   usePathname: () => "/",
 }));
 
-const links = ["fundação", "componentes", "exemplos", "blocos"];
+const links = ["primeiros passos", "fundação", "componentes", "exemplos", "blocos"];
 
 describe("cabeçalho do site", () => {
   it("o botão de menu abre um painel com a navegação e a troca de tema", async () => {
@@ -34,7 +34,7 @@ describe("cabeçalho do site", () => {
     screen.getByRole("button", { name: "Menu" }).focus();
     await user.keyboard("{Enter}");
 
-    expect(within(screen.getByRole("dialog", { name: "Menu" })).getByRole("link", { name: "fundação" })).toHaveFocus();
+    expect(within(screen.getByRole("dialog", { name: "Menu" })).getByRole("link", { name: "primeiros passos" })).toHaveFocus();
   });
 
   it("escolher um link do painel fecha o painel e devolve o foco ao botão", async () => {

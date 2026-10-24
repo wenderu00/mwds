@@ -1,6 +1,6 @@
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { MotionDemo } from "./motion-demo";
-import { FoundationSection, SpecTable, ThemePair } from "./shared";
+import { FoundationSection, SpecTable, ThemePair } from "../_docs/section";
 
 const durations = [
   ["duration-fast", "100ms", "realce de item, troca de ícone"],

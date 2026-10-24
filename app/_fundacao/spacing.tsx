@@ -1,5 +1,5 @@
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
-import { FoundationSection, SpecTable, ThemePair } from "./shared";
+import { FoundationSection, SpecTable, ThemePair } from "../_docs/section";
 
 const steps = [
   { step: "0", barClass: "w-0" },
