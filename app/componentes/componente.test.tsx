@@ -2,6 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import ComponentPage from "@/app/componentes/[slug]/page";
 import { docs, getDoc } from "@/app/_docs/catalog";
+import { installInfo } from "@/app/_docs/install";
 import { TooltipProvider } from "@/registry/marcio/ui/tooltip";
 
 vi.mock("next/navigation", () => ({
@@ -23,6 +24,17 @@ describe("página de componente", () => {
     await renderDoc(slug);
     const table = screen.getByRole("table", { name: "Teclado" });
     expect(within(table).getAllByRole("row")).toHaveLength(doc.keyboard!.length + 1);
+  });
+
+  it("mostra o comando de instalação e as dependências lidas do registry.json", async () => {
+    await renderDoc("date-picker");
+    expect(screen.getByText("npx shadcn@latest add @marcio/date-picker")).toBeInTheDocument();
+    expect(screen.getByText("lucide-react, react-day-picker")).toBeInTheDocument();
+    expect(screen.getByText("calendar, form-field, icon-button, popover")).toBeInTheDocument();
+  });
+
+  it.each(docs.map((doc) => doc.file.replace(/\.tsx$/, "")))("%s existe no registry.json", (name) => {
+    expect(installInfo(name)).toBeDefined();
   });
 
   it("omite a seção de teclado em componente sem atalhos documentados", async () => {

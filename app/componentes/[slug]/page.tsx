@@ -5,6 +5,8 @@ import { cn } from "@/registry/marcio/lib/utils";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
 import { docs, getDoc, groups } from "../../_docs/catalog";
+import { CodeBlock } from "../../_docs/code-block";
+import { installInfo } from "../../_docs/install";
 import { StatusBadge } from "../../_docs/status-badge";
 import { Preview } from "../../_docs/preview";
 import { container, SiteHeader } from "../../_docs/site-header";
@@ -26,6 +28,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
   const { slug } = await params;
   const doc = getDoc(slug);
   if (!doc) notFound();
+  const install = installInfo(doc.file.replace(/\.tsx$/, ""));
 
   const sections = ["uso", "exemplos", "props", ...(doc.keyboard ? ["teclado"] : []), "acessibilidade"];
   const index = (id: string) => String(sections.indexOf(id) + 1).padStart(2, "0");
@@ -68,6 +71,17 @@ export default async function ComponentPage({ params }: { params: Promise<Params
             <StatusBadge status={doc.status} className="self-start" />
             <p className="max-w-measure text-lead text-ink-soft">{doc.summary}</p>
             <CodeComment>{`registry/marcio/ui/${doc.file}`}</CodeComment>
+            {install && (
+              <div className="flex max-w-measure flex-col gap-3">
+                <CodeBlock title="terminal · instalar" code={install.command} />
+                <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 font-mono text-mono-xs">
+                  <dt className="text-ink-muted">{"// pacotes npm"}</dt>
+                  <dd className="text-ink-soft">{install.dependencies.join(", ") || "nenhum"}</dd>
+                  <dt className="text-ink-muted">{"// componentes"}</dt>
+                  <dd className="text-ink-soft">{install.registryDependencies.join(", ") || "nenhum"}</dd>
+                </dl>
+              </div>
+            )}
           </div>
 
           <section className="flex flex-col gap-6">
