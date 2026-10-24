@@ -4,6 +4,19 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.9.1] - 2026-10-24
+
+### Novo
+
+- CurrencyInput e DateRangePicker ganham página própria no catálogo e entrada na barra lateral. Continuam instalados por `@marcio/masked-input` e `@marcio/date-picker`.
+- Teste no CI que percorre o site e falha se algum link interno não responder 200.
+- Teste que confere se todo item do `registry.json` tem página no catálogo ou em Blocos, e se a barra lateral lista todas as páginas.
+
+### Corrigido
+
+- Os links para arquivos do repositório em Novidades, como o do ADR 0017, abrem o arquivo no GitHub em vez de dar 404.
+- O rodapé conta componentes instaláveis, não páginas do catálogo.
+
 ## [0.9.0] - 2026-10-24
 
 ### Novo
