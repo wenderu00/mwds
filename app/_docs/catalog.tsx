@@ -126,6 +126,10 @@ export const statusLabel: Record<DocStatus, string> = { estavel: "estável", bet
 
 export type DocUsage = { use: string[]; avoid: string[] };
 
+export type DocSample = { render: () => ReactNode; caption: string };
+
+export type DocDoDont = { do: DocSample; dont: DocSample };
+
 export type ComponentDoc = {
   slug: string;
   name: string;
@@ -134,6 +138,7 @@ export type ComponentDoc = {
   file: string;
   status: DocStatus;
   usage: DocUsage;
+  dosDonts?: DocDoDont[];
   props: DocProp[];
   examples: DocExample[];
   a11y: string[];
@@ -356,6 +361,23 @@ export const docs: ComponentDoc[] = [
       use: ["Um efeito pontual em títulos de telas de destaque, como a 404."],
       avoid: ["Telas de sistema e formulários.", "Textos longos ou mais de um por tela: o efeito perde a graça e cansa."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "Um título de destaque, uma vez na tela.",
+          render: () => <GlitchText className="font-display text-display-md font-extrabold text-accent-text">404</GlitchText>,
+        },
+        dont: {
+          caption: "Em tela de trabalho o efeito atrapalha a leitura e cansa.",
+          render: () => (
+            <div className="flex flex-col gap-2">
+              <GlitchText className="font-display text-display-sm font-extrabold">Dados pessoais</GlitchText>
+              <Input aria-label="Nome completo" placeholder="Nome completo" />
+            </div>
+          ),
+        },
+      },
+    ],
     props: [
       { name: "trigger", type: '"hover" | "mount"', default: '"hover"', description: "Dispara ao passar o mouse ou uma vez ao montar." },
       classNameProp,
@@ -429,6 +451,28 @@ export const docs: ComponentDoc[] = [
       use: ["Disparar uma ação: salvar, enviar, abrir um diálogo.", "No máximo um botão primário por área da tela; o resto vai em secondary ou ghost.", "danger só para a ação destrutiva, de preferência confirmada por AlertDialog."],
       avoid: ["Navegar para outra página: use Link.", "Botão só com ícone: use IconButton, que exige aria-label.", "Ligar e desligar uma preferência: use Switch."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "Um primário por área; a ação secundária vai em secondary.",
+          render: () => (
+            <>
+              <Button>Salvar</Button>
+              <Button variant="secondary">Cancelar</Button>
+            </>
+          ),
+        },
+        dont: {
+          caption: "Dois primários lado a lado disputam a atenção e escondem qual é a ação principal.",
+          render: () => (
+            <>
+              <Button>Salvar</Button>
+              <Button>Cancelar</Button>
+            </>
+          ),
+        },
+      },
+    ],
     keyboard: [
       { keys: "Tab", action: "Leva o foco ao botão." },
       { keys: "Enter / Espaço", action: "Ativa o botão. Em loading, o botão fica desabilitado." },
@@ -862,6 +906,31 @@ export const docs: ComponentDoc[] = [
       use: ["Ligar e desligar uma preferência com efeito imediato, como notificações."],
       avoid: ["Escolha que só vale ao enviar um formulário: use Checkbox.", "Escolha entre duas opções que não são ligado e desligado: use RadioGroup."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "O efeito é imediato: ligou, as notificações começam.",
+          render: () => (
+            <div className="flex items-center gap-3">
+              <Switch id="dd-switch-certo" defaultChecked />
+              <Label htmlFor="dd-switch-certo">Notificações por e-mail</Label>
+            </div>
+          ),
+        },
+        dont: {
+          caption: "Se nada acontece até salvar, a pessoa acha que já ligou. Use Checkbox.",
+          render: () => (
+            <div className="flex flex-col items-start gap-4">
+              <div className="flex items-center gap-3">
+                <Switch id="dd-switch-errado" defaultChecked />
+                <Label htmlFor="dd-switch-errado">Aceito os termos</Label>
+              </div>
+              <Button size="sm">Enviar cadastro</Button>
+            </div>
+          ),
+        },
+      },
+    ],
     keyboard: [
       { keys: "Tab", action: "Leva o foco ao interruptor." },
       { keys: "Espaço / Enter", action: "Liga e desliga." },
@@ -997,6 +1066,26 @@ export const docs: ComponentDoc[] = [
       use: ["Navegar para outra página ou âncora.", "Links dentro de texto corrido, sempre sublinhados."],
       avoid: ["Disparar uma ação na mesma página: use Button.", "Texto como clique aqui: o texto do link precisa dizer o destino."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "O texto do link diz para onde ele leva.",
+          render: () => (
+            <p className="text-ink-soft">
+              Antes de enviar, leia a <Link href="#">política de privacidade</Link>.
+            </p>
+          ),
+        },
+        dont: {
+          caption: "Clique aqui não diz o destino, e lista de links do leitor de tela fica sem sentido.",
+          render: () => (
+            <p className="text-ink-soft">
+              Para ler a política de privacidade, <Link href="#">clique aqui</Link>.
+            </p>
+          ),
+        },
+      },
+    ],
     keyboard: [
       { keys: "Tab", action: "Leva o foco ao link." },
       { keys: "Enter", action: "Segue o link." },
@@ -1058,6 +1147,33 @@ export const docs: ComponentDoc[] = [
       use: ["Escolha única entre até cinco opções, todas visíveis ao mesmo tempo.", "Opções que precisam de descrição ao lado para a escolha fazer sentido."],
       avoid: ["Mais de cinco opções ou pouco espaço: use Select.", "Lista longa ou que precisa de busca: use Combobox.", "Várias escolhas ao mesmo tempo: use Checkbox."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "Até cinco opções, todas visíveis: a comparação é imediata.",
+          render: () => (
+            <FormField label="Plano">
+              <RadioGroup defaultValue="mensal">
+                <RadioGroupOption value="mensal" label="Mensal" />
+                <RadioGroupOption value="anual" label="Anual" description="Dois meses grátis." />
+              </RadioGroup>
+            </FormField>
+          ),
+        },
+        dont: {
+          caption: "Uma lista longa de estados ocupa a tela inteira: use Select ou Combobox.",
+          render: () => (
+            <FormField label="Estado">
+              <RadioGroup defaultValue="pe" className="grid-cols-2">
+                {["AC", "AL", "AM", "BA", "CE", "PE", "PB", "RN"].map((uf) => (
+                  <RadioGroupOption key={uf} value={uf.toLowerCase()} label={uf} />
+                ))}
+              </RadioGroup>
+            </FormField>
+          ),
+        },
+      },
+    ],
     keyboard: [
       { keys: "Tab", action: "Entra no grupo pela opção marcada, ou pela primeira, e sai do grupo." },
       { keys: "Setas", action: "Movem e marcam a opção anterior ou a próxima." },
@@ -1660,6 +1776,26 @@ export const docs: ComponentDoc[] = [
       use: ["Um estado que continua valendo enquanto a pessoa está na página: sessão expirando, conta pendente, erro ao carregar.", "Avisos que pedem ação, com o botão dentro do Alert."],
       avoid: ["Resultado passageiro de uma ação, como Salvo: use Toast.", "Erro de um campo: use o error do FormField.", "Confirmar uma ação: use AlertDialog."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "Um estado que continua valendo e pede ação fica na tela.",
+          render: () => (
+            <Alert tone="warning" title="Sessão expirando" className="w-full">
+              Salve o rascunho: a sessão termina em 5 minutos.
+            </Alert>
+          ),
+        },
+        dont: {
+          caption: "Confirmação passageira presa na página vira ruído. Use Toast.",
+          render: () => (
+            <Alert tone="success" title="Salvo" className="w-full">
+              As alterações foram salvas.
+            </Alert>
+          ),
+        },
+      },
+    ],
     keyboard: [
       { keys: "Tab", action: "Percorre a ação e o botão de fechar, quando houver." },
       { keys: "Enter / Espaço", action: "Ativa o botão com foco." },

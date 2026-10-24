@@ -91,8 +91,8 @@ export default async function ComponentPage({ params }: { params: Promise<Params
             <div className="grid gap-6 md:grid-cols-2">
               {(
                 [
-                  ["use para", doc.usage.use, "marker:text-success-text"],
-                  ["não use para", doc.usage.avoid, "marker:text-danger-text"],
+                  ["use quando", doc.usage.use, "marker:text-success-text"],
+                  ["prefira outro quando", doc.usage.avoid, "marker:text-danger-text"],
                 ] as const
               ).map(([title, rules, marker]) => (
                 <div key={title} className="flex flex-col gap-3 rounded-card border border-line p-5">
@@ -105,6 +105,24 @@ export default async function ComponentPage({ params }: { params: Promise<Params
                 </div>
               ))}
             </div>
+            {doc.dosDonts?.map((pair) => (
+              <div key={pair.do.caption} className="grid gap-6 md:grid-cols-2">
+                {(
+                  [
+                    ["certo", pair.do, "border-t-success-text", "text-success-text"],
+                    ["errado", pair.dont, "border-t-danger-text", "text-danger-text"],
+                  ] as const
+                ).map(([label, sample, border, text]) => (
+                  <figure key={label} className={cn("flex flex-col overflow-hidden rounded-card border border-line border-t-2", border)}>
+                    <div className="flex flex-wrap items-center gap-3 p-6">{sample.render()}</div>
+                    <figcaption className="flex flex-col gap-1 border-t border-line bg-band px-5 py-4">
+                      <span className={cn("font-mono text-mono-xs", text)}>{`// ${label}`}</span>
+                      <span className="text-ink-soft">{sample.caption}</span>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            ))}
           </section>
 
           <section className="flex flex-col gap-8">

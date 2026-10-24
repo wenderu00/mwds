@@ -26,6 +26,20 @@ describe("página de componente", () => {
     expect(within(table).getAllByRole("row")).toHaveLength(doc.keyboard!.length + 1);
   });
 
+  it.each(docs.filter((doc) => doc.dosDonts).map((doc) => doc.slug))("%s mostra os exemplos certo e errado lado a lado", async (slug) => {
+    const doc = getDoc(slug)!;
+    await renderDoc(slug);
+    const section = screen.getByRole("heading", { name: /Quando usar/ }).closest("section")!;
+    const figures = within(section).getAllByRole("figure");
+    expect(figures).toHaveLength(doc.dosDonts!.length * 2);
+    expect(figures[0]).toHaveTextContent("// certo");
+    expect(figures[1]).toHaveTextContent("// errado");
+  });
+
+  it("documenta certo e errado nas escolhas que mais confundem", () => {
+    for (const slug of ["button", "link", "radio-group", "switch", "alert", "glitch-text"]) expect(getDoc(slug)?.dosDonts?.length, slug).toBeGreaterThan(0);
+  });
+
   it("mostra o comando de instalação e as dependências lidas do registry.json", async () => {
     await renderDoc("date-picker");
     expect(screen.getByText("npx shadcn@latest add @marcio/date-picker")).toBeInTheDocument();
