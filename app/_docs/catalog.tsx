@@ -396,7 +396,7 @@ export const docs: ComponentDoc[] = [
     slug: "typography",
     name: "Heading e Text",
     group: "identidade",
-    status: "beta",
+    status: "estavel",
     summary: "Títulos em display e textos de corpo e mono com a escala do @mw/ui. A prop as escolhe a tag sem mudar o estilo.",
     file: "typography.tsx",
     usage: {
@@ -1592,7 +1592,7 @@ export const docs: ComponentDoc[] = [
     slug: "separator",
     name: "Separator",
     group: "primitivos",
-    status: "beta",
+    status: "estavel",
     summary: "Linha de 1px em line, horizontal ou vertical, para separar grupos de conteúdo.",
     file: "separator.tsx",
     usage: {
@@ -1746,7 +1746,7 @@ export const docs: ComponentDoc[] = [
     slug: "kbd",
     name: "Kbd",
     group: "primitivos",
-    status: "beta",
+    status: "estavel",
     summary: "Tecla de atalho em mono com borda, como no gatilho da busca.",
     file: "kbd.tsx",
     usage: {
@@ -2292,7 +2292,7 @@ export const docs: ComponentDoc[] = [
     slug: "accordion",
     name: "Accordion",
     group: "compostos",
-    status: "beta",
+    status: "estavel",
     summary: "Lista de seções que abrem e fecham, separadas por linhas. Para perguntas frequentes e configurações longas.",
     file: "accordion.tsx",
     usage: {
@@ -2344,7 +2344,7 @@ export const docs: ComponentDoc[] = [
     slug: "collapsible",
     name: "Collapsible",
     group: "compostos",
-    status: "beta",
+    status: "estavel",
     summary: "Um bloco que abre e fecha a partir de um gatilho, sem estilo próprio no gatilho. Base para mostrar mais e opções avançadas.",
     file: "collapsible.tsx",
     usage: {
@@ -2386,7 +2386,7 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Calendário em português, semana começando no domingo, com seleção de um dia ou de um intervalo. Base do DatePicker.",
     file: "calendar.tsx",
-    status: "beta",
+    status: "estavel",
     usage: {
       use: ["Calendário sempre visível na página, como numa agenda ou num filtro lateral.", "Base de DatePicker e DateRangePicker."],
       avoid: ["Campo de data em formulário: use DatePicker, que ocupa uma linha.", "Datas muito distantes, como nascimento: digitar é mais rápido que navegar mês a mês."],
