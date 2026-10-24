@@ -104,12 +104,20 @@ export type DocExample = {
 
 export type DocKey = { keys: string; action: string };
 
+export type DocStatus = "estavel" | "beta" | "experimental";
+
+export const statusLabel: Record<DocStatus, string> = { estavel: "estável", beta: "beta", experimental: "experimental" };
+
+export type DocUsage = { use: string[]; avoid: string[] };
+
 export type ComponentDoc = {
   slug: string;
   name: string;
   group: "identidade" | "primitivos" | "compostos" | "padroes";
   summary: string;
   file: string;
+  status: DocStatus;
+  usage: DocUsage;
   props: DocProp[];
   examples: DocExample[];
   a11y: string[];
@@ -131,6 +139,11 @@ export const docs: ComponentDoc[] = [
     group: "identidade",
     summary: "Rótulo curto em mono, caixa alta e accent, acima de títulos. É a primeira coisa que o olho lê numa seção.",
     file: "kicker.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Rotular uma seção antes do título, com uma ou duas palavras.", "Indicar a categoria de uma página, como no topo das páginas de componente."],
+      avoid: ["Frases inteiras: o kicker é lido como etiqueta, não como texto.", "Substituir o título: ele sempre vem acompanhado de um."],
+    },
     props: [asChildProp, classNameProp],
     examples: [
       {
@@ -152,6 +165,11 @@ export const docs: ComponentDoc[] = [
     group: "identidade",
     summary: "Título de seção em display extrabold, com numeração em mono e linha horizontal, como no portfólio.",
     file: "section-title.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Abrir seções numeradas de páginas de conteúdo e documentação.", "Títulos de seção em telas de destaque, como o portfólio."],
+      avoid: ["Títulos dentro de cards e formulários: use CardTitle.", "O título principal de uma tela de sistema: use PageHeader."],
+    },
     props: [
       { name: "index", type: "string", description: "Número da seção, como 01. É decorativo para leitores de tela." },
       { name: "kicker", type: "ReactNode", description: "Rótulo opcional entre o número e o título." },
@@ -184,6 +202,11 @@ export const docs: ComponentDoc[] = [
     group: "identidade",
     summary: "Legenda em formato de comentário de código. Use para metadados, notas e estados vazios.",
     file: "code-comment.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Metadados, legendas, caminhos de arquivo e estados vazios curtos.", "Rótulos de painel, como // escuro e // claro nas prévias."],
+      avoid: ["Mensagens de erro ou avisos: use FormField, Alert ou Toast.", "Texto que a pessoa precisa ler para agir: o tom de comentário diz que é secundário."],
+    },
     props: [classNameProp],
     examples: [
       {
@@ -200,6 +223,11 @@ export const docs: ComponentDoc[] = [
     group: "identidade",
     summary: "Bloco amarelo sólido com texto preto em display extrabold. Igual nos dois temas.",
     file: "logo-block.tsx",
+    status: "estavel",
+    usage: {
+      use: ["A marca no cabeçalho do site e em telas de login.", "Um único ponto de identidade por tela."],
+      avoid: ["Mais de um por tela.", "Destacar conteúdo ou ação: para isso existe o Button primário."],
+    },
     props: [
       { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Altura de 36, 44 ou 64px." },
       asChildProp,
@@ -237,6 +265,11 @@ export const docs: ComponentDoc[] = [
     group: "identidade",
     summary: "Grade de pontos em accent com máscara radial, para fundo de telas de destaque. Animação opcional.",
     file: "dot-grid.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Fundo de telas de destaque: hero, login, 404 e estados vazios decorados."],
+      avoid: ["Atrás de tabelas, formulários ou texto longo: os pontos competem com o conteúdo.", "Mais de uma grade animada por tela."],
+    },
     props: [
       { name: "animated", type: "boolean", default: "false", description: "Faz a máscara passear devagar. Desliga com movimento reduzido." },
       classNameProp,
@@ -263,6 +296,11 @@ export const docs: ComponentDoc[] = [
     group: "identidade",
     summary: "Texto em mono que aparece letra a letra, com cursor de terminal piscando. Para telas de destaque.",
     file: "typing-text.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Uma frase curta em telas de destaque, como a 404 ou um hero."],
+      avoid: ["Texto que a pessoa precisa ler para continuar: a animação atrasa a leitura.", "Mais de uma linha ou mais de um por tela."],
+    },
     props: [
       { name: "text", type: "string", description: "Texto completo. Fica inteiro no DOM desde o início." },
       { name: "delay", type: "number", default: "0", description: "Atraso em ms antes de começar." },
@@ -297,6 +335,11 @@ export const docs: ComponentDoc[] = [
     group: "identidade",
     summary: "Tremida com sombras em accent e mutant, herdada do jogo Mate o Mutante. Use com parcimônia.",
     file: "glitch-text.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Um efeito pontual em títulos de telas de destaque, como a 404."],
+      avoid: ["Telas de sistema e formulários.", "Textos longos ou mais de um por tela: o efeito perde a graça e cansa."],
+    },
     props: [
       { name: "trigger", type: '"hover" | "mount"', default: '"hover"', description: "Dispara ao passar o mouse ou uma vez ao montar." },
       classNameProp,
@@ -316,6 +359,15 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Ação principal da interface. Primário amarelo com texto preto; secundário com borda que acende no hover.",
     file: "button.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Disparar uma ação: salvar, enviar, abrir um diálogo.", "No máximo um botão primário por área da tela; o resto vai em secondary ou ghost.", "danger só para a ação destrutiva, de preferência confirmada por AlertDialog."],
+      avoid: ["Navegar para outra página: use Link.", "Botão só com ícone: use IconButton, que exige aria-label.", "Ligar e desligar uma preferência: use Switch."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Leva o foco ao botão." },
+      { keys: "Enter / Espaço", action: "Ativa o botão. Em loading, o botão fica desabilitado." },
+    ],
     props: [
       { name: "variant", type: '"primary" | "secondary" | "ghost" | "danger"', default: '"primary"', description: "Peso visual da ação." },
       { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Altura de 36, 44 ou 48px." },
@@ -386,6 +438,11 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Botão quadrado só com ícone. Exige aria-label; combine com Tooltip para mostrar o mesmo texto a quem usa o mouse.",
     file: "icon-button.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Ações repetidas em linhas de tabela e listas, como editar e excluir.", "Ações de barra de ferramentas cujo ícone é conhecido: fechar, menu, buscar.", "Sempre com Tooltip quando o ícone não for óbvio."],
+      avoid: ["A ação principal da tela: use Button com texto.", "Ícones ambíguos sem Tooltip."],
+    },
     props: [
       { name: "aria-label", type: "string", description: "Obrigatório. É o nome do botão para leitor de tela e comando de voz." },
       { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "36px, altura de controle (acompanha a densidade) ou 48px." },
@@ -475,6 +532,15 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Campo de texto de uma linha, com fundo ground e borda line-control.",
     file: "input.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Texto livre de uma linha: nome, e-mail, busca.", "Sempre dentro de FormField, para ganhar rótulo, descrição e erro."],
+      avoid: ["Texto longo: use Textarea.", "CPF, CNPJ, telefone, CEP e moeda: use MaskedInput.", "Escolha entre opções conhecidas: use Select, Combobox ou RadioGroup.", "Datas: use DatePicker."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Leva o foco ao campo." },
+      { keys: "Enter", action: "Dentro de um formulário, envia o formulário." },
+    ],
     props: [
       { name: "type", type: "string", default: '"text"', description: "Qualquer tipo nativo de input." },
       { name: "aria-invalid", type: "boolean", description: "Pinta a borda com danger-text." },
@@ -502,6 +568,16 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Input com máscara brasileira: CPF, CNPJ, telefone, CEP e moeda. Mostra o valor formatado e entrega só os dígitos.",
     file: "masked-input.tsx",
+    status: "beta",
+    usage: {
+      use: ["Documentos e contatos brasileiros com formato fixo: CPF, CNPJ, telefone, CEP.", "Valores em reais com CurrencyInput.", "Validar CPF e CNPJ com isValidCpf e isValidCnpj na regra do formulário."],
+      avoid: ["Números sem formato fixo, como quantidade: use Input com type number.", "Telefones internacionais: a máscara é só para o Brasil."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Leva o foco ao campo." },
+      { keys: "Dígitos", action: "Entram na máscara; letras e símbolos são ignorados." },
+      { keys: "Backspace", action: "Apaga o último dígito; a máscara se ajusta." },
+    ],
     props: [
       { name: "mask", type: '"cpf" | "cnpj" | "phone" | "cep"', description: "Formato do MaskedInput. Telefone vira celular a partir do 11º dígito." },
       { name: "value / onValueChange", type: "string / (value) => void", description: "Valor sem máscara, só dígitos. Use com o Controller do React Hook Form." },
@@ -566,6 +642,15 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Campo de texto de várias linhas, redimensionável na vertical.",
     file: "textarea.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Texto de várias linhas: descrição, comentário, mensagem.", "Mostre o limite de caracteres na descrição do FormField quando houver."],
+      avoid: ["Texto curto de uma linha: use Input."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Leva o foco ao campo. Dentro dele, Tab sai do campo, não insere tabulação." },
+      { keys: "Enter", action: "Quebra a linha; não envia o formulário." },
+    ],
     props: [{ name: "rows", type: "number", default: "4", description: "Linhas visíveis iniciais." }, classNameProp],
     examples: [
       {
@@ -583,6 +668,11 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Rótulo de campo baseado no Radix Label. Clicar nele foca o controle.",
     file: "label.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Rótulo de um controle solto, fora de FormField, como ao lado de um Checkbox."],
+      avoid: ["Campos de formulário comuns: FormField já cria o Label e liga os ids.", "Títulos de seção: use SectionTitle ou CardTitle."],
+    },
     props: [
       { name: "htmlFor", type: "string", description: "id do controle." },
       { name: "required", type: "boolean", default: "false", description: "Mostra um asterisco decorativo." },
@@ -611,6 +701,15 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Caixa de marcação do Radix. Marcada, fica amarela com o check preto.",
     file: "checkbox.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Escolhas que só valem depois de enviar o formulário, como aceitar termos.", "Marcar vários itens de uma lista, como linhas de tabela."],
+      avoid: ["Preferência com efeito imediato: use Switch.", "Escolha única entre opções: use RadioGroup."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Leva o foco à caixa." },
+      { keys: "Espaço", action: "Marca e desmarca." },
+    ],
     props: [
       { name: "checked", type: 'boolean | "indeterminate"', description: "Estado controlado." },
       { name: "defaultChecked", type: "boolean", description: "Estado inicial não controlado." },
@@ -646,6 +745,15 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Interruptor liga e desliga do Radix, para preferências com efeito imediato.",
     file: "switch.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Ligar e desligar uma preferência com efeito imediato, como notificações."],
+      avoid: ["Escolha que só vale ao enviar um formulário: use Checkbox.", "Escolha entre duas opções que não são ligado e desligado: use RadioGroup."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Leva o foco ao interruptor." },
+      { keys: "Espaço / Enter", action: "Liga e desliga." },
+    ],
     props: [
       { name: "checked", type: "boolean", description: "Estado controlado." },
       { name: "onCheckedChange", type: "(checked: boolean) => void", description: "Chamado ao alternar." },
@@ -677,6 +785,11 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Etiqueta curta em mono para status e categorias. Combina tom e aparência.",
     file: "badge.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Status e categorias curtas em tabelas, cards e cabeçalhos.", "Contagens pequenas ao lado de um item de navegação."],
+      avoid: ["Ações: badge não é clicável. Use Button ou Link.", "Avisos que a pessoa precisa ler: use Alert."],
+    },
     props: [
       { name: "tone", type: '"neutral" | "accent" | "danger" | "success" | "warning" | "info"', default: '"neutral"', description: "Significado." },
       { name: "appearance", type: '"soft" | "solid" | "outline"', default: '"soft"', description: "Peso visual." },
@@ -735,6 +848,11 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Indicador de carregamento. Herda a cor do texto ao redor.",
     file: "spinner.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Espera curta de uma ação, dentro de um botão ou ao lado de um texto.", "Carregamento de algo pequeno, quando o formato do conteúdo não é conhecido."],
+      avoid: ["Carregamento de uma área inteira com formato conhecido: use Skeleton.", "Progresso que pode ser medido: use Progress."],
+    },
     props: [
       { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "14, 16 ou 24px." },
       { name: "label", type: "string", default: '"Carregando"', description: "Texto anunciado no status." },
@@ -762,6 +880,15 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Link em accent-text. Sublinhado sempre dentro de texto; só no hover em navegação.",
     file: "link.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Navegar para outra página ou âncora.", "Links dentro de texto corrido, sempre sublinhados."],
+      avoid: ["Disparar uma ação na mesma página: use Button.", "Texto como clique aqui: o texto do link precisa dizer o destino."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Leva o foco ao link." },
+      { keys: "Enter", action: "Segue o link." },
+    ],
     props: [
       { name: "variant", type: '"inline" | "standalone" | "muted"', default: '"inline"', description: "Contexto do link." },
       { name: "mono", type: "boolean", default: "false", description: "Usa a fonte mono." },
@@ -814,6 +941,16 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Escolha única com todas as opções visíveis. Marcado, o círculo fica amarelo com ponto preto.",
     file: "radio-group.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Escolha única entre até cinco opções, todas visíveis ao mesmo tempo.", "Opções que precisam de descrição ao lado para a escolha fazer sentido."],
+      avoid: ["Mais de cinco opções ou pouco espaço: use Select.", "Lista longa ou que precisa de busca: use Combobox.", "Várias escolhas ao mesmo tempo: use Checkbox."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Entra no grupo pela opção marcada, ou pela primeira, e sai do grupo." },
+      { keys: "Setas", action: "Movem e marcam a opção anterior ou a próxima." },
+      { keys: "Espaço", action: "Marca a opção com foco." },
+    ],
     props: [
       { name: "value / defaultValue", type: "string", description: "Opção marcada." },
       { name: "onValueChange", type: "(value: string) => void", description: "Chamado ao trocar." },
@@ -860,6 +997,15 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Navegação entre páginas com anterior, próxima e reticências. A página atual é o botão amarelo.",
     file: "pagination.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Listas e tabelas longas divididas em páginas, abaixo do conteúdo."],
+      avoid: ["Listas curtas que cabem numa tela.", "Feeds em que a pessoa só avança: um botão Carregar mais basta."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Percorre anterior, cada página e próxima." },
+      { keys: "Enter / Espaço", action: "Vai para a página com foco." },
+    ],
     props: [
       { name: "page", type: "number", description: "Página atual, começando em 1." },
       { name: "pageCount", type: "number", description: "Total de páginas." },
@@ -892,6 +1038,16 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Painel flutuante ancorado num gatilho, em surface com borda. Base do Combobox.",
     file: "popover.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Conteúdo curto e interativo ancorado num gatilho, como um pequeno formulário ou filtro.", "Base para componentes próprios, como Combobox e DatePicker."],
+      avoid: ["Dica de texto curta sem interação: use Tooltip.", "Lista de ações: use DropdownMenu.", "Conteúdo longo ou tarefa completa: use Dialog ou Sheet."],
+    },
+    keyboard: [
+      { keys: "Enter / Espaço", action: "No gatilho, abre e fecha." },
+      { keys: "Tab", action: "Percorre o conteúdo do painel." },
+      { keys: "Esc", action: "Fecha e devolve o foco ao gatilho." },
+    ],
     props: [
       { name: "open / onOpenChange", type: "boolean / (open) => void", description: "Uso controlado." },
       { name: "PopoverContent align", type: '"start" | "center" | "end"', default: '"start"', description: "Alinhamento em relação ao gatilho." },
@@ -926,6 +1082,16 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Lista filtrável com busca digitada, sobre o cmdk. Ignora acentos. Base do Combobox e do Command Palette.",
     file: "command.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Lista filtrável por texto dentro de outro componente, como Popover ou Dialog.", "Base para buscas próprias quando Combobox e CommandPalette não servem."],
+      avoid: ["Campo de formulário com busca: use Combobox.", "Busca global de páginas e ações: use CommandPalette."],
+    },
+    keyboard: [
+      { keys: "Digitar", action: "Filtra a lista, ignorando acentos." },
+      { keys: "Setas para cima e para baixo", action: "Percorrem os itens." },
+      { keys: "Enter", action: "Executa o item destacado." },
+    ],
     props: [
       { name: "label", type: "string", description: "Nome acessível do campo de busca." },
       { name: "filter", type: "(value, search, keywords) => number", default: "commandFilter", description: "Filtro sem acentos que exige todos os termos." },
@@ -968,6 +1134,18 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Select com busca para listas longas. Gatilho igual ao Input, busca sem acentos, funciona com Controller.",
     file: "combobox.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Escolha única numa lista longa, de mais ou menos 15 opções para cima.", "Listas em que a pessoa sabe o nome do que procura: cidades, clientes, projetos."],
+      avoid: ["Até cinco opções: use RadioGroup.", "Lista média que dá para ler inteira: use Select.", "Várias escolhas ao mesmo tempo: ainda não há componente; use Checkbox numa lista."],
+    },
+    keyboard: [
+      { keys: "Enter / Espaço / Seta para baixo", action: "No gatilho, abre a lista com o foco na busca." },
+      { keys: "Digitar", action: "Filtra as opções, ignorando acentos." },
+      { keys: "Setas para cima e para baixo", action: "Percorrem as opções." },
+      { keys: "Enter", action: "Escolhe a opção destacada e fecha." },
+      { keys: "Esc", action: "Fecha sem mudar e devolve o foco ao gatilho." },
+    ],
     props: [
       { name: "options", type: "ComboboxOption[]", description: "{ value, label, keywords?, disabled? }" },
       { name: "value / defaultValue", type: "string", description: "Valor selecionado. Clicar de novo na opção marcada limpa a seleção." },
@@ -1013,6 +1191,19 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Menu de ações com atalhos em mono, submenus, itens marcáveis e item destrutivo em vermelho.",
     file: "dropdown-menu.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Ações sobre um item, como no botão de mais ações de uma linha de tabela.", "Ações secundárias que não cabem na tela, com atalhos em mono."],
+      avoid: ["Escolher um valor para um formulário: use Select ou Combobox.", "Navegação principal do site: use links visíveis ou AppShell.", "A ação principal da tela: ela merece um Button visível."],
+    },
+    keyboard: [
+      { keys: "Enter / Espaço / Seta para baixo", action: "No gatilho, abre o menu com o foco no primeiro item." },
+      { keys: "Setas para cima e para baixo", action: "Percorrem os itens." },
+      { keys: "Seta para a direita / esquerda", action: "Abre e fecha um submenu." },
+      { keys: "Enter / Espaço", action: "Executa o item ou marca a opção." },
+      { keys: "Letra", action: "Pula para o item que começa com ela." },
+      { keys: "Esc", action: "Fecha e devolve o foco ao gatilho." },
+    ],
     props: [
       { name: "DropdownMenuItem variant", type: '"default" | "danger"', default: '"default"', description: "danger para ações destrutivas." },
       { name: "DropdownMenuItem onSelect", type: "(event) => void", description: "Executa a ação e fecha o menu." },
@@ -1037,6 +1228,11 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Foto da pessoa ou iniciais em mono sobre surface. Nomeado pelo nome da pessoa.",
     file: "avatar.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Identificar uma pessoa ao lado do nome, em listas, comentários e no cabeçalho.", "AvatarGroup para mostrar quem participa de algo, com contagem do resto."],
+      avoid: ["Logos de empresa ou ícones de categoria: avatar é para pessoas.", "Sozinho sem o nome por perto, quando o nome importa para a tarefa."],
+    },
     props: [
       { name: "name", type: "string", description: "Nome da pessoa: vira o nome acessível e as iniciais." },
       { name: "src", type: "string", description: "Foto. Se falhar ou não existir, mostra as iniciais." },
@@ -1083,6 +1279,11 @@ export const docs: ComponentDoc[] = [
     group: "primitivos",
     summary: "Blocos no lugar do conteúdo enquanto ele carrega. Pulsam devagar e ficam parados com movimento reduzido.",
     file: "skeleton.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Carregamento de áreas com formato conhecido: listas, cards, tabelas.", "Dentro de LoadingRegion, para anunciar o carregamento."],
+      avoid: ["Esperas curtas de uma ação: use Spinner no botão.", "Carregamentos que demoram muito: diga o que está acontecendo com Progress ou texto."],
+    },
     props: [
       { name: "Skeleton className", type: "string", description: "Defina tamanho e forma com classes (h-4 w-32, size-10 rounded-full)." },
       { name: "SkeletonText lines", type: "number", default: "3", description: "Linhas de texto; a última é mais curta." },
@@ -1116,6 +1317,15 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Trilha de navegação em mono com separador /. Use BreadcrumbTrail para o caso comum.",
     file: "breadcrumb.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Mostrar onde a página está numa hierarquia de três níveis ou mais.", "Dentro do PageHeader, acima do título."],
+      avoid: ["Sites rasos, de um ou dois níveis.", "Mostrar o histórico de navegação: a trilha é a hierarquia, não o caminho percorrido."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Percorre os links da trilha. A página atual não é link." },
+      { keys: "Enter", action: "Segue o link com foco." },
+    ],
     props: [
       { name: "BreadcrumbTrail items", type: "{ label, href? }[]", description: "Atalho: o último item vira a página atual." },
       { name: "aria-label", type: "string", default: '"Trilha de navegação"', description: "Nome do nav." },
@@ -1145,6 +1355,15 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Aviso fixo na página, com fundo suave do estado, ícone, título, ação e fechar opcional.",
     file: "alert.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Um estado que continua valendo enquanto a pessoa está na página: sessão expirando, conta pendente, erro ao carregar.", "Avisos que pedem ação, com o botão dentro do Alert."],
+      avoid: ["Resultado passageiro de uma ação, como Salvo: use Toast.", "Erro de um campo: use o error do FormField.", "Confirmar uma ação: use AlertDialog."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Percorre a ação e o botão de fechar, quando houver." },
+      { keys: "Enter / Espaço", action: "Ativa o botão com foco." },
+    ],
     props: [
       { name: "tone", type: '"neutral" | "info" | "success" | "warning" | "danger"', default: '"neutral"', description: "Estado." },
       { name: "title", type: "ReactNode", description: "Título no tom do estado." },
@@ -1187,6 +1406,15 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Painel lateral sobre a página, para filtros e edição rápida. Abre pela direita por padrão.",
     file: "sheet.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Filtros e edição rápida mantendo a lista visível por trás.", "Conteúdo mais longo que um Dialog comporta, como um formulário de vários campos.", "Navegação no mobile, como faz o AppShell."],
+      avoid: ["Tarefa curta e focada: use Dialog.", "Confirmar uma ação destrutiva: use AlertDialog."],
+    },
+    keyboard: [
+      { keys: "Tab / Shift + Tab", action: "Percorrem o conteúdo. O foco não sai do painel." },
+      { keys: "Esc", action: "Fecha e devolve o foco ao gatilho." },
+    ],
     props: [
       { name: "SheetContent side", type: '"right" | "left" | "top" | "bottom"', default: '"right"', description: "Lado de onde o painel entra." },
       { name: "open / onOpenChange", type: "boolean / (open) => void", description: "Uso controlado." },
@@ -1240,6 +1468,11 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Barra de progresso em accent-line sobre surface, com rótulo e porcentagem. Sem valor, fica indeterminada.",
     file: "progress.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Tarefas que demoram e podem ser medidas: envio de arquivo, importação, etapas.", "Sem valor, quando a tarefa demora mas não dá para medir."],
+      avoid: ["Esperas curtas: use Spinner.", "Mostrar uma quantidade, como espaço usado em disco, quando não há tarefa em andamento: prefira texto."],
+    },
     props: [
       { name: "value", type: "number | null", default: "null", description: "Progresso; null deixa indeterminado." },
       { name: "max", type: "number", default: "100", description: "Valor máximo." },
@@ -1273,6 +1506,18 @@ export const docs: ComponentDoc[] = [
     group: "padroes",
     summary: "Busca de comandos e páginas com ⌘K ou Ctrl+K, no estilo prompt de terminal. Este site usa uma: experimente.",
     file: "command-palette.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Busca global de páginas e ações em sistemas com muitas telas.", "Atalho para quem usa o teclado; o mesmo destino precisa existir na navegação visível."],
+      avoid: ["Única forma de chegar a uma página.", "Busca dentro de um campo de formulário: use Combobox."],
+    },
+    keyboard: [
+      { keys: "Ctrl + K / ⌘ + K", action: "Abre e fecha de qualquer lugar da página." },
+      { keys: "Digitar", action: "Filtra os comandos, ignorando acentos." },
+      { keys: "Setas para cima e para baixo", action: "Percorrem os comandos." },
+      { keys: "Enter", action: "Executa o comando e fecha." },
+      { keys: "Esc", action: "Fecha e devolve o foco." },
+    ],
     props: [
       { name: "children", type: "CommandGroup / CommandPaletteItem", description: "Itens e grupos da paleta." },
       { name: "trigger", type: "ReactNode", description: "Botão que abre a paleta; use CommandPaletteTrigger." },
@@ -1302,6 +1547,17 @@ export const docs: ComponentDoc[] = [
     group: "padroes",
     summary: "Layout de painel: sidebar recolhível só com ícones, cabeçalho e conteúdo. No mobile, a navegação abre num Sheet.",
     file: "app-shell.tsx",
+    status: "beta",
+    usage: {
+      use: ["Casca de sistemas internos e painéis com várias seções.", "Sidebar recolhível quando a pessoa precisa de espaço para tabelas."],
+      avoid: ["Sites públicos e páginas de conteúdo: use um cabeçalho simples.", "Sistemas de uma ou duas telas."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "O primeiro Tab mostra o link Pular para o conteúdo." },
+      { keys: "Enter", action: "No link de pular, leva o foco ao conteúdo principal." },
+      { keys: "Tab / Enter na sidebar", action: "Percorrem e seguem os itens de navegação." },
+      { keys: "Enter / Espaço no botão de recolher", action: "Recolhe e expande a sidebar." },
+    ],
     props: [
       { name: "AppShell skipLinkLabel / mainId", type: "string", description: "Link de pular para o conteúdo e o id do main." },
       { name: "AppShellSidebar brand / footer", type: "ReactNode", description: "Topo e rodapé da sidebar." },
@@ -1332,6 +1588,11 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Junta Label, controle, descrição e erro. Liga os ids e atributos ARIA sozinho e funciona com React Hook Form.",
     file: "form-field.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Todo campo de formulário: junta rótulo, descrição e erro e liga os atributos ARIA.", "Com React Hook Form, por register ou Controller."],
+      avoid: ["Controles soltos fora de formulário, como uma busca na barra: basta aria-label.", "Agrupar vários campos: use fieldset com legend."],
+    },
     props: [
       { name: "label", type: "ReactNode", description: "Rótulo do campo." },
       { name: "description", type: "ReactNode", description: "Ajuda abaixo do campo, ligada por aria-describedby." },
@@ -1391,6 +1652,14 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Superfície com borda e rounded-card, sem sombra. A versão interactive acende a borda no hover.",
     file: "card.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Agrupar conteúdo relacionado numa superfície: resumo, formulário, item de lista.", "interactive quando o card inteiro leva a um lugar, com um link dentro."],
+      avoid: ["Cards dentro de cards.", "Separar seções de uma página que já têm títulos: espaço basta.", "Destacar um aviso: use Alert."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "No card interactive, foca o link ou botão de dentro e acende a borda." },
+    ],
     props: [
       { name: "interactive", type: "boolean", default: "false", description: "Borda em accent-line no hover e quando algo dentro tem foco." },
       { name: "CardTitle as", type: '"h2" | "h3" | "h4" | "p"', default: '"h3"', description: "Nível do título do card." },
@@ -1429,6 +1698,18 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Lista de opções do Radix com gatilho no formato do Input. Item destacado em accent-soft.",
     file: "select.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Escolha única numa lista média, de seis a mais ou menos quinze opções.", "Quando o espaço é curto e as opções não precisam de descrição."],
+      avoid: ["Até cinco opções: use RadioGroup, que mostra todas.", "Lista longa ou que precisa de busca: use Combobox.", "Ações: use DropdownMenu."],
+    },
+    keyboard: [
+      { keys: "Enter / Espaço / Setas", action: "No gatilho, abrem a lista com o foco na opção marcada." },
+      { keys: "Setas para cima e para baixo", action: "Percorrem as opções." },
+      { keys: "Letra", action: "Pula para a opção que começa com ela." },
+      { keys: "Enter / Espaço", action: "Escolhe a opção e fecha." },
+      { keys: "Esc", action: "Fecha sem mudar e devolve o foco ao gatilho." },
+    ],
     props: [
       { name: "value / onValueChange", type: "string / (value) => void", description: "Uso controlado, como no Controller do React Hook Form." },
       { name: "defaultValue", type: "string", description: "Valor inicial não controlado." },
@@ -1468,6 +1749,15 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Janela modal do Radix sobre o scrim. Card surface, título em display e botão de fechar.",
     file: "dialog.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Tarefa curta e focada que interrompe o fluxo: editar um nome, arquivar com motivo, ler os termos.", "No máximo um diálogo aberto por vez."],
+      avoid: ["Confirmar ação destrutiva ou sem volta: use AlertDialog.", "Conteúdo longo ou filtros com a lista visível: use Sheet.", "Avisos que não pedem resposta: use Alert ou Toast."],
+    },
+    keyboard: [
+      { keys: "Tab / Shift + Tab", action: "Percorrem o conteúdo. O foco não sai do diálogo." },
+      { keys: "Esc", action: "Fecha e devolve o foco ao gatilho." },
+    ],
     props: [
       { name: "open / onOpenChange", type: "boolean / (open) => void", description: "Uso controlado." },
       { name: "DialogContent showClose", type: "boolean", default: "true", description: "Mostra o botão de fechar no canto." },
@@ -1516,6 +1806,11 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Calendário em português, semana começando no domingo, com seleção de um dia ou de um intervalo. Base do DatePicker.",
     file: "calendar.tsx",
+    status: "beta",
+    usage: {
+      use: ["Calendário sempre visível na página, como numa agenda ou num filtro lateral.", "Base de DatePicker e DateRangePicker."],
+      avoid: ["Campo de data em formulário: use DatePicker, que ocupa uma linha.", "Datas muito distantes, como nascimento: digitar é mais rápido que navegar mês a mês."],
+    },
     props: [
       { name: "mode", type: '"single" | "range" | "multiple"', description: "Um dia, um intervalo ou vários dias." },
       { name: "selected / onSelect", type: "Date | DateRange / (value) => void", description: "Uso controlado." },
@@ -1555,6 +1850,11 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Campo de data em dd/mm/aaaa que abre o Calendar num Popover. Tem versão de intervalo, o DateRangePicker.",
     file: "date-picker.tsx",
+    status: "beta",
+    usage: {
+      use: ["Campo de data em formulário: vencimento, início, agendamento.", "DateRangePicker para períodos, como filtros de relatório."],
+      avoid: ["Data de nascimento e datas muito distantes: use Input com a máscara dd/mm/aaaa.", "Calendário sempre visível: use Calendar."],
+    },
     props: [
       { name: "value / onValueChange", type: "Date | null / (date) => void", description: "Uso controlado, como no Controller do React Hook Form." },
       { name: "defaultValue", type: "Date | null", description: "Valor inicial não controlado." },
@@ -1618,6 +1918,11 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção e limites de tipo, tamanho e quantidade.",
     file: "file-upload.tsx",
+    status: "beta",
+    usage: {
+      use: ["Anexar arquivos num formulário, com limites claros de tipo e tamanho.", "Diga os limites no hint: tipo, tamanho e quantidade."],
+      avoid: ["Trocar a foto de perfil com recorte: o componente não edita a imagem.", "Envio de muitos arquivos grandes com progresso individual: ainda não há suporte."],
+    },
     props: [
       { name: "value / onValueChange", type: "File[] / (files) => void", description: "Uso controlado." },
       { name: "accept", type: "string", description: 'Mesmo formato do atributo nativo: ".pdf,image/*".' },
@@ -1667,6 +1972,11 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Confirmação de ação destrutiva ou sem volta. Abre com o foco em Cancelar e não fecha com clique fora.",
     file: "alert-dialog.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Confirmar uma ação destrutiva ou sem volta: excluir, publicar, encerrar conta.", "O título é uma pergunta e o botão repete o verbo: Excluir projeto? / Excluir."],
+      avoid: ["Ações que podem ser desfeitas: faça direto e ofereça Desfazer num Toast.", "Tarefas com campos: use Dialog."],
+    },
     props: [
       { name: "open / onOpenChange", type: "boolean / (open) => void", description: "Uso controlado, por exemplo para abrir a partir de um item de menu." },
       { name: "AlertDialogAction variant", type: '"danger" | "primary" | "secondary" | "ghost"', default: '"danger"', description: "Botão de confirmação. Aceita as props do Button, como onClick e loading." },
@@ -1735,6 +2045,16 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Notificação temporária no canto inferior direito, com faixa na cor do estado. Chame toast() de qualquer lugar.",
     file: "toast.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Resultado passageiro de uma ação: Salvo, Projeto excluído, Convite enviado.", "Uma ação rápida opcional, como Desfazer."],
+      avoid: ["Erro que impede continuar ou estado que continua valendo: use Alert.", "Informação essencial ou que pede decisão: o toast some sozinho.", "Erro de campo: use o error do FormField."],
+    },
+    keyboard: [
+      { keys: "F8", action: "Leva o foco à região de notificações." },
+      { keys: "Tab", action: "Percorre a ação e o botão de fechar do toast." },
+      { keys: "Esc", action: "Fecha o toast com foco." },
+    ],
     props: [
       { name: "toast({ title })", type: "ReactNode", description: "Título obrigatório." },
       { name: "toast({ description })", type: "ReactNode", description: "Texto de apoio." },
@@ -1768,6 +2088,16 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Abas em mono; a ativa ganha sublinhado em accent-line.",
     file: "tabs.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Alternar entre painéis de conteúdo relacionados na mesma página, como as seções de Configurações.", "De duas a seis abas com rótulos curtos."],
+      avoid: ["Filtrar ou ordenar os mesmos dados: Tabs troca de painel, não de visualização.", "Etapas que precisam ser feitas em ordem: use um fluxo em etapas.", "Navegar entre páginas: use links."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Entra na aba ativa e depois vai para o painel." },
+      { keys: "Setas para a esquerda e para a direita", action: "Trocam de aba." },
+      { keys: "Home / End", action: "Vão para a primeira e a última aba." },
+    ],
     props: [
       { name: "defaultValue / value", type: "string", description: "Aba inicial ou controlada." },
       { name: "onValueChange", type: "(value) => void", description: "Chamado ao trocar de aba." },
@@ -1805,6 +2135,11 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Tabela semântica com cabeçalho em mono, linhas separadas e hover em band. Rola na horizontal em telas estreitas.",
     file: "table.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Dados com várias colunas que a pessoa compara linha a linha.", "Números em mono e alinhados à direita."],
+      avoid: ["Layout de página: tabela é só para dados.", "Listas de uma coluna: use uma lista ou cards."],
+    },
     props: [
       { name: "containerClassName", type: "string", description: "Classes do contêiner com borda e rolagem." },
       { name: 'TableRow data-state="selected"', type: "atributo", description: "Pinta a linha com accent-soft." },
@@ -1860,6 +2195,15 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Dica curta invertida (fundo ink) que aparece no hover e no foco. Ideal para botões só com ícone.",
     file: "tooltip.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Nomear botões só com ícone, repetindo o aria-label.", "Uma dica curta de uma linha sobre um controle."],
+      avoid: ["Informação essencial: no toque, o tooltip não aparece.", "Conteúdo interativo, como links ou botões: use Popover.", "Texto longo: use a descrição do FormField."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Focar o gatilho mostra a dica." },
+      { keys: "Esc", action: "Fecha a dica sem tirar o foco." },
+    ],
     props: [
       { name: "TooltipProvider delayDuration", type: "number", default: "300", description: "Atraso para abrir. Coloque o provider no layout raiz." },
       { name: "TooltipContent side", type: '"top" | "right" | "bottom" | "left"', default: '"top"', description: "Lado preferido." },
@@ -1898,6 +2242,11 @@ export const docs: ComponentDoc[] = [
     group: "padroes",
     summary: "Cabeçalho de tela de sistema: trilha, kicker, título h1, descrição e ações à direita.",
     file: "page-header.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Topo de toda tela de sistema: trilha, título h1, descrição e ações da página.", "A ação principal da tela fica à direita, como o único botão primário."],
+      avoid: ["Mais de um por página.", "Seções dentro da página: use SectionTitle ou CardTitle."],
+    },
     props: [
       { name: "title", type: "ReactNode", description: "Vira o h1 da página." },
       { name: "kicker", type: "ReactNode", description: "Rótulo acima do título." },
@@ -1936,6 +2285,11 @@ export const docs: ComponentDoc[] = [
     group: "padroes",
     summary: "Estado vazio com comentário de código, título, descrição e ação. A versão decorated ganha a DotGrid.",
     file: "empty-state.tsx",
+    status: "estavel",
+    usage: {
+      use: ["Lista ou tabela sem itens, com a ação que resolve: Criar o primeiro projeto.", "Busca sem resultado, dizendo como ampliar a busca."],
+      avoid: ["Erro ao carregar: use Alert com a ação de tentar de novo.", "Carregamento: use Skeleton."],
+    },
     props: [
       { name: "title", type: "ReactNode", description: "Título do estado." },
       { name: "comment", type: "ReactNode", description: "Linha em formato // comentário acima do título." },
@@ -1987,6 +2341,15 @@ export const docs: ComponentDoc[] = [
     group: "padroes",
     summary: "Escolha entre sistema, escuro e claro. Grava a escolha e o ThemeScript a aplica antes da primeira pintura.",
     file: "theme-toggle.tsx",
+    status: "estavel",
+    usage: {
+      use: ["No cabeçalho do site ou nas preferências da conta.", "Sempre junto com o ThemeScript no head, para não piscar."],
+      avoid: ["Mais de um na mesma tela.", "Trocar o tema de uma parte só da página: use data-theme no elemento."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Entra no grupo pela opção marcada." },
+      { keys: "Setas", action: "Trocam a opção e aplicam o tema na hora." },
+    ],
     props: [
       { name: "labels", type: "Partial<Record<ThemeChoice, string>>", description: "Textos das opções." },
       { name: "label", type: "string", default: '"Tema"', description: "Nome acessível do grupo." },

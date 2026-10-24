@@ -89,7 +89,7 @@ Todos os pares usados passam WCAG AA nos dois temas. A tabela completa está em 
 | `admin-shell` | block | Casca de painel usada por `dashboard` e `settings` |
 | `marcio-ui` | item | Todos os componentes |
 
-Exemplos, props e notas de acessibilidade de cada componente ficam em [https://wenderu00.github.io/mwds/componentes](https://wenderu00.github.io/mwds/componentes/). Telas completas de sistema estão em [/exemplos](https://wenderu00.github.io/mwds/exemplos/), e os blocos em [/blocos](https://wenderu00.github.io/mwds/blocos/).
+Cada página de componente traz quando usar e quando não usar, exemplos, props, teclado e notas de acessibilidade, além de um selo de status: **estável** (API firme), **beta** (pode mudar sem aviso de migração) ou **experimental** (pode sair). As páginas ficam em [https://wenderu00.github.io/mwds/componentes](https://wenderu00.github.io/mwds/componentes/). Telas completas de sistema estão em [/exemplos](https://wenderu00.github.io/mwds/exemplos/), e os blocos em [/blocos](https://wenderu00.github.io/mwds/blocos/).
 
 ### Blocos
 
