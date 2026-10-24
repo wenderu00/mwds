@@ -13,6 +13,9 @@ export const axe = configureAxe({
   },
 });
 
+// Uma página inteira nos dois temas leva uns 3s localmente e o dobro no runner do CI; o padrão do vitest é 5s.
+export const pageAxeTimeout = 20_000;
+
 export function setTheme(theme: Theme) {
   document.documentElement.setAttribute("data-theme", theme);
 }

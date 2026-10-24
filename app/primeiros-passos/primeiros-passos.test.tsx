@@ -5,7 +5,7 @@ import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import GettingStartedPage from "@/app/primeiros-passos/page";
 import { buildRegistry } from "@/scripts/build-registry";
-import { axe, setTheme, themes } from "@/test/a11y";
+import { axe, pageAxeTimeout, setTheme, themes } from "@/test/a11y";
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn(), back: vi.fn(), replace: vi.fn(), prefetch: vi.fn() }),
@@ -69,5 +69,5 @@ describe("página primeiros passos", () => {
       expect(await axe(container)).toHaveNoViolations();
       unmount();
     }
-  });
+  }, pageAxeTimeout);
 });

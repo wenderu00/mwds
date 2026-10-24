@@ -2,7 +2,7 @@ import { render, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import FoundationPage from "@/app/page";
-import { axe, setTheme, themes } from "@/test/a11y";
+import { axe, pageAxeTimeout, setTheme, themes } from "@/test/a11y";
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn(), back: vi.fn(), replace: vi.fn(), prefetch: vi.fn() }),
@@ -43,5 +43,5 @@ describe("página de fundação", () => {
       expect(await axe(container)).toHaveNoViolations();
       unmount();
     }
-  });
+  }, pageAxeTimeout);
 });
