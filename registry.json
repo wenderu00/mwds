@@ -2254,6 +2254,7 @@
         "http://localhost:3000/r/badge.json",
         "http://localhost:3000/r/button.json",
         "http://localhost:3000/r/card.json",
+        "http://localhost:3000/r/chart.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/page-header.json",
         "http://localhost:3000/r/section-title.json",

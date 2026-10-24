@@ -17,6 +17,24 @@ export const metrics: Metric[] = [
   { label: "Taxa de conclusão", value: "74%", change: "estável", trend: "flat", tone: "neutral", detail: "das tarefas do trimestre", progress: 74 },
 ];
 
+// Horas registradas por semana, por frente de trabalho, nas últimas 8 semanas.
+export const hoursByWeek = [
+  { semana: "01/09", produto: 32, suporte: 12, gestao: 6 },
+  { semana: "08/09", produto: 36, suporte: 10, gestao: 6 },
+  { semana: "15/09", produto: 30, suporte: 16, gestao: 8 },
+  { semana: "22/09", produto: 40, suporte: 9, gestao: 5 },
+  { semana: "29/09", produto: 42, suporte: 11, gestao: 6 },
+  { semana: "06/10", produto: 38, suporte: 14, gestao: 7 },
+  { semana: "13/10", produto: 44, suporte: 8, gestao: 6 },
+  { semana: "20/10", produto: 46, suporte: 10, gestao: 5 },
+];
+
+export const workstreams = [
+  { key: "produto", label: "Produto" },
+  { key: "suporte", label: "Suporte" },
+  { key: "gestao", label: "Gestão" },
+];
+
 export type Deadline = { project: string; task: string; due: string; tone: Tone; status: string };
 
 export const deadlines: Deadline[] = [
