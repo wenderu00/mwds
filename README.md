@@ -15,7 +15,7 @@ A fonte da verdade da identidade é o portfólio em [wenderu00.github.io](https:
 
 ## Instalar num projeto novo
 
-O passo a passo completo, testado num projeto criado do zero, está em [Primeiros passos](https://wenderu00.github.io/mwds/primeiros-passos/): requisitos, tokens, tema sem piscar, primeiro componente, primeiro bloco, como atualizar e como aplicar sem o CLI.
+O passo a passo completo, testado num projeto criado do zero, está em [Primeiros passos](https://wenderu00.github.io/mwds/primeiros-passos/): requisitos, tokens, tema sem piscar, primeiro componente, primeiro bloco, como atualizar e como aplicar sem o CLI. O tom dos textos, os rótulos, as mensagens de erro e os formatos pt-BR estão em [Escrita](https://wenderu00.github.io/mwds/escrita/).
 
 O essencial são dois comandos. Uma vez por projeto, para criar o `components.json` com o namespace `@marcio`, as fontes, o `cn` e os tokens:
 

@@ -9,7 +9,7 @@ vi.mock("next/navigation", () => ({
   usePathname: () => "/",
 }));
 
-const links = ["primeiros passos", "fundação", "componentes", "exemplos", "blocos"];
+const links = ["primeiros passos", "fundação", "escrita", "componentes", "exemplos", "blocos"];
 
 describe("cabeçalho do site", () => {
   it("o botão de menu abre um painel com a navegação e a troca de tema", async () => {
