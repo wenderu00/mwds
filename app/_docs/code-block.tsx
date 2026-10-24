@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Copy } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
 import { Button } from "@/registry/marcio/ui/button";
 
@@ -11,14 +11,20 @@ const messages: Record<CopyState, string> = { idle: "", copied: "Copiado", faile
 
 export function CodeBlock({ title, code, className }: { title: string; code: string; className?: string }) {
   const [state, setState] = useState<CopyState>("idle");
+  const resetTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  useEffect(() => () => clearTimeout(resetTimer.current), []);
 
   async function copy() {
+    clearTimeout(resetTimer.current);
+    setState("idle");
     try {
       await navigator.clipboard.writeText(code);
       setState("copied");
     } catch {
       setState("failed");
     }
+    resetTimer.current = setTimeout(() => setState("idle"), 2000);
   }
 
   return (

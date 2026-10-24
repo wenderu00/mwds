@@ -127,7 +127,7 @@ export default function GettingStartedPage() {
           band
           intro={<p>Pule este passo se o projeto já existe e usa App Router e Tailwind v4.</p>}
         >
-          <CodeBlock title="terminal · criar o projeto" code={`npx create-next-app@latest meu-app --ts --tailwind --app --eslint --import-alias "@/*"\ncd meu-app`} />
+          <CodeBlock title="terminal · criar o projeto" code={`npx create-next-app@16 meu-app --ts --tailwind --app --eslint --import-alias "@/*"\ncd meu-app`} />
         </FoundationSection>
 
         <FoundationSection
