@@ -140,6 +140,7 @@ Decisões e motivos no ADR 0015. A página de fundação mostra cada grupo nos d
 | rounded-full | círculo: avatar, switch, rádio |
 | sombra | nenhuma; elevação por superfície e borda, `bg-scrim` atrás de Dialog e Sheet |
 | duration-fast / base / slow | 100ms / 200ms / 300ms (0,01ms com `prefers-reduced-motion: reduce`) |
+| `--mw-duration-blink` / `-type` / `-glitch` / `-drift` | 900ms / 1800ms / 320ms / 18s: cursor, TypingText, GlitchText, DotGrid; só rodam com `motion-safe` |
 | ease-standard | cubic-bezier(0.2, 0.7, 0.2, 1) |
 | ease-enter | cubic-bezier(0, 0, 0.2, 1) |
 | ease-exit | cubic-bezier(0.4, 0, 1, 1) |

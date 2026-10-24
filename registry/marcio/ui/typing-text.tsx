@@ -7,11 +7,11 @@ export type TypingTextProps = Omit<ComponentProps<"span">, "children"> & {
   duration?: number;
 };
 
-export function TypingText({ text, delay = 0, duration = 1800, className, style, ...props }: TypingTextProps) {
+export function TypingText({ text, delay = 0, duration, className, style, ...props }: TypingTextProps) {
   const typingStyle = {
     "--mw-chars": [...text].length,
     "--mw-type-delay": `${delay}ms`,
-    "--mw-type-duration": `${duration}ms`,
+    ...(duration === undefined ? {} : { "--mw-type-duration": `${duration}ms` }),
     ...style,
   } as CSSProperties;
 

@@ -25,7 +25,7 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 ├── registry/
 │   └── marcio/
 │       ├── tokens.css
-│       ├── lib/utils.ts
+│       ├── lib/utils.ts, lib/br.ts
 │       └── ui/
 │           ├── kicker.tsx
 │           ├── section-title.tsx
@@ -85,7 +85,7 @@ Cada pasta vira um item `registry:block`. Os componentes de um bloco são instal
 
 Fase 6 acrescentou: RadioGroup, Avatar, Skeleton (primitivos); Pagination, Popover, Command, Combobox, DropdownMenu, Breadcrumb, Alert, Sheet, Progress (compostos); CommandPalette e AppShell (padrões).
 
-Etapa 3 acrescentou: IconButton (primitivo) e AlertDialog (composto).
+Etapa 3 acrescentou: IconButton e MaskedInput (primitivos); AlertDialog, Calendar, DatePicker e FileUpload (compostos); a lib `br` com máscaras e validação de CPF e CNPJ.
 
 - Identidade: Kicker, SectionTitle, CodeComment, LogoBlock, DotGrid, TypingText, GlitchText
 - Primitivos: Button, Input, Textarea, Label, Checkbox, Switch, Badge, Spinner, Link

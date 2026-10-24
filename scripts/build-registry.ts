@@ -152,6 +152,15 @@ export function buildRegistry() {
     files: [{ path: "registry/marcio/lib/utils.ts", type: "registry:lib" }],
   };
 
+  const br: RegistryItem = {
+    name: "br",
+    type: "registry:lib",
+    title: "Formatos brasileiros",
+    description: "Máscaras de CPF, CNPJ, telefone, CEP e moeda, e validação do dígito verificador de CPF e CNPJ.",
+    ...dependenciesOf("registry/marcio/lib/br.ts", { withTokens: false }),
+    files: [{ path: "registry/marcio/lib/br.ts", type: "registry:lib" }],
+  };
+
   const uiItems: RegistryItem[] = uiFiles.map((file) => {
     const name = basename(file, ".tsx");
     const doc = docs.find((entry) => entry.slug === name);
@@ -213,7 +222,7 @@ export function buildRegistry() {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "marcio",
     homepage: baseUrl,
-    items: [tokens, ...fontItems, utils, ...uiItems, ...blockItems, all],
+    items: [tokens, ...fontItems, utils, br, ...uiItems, ...blockItems, all],
   };
 }
 

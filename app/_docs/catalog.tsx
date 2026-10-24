@@ -16,6 +16,7 @@ import { Avatar, AvatarGroup } from "@/registry/marcio/ui/avatar";
 import { Badge } from "@/registry/marcio/ui/badge";
 import { BreadcrumbTrail } from "@/registry/marcio/ui/breadcrumb";
 import { Button } from "@/registry/marcio/ui/button";
+import { Calendar } from "@/registry/marcio/ui/calendar";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/marcio/ui/card";
 import { Checkbox } from "@/registry/marcio/ui/checkbox";
 import { Combobox } from "@/registry/marcio/ui/combobox";
@@ -39,7 +40,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/registry/marcio/ui/dialog";
+import { DatePicker, DateRangePicker } from "@/registry/marcio/ui/date-picker";
 import { EmptyState } from "@/registry/marcio/ui/empty-state";
+import { FileUpload } from "@/registry/marcio/ui/file-upload";
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { DotGrid } from "@/registry/marcio/ui/dot-grid";
@@ -50,6 +53,7 @@ import { Kicker } from "@/registry/marcio/ui/kicker";
 import { Label } from "@/registry/marcio/ui/label";
 import { Link } from "@/registry/marcio/ui/link";
 import { LogoBlock } from "@/registry/marcio/ui/logo-block";
+import { CurrencyInput, MaskedInput } from "@/registry/marcio/ui/masked-input";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { Progress } from "@/registry/marcio/ui/progress";
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/marcio/ui/popover";
@@ -262,7 +266,7 @@ export const docs: ComponentDoc[] = [
     props: [
       { name: "text", type: "string", description: "Texto completo. Fica inteiro no DOM desde o início." },
       { name: "delay", type: "number", default: "0", description: "Atraso em ms antes de começar." },
-      { name: "duration", type: "number", default: "1800", description: "Duração da digitação em ms." },
+      { name: "duration", type: "number", default: "1800", description: "Duração da digitação em ms. Sem a prop, vale o token --mw-duration-type." },
       classNameProp,
     ],
     examples: [
@@ -491,6 +495,70 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: ["Sempre associe um Label (ou aria-label). Placeholder não substitui rótulo."],
+  },
+  {
+    slug: "masked-input",
+    name: "MaskedInput",
+    group: "primitivos",
+    summary: "Input com máscara brasileira: CPF, CNPJ, telefone, CEP e moeda. Mostra o valor formatado e entrega só os dígitos.",
+    file: "masked-input.tsx",
+    props: [
+      { name: "mask", type: '"cpf" | "cnpj" | "phone" | "cep"', description: "Formato do MaskedInput. Telefone vira celular a partir do 11º dígito." },
+      { name: "value / onValueChange", type: "string / (value) => void", description: "Valor sem máscara, só dígitos. Use com o Controller do React Hook Form." },
+      { name: "defaultValue", type: "string", description: "Valor inicial não controlado, com ou sem máscara." },
+      { name: "name", type: "string", description: "Cria um input escondido com o valor sem máscara, para formulários nativos." },
+      { name: "CurrencyInput value / onValueChange", type: "number | null / (cents) => void", description: "Moeda em centavos inteiros: 123456 aparece como R$ 1.234,56." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Documentos e contato",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="CPF"><MaskedInput mask="cpf" /></FormField>\n<FormField label="CNPJ"><MaskedInput mask="cnpj" /></FormField>\n<FormField label="Celular"><MaskedInput mask="phone" /></FormField>\n<FormField label="CEP"><MaskedInput mask="cep" /></FormField>`,
+        render: (theme) => (
+          <>
+            <FormField label="CPF" id={`mask-cpf-${theme}`}>
+              <MaskedInput mask="cpf" defaultValue="52998224725" />
+            </FormField>
+            <FormField label="CNPJ" id={`mask-cnpj-${theme}`}>
+              <MaskedInput mask="cnpj" />
+            </FormField>
+            <FormField label="Celular" id={`mask-phone-${theme}`}>
+              <MaskedInput mask="phone" defaultValue="11934567890" />
+            </FormField>
+            <FormField label="CEP" id={`mask-cep-${theme}`}>
+              <MaskedInput mask="cep" />
+            </FormField>
+          </>
+        ),
+      },
+      {
+        title: "Moeda",
+        description: "Os dígitos entram pela direita, como em caixa eletrônico.",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Valor do contrato">\n  <CurrencyInput value={centavos} onValueChange={setCentavos} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Valor do contrato" id={`mask-brl-${theme}`}>
+            <CurrencyInput defaultValue={123456} />
+          </FormField>
+        ),
+      },
+      {
+        title: "Validação de CPF e CNPJ",
+        description: "A máscara só formata. O dígito verificador fica em registry/marcio/lib/br.ts, para usar nas regras do formulário.",
+        code: `import { isValidCpf } from "@/lib/br";\n\nrules={{ validate: (cpf) => isValidCpf(cpf) || "Confira o CPF: os dígitos finais não batem." }}`,
+        render: (theme) => (
+          <FormField label="CPF" id={`mask-cpf-erro-${theme}`} error="Confira o CPF: os dígitos finais não batem." className="w-full">
+            <MaskedInput mask="cpf" defaultValue="52998224724" />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "Abre o teclado numérico no celular (inputmode numeric) e usa autocomplete de telefone e CEP.",
+      "O placeholder mostra o formato, mas não substitui o rótulo.",
+      "O cursor vai para o fim depois de cada dígito. Para corrigir no meio, apague até o ponto e digite de novo.",
+    ],
   },
   {
     slug: "textarea",
@@ -1440,6 +1508,157 @@ export const docs: ComponentDoc[] = [
       "DialogTitle e DialogDescription dão nome e descrição ao diálogo.",
       "O diálogo abre no tema da página, não no painel do exemplo.",
       "Para confirmar uma ação destrutiva, use AlertDialog: ele não fecha com clique fora e abre com o foco em Cancelar.",
+    ],
+  },
+  {
+    slug: "calendar",
+    name: "Calendar",
+    group: "compostos",
+    summary: "Calendário em português, semana começando no domingo, com seleção de um dia ou de um intervalo. Base do DatePicker.",
+    file: "calendar.tsx",
+    props: [
+      { name: "mode", type: '"single" | "range" | "multiple"', description: "Um dia, um intervalo ou vários dias." },
+      { name: "selected / onSelect", type: "Date | DateRange / (value) => void", description: "Uso controlado." },
+      { name: "defaultMonth", type: "Date", description: "Mês mostrado ao abrir." },
+      { name: "disabled", type: "Matcher | Matcher[]", description: "Dias bloqueados, por exemplo { before: hoje } ou { dayOfWeek: [0, 6] }." },
+      { name: "numberOfMonths", type: "number", default: "1", description: "Quantos meses lado a lado." },
+      { name: "showOutsideDays", type: "boolean", default: "true", description: "Mostra os dias dos meses vizinhos em ink-muted." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Um dia",
+        code: `<Calendar mode="single" selected={data} onSelect={setData} />`,
+        render: () => <Calendar mode="single" defaultMonth={new Date(2026, 9, 1)} selected={new Date(2026, 9, 15)} />,
+      },
+      {
+        title: "Intervalo",
+        code: `<Calendar mode="range" selected={periodo} onSelect={setPeriodo} />`,
+        render: () => <Calendar mode="range" defaultMonth={new Date(2026, 9, 1)} selected={{ from: new Date(2026, 9, 12), to: new Date(2026, 9, 16) }} />,
+      },
+    ],
+    a11y: [
+      "A grade tem role grid, com o mês e o ano como nome. Cada dia é um botão com a data por extenso, e o dia de hoje é anunciado como Hoje.",
+      "O dia escolhido usa accent com texto on-accent; o intervalo, accent-soft. Hoje ganha borda e peso, não só cor.",
+    ],
+    keyboard: [
+      { keys: "Setas", action: "Movem o foco entre os dias. Passar do fim do mês troca de mês." },
+      { keys: "Page Up / Page Down", action: "Mês anterior e próximo." },
+      { keys: "Shift + Page Up / Page Down", action: "Ano anterior e próximo." },
+      { keys: "Home / End", action: "Início e fim da semana." },
+      { keys: "Enter / Espaço", action: "Escolhe o dia com foco." },
+    ],
+  },
+  {
+    slug: "date-picker",
+    name: "DatePicker",
+    group: "compostos",
+    summary: "Campo de data em dd/mm/aaaa que abre o Calendar num Popover. Tem versão de intervalo, o DateRangePicker.",
+    file: "date-picker.tsx",
+    props: [
+      { name: "value / onValueChange", type: "Date | null / (date) => void", description: "Uso controlado, como no Controller do React Hook Form." },
+      { name: "defaultValue", type: "Date | null", description: "Valor inicial não controlado." },
+      { name: "fromDate / toDate", type: "Date", description: "Primeiro e último dia que podem ser escolhidos." },
+      { name: "clearable", type: "boolean", default: "false", description: "Mostra o botão de limpar quando há data." },
+      { name: "placeholder", type: "ReactNode", default: '"dd/mm/aaaa"', description: "Texto sem data escolhida." },
+      { name: "name", type: "string", description: "Cria um input escondido com a data em aaaa-mm-dd." },
+      { name: "DateRangePicker value", type: "{ from?: Date; to?: Date } | null", description: "Intervalo. Fecha quando início e fim estão escolhidos." },
+      { name: "DateRangePicker numberOfMonths", type: "number", default: "2", description: "Meses lado a lado no intervalo." },
+    ],
+    examples: [
+      {
+        title: "Data única",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Vencimento">\n  <DatePicker value={data} onValueChange={setData} clearable />\n</FormField>`,
+        render: (theme) => (
+          <>
+            <FormField label="Vencimento" id={`dp-a-${theme}`}>
+              <DatePicker defaultValue={new Date(2026, 9, 15)} clearable />
+            </FormField>
+            <FormField label="Data de início" id={`dp-b-${theme}`} error="Escolha a data de início.">
+              <DatePicker />
+            </FormField>
+          </>
+        ),
+      },
+      {
+        title: "Intervalo",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Período">\n  <DateRangePicker value={periodo} onValueChange={setPeriodo} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Período" id={`dp-range-${theme}`}>
+            <DateRangePicker defaultValue={{ from: new Date(2026, 9, 12), to: new Date(2026, 9, 16) }} clearable />
+          </FormField>
+        ),
+      },
+      {
+        title: "Com React Hook Form",
+        code: `<Controller\n  control={control}\n  name="vencimento"\n  rules={{ required: "Escolha a data de vencimento." }}\n  render={({ field, fieldState }) => (\n    <FormField label="Vencimento" required error={fieldState.error?.message}>\n      <DatePicker value={field.value} onValueChange={field.onChange} />\n    </FormField>\n  )}\n/>`,
+        render: (theme) => (
+          <FormField label="Vencimento" required id={`dp-rhf-${theme}`} className="w-full">
+            <DatePicker />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "O gatilho é um botão que recebe o rótulo, a descrição e o erro do FormField.",
+      "Ao abrir, o foco vai para o dia escolhido ou para hoje. Ao escolher ou fechar, volta ao gatilho.",
+      "O botão de limpar tem nome próprio (Limpar data) e devolve o foco ao campo.",
+    ],
+    keyboard: [
+      { keys: "Enter / Espaço", action: "No gatilho, abre o calendário. Num dia, escolhe e fecha." },
+      { keys: "Setas, Page Up / Page Down, Home / End", action: "Navegam no calendário, como no Calendar." },
+      { keys: "Esc", action: "Fecha sem mudar a data e devolve o foco ao gatilho." },
+    ],
+  },
+  {
+    slug: "file-upload",
+    name: "FileUpload",
+    group: "compostos",
+    summary: "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção e limites de tipo, tamanho e quantidade.",
+    file: "file-upload.tsx",
+    props: [
+      { name: "value / onValueChange", type: "File[] / (files) => void", description: "Uso controlado." },
+      { name: "accept", type: "string", description: 'Mesmo formato do atributo nativo: ".pdf,image/*".' },
+      { name: "acceptLabel", type: "string", description: 'Nome legível dos tipos, usado na mensagem de erro: "PDF ou imagem".' },
+      { name: "maxSize", type: "number", description: "Tamanho máximo de cada arquivo, em bytes." },
+      { name: "multiple / maxFiles", type: "boolean / number", default: "false / 1", description: "Vários arquivos e o limite. Sem multiple, o novo substitui o anterior." },
+      { name: "onReject", type: "(rejections) => void", description: "Recebe os arquivos recusados, com motivo e mensagem." },
+      { name: "title / hint", type: "ReactNode", description: "Texto principal da área e linha de apoio em mono." },
+      { name: "removeLabel", type: "(file) => string", default: '"Remover <nome>"', description: "Nome do botão de remover." },
+    ],
+    examples: [
+      {
+        title: "Vários arquivos com limites",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Anexos">\n  <FileUpload\n    multiple\n    maxFiles={3}\n    maxSize={5 * 1024 * 1024}\n    accept=".pdf,image/*"\n    acceptLabel="PDF ou imagem"\n    hint="PDF ou imagem, até 5 MB cada, no máximo 3"\n  />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Anexos" id={`fu-a-${theme}`}>
+            <FileUpload multiple maxFiles={3} maxSize={5 * 1024 * 1024} accept=".pdf,image/*" acceptLabel="PDF ou imagem" hint="PDF ou imagem, até 5 MB cada, no máximo 3" />
+          </FormField>
+        ),
+      },
+      {
+        title: "Um arquivo",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Contrato assinado">\n  <FileUpload accept=".pdf" acceptLabel="PDF" hint="PDF até 10 MB" maxSize={10 * 1024 * 1024} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Contrato assinado" id={`fu-b-${theme}`}>
+            <FileUpload accept=".pdf" acceptLabel="PDF" hint="PDF até 10 MB" maxSize={10 * 1024 * 1024} />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "A área inteira é o rótulo de um input de arquivo nativo, então funciona com clique, teclado e leitor de tela sem script extra.",
+      "Arquivos recusados aparecem numa região role alert, com o nome do arquivo, o motivo e como resolver.",
+      "Cada arquivo da lista tem um botão Remover com o nome do arquivo. Depois de remover, o foco volta para o campo.",
+      "Arrastar não é a única forma: o texto da área sempre diz que dá para clicar.",
+    ],
+    keyboard: [
+      { keys: "Tab", action: "Foca a área (contorno de foco nela inteira) e depois cada botão Remover." },
+      { keys: "Enter / Espaço", action: "Na área, abre o seletor de arquivos do sistema. Num botão, remove o arquivo." },
     ],
   },
   {

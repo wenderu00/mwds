@@ -132,8 +132,8 @@
           "ease-exit": "var(--mw-ease-exit)",
           "default-transition-timing-function": "var(--mw-ease-standard)",
           "animate-mw-blink": "mw-blink var(--mw-duration-blink) step-end infinite",
-          "animate-mw-drift": "mw-drift 18s ease-in-out infinite",
-          "animate-mw-glitch": "mw-glitch 320ms steps(6) both",
+          "animate-mw-drift": "mw-drift var(--mw-duration-drift) ease-in-out infinite",
+          "animate-mw-glitch": "mw-glitch var(--mw-duration-glitch) steps(6) both",
           "animate-mw-fade-in": "mw-fade-in var(--mw-duration-base) var(--mw-ease-enter) both",
           "animate-mw-pop-in": "mw-pop-in var(--mw-duration-base) var(--mw-ease-enter) both",
           "animate-mw-slide-in": "mw-slide-in var(--mw-duration-slow) var(--mw-ease-enter) both",
@@ -162,6 +162,9 @@
           "--mw-duration-base": "200ms",
           "--mw-duration-slow": "300ms",
           "--mw-duration-blink": "900ms",
+          "--mw-duration-type": "1800ms",
+          "--mw-duration-glitch": "320ms",
+          "--mw-duration-drift": "18s",
           "--mw-ease-standard": "cubic-bezier(0.2, 0.7, 0.2, 1)",
           "--mw-ease-enter": "cubic-bezier(0, 0, 0.2, 1)",
           "--mw-ease-exit": "cubic-bezier(0.4, 0, 1, 1)",
@@ -326,7 +329,7 @@
             "overflow": "hidden",
             "width": "calc(var(--mw-chars) * 1ch + 0.6ch)",
             "border-right": "0.6ch solid var(--color-accent-line)",
-            "animation": "mw-type var(--mw-type-duration, 1800ms) steps(var(--mw-chars)) var(--mw-type-delay, 0ms) both,\n      mw-border-blink var(--mw-duration-blink) step-end infinite"
+            "animation": "mw-type var(--mw-type-duration, var(--mw-duration-type)) steps(var(--mw-chars)) var(--mw-type-delay, 0ms) both,\n      mw-border-blink var(--mw-duration-blink) step-end infinite"
           }
         },
         "@keyframes mw-border-blink": {
@@ -525,6 +528,20 @@
       ]
     },
     {
+      "name": "br",
+      "type": "registry:lib",
+      "title": "Formatos brasileiros",
+      "description": "Máscaras de CPF, CNPJ, telefone, CEP e moeda, e validação do dígito verificador de CPF e CNPJ.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/marcio/lib/br.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
       "name": "alert-dialog",
       "type": "registry:ui",
       "title": "AlertDialog",
@@ -690,6 +707,29 @@
       ]
     },
     {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "Calendário em português, semana começando no domingo, com seleção de um dia ou de um intervalo. Base do DatePicker.",
+      "dependencies": [
+        "lucide-react",
+        "react-day-picker"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
@@ -824,6 +864,33 @@
       ]
     },
     {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "DatePicker",
+      "description": "Campo de data em dd/mm/aaaa que abre o Calendar num Popover. Tem versão de intervalo, o DateRangePicker.",
+      "dependencies": [
+        "lucide-react",
+        "react-day-picker"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/calendar.json",
+        "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/popover.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/date-picker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",
@@ -909,6 +976,29 @@
       ],
       "categories": [
         "padroes"
+      ]
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "FileUpload",
+      "description": "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção e limites de tipo, tamanho e quantidade.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/file-upload.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
       ]
     },
     {
@@ -1084,6 +1174,27 @@
       ],
       "categories": [
         "identidade"
+      ]
+    },
+    {
+      "name": "masked-input",
+      "type": "registry:ui",
+      "title": "MaskedInput",
+      "description": "Input com máscara brasileira: CPF, CNPJ, telefone, CEP e moeda. Mostra o valor formatado e entrega só os dígitos.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/br.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/masked-input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
       ]
     },
     {
@@ -1688,16 +1799,19 @@
         "http://localhost:3000/r/badge.json",
         "http://localhost:3000/r/breadcrumb.json",
         "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/calendar.json",
         "http://localhost:3000/r/card.json",
         "http://localhost:3000/r/checkbox.json",
         "http://localhost:3000/r/code-comment.json",
         "http://localhost:3000/r/combobox.json",
         "http://localhost:3000/r/command-palette.json",
         "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/date-picker.json",
         "http://localhost:3000/r/dialog.json",
         "http://localhost:3000/r/dot-grid.json",
         "http://localhost:3000/r/dropdown-menu.json",
         "http://localhost:3000/r/empty-state.json",
+        "http://localhost:3000/r/file-upload.json",
         "http://localhost:3000/r/form-field.json",
         "http://localhost:3000/r/glitch-text.json",
         "http://localhost:3000/r/icon-button.json",
@@ -1706,6 +1820,7 @@
         "http://localhost:3000/r/label.json",
         "http://localhost:3000/r/link.json",
         "http://localhost:3000/r/logo-block.json",
+        "http://localhost:3000/r/masked-input.json",
         "http://localhost:3000/r/page-header.json",
         "http://localhost:3000/r/pagination.json",
         "http://localhost:3000/r/popover.json",
