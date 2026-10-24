@@ -1012,7 +1012,7 @@
       "name": "date-picker",
       "type": "registry:ui",
       "title": "DatePicker",
-      "description": "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Tem versão de intervalo, o DateRangePicker.",
+      "description": "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Para períodos, veja o DateRangePicker.",
       "dependencies": [
         "lucide-react",
         "react-day-picker"
@@ -1412,7 +1412,7 @@
       "name": "masked-input",
       "type": "registry:ui",
       "title": "MaskedInput",
-      "description": "Input com máscara brasileira: CPF, CNPJ, telefone, CEP e moeda. Mostra o valor formatado e entrega só os dígitos.",
+      "description": "Input com máscara brasileira: CPF, CNPJ, telefone e CEP. Mostra o valor formatado e entrega só os dígitos. Para reais, veja o CurrencyInput.",
       "dependencies": [],
       "registryDependencies": [
         "http://localhost:3000/r/br.json",

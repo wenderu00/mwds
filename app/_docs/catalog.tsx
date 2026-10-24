@@ -676,12 +676,12 @@ export const docs: ComponentDoc[] = [
     slug: "masked-input",
     name: "MaskedInput",
     group: "primitivos",
-    summary: "Input com máscara brasileira: CPF, CNPJ, telefone, CEP e moeda. Mostra o valor formatado e entrega só os dígitos.",
+    summary: "Input com máscara brasileira: CPF, CNPJ, telefone e CEP. Mostra o valor formatado e entrega só os dígitos. Para reais, veja o CurrencyInput.",
     file: "masked-input.tsx",
     status: "beta",
     usage: {
-      use: ["Documentos e contatos brasileiros com formato fixo: CPF, CNPJ, telefone, CEP.", "Valores em reais com CurrencyInput.", "Validar CPF e CNPJ com isValidCpf e isValidCnpj na regra do formulário."],
-      avoid: ["Números sem formato fixo, como quantidade: use NumberInput.", "Telefones internacionais: a máscara é só para o Brasil."],
+      use: ["Documentos e contatos brasileiros com formato fixo: CPF, CNPJ, telefone, CEP.", "Validar CPF e CNPJ com isValidCpf e isValidCnpj na regra do formulário."],
+      avoid: ["Números sem formato fixo, como quantidade: use NumberInput.", "Valores em reais: use CurrencyInput.", "Telefones internacionais: a máscara é só para o Brasil."],
     },
     keyboard: [
       { keys: "Tab", action: "Leva o foco ao campo." },
@@ -693,7 +693,6 @@ export const docs: ComponentDoc[] = [
       { name: "value / onValueChange", type: "string / (value) => void", description: "Valor sem máscara, só dígitos. Use com o Controller do React Hook Form." },
       { name: "defaultValue", type: "string", description: "Valor inicial não controlado, com ou sem máscara." },
       { name: "name", type: "string", description: "Cria um input escondido com o valor sem máscara, para formulários nativos." },
-      { name: "CurrencyInput value / onValueChange", type: "number | null / (cents) => void", description: "Moeda em centavos inteiros: 123456 aparece como R$ 1.234,56." },
       classNameProp,
     ],
     examples: [
@@ -719,17 +718,6 @@ export const docs: ComponentDoc[] = [
         ),
       },
       {
-        title: "Moeda",
-        description: "Os dígitos entram pela direita, como em caixa eletrônico.",
-        className: "w-full flex-col items-stretch",
-        code: `<FormField label="Valor do contrato">\n  <CurrencyInput value={centavos} onValueChange={setCentavos} />\n</FormField>`,
-        render: (theme) => (
-          <FormField label="Valor do contrato" id={`mask-brl-${theme}`}>
-            <CurrencyInput defaultValue={123456} />
-          </FormField>
-        ),
-      },
-      {
         title: "Validação de CPF e CNPJ",
         description: "A máscara só formata. O dígito verificador fica em registry/marcio/lib/br.ts, para usar nas regras do formulário.",
         code: `import { isValidCpf } from "@/lib/br";\n\nrules={{ validate: (cpf) => isValidCpf(cpf) || "Confira o CPF: os dígitos finais não batem." }}`,
@@ -744,6 +732,44 @@ export const docs: ComponentDoc[] = [
       "Abre o teclado numérico no celular (inputmode numeric) e usa autocomplete de telefone e CEP.",
       "O placeholder mostra o formato, mas não substitui o rótulo.",
       "O cursor vai para o fim depois de cada dígito. Para corrigir no meio, apague até o ponto e digite de novo.",
+    ],
+  },
+  {
+    slug: "currency-input",
+    name: "CurrencyInput",
+    group: "primitivos",
+    summary: "Campo de valor em reais. Os dígitos entram pela direita, como em caixa eletrônico, e o valor sai em centavos inteiros.",
+    file: "masked-input.tsx",
+    status: "beta",
+    usage: {
+      use: ["Valores em reais: preço, contrato, reembolso.", "Guarde e envie em centavos inteiros, sem ponto flutuante."],
+      avoid: ["Quantidades e números sem moeda: use NumberInput.", "Outras moedas: o formato é só o do real."],
+    },
+    keyboard: [
+      { keys: "Dígitos", action: "Entram pela direita: 1, 12, 123 viram R$ 0,01, R$ 0,12, R$ 1,23." },
+      { keys: "Backspace", action: "Apaga o último dígito." },
+    ],
+    props: [
+      { name: "value / onValueChange", type: "number | null / (cents) => void", description: "Valor em centavos inteiros: 123456 aparece como R$ 1.234,56. Campo vazio é null." },
+      { name: "defaultValue", type: "number | null", description: "Valor inicial não controlado, em centavos." },
+      { name: "name", type: "string", description: "Cria um input escondido com os centavos, para formulários nativos." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Valor do contrato",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Valor do contrato">\n  <CurrencyInput value={centavos} onValueChange={setCentavos} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Valor do contrato" id={`brl-${theme}`}>
+            <CurrencyInput defaultValue={123456} />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "Abre o teclado numérico no celular (inputmode numeric).",
+      "O valor lido pelo leitor de tela já vem formatado, com R$ e vírgula.",
     ],
   },
   {
@@ -2379,12 +2405,12 @@ export const docs: ComponentDoc[] = [
     slug: "date-picker",
     name: "DatePicker",
     group: "compostos",
-    summary: "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Tem versão de intervalo, o DateRangePicker.",
+    summary: "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Para períodos, veja o DateRangePicker.",
     file: "date-picker.tsx",
     status: "beta",
     usage: {
-      use: ["Campo de data em formulário: vencimento, início, agendamento, nascimento. Quem sabe a data digita; quem não sabe abre o calendário.", "DateRangePicker para períodos, como filtros de relatório."],
-      avoid: ["Calendário sempre visível: use Calendar.", "Mês e ano sem dia: use dois Select."],
+      use: ["Campo de data em formulário: vencimento, início, agendamento, nascimento. Quem sabe a data digita; quem não sabe abre o calendário."],
+      avoid: ["Período com início e fim: use DateRangePicker.", "Calendário sempre visível: use Calendar.", "Mês e ano sem dia: use dois Select."],
     },
     props: [
       { name: "value / onValueChange", type: "Date | null / (date) => void", description: "Uso controlado, como no Controller do React Hook Form." },
@@ -2395,8 +2421,6 @@ export const docs: ComponentDoc[] = [
       { name: "calendarLabel", type: "string", default: '"Abrir calendário"', description: "Nome do botão que abre o calendário." },
       { name: "invalidMessage", type: "string", default: '"Data inválida. Digite no formato dd/mm/aaaa."', description: "Mensagem para data incompleta ou que não existe. Fora de fromDate e toDate, a mensagem diz o intervalo aceito." },
       { name: "name", type: "string", description: "Cria um input escondido com a data em aaaa-mm-dd." },
-      { name: "DateRangePicker value", type: "{ from?: Date; to?: Date } | null", description: "Intervalo. Fecha quando início e fim estão escolhidos." },
-      { name: "DateRangePicker numberOfMonths", type: "number", default: "2", description: "Meses lado a lado no intervalo." },
     ],
     examples: [
       {
@@ -2415,16 +2439,6 @@ export const docs: ComponentDoc[] = [
         ),
       },
       {
-        title: "Intervalo",
-        className: "w-full flex-col items-stretch",
-        code: `<FormField label="Período">\n  <DateRangePicker value={periodo} onValueChange={setPeriodo} />\n</FormField>`,
-        render: (theme) => (
-          <FormField label="Período" id={`dp-range-${theme}`}>
-            <DateRangePicker defaultValue={{ from: new Date(2026, 9, 12), to: new Date(2026, 9, 16) }} clearable />
-          </FormField>
-        ),
-      },
-      {
         title: "Com React Hook Form",
         code: `<Controller\n  control={control}\n  name="vencimento"\n  rules={{ required: "Escolha a data de vencimento." }}\n  render={({ field, fieldState }) => (\n    <FormField label="Vencimento" required error={fieldState.error?.message}>\n      <DatePicker value={field.value} onValueChange={field.onChange} />\n    </FormField>\n  )}\n/>`,
         render: (theme) => (
@@ -2438,7 +2452,6 @@ export const docs: ComponentDoc[] = [
       "O DatePicker é um campo de texto com teclado numérico no celular. Recebe o rótulo, a descrição, o erro e o obrigatório do FormField.",
       "Data incompleta, inexistente ou fora do intervalo marca o campo com aria-invalid e liga a mensagem por aria-describedby. O valor vira null até a data ser corrigida.",
       "O botão Abrir calendário abre um diálogo. O foco vai para o dia escolhido ou para hoje; ao escolher ou fechar, volta ao campo.",
-      "O DateRangePicker mantém o gatilho com role combobox.",
       "O botão de limpar tem nome próprio (Limpar data) e devolve o foco ao campo.",
     ],
     keyboard: [
@@ -2447,6 +2460,48 @@ export const docs: ComponentDoc[] = [
       { keys: "Enter / Espaço", action: "No botão do calendário, abre. Num dia, escolhe e fecha." },
       { keys: "Setas, Page Up / Page Down, Home / End", action: "Navegam no calendário, como no Calendar." },
       { keys: "Esc", action: "Fecha sem mudar a data e devolve o foco ao campo." },
+    ],
+  },
+  {
+    slug: "date-range-picker",
+    name: "DateRangePicker",
+    group: "compostos",
+    summary: "Período com início e fim, escolhido em dois meses lado a lado do Calendar, num Popover.",
+    file: "date-picker.tsx",
+    status: "beta",
+    usage: {
+      use: ["Filtros de relatório e listagem por período.", "Reservas e vigências com início e fim."],
+      avoid: ["Uma data só: use DatePicker.", "Períodos fixos, como este mês ou últimos 30 dias: use ToggleGroup ou Select."],
+    },
+    props: [
+      { name: "value / onValueChange", type: "{ from?: Date; to?: Date } | null / (range) => void", description: "Uso controlado. Fecha quando início e fim estão escolhidos." },
+      { name: "defaultValue", type: "{ from?: Date; to?: Date } | null", description: "Valor inicial não controlado." },
+      { name: "numberOfMonths", type: "number", default: "2", description: "Meses lado a lado." },
+      { name: "fromDate / toDate", type: "Date", description: "Primeiro e último dia que podem ser escolhidos." },
+      { name: "clearable", type: "boolean", default: "false", description: "Mostra o botão Limpar período." },
+      { name: "name", type: "string", description: "Cria um input escondido com aaaa-mm-dd/aaaa-mm-dd." },
+    ],
+    examples: [
+      {
+        title: "Período",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Período">\n  <DateRangePicker value={periodo} onValueChange={setPeriodo} clearable />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Período" id={`drp-${theme}`}>
+            <DateRangePicker defaultValue={{ from: new Date(2026, 9, 12), to: new Date(2026, 9, 16) }} clearable />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "O gatilho tem role combobox, abre um diálogo e recebe o rótulo, a descrição e o erro do FormField.",
+      "O texto do gatilho diz o período inteiro: 12/10/2026 até 16/10/2026.",
+      "Ao fechar, o foco volta ao gatilho.",
+    ],
+    keyboard: [
+      { keys: "Enter / Espaço", action: "No gatilho, abre o calendário. Num dia, marca o início e depois o fim." },
+      { keys: "Setas, Page Up / Page Down, Home / End", action: "Navegam no calendário, como no Calendar." },
+      { keys: "Esc", action: "Fecha sem mudar o período." },
     ],
   },
   {

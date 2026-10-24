@@ -23,7 +23,7 @@ const dateFormat = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-
 
 const formatDay = (date: string) => dateFormat.format(new Date(`${date}T00:00:00Z`));
 
-const componentNames = [...docs.flatMap((doc) => doc.name.split(" e ")), "DateRangePicker", "CurrencyInput"];
+const componentNames = docs.flatMap((doc) => doc.name.split(" e "));
 
 const anchor = (version: string) => `v${version.replaceAll(".", "-")}`;
 
