@@ -928,6 +928,31 @@
       ]
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "DataTable",
+      "description": "Table com ordenação por coluna, seleção de linhas e paginação. Cada parte pode ser controlada por fora.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/checkbox.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/pagination.json",
+        "http://localhost:3000/r/table.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/data-table.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "date-picker",
       "type": "registry:ui",
       "title": "DatePicker",
@@ -1282,6 +1307,30 @@
       ]
     },
     {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "NumberInput",
+      "description": "Campo numérico com botões de diminuir e aumentar, mínimo, máximo, passo e formatação pt-BR.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/number-input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
       "name": "page-header",
       "type": "registry:ui",
       "title": "PageHeader",
@@ -1545,6 +1594,51 @@
       ],
       "categories": [
         "primitivos"
+      ]
+    },
+    {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "StatCard",
+      "description": "Métrica em card: rótulo em mono, valor em display, variação com cor de estado e progresso opcional.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/badge.json",
+        "http://localhost:3000/r/card.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/progress.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/stat-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Etapas numeradas de um fluxo, com estados concluída, atual e pendente. Horizontal ou vertical.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/stepper.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
       ]
     },
     {
@@ -1815,9 +1909,9 @@
         "http://localhost:3000/r/card.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/page-header.json",
-        "http://localhost:3000/r/progress.json",
         "http://localhost:3000/r/section-title.json",
         "http://localhost:3000/r/skeleton.json",
+        "http://localhost:3000/r/stat-card.json",
         "http://localhost:3000/r/table.json"
       ],
       "files": [
@@ -1825,11 +1919,6 @@
           "path": "registry/marcio/blocks/dashboard/data.ts",
           "type": "registry:component",
           "target": "components/blocks/dashboard/data.ts"
-        },
-        {
-          "path": "registry/marcio/blocks/dashboard/metric-card.tsx",
-          "type": "registry:component",
-          "target": "components/blocks/dashboard/metric-card.tsx"
         },
         {
           "path": "registry/marcio/blocks/dashboard/page.tsx",
@@ -1982,6 +2071,7 @@
         "http://localhost:3000/r/combobox.json",
         "http://localhost:3000/r/command-palette.json",
         "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/data-table.json",
         "http://localhost:3000/r/date-picker.json",
         "http://localhost:3000/r/dialog.json",
         "http://localhost:3000/r/dot-grid.json",
@@ -1998,6 +2088,7 @@
         "http://localhost:3000/r/link.json",
         "http://localhost:3000/r/logo-block.json",
         "http://localhost:3000/r/masked-input.json",
+        "http://localhost:3000/r/number-input.json",
         "http://localhost:3000/r/page-header.json",
         "http://localhost:3000/r/pagination.json",
         "http://localhost:3000/r/popover.json",
@@ -2010,6 +2101,8 @@
         "http://localhost:3000/r/skeleton.json",
         "http://localhost:3000/r/slider.json",
         "http://localhost:3000/r/spinner.json",
+        "http://localhost:3000/r/stat-card.json",
+        "http://localhost:3000/r/stepper.json",
         "http://localhost:3000/r/switch.json",
         "http://localhost:3000/r/table.json",
         "http://localhost:3000/r/tabs.json",

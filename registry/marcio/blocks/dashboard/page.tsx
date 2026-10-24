@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import NextLink from "next/link";
 import { AdminShell } from "@/registry/marcio/blocks/admin-shell/admin-shell";
 import { deadlines, metrics } from "@/registry/marcio/blocks/dashboard/data";
-import { MetricCard } from "@/registry/marcio/blocks/dashboard/metric-card";
 import { RecentActivity } from "@/registry/marcio/blocks/dashboard/recent-activity";
 import { Alert } from "@/registry/marcio/ui/alert";
 import { Badge } from "@/registry/marcio/ui/badge";
@@ -10,6 +9,7 @@ import { Button } from "@/registry/marcio/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/registry/marcio/ui/card";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
+import { StatCard } from "@/registry/marcio/ui/stat-card";
 
 export const metadata: Metadata = { title: "Painel" };
 
@@ -50,7 +50,7 @@ export default function DashboardPage() {
 
       <section aria-label="Métricas" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {metrics.map((metric) => (
-          <MetricCard key={metric.label} metric={metric} />
+          <StatCard key={metric.label} {...metric} />
         ))}
       </section>
 

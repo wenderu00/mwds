@@ -56,12 +56,15 @@ import { Kicker } from "@/registry/marcio/ui/kicker";
 import { Label } from "@/registry/marcio/ui/label";
 import { Link } from "@/registry/marcio/ui/link";
 import { LogoBlock } from "@/registry/marcio/ui/logo-block";
+import { NumberInput } from "@/registry/marcio/ui/number-input";
 import { CurrencyInput, MaskedInput } from "@/registry/marcio/ui/masked-input";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { Progress } from "@/registry/marcio/ui/progress";
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/marcio/ui/popover";
 import { RadioGroup, RadioGroupOption } from "@/registry/marcio/ui/radio-group";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
+import { StatCard } from "@/registry/marcio/ui/stat-card";
+import { Stepper } from "@/registry/marcio/ui/stepper";
 import { Separator } from "@/registry/marcio/ui/separator";
 import {
   Select,
@@ -90,9 +93,11 @@ import {
   AlertDismissDemo,
   AppShellDemo,
   CommandPaletteDemo,
+  DataTableDemo,
   DropdownMenuDemo,
   PaginationDemo,
   ProgressDemo,
+  StepperDemo,
   ToastActionDemo,
   ToastDemo,
 } from "./demos";
@@ -627,7 +632,7 @@ export const docs: ComponentDoc[] = [
     status: "beta",
     usage: {
       use: ["Documentos e contatos brasileiros com formato fixo: CPF, CNPJ, telefone, CEP.", "Valores em reais com CurrencyInput.", "Validar CPF e CNPJ com isValidCpf e isValidCnpj na regra do formulário."],
-      avoid: ["Números sem formato fixo, como quantidade: use Input com type number.", "Telefones internacionais: a máscara é só para o Brasil."],
+      avoid: ["Números sem formato fixo, como quantidade: use NumberInput.", "Telefones internacionais: a máscara é só para o Brasil."],
     },
     keyboard: [
       { keys: "Tab", action: "Leva o foco ao campo." },
@@ -690,6 +695,53 @@ export const docs: ComponentDoc[] = [
       "Abre o teclado numérico no celular (inputmode numeric) e usa autocomplete de telefone e CEP.",
       "O placeholder mostra o formato, mas não substitui o rótulo.",
       "O cursor vai para o fim depois de cada dígito. Para corrigir no meio, apague até o ponto e digite de novo.",
+    ],
+  },
+  {
+    slug: "number-input",
+    name: "NumberInput",
+    group: "primitivos",
+    status: "beta",
+    summary: "Campo numérico com botões de diminuir e aumentar, mínimo, máximo, passo e formatação pt-BR.",
+    file: "number-input.tsx",
+    usage: {
+      use: ["Quantidades e valores pequenos que a pessoa ajusta de um em um: itens, parcelas, vagas.", "Números com casas decimais em pt-BR, como peso e porcentagem, com step 0,1 ou 0,5."],
+      avoid: ["Dinheiro: use CurrencyInput.", "Códigos que só têm dígitos, como CEP e CPF: use MaskedInput.", "Escolha aproximada numa faixa: use Slider."],
+    },
+    props: [
+      { name: "value / onValueChange", type: "number | null / (value) => void", description: "Uso controlado. Campo vazio é null." },
+      { name: "defaultValue", type: "number | null", description: "Valor inicial não controlado." },
+      { name: "min / max", type: "number", description: "Limites. Os botões se desabilitam nos extremos e o valor é ajustado ao sair do campo." },
+      { name: "step", type: "number", default: "1", description: "Passo das setas e dos botões. Também define as casas decimais exibidas." },
+      { name: "formatOptions", type: "Intl.NumberFormatOptions", description: 'Formato de exibição, por exemplo { style: "percent" } ou unidade.' },
+      { name: "decrementLabel / incrementLabel", type: "string", default: '"Diminuir" / "Aumentar"', description: "Nomes dos botões." },
+    ],
+    examples: [
+      {
+        title: "Quantidade e decimal",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Vagas">\n  <NumberInput defaultValue={4} min={1} max={20} />\n</FormField>\n<FormField label="Peso (kg)">\n  <NumberInput defaultValue={72.5} step={0.5} min={0} />\n</FormField>`,
+        render: (theme) => (
+          <>
+            <FormField label="Vagas" id={`num-a-${theme}`}>
+              <NumberInput defaultValue={4} min={1} max={20} />
+            </FormField>
+            <FormField label="Peso (kg)" id={`num-b-${theme}`} description="Use vírgula para os decimais.">
+              <NumberInput defaultValue={72.5} step={0.5} min={0} />
+            </FormField>
+          </>
+        ),
+      },
+    ],
+    a11y: [
+      "O campo tem role spinbutton com valor, mínimo, máximo e o texto formatado em aria-valuetext.",
+      "Os botões de diminuir e aumentar ficam fora do Tab: pelo teclado, as setas fazem o mesmo.",
+      "Aceita 1.234,5 e também 1234.5. Ao sair do campo, o valor volta formatado em pt-BR.",
+    ],
+    keyboard: [
+      { keys: "Setas para cima e para baixo", action: "Aumentam e diminuem um passo." },
+      { keys: "Page Up / Page Down", action: "Aumentam e diminuem dez passos." },
+      { keys: "Home / End", action: "Vão para o mínimo e o máximo, quando definidos." },
     ],
   },
   {
@@ -2427,7 +2479,7 @@ export const docs: ComponentDoc[] = [
     status: "estavel",
     usage: {
       use: ["Alternar entre painéis de conteúdo relacionados na mesma página, como as seções de Configurações.", "De duas a seis abas com rótulos curtos."],
-      avoid: ["Filtrar ou trocar a visualização dos mesmos dados: use ToggleGroup.", "Etapas que precisam ser feitas em ordem: use um fluxo em etapas.", "Navegar entre páginas: use links."],
+      avoid: ["Filtrar ou trocar a visualização dos mesmos dados: use ToggleGroup.", "Etapas que precisam ser feitas em ordem: use Stepper.", "Navegar entre páginas: use links."],
     },
     keyboard: [
       { keys: "Tab", action: "Entra na aba ativa e depois vai para o painel." },
@@ -2474,7 +2526,7 @@ export const docs: ComponentDoc[] = [
     status: "estavel",
     usage: {
       use: ["Dados com várias colunas que a pessoa compara linha a linha.", "Números em mono e alinhados à direita."],
-      avoid: ["Layout de página: tabela é só para dados.", "Listas de uma coluna: use uma lista ou cards."],
+      avoid: ["Ordenar, selecionar ou paginar: use DataTable.", "Layout de página: tabela é só para dados.", "Listas de uma coluna: use uma lista ou cards."],
     },
     props: [
       { name: "containerClassName", type: "string", description: "Classes do contêiner com borda e rolagem." },
@@ -2524,6 +2576,135 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: ["TableHead usa th com scope col.", "Use TableCaption ou aria-label para nomear a tabela.", "Números em mono e alinhados à direita."],
+  },
+  {
+    slug: "data-table",
+    name: "DataTable",
+    group: "compostos",
+    status: "beta",
+    summary: "Table com ordenação por coluna, seleção de linhas e paginação. Cada parte pode ser controlada por fora.",
+    file: "data-table.tsx",
+    usage: {
+      use: ["Listagens de sistema em que a pessoa ordena, seleciona e pagina, como a tela de projetos.", "Ações em lote sobre as linhas selecionadas."],
+      avoid: ["Tabelas curtas e estáticas, sem ordenar nem selecionar: use Table.", "Milhares de linhas carregadas de uma vez: pagine no servidor e passe page e sort controlados."],
+    },
+    props: [
+      { name: "data / columns / getRowId", type: "T[] / DataTableColumn<T>[] / (row) => string", description: "Linhas, colunas e o id estável de cada linha." },
+      { name: "column.sortValue", type: "(row) => string | number", description: "Torna a coluna ordenável. Textos comparam em pt-BR, sem diferenciar acentos." },
+      { name: "column.align / className", type: '"left" | "right" / string', description: "Alinhamento e classes da célula. Números vão à direita." },
+      { name: "pageSize / page / onPageChange", type: "number / number / (page) => void", default: "10", description: "Paginação. Controle page para voltar à primeira página ao filtrar." },
+      { name: "sort / defaultSort / onSortChange", type: "{ column, direction } | null", description: "Ordenação. Clicar no cabeçalho alterna crescente e decrescente." },
+      { name: "selectable / selected / onSelectedChange", type: "boolean / Set<string> / (ids) => void", description: "Coluna de seleção com marcar a página inteira." },
+      { name: "rowLabel / selectPageLabel", type: "(row) => string / string", description: "Nomes dos checkboxes: Selecionar <linha> e o da página." },
+      { name: "caption / footer / empty", type: "ReactNode | (range) => ReactNode", description: "Legenda, rodapé ao lado da paginação e o que mostrar sem dados." },
+    ],
+    examples: [
+      {
+        title: "Ordenar, selecionar e paginar",
+        className: "w-full",
+        stacked: true,
+        code: `<DataTable\n  data={projetos}\n  columns={[\n    { id: "nome", header: "Projeto", sortValue: (p) => p.name, cell: (p) => p.name },\n    { id: "horas", header: "Horas", align: "right", sortValue: (p) => p.hours, cell: (p) => p.hours },\n  ]}\n  getRowId={(p) => p.id}\n  pageSize={3}\n  selectable\n  selected={selecionados}\n  onSelectedChange={setSelecionados}\n  rowLabel={(p) => p.name}\n  caption={({ first, last, total }) => \`Mostrando \${first} a \${last} de \${total}\`}\n/>`,
+        render: () => <DataTableDemo />,
+      },
+    ],
+    a11y: [
+      "Colunas ordenáveis têm um botão no cabeçalho e aria-sort no th, com ascending, descending ou none.",
+      "Cada linha tem um checkbox com o nome dela; o da página fica indeterminado quando só parte está marcada.",
+      "A legenda nomeia a tabela; prefira uma que diga o intervalo, como Mostrando 1 a 8 de 23.",
+    ],
+    keyboard: [
+      { keys: "Tab", action: "Percorre os cabeçalhos ordenáveis, os checkboxes, o conteúdo das células e a paginação." },
+      { keys: "Enter / Espaço", action: "No cabeçalho, alterna a ordenação. No checkbox, marca a linha." },
+    ],
+  },
+  {
+    slug: "stat-card",
+    name: "StatCard",
+    group: "compostos",
+    status: "beta",
+    summary: "Métrica em card: rótulo em mono, valor em display, variação com cor de estado e progresso opcional.",
+    file: "stat-card.tsx",
+    usage: {
+      use: ["Números-chave no topo de painéis, de dois a quatro por linha.", "Variação em relação a um período, com o tom que diz se é bom ou ruim."],
+      avoid: ["Séries ao longo do tempo: use um gráfico.", "Mais de quatro por linha: a comparação se perde.", "Listar muitos números: use Table."],
+    },
+    props: [
+      { name: "label / value", type: "string / ReactNode", description: "Rótulo em mono e valor em display." },
+      { name: "change / trend", type: 'ReactNode / "up" | "down" | "flat"', default: '- / "flat"', description: "Variação. A seta é decorativa; o sentido é lido por extenso (subiu, caiu, estável)." },
+      { name: "tone", type: '"neutral" | "success" | "danger" | "warning" | "info" | "accent"', default: '"neutral"', description: "Cor da variação. Subir nem sempre é bom: atrasos subindo é danger." },
+      { name: "detail", type: "ReactNode", description: "Linha de contexto, como desde o mês passado." },
+      { name: "progress / progressLabel", type: "number / string", description: "Barra de progresso de 0 a 100 e o nome dela." },
+    ],
+    examples: [
+      {
+        title: "Painel",
+        className: "grid w-full items-stretch gap-4 sm:grid-cols-2",
+        stacked: true,
+        code: `<StatCard label="Horas no mês" value="186h" change="+8%" trend="up" tone="success" detail="meta de 220h" />\n<StatCard label="Entregas atrasadas" value="3" change="+1" trend="up" tone="danger" detail="precisam de atenção" />`,
+        render: () => (
+          <>
+            <StatCard label="Horas no mês" value="186h" change="+8%" trend="up" tone="success" detail="meta de 220h" />
+            <StatCard label="Entregas atrasadas" value="3" change="+1" trend="up" tone="danger" detail="precisam de atenção" />
+            <StatCard label="Taxa de conclusão" value="74%" change="estável" trend="flat" detail="das tarefas do trimestre" progress={74} />
+            <StatCard label="Projetos ativos" value="12" />
+          </>
+        ),
+      },
+    ],
+    a11y: ["A seta da variação é escondida e o sentido vai em texto para o leitor de tela.", "A cor nunca é a única pista: o sinal e o texto da variação dizem o mesmo."],
+  },
+  {
+    slug: "stepper",
+    name: "Stepper",
+    group: "compostos",
+    status: "beta",
+    summary: "Etapas numeradas de um fluxo, com estados concluída, atual e pendente. Horizontal ou vertical.",
+    file: "stepper.tsx",
+    usage: {
+      use: ["Formulários longos divididos em etapas que seguem uma ordem.", "Mostrar onde a pessoa está e quanto falta, de três a seis etapas.", "Com onStepChange, voltar a uma etapa já concluída."],
+      avoid: ["Seções que podem ser visitadas em qualquer ordem: use Tabs.", "Progresso de uma tarefa automática: use Progress.", "Duas etapas só: um título com Etapa 1 de 2 basta."],
+    },
+    props: [
+      { name: "steps", type: "{ title, description? }[]", description: "Etapas em ordem." },
+      { name: "current", type: "number", description: "Índice da etapa atual, a partir de 0. As anteriores ficam concluídas." },
+      { name: "orientation", type: '"horizontal" | "vertical"', default: '"horizontal"', description: "No celular, a horizontal empilha." },
+      { name: "onStepChange", type: "(index) => void", description: "Torna as etapas concluídas clicáveis." },
+      { name: "aria-label", type: "string", default: '"Etapas"', description: "Nome da lista." },
+    ],
+    examples: [
+      {
+        title: "Fluxo de cadastro",
+        className: "w-full",
+        stacked: true,
+        code: `<Stepper\n  aria-label="Cadastro"\n  current={etapa}\n  onStepChange={setEtapa}\n  steps={[\n    { title: "Dados", description: "Nome e documento" },\n    { title: "Endereço", description: "CEP e número" },\n    { title: "Revisão", description: "Confira e envie" },\n  ]}\n/>`,
+        render: () => <StepperDemo />,
+      },
+      {
+        title: "Vertical",
+        code: `<Stepper orientation="vertical" current={1} steps={etapas} />`,
+        render: () => (
+          <Stepper
+            orientation="vertical"
+            current={1}
+            aria-label="Implantação"
+            steps={[
+              { title: "Contrato assinado", description: "12/10/2026" },
+              { title: "Configuração", description: "em andamento" },
+              { title: "Treinamento" },
+            ]}
+          />
+        ),
+      },
+    ],
+    a11y: [
+      "É uma lista ordenada; a etapa atual tem aria-current step e cada etapa diz o estado em texto (concluída, etapa atual, pendente).",
+      "O estado não depende só de cor: concluída mostra o check, atual tem borda e número, pendente fica em ink-muted.",
+      "Só as etapas concluídas viram botão. As pendentes não são clicáveis para não pular validações.",
+    ],
+    keyboard: [
+      { keys: "Tab", action: "Com onStepChange, percorre as etapas concluídas." },
+      { keys: "Enter / Espaço", action: "Volta para a etapa concluída com foco." },
+    ],
   },
   {
     slug: "tooltip",

@@ -75,7 +75,7 @@ registry/marcio/blocks/
 ├── login/          # page.tsx -> app/login/page.tsx, login-form.tsx
 ├── not-found/      # not-found.tsx -> app/not-found.tsx, not-found-terminal.tsx
 ├── admin-shell/    # admin-shell.tsx, usado por dashboard e settings
-├── dashboard/      # page.tsx -> app/dashboard/page.tsx, data.ts, metric-card.tsx, recent-activity.tsx
+├── dashboard/      # page.tsx -> app/dashboard/page.tsx, data.ts, recent-activity.tsx (as métricas usam o StatCard)
 └── settings/       # page.tsx -> app/configuracoes/page.tsx, settings-tabs.tsx
 ```
 
@@ -85,7 +85,7 @@ Cada pasta vira um item `registry:block`. Os componentes de um bloco são instal
 
 Fase 6 acrescentou: RadioGroup, Avatar, Skeleton (primitivos); Pagination, Popover, Command, Combobox, DropdownMenu, Breadcrumb, Alert, Sheet, Progress (compostos); CommandPalette e AppShell (padrões).
 
-Etapa 3 acrescentou: IconButton e MaskedInput (primitivos); AlertDialog, Calendar, DatePicker e FileUpload (compostos); a lib `br` com máscaras e validação de CPF e CNPJ. Depois: Heading e Text (identidade, em `typography.tsx`); Separator, ToggleGroup, Slider e Kbd (primitivos); Accordion e Collapsible (compostos).
+Etapa 3 acrescentou: IconButton e MaskedInput (primitivos); AlertDialog, Calendar, DatePicker e FileUpload (compostos); a lib `br` com máscaras e validação de CPF e CNPJ. Depois: Heading e Text (identidade, em `typography.tsx`); Separator, ToggleGroup, Slider e Kbd (primitivos); Accordion e Collapsible (compostos). Por último: NumberInput (primitivo); DataTable, StatCard e Stepper (compostos), com o DataTable extraído da listagem e o StatCard do Dashboard.
 
 - Identidade: Kicker, SectionTitle, CodeComment, LogoBlock, DotGrid, TypingText, GlitchText
 - Primitivos: Button, Input, Textarea, Label, Checkbox, Switch, Badge, Spinner, Link
