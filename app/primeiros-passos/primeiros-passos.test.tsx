@@ -36,6 +36,14 @@ describe("página primeiros passos", () => {
     expect(labelledBy && document.getElementById(labelledBy)?.textContent?.trim()).toBeTruthy();
   });
 
+  it("explica que o Tailwind v4 lê os tokens pelo @theme inline, sem tailwind.config", () => {
+    const { getByRole } = render(<GettingStartedPage />);
+    const section = getByRole("heading", { name: "E o Tailwind?" }).closest("section")!;
+    expect(section.id).toBe("tokens");
+    expect(section.textContent).toContain("@theme inline");
+    expect(section.textContent).toContain("--color-*: initial");
+  });
+
   it("só manda instalar itens que existem no registry", () => {
     const text = commands();
     const names = [...text.matchAll(/@marcio\/([\w-]+)/g), ...text.matchAll(/\/r\/([\w-]+)\.json/g)].map((match) => match[1]!);
