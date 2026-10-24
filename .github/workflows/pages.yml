@@ -38,8 +38,30 @@ jobs:
         with:
           path: out
 
+  # Axe com contraste real e regressão visual, no container do Playwright para a renderização
+  # ser sempre a mesma. As capturas de referência vêm do workflow atualizar-capturas.
+  qualidade:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run build
+      - run: npm run e2e
+        env:
+          CI: "true"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: relatorio-playwright
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
+
   deploy:
-    needs: build
+    needs: [build, qualidade]
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:

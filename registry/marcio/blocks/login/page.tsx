@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: "Entrar" };
 export default function LoginPage() {
   return (
     <div className="grid min-h-dvh bg-ground text-ink lg:grid-cols-2">
-      <section className="relative isolate hidden flex-col justify-between overflow-hidden border-r border-line bg-band p-10 lg:flex">
+      <aside aria-label="Sobre o painel" className="relative isolate hidden flex-col justify-between overflow-hidden border-r border-line bg-band p-10 lg:flex">
         <DotGrid animated />
         <LogoBlock asChild className="self-start">
           <NextLink href="/" aria-label="Página inicial">
@@ -25,7 +25,7 @@ export default function LoginPage() {
           <TypingText text="// acesso restrito à equipe" delay={400} className="text-mono-xs text-ink-muted" />
         </div>
         <CodeComment>v0.1 · Recife, PE</CodeComment>
-      </section>
+      </aside>
 
       <main id="conteudo" className="flex items-center justify-center px-6 py-12">
         <div className="flex w-full max-w-sm flex-col gap-8">

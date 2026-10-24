@@ -1,0 +1,54 @@
+name: Atualizar capturas
+
+# Gera as capturas de referência da regressão visual no mesmo container do job qualidade
+# e faz commit delas na branch. Rode quando uma mudança visual for intencional:
+# pelo rótulo atualizar-capturas no PR, ou manualmente (Actions > Atualizar capturas).
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch que recebe as capturas
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  atualizar:
+    if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'atualizar-capturas'
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    env:
+      BRANCH: ${{ github.event_name == 'workflow_dispatch' && inputs.branch || github.head_ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH }}
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - run: npm ci
+      - run: npm run build
+      - run: npm run e2e:update
+        env:
+          CI: "true"
+      - name: Commit das capturas
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add e2e/__screenshots__
+          if git diff --cached --quiet; then
+            echo "Capturas sem mudança."
+          else
+            git commit -m "Atualiza as capturas de regressão visual"
+            git push origin "HEAD:$BRANCH"
+          fi
+      - name: Tira o rótulo para poder usar de novo
+        if: github.event_name == 'pull_request'
+        run: |
+          curl -fsS -X DELETE \
+            -H "Authorization: Bearer ${{ github.token }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels/atualizar-capturas"

@@ -38,7 +38,7 @@ describe("DatePicker", () => {
         <DatePicker defaultValue={october} onValueChange={onValueChange} />
       </FormField>,
     );
-    const trigger = screen.getByRole("button", { name: /vencimento/i });
+    const trigger = screen.getByRole("combobox", { name: /vencimento/i });
     expect(trigger).toHaveTextContent("15/10/2026");
 
     await user.click(trigger);
@@ -55,10 +55,10 @@ describe("DatePicker", () => {
   it("Esc fecha sem mudar a data", async () => {
     const user = userEvent.setup();
     render(<DatePicker aria-label="Vencimento" defaultValue={october} />);
-    await user.click(screen.getByRole("button", { name: "Vencimento" }));
+    await user.click(screen.getByRole("combobox", { name: "Vencimento" }));
     await user.keyboard("{ArrowRight}{Escape}");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Vencimento" })).toHaveTextContent("15/10/2026");
+    expect(screen.getByRole("combobox", { name: "Vencimento" })).toHaveTextContent("15/10/2026");
   });
 
   it("limpa a data e devolve o foco ao campo", async () => {
@@ -70,7 +70,7 @@ describe("DatePicker", () => {
     );
     expect(document.querySelector('input[name="vencimento"]')).toHaveValue("2026-10-15");
     await user.click(screen.getByRole("button", { name: "Limpar data" }));
-    const trigger = screen.getByRole("button", { name: /vencimento/i });
+    const trigger = screen.getByRole("combobox", { name: /vencimento/i });
     expect(trigger).toHaveTextContent("dd/mm/aaaa");
     expect(trigger).toHaveFocus();
     expect(document.querySelector('input[name="vencimento"]')).toHaveValue("");
@@ -79,7 +79,7 @@ describe("DatePicker", () => {
   it("bloqueia datas fora de fromDate e toDate", async () => {
     const user = userEvent.setup();
     render(<DatePicker aria-label="Vencimento" defaultValue={october} fromDate={new Date(2026, 9, 10)} toDate={new Date(2026, 9, 20)} />);
-    await user.click(screen.getByRole("button", { name: "Vencimento" }));
+    await user.click(screen.getByRole("combobox", { name: "Vencimento" }));
     expect(screen.getByRole("button", { name: /, 9 de outubro de 2026/i })).toBeDisabled();
     expect(screen.getByRole("button", { name: /, 21 de outubro de 2026/i })).toBeDisabled();
     expect(screen.getByRole("button", { name: /, 20 de outubro de 2026/i })).toBeEnabled();
@@ -109,7 +109,7 @@ describe("DatePicker", () => {
     render(<Form />);
     await user.click(screen.getByRole("button", { name: "Salvar" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("Escolha a data de vencimento.");
-    expect(screen.getByRole("button", { name: /vencimento/i })).toHaveAttribute("aria-invalid", "true");
+    expect(screen.getByRole("combobox", { name: /vencimento/i })).toHaveAttribute("aria-invalid", "true");
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
@@ -130,7 +130,7 @@ describe("DateRangePicker", () => {
       return <DateRangePicker aria-label="Período" value={range as never} onValueChange={setRange} numberOfMonths={1} />;
     }
     render(<Range />);
-    const trigger = screen.getByRole("button", { name: "Período" });
+    const trigger = screen.getByRole("combobox", { name: "Período" });
     await user.click(trigger);
     await user.click(screen.getByRole("button", { name: /20 de outubro de 2026/i }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();

@@ -83,9 +83,9 @@ export function ProgressDemo() {
   );
 }
 
-export function PaginationDemo({ pageCount }: { pageCount: number }) {
+export function PaginationDemo({ pageCount, label }: { pageCount: number; label: string }) {
   const [page, setPage] = useState(1);
-  return <Pagination page={page} pageCount={pageCount} onPageChange={setPage} />;
+  return <Pagination page={page} pageCount={pageCount} onPageChange={setPage} labels={{ navigation: label }} />;
 }
 
 export function DropdownMenuDemo() {
@@ -237,7 +237,7 @@ export function AppShellDemo({ theme }: { theme: string }) {
             <BreadcrumbTrail items={[{ label: "Início", href: "#" }, { label: current.label }]} />
             <Avatar name="Márcio Wendell" size="sm" className="ml-auto" />
           </AppShellHeader>
-          <AppShellMain id={`shell-main-${theme}`}>
+          <AppShellMain as="div" id={`shell-main-${theme}`}>
             <h4 className="font-display text-display-sm font-extrabold">{current.label}</h4>
             <p className="mt-2 text-ink-soft">Conteúdo da página. Recolha a sidebar pelo botão do cabeçalho.</p>
           </AppShellMain>

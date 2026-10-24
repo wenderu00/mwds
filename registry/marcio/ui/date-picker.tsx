@@ -65,7 +65,9 @@ function PickerShell({
         <PopoverTrigger asChild>
           <button
             type="button"
+            role="combobox"
             aria-haspopup="dialog"
+            aria-expanded={open}
             aria-controls={contentId}
             data-placeholder={hasValue ? undefined : ""}
             disabled={disabled}

@@ -1127,12 +1127,12 @@ export const docs: ComponentDoc[] = [
       {
         title: "Poucas páginas",
         code: `<Pagination page={page} pageCount={5} onPageChange={setPage} />`,
-        render: () => <PaginationDemo pageCount={5} />,
+        render: (theme) => <PaginationDemo pageCount={5} label={`Paginação com poucas páginas, tema ${theme === "dark" ? "escuro" : "claro"}`} />,
       },
       {
         title: "Muitas páginas",
         code: `<Pagination page={page} pageCount={42} onPageChange={setPage} />`,
-        render: () => <PaginationDemo pageCount={42} />,
+        render: (theme) => <PaginationDemo pageCount={42} label={`Paginação com muitas páginas, tema ${theme === "dark" ? "escuro" : "claro"}`} />,
       },
     ],
     a11y: [
@@ -1858,6 +1858,7 @@ export const docs: ComponentDoc[] = [
       { name: "AppShell skipLinkLabel / mainId", type: "string", description: "Link de pular para o conteúdo e o id do main." },
       { name: "AppShellSidebar brand / footer", type: "ReactNode", description: "Topo e rodapé da sidebar." },
       { name: "AppShellNavGroup label", type: "ReactNode", description: "Título do grupo; some quando recolhido." },
+      { name: "AppShellMain as", type: '"main" | "div"', default: '"main"', description: "Use div quando o AppShell fica dentro de uma página que já tem main." },
       { name: "AppShellNavItem", type: "{ label, icon, active, badge, href, asChild }", description: "Item de navegação; active marca a página atual. Com asChild, passe um link vazio (como NextLink) e o ícone e o rótulo entram dentro dele." },
       { name: "AppShellHeader", type: "componente", description: "Cabeçalho com os botões de menu (mobile) e recolher (desktop) e o que você colocar." },
       { name: "useAppShell", type: "hook", description: "Lê e muda collapsed e mobileOpen." },
@@ -2212,17 +2213,18 @@ export const docs: ComponentDoc[] = [
       {
         title: "Um dia",
         code: `<Calendar mode="single" selected={data} onSelect={setData} />`,
-        render: () => <Calendar mode="single" defaultMonth={new Date(2026, 9, 1)} selected={new Date(2026, 9, 15)} />,
+        render: () => <Calendar mode="single" aria-label="Calendário de um dia" defaultMonth={new Date(2026, 9, 1)} selected={new Date(2026, 9, 15)} />,
       },
       {
         title: "Intervalo",
         code: `<Calendar mode="range" selected={periodo} onSelect={setPeriodo} />`,
-        render: () => <Calendar mode="range" defaultMonth={new Date(2026, 9, 1)} selected={{ from: new Date(2026, 9, 12), to: new Date(2026, 9, 16) }} />,
+        render: () => <Calendar mode="range" aria-label="Calendário de intervalo" defaultMonth={new Date(2026, 9, 1)} selected={{ from: new Date(2026, 9, 12), to: new Date(2026, 9, 16) }} />,
       },
     ],
     a11y: [
       "A grade tem role grid, com o mês e o ano como nome. Cada dia é um botão com a data por extenso, e o dia de hoje é anunciado como Hoje.",
       "O dia escolhido usa accent com texto on-accent; o intervalo, accent-soft. Hoje ganha borda e peso, não só cor.",
+      "Com mais de um calendário na página, dê um aria-label a cada um: ele também nomeia a barra de navegação.",
     ],
     keyboard: [
       { keys: "Setas", action: "Movem o foco entre os dias. Passar do fim do mês troca de mês." },
@@ -2290,7 +2292,7 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: [
-      "O gatilho é um botão que recebe o rótulo, a descrição e o erro do FormField.",
+      "O gatilho tem role combobox, abre um diálogo (aria-haspopup dialog) e recebe o rótulo, a descrição, o erro e o obrigatório do FormField.",
       "Ao abrir, o foco vai para o dia escolhido ou para hoje. Ao escolher ou fechar, volta ao gatilho.",
       "O botão de limpar tem nome próprio (Limpar data) e devolve o foco ao campo.",
     ],
@@ -2575,7 +2577,7 @@ export const docs: ComponentDoc[] = [
         ),
       },
     ],
-    a11y: ["TableHead usa th com scope col.", "Use TableCaption ou aria-label para nomear a tabela.", "Números em mono e alinhados à direita."],
+    a11y: ["TableHead usa th com scope col.", "O contêiner entra no Tab para quem usa teclado conseguir rolar a tabela na horizontal.", "Use TableCaption ou aria-label para nomear a tabela.", "Números em mono e alinhados à direita."],
   },
   {
     slug: "data-table",
