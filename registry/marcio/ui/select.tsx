@@ -5,19 +5,24 @@ import type { ComponentProps } from "react";
 import { Check, ChevronDown } from "lucide-react";
 import { cn } from "@/registry/marcio/lib/utils";
 import { useFormField } from "@/registry/marcio/ui/form-field";
+import { controlHeights, triggerClasses, type ControlSize } from "@/registry/marcio/ui/input";
 
 export const Select = SelectPrimitive.Root;
 export const SelectGroup = SelectPrimitive.Group;
 export const SelectValue = SelectPrimitive.Value;
 
-export function SelectTrigger({ className, children, ...props }: ComponentProps<typeof SelectPrimitive.Trigger>) {
+export type SelectTriggerProps = ComponentProps<typeof SelectPrimitive.Trigger> & { size?: ControlSize };
+
+export function SelectTrigger({ className, children, size = "md", ...props }: SelectTriggerProps) {
   const field = useFormField();
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       {...field?.controlProps}
       className={cn(
-        "flex h-control w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-control border border-line-control bg-ground px-3 text-left text-base text-ink transition-colors duration-base ease-standard hover:border-accent-line disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-danger-text data-[placeholder]:text-ink-muted [&>span]:truncate",
+        triggerClasses,
+        controlHeights[size],
+        "[&>span]:truncate",
         className,
       )}
       {...props}

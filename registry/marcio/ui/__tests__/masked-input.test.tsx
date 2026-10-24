@@ -72,10 +72,11 @@ describe("CurrencyInput", () => {
     render(<Price />);
     const input = screen.getByRole("textbox", { name: "Preço" });
     await user.type(input, "123456");
-    expect(input).toHaveValue("R$ 1.234,56");
+    expect(input).toHaveValue("1.234,56");
+    expect(input).toHaveAccessibleDescription("R$");
     expect(screen.getByRole("status")).toHaveTextContent("123456");
     await user.type(input, "{Backspace}");
-    expect(input).toHaveValue("R$ 123,45");
+    expect(input).toHaveValue("123,45");
     await user.clear(input);
     expect(input).toHaveValue("");
     expect(screen.getByRole("status")).toHaveTextContent("null");

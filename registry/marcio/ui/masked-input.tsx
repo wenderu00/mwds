@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, type ChangeEvent } from "react";
-import { formatBRL, formatCep, formatCnpj, formatCpf, formatPhone, onlyDigits } from "@/registry/marcio/lib/br";
+import { useId, useState, type ChangeEvent } from "react";
+import { formatCep, formatCnpj, formatCpf, formatPhone, onlyDigits } from "@/registry/marcio/lib/br";
 import { Input, type InputProps } from "@/registry/marcio/ui/input";
 
 const masks = {
@@ -62,7 +62,18 @@ export type CurrencyInputProps = BaseProps & {
   onValueChange?: (cents: number | null) => void;
 };
 
-export function CurrencyInput({ value: controlledValue, defaultValue = null, onValueChange, onChange, name, ...props }: CurrencyInputProps) {
+const amount = new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+export function CurrencyInput({
+  value: controlledValue,
+  defaultValue = null,
+  onValueChange,
+  onChange,
+  name,
+  "aria-describedby": ariaDescribedBy,
+  ...props
+}: CurrencyInputProps) {
+  const prefixId = useId();
   const [innerValue, setInnerValue] = useState(defaultValue);
   const value = controlledValue === undefined ? innerValue : controlledValue;
 
@@ -80,10 +91,13 @@ export function CurrencyInput({ value: controlledValue, defaultValue = null, onV
         data-slot="currency-input"
         inputMode="numeric"
         autoComplete="off"
-        placeholder="R$ 0,00"
+        placeholder="0,00"
         {...props}
+        // O R$ fica no slot de início; a descrição faz o leitor de tela dizer a moeda junto do valor.
+        start={<span id={prefixId}>R$</span>}
+        aria-describedby={[prefixId, ariaDescribedBy].filter(Boolean).join(" ")}
         type="text"
-        value={value === null ? "" : formatBRL(value)}
+        value={value === null ? "" : amount.format(value / 100)}
         onChange={handleChange}
       />
       {name && <input type="hidden" name={name} value={value ?? ""} />}

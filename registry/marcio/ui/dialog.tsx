@@ -21,19 +21,23 @@ export function DialogOverlay({ className, ...props }: ComponentProps<typeof Dia
   );
 }
 
+export const dialogSizes = { sm: "max-w-sm", md: "max-w-lg", lg: "max-w-2xl" } as const;
+
 export type DialogContentProps = ComponentProps<typeof DialogPrimitive.Content> & {
   closeLabel?: string;
   showClose?: boolean;
+  size?: keyof typeof dialogSizes;
 };
 
-export function DialogContent({ className, children, closeLabel = "Fechar", showClose = true, ...props }: DialogContentProps) {
+export function DialogContent({ className, children, closeLabel = "Fechar", showClose = true, size = "md", ...props }: DialogContentProps) {
   return (
     <DialogPortal>
       <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "fixed top-1/2 left-1/2 z-dialog flex max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 flex-col gap-6 overflow-y-auto rounded-card border border-line-strong bg-surface p-6 text-ink motion-safe:data-[state=open]:animate-mw-pop-in",
+          "fixed top-1/2 left-1/2 z-dialog flex max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col gap-6 overflow-y-auto rounded-card border border-line-strong bg-surface p-6 text-ink motion-safe:data-[state=open]:animate-mw-pop-in",
+          dialogSizes[size],
           className,
         )}
         {...props}
