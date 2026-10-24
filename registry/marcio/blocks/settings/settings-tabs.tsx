@@ -3,20 +3,21 @@
 import { useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { Alert } from "@/registry/marcio/ui/alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/registry/marcio/ui/alert-dialog";
 import { Avatar } from "@/registry/marcio/ui/avatar";
 import { Button } from "@/registry/marcio/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/marcio/ui/card";
 import { Combobox } from "@/registry/marcio/ui/combobox";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/registry/marcio/ui/dialog";
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { Input } from "@/registry/marcio/ui/input";
 import { RadioGroup, RadioGroupOption } from "@/registry/marcio/ui/radio-group";
@@ -200,27 +201,23 @@ function Account() {
         </Alert>
       </CardContent>
       <CardFooter>
-        <Dialog>
-          <DialogTrigger asChild>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
             <Button variant="danger">Excluir minha conta</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Excluir sua conta?</DialogTitle>
-              <DialogDescription>Todos os seus dados serão apagados. Essa ação não pode ser desfeita.</DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="secondary">Cancelar</Button>
-              </DialogClose>
-              <DialogClose asChild>
-                <Button variant="danger" onClick={() => toast({ tone: "info", title: "Nada foi excluído", description: "Esta é uma tela de demonstração." })}>
-                  Excluir conta
-                </Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Excluir sua conta?</AlertDialogTitle>
+              <AlertDialogDescription>Todos os seus dados serão apagados. Essa ação não pode ser desfeita.</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction onClick={() => toast({ tone: "info", title: "Nada foi excluído", description: "Esta é uma tela de demonstração." })}>
+                Excluir conta
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </CardFooter>
     </Card>
   );

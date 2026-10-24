@@ -37,6 +37,27 @@ describe("listing example", () => {
     expect(screen.getByRole("table")).toBeInTheDocument();
   });
 
+  it("deletes a project only after confirming in an alert dialog", async () => {
+    const user = userEvent.setup();
+    withProviders(<ProjectsView />);
+    const openDelete = async () => {
+      await user.click(screen.getByRole("button", { name: "Mais ações para Ouvidoria Digital" }));
+      await user.click(await screen.findByRole("menuitem", { name: "Excluir" }));
+      return screen.findByRole("alertdialog", { name: "Excluir projeto?" });
+    };
+
+    let dialog = await openDelete();
+    expect(within(dialog).getByRole("button", { name: "Cancelar" })).toHaveFocus();
+    await user.click(within(dialog).getByRole("button", { name: "Cancelar" }));
+    await waitFor(() => expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument());
+    expect(screen.getByRole("row", { name: /Ouvidoria Digital/ })).toBeInTheDocument();
+
+    dialog = await openDelete();
+    await user.click(within(dialog).getByRole("button", { name: "Excluir" }));
+    expect(await screen.findByText("Projeto excluído")).toBeInTheDocument();
+    expect(screen.queryByRole("row", { name: /Ouvidoria Digital/ })).not.toBeInTheDocument();
+  });
+
   it("archives a project after confirmation and can undo", async () => {
     const user = userEvent.setup();
     withProviders(<ProjectsView />);

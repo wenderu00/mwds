@@ -3,7 +3,7 @@
 import { Check, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
-import { Button } from "@/registry/marcio/ui/button";
+import { IconButton } from "@/registry/marcio/ui/icon-button";
 
 type CopyState = "idle" | "copied" | "failed";
 
@@ -35,9 +35,9 @@ export function CodeBlock({ title, code, className }: { title: string; code: str
           <span role="status" className={cn("font-mono text-mono-xs", state === "failed" ? "text-danger-text" : "text-ink-muted")}>
             {messages[state]}
           </span>
-          <Button variant="ghost" size="sm" className="px-2.5" aria-label={`Copiar ${title}`} onClick={copy}>
+          <IconButton size="sm" aria-label={`Copiar ${title}`} onClick={copy}>
             {state === "copied" ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
-          </Button>
+          </IconButton>
         </div>
       </div>
       <pre className="overflow-x-auto p-4 font-mono text-mono-xs text-ink-soft">

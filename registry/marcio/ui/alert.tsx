@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { CircleAlert, CircleCheck, CircleX, Info, X } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
+import { IconButton } from "@/registry/marcio/ui/icon-button";
 
 export const alertVariants = cva(
   "relative grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-3 gap-y-1 rounded-control border px-4 py-3 text-ink [&>svg]:mt-0.5 [&>svg]:size-5",
@@ -65,14 +66,9 @@ export function Alert({
         {action && <div className="mt-2 flex flex-wrap gap-2">{action}</div>}
       </div>
       {onDismiss && (
-        <button
-          type="button"
-          aria-label={dismissLabel}
-          onClick={onDismiss}
-          className="absolute top-2 right-2 inline-flex size-8 cursor-pointer items-center justify-center rounded-control text-ink-muted transition-colors duration-base hover:bg-ground hover:text-ink"
-        >
-          <X aria-hidden="true" className="size-4" />
-        </button>
+        <IconButton aria-label={dismissLabel} size="sm" onClick={onDismiss} className="absolute top-1.5 right-1.5 enabled:hover:bg-ground">
+          <X aria-hidden="true" />
+        </IconButton>
       )}
     </div>
   );

@@ -2,6 +2,16 @@
 
 import { Ellipsis, Pencil } from "lucide-react";
 import { useMemo, useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/registry/marcio/ui/alert-dialog";
 import { Badge } from "@/registry/marcio/ui/badge";
 import { BreadcrumbTrail } from "@/registry/marcio/ui/breadcrumb";
 import { Button } from "@/registry/marcio/ui/button";
@@ -25,6 +35,7 @@ import {
 } from "@/registry/marcio/ui/dropdown-menu";
 import { EmptyState } from "@/registry/marcio/ui/empty-state";
 import { FormField } from "@/registry/marcio/ui/form-field";
+import { IconButton } from "@/registry/marcio/ui/icon-button";
 import { Input } from "@/registry/marcio/ui/input";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { Pagination } from "@/registry/marcio/ui/pagination";
@@ -59,6 +70,7 @@ export function ProjectsView() {
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [archiving, setArchiving] = useState<Project | null>(null);
+  const [deleting, setDeleting] = useState<Project | null>(null);
 
   const filtered = useMemo(() => {
     const term = normalize(query.trim());
@@ -99,6 +111,16 @@ export function ProjectsView() {
       }
       return next;
     });
+  }
+
+  function remove(project: Project) {
+    setItems((current) => current.filter((p) => p.id !== project.id));
+    setSelected((current) => {
+      const next = new Set(current);
+      next.delete(project.id);
+      return next;
+    });
+    toast({ tone: "success", title: "Projeto excluído", description: project.name });
   }
 
   function archive(project: Project) {
@@ -271,23 +293,21 @@ export function ProjectsView() {
                       <div className="flex justify-end gap-1">
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <Button
-                              variant="ghost"
+                            <IconButton
                               size="sm"
-                              className="px-2.5"
                               aria-label={`Editar ${project.name}`}
                               onClick={() => toast({ title: `Editar ${project.name}`, description: "Aqui abriria o formulário de edição." })}
                             >
                               <Pencil aria-hidden="true" />
-                            </Button>
+                            </IconButton>
                           </TooltipTrigger>
                           <TooltipContent>Editar</TooltipContent>
                         </Tooltip>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="sm" className="px-2.5" aria-label={`Mais ações para ${project.name}`}>
+                            <IconButton size="sm" aria-label={`Mais ações para ${project.name}`}>
                               <Ellipsis aria-hidden="true" />
-                            </Button>
+                            </IconButton>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
                             <DropdownMenuLabel>{project.name}</DropdownMenuLabel>
@@ -300,10 +320,7 @@ export function ProjectsView() {
                               Arquivar
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                              variant="danger"
-                              onSelect={() => toast({ tone: "danger", title: "Exclusão bloqueada", description: "Neste exemplo nada é apagado." })}
-                            >
+                            <DropdownMenuItem variant="danger" onSelect={() => setDeleting(project)}>
                               Excluir
                             </DropdownMenuItem>
                           </DropdownMenuContent>
@@ -324,6 +341,19 @@ export function ProjectsView() {
           </div>
         </>
       )}
+
+      <AlertDialog open={deleting !== null} onOpenChange={(open) => !open && setDeleting(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Excluir projeto?</AlertDialogTitle>
+            <AlertDialogDescription>{deleting?.name} e os dados ligados a ele serão apagados. Essa ação não pode ser desfeita.</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={() => deleting && remove(deleting)}>Excluir</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <Dialog open={archiving !== null} onOpenChange={(open) => !open && setArchiving(null)}>
         <DialogContent>

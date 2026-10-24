@@ -1,5 +1,5 @@
 import { Check, ChevronDown, CircleAlert, Folder, Info, LayoutDashboard, Menu, Pencil, Settings, X } from "lucide-react";
-import { Button } from "@/registry/marcio/ui/button";
+import { IconButton } from "@/registry/marcio/ui/icon-button";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { FoundationSection, SpecTable, ThemePair } from "../_docs/section";
 
@@ -43,9 +43,9 @@ export function IconsSection() {
             ))}
             <div className="flex flex-col gap-2">
               <CodeComment>botão só de ícone</CodeComment>
-              <Button variant="ghost" size="sm" className="self-start px-2.5" aria-label="Editar projeto">
+              <IconButton size="sm" className="self-start" aria-label="Editar projeto">
                 <Pencil aria-hidden="true" />
-              </Button>
+              </IconButton>
             </div>
           </div>
         )}

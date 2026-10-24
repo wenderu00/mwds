@@ -5,6 +5,7 @@ import { Toast as ToastPrimitive } from "radix-ui";
 import { useSyncExternalStore, type ComponentProps, type ReactNode } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/registry/marcio/lib/utils";
+import { IconButton } from "@/registry/marcio/ui/icon-button";
 
 export type ToastTone = "neutral" | "success" | "danger" | "warning" | "info";
 
@@ -97,11 +98,10 @@ export function Toaster({ closeLabel = "Fechar", label = "Notificações", durat
           className={toastVariants({ tone: item.tone })}
         >
           <ToastPrimitive.Title className="text-base font-semibold">{item.title}</ToastPrimitive.Title>
-          <ToastPrimitive.Close
-            aria-label={closeLabel}
-            className="row-span-2 inline-flex size-8 cursor-pointer items-center justify-center rounded-control text-ink-muted transition-colors duration-base hover:bg-band hover:text-ink"
-          >
-            <X aria-hidden="true" className="size-4" />
+          <ToastPrimitive.Close asChild>
+            <IconButton aria-label={closeLabel} size="sm" className="row-span-2 enabled:hover:bg-band">
+              <X aria-hidden="true" />
+            </IconButton>
           </ToastPrimitive.Close>
           {item.description && (
             <ToastPrimitive.Description className="text-sm text-ink-soft">{item.description}</ToastPrimitive.Description>

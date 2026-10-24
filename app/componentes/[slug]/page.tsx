@@ -107,8 +107,34 @@ export default async function ComponentPage({ params }: { params: Promise<Params
             </div>
           </section>
 
+          {doc.keyboard && (
+            <section className="flex flex-col gap-6">
+              <SectionTitle index="03" as="h2" size="md" id="teclado">
+                Teclado
+              </SectionTitle>
+              <div className="overflow-x-auto rounded-card border border-line">
+                <table aria-labelledby="teclado" className="w-full min-w-[480px] border-collapse text-left">
+                  <thead className="bg-surface font-mono text-mono-xs text-ink-muted">
+                    <tr>
+                      <th scope="col" className="px-4 py-3 font-medium">tecla</th>
+                      <th scope="col" className="px-4 py-3 font-medium">ação</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {doc.keyboard.map((entry) => (
+                      <tr key={entry.keys} className="border-t border-line align-top">
+                        <td className="px-4 py-3 font-mono text-mono-xs whitespace-nowrap text-accent-text">{entry.keys}</td>
+                        <td className="px-4 py-3 text-base text-ink-soft">{entry.action}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          )}
+
           <section className="flex flex-col gap-6">
-            <SectionTitle index="03" as="h2" size="md" id="acessibilidade">
+            <SectionTitle index={doc.keyboard ? "04" : "03"} as="h2" size="md" id="acessibilidade">
               Acessibilidade
             </SectionTitle>
             <ul className="flex list-disc flex-col gap-2 pl-5 text-ink-soft marker:text-accent-text">

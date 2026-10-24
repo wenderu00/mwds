@@ -169,7 +169,8 @@ describe("settings block", () => {
     withToaster(<SettingsPage />);
     await user.click(screen.getByRole("tab", { name: "conta" }));
     await user.click(screen.getByRole("button", { name: "Excluir minha conta" }));
-    const dialog = await screen.findByRole("dialog", { name: "Excluir sua conta?" });
+    const dialog = await screen.findByRole("alertdialog", { name: "Excluir sua conta?" });
+    expect(within(dialog).getByRole("button", { name: "Cancelar" })).toHaveFocus();
     await user.click(within(dialog).getByRole("button", { name: "Excluir conta" }));
     expect(await screen.findByText("Nada foi excluído")).toBeInTheDocument();
   });

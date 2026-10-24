@@ -5,6 +5,7 @@ import { Dialog as DialogPrimitive } from "radix-ui";
 import type { ComponentProps } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/registry/marcio/lib/utils";
+import { IconButton } from "@/registry/marcio/ui/icon-button";
 import { DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogTitle } from "@/registry/marcio/ui/dialog";
 
 export const Sheet = DialogPrimitive.Root;
@@ -48,11 +49,10 @@ export function SheetContent({ side, className, children, closeLabel = "Fechar",
       >
         {children}
         {showClose && (
-          <DialogPrimitive.Close
-            aria-label={closeLabel}
-            className="absolute top-4 right-4 inline-flex size-9 cursor-pointer items-center justify-center rounded-control text-ink-muted transition-colors duration-base hover:bg-band hover:text-ink"
-          >
-            <X aria-hidden="true" className="size-4" />
+          <DialogPrimitive.Close asChild>
+            <IconButton aria-label={closeLabel} size="sm" className="absolute top-4 right-4 enabled:hover:bg-band">
+              <X aria-hidden="true" />
+            </IconButton>
           </DialogPrimitive.Close>
         )}
       </DialogPrimitive.Content>
