@@ -128,14 +128,24 @@ Contraste mínimo medido de cada `-text` sobre ground, band, surface e o própri
 
 Todo título em `font-display` usa peso 800 (extrabold), como pede o prompt.
 
-## 7. Forma e movimento
+## 7. Forma, movimento, camadas e densidade
+
+Decisões e motivos no ADR 0015. A página de fundação mostra cada grupo nos dois temas.
 
 | Token | Valor |
 |---|---|
-| radius-control | `rounded-md` (6px): botões, inputs, badges |
-| radius-card | `rounded-xl` (12px): cards, dialog, tabela |
-| radius-pill | `rounded-full`: chips e switch |
-| shadow | nenhuma |
-| duration-fast | 200ms (transições de cor e borda) |
-| ease-out | cubic-bezier(0.2, 0.7, 0.2, 1) |
+| rounded-mark | 4px: checkbox, link, item de menu |
+| rounded-control | 6px: botões, inputs, badges, popover, tooltip, toast |
+| rounded-card | 12px: cards, dialog, tabela, estado vazio |
+| rounded-full | círculo: avatar, switch, rádio |
+| sombra | nenhuma; elevação por superfície e borda, `bg-scrim` atrás de Dialog e Sheet |
+| duration-fast / base / slow | 100ms / 200ms / 300ms (0,01ms com `prefers-reduced-motion: reduce`) |
+| ease-standard | cubic-bezier(0.2, 0.7, 0.2, 1) |
+| ease-enter | cubic-bezier(0, 0, 0.2, 1) |
+| ease-exit | cubic-bezier(0.4, 0, 1, 1) |
+| z-behind … z-tooltip | -1, 0, 10 (sticky), 20 (sheet), 30 (dialog), 40 (popover), 50 (toast), 60 (tooltip) |
+| max-w-content / max-w-measure | 1200px / 680px |
+| h-control | 44px; 36px com `data-density="compacta"`, 48px com `"ampla"` |
+| py-cell-y | 12px; 8px compacta, 16px ampla |
+| ícones | lucide-react, `size-4` / `size-5` / `size-6` |
 | dot-grid | pontos de 1.2px, passo 28px, `accent-line` a 55%, máscara radial 70% |

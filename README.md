@@ -194,7 +194,7 @@ npm run dev
 | `npm run dev` | Site de documentação em `http://localhost:3000`, que também serve o registry em `/r` |
 | `npm run build` | Gera o `registry.json`, roda `shadcn build` (saída em `public/r`) e o `next build`, que exporta o site estático para `out/` |
 | `npm run registry:build` | Só o registry |
-| `npm run lint` | ESLint, com a regra que proíbe cores fora dos tokens, e a checagem de cores em CSS |
+| `npm run lint` | ESLint, com as regras que proíbem cores e valores de forma, movimento e camada fora dos tokens, e a checagem de cores em CSS |
 | `npm run test` | Validação de contraste e testes (Vitest, Testing Library e vitest-axe) |
 | `npm run contrast` | Tabela de contraste de todos os pares nos dois temas |
 | `npm run accent-scale` | Mostra a escala do accent gerada em OKLCH |
@@ -206,7 +206,9 @@ Rode `npm run registry:build` em outro terminal depois de mudar algo em `registr
 
 - **Cores só em `tokens.css`.** A regra `mw/no-raw-color` reprova hex, `rgb()`, `oklch()`, valores arbitrários como `bg-[#fff]` e classes da paleta padrão como `bg-red-500`.
 - **Contraste validado.** `scripts/contrast-pairs.ts` lista cada par de token usado. Um par novo num componente entra na lista; `npm run test` falha se algum ficar abaixo de 4,5:1 (texto) ou 3:1 (bordas de controle e foco).
-- **Movimento opcional.** Toda animação usa `motion-safe:` ou fica dentro de `prefers-reduced-motion: no-preference`.
+- **Forma, movimento e camadas só por token.** A regra `mw/no-raw-token` reprova `rounded-xl`, `duration-200`, `ease-out`, `z-50`, `shadow-*` e medidas arbitrárias como `p-[13px]`. Use `rounded-control`, `duration-base`, `ease-standard`, `z-dialog`, `h-control` e `max-w-content` (ADR 0015).
+- **Movimento opcional.** Toda animação usa `motion-safe:` ou fica dentro de `prefers-reduced-motion: no-preference`. As durações viram 0,01ms com `reduce`.
+- **Ícones do lucide-react**, em `size-4`, `size-5` ou `size-6`, com `aria-hidden` quando são decorativos.
 - **Acessibilidade testada.** Cada componente tem testes de comportamento e de axe nos dois temas.
 
 ### Adicionar um componente
