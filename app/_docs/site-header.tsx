@@ -10,6 +10,7 @@ export const container = "mx-auto max-w-content px-6";
 const nav = [
   { href: "/primeiros-passos", label: "primeiros passos" },
   { href: "/", label: "fundação" },
+  { href: "/escrita", label: "escrita" },
   { href: "/componentes", label: "componentes" },
   { href: "/exemplos", label: "exemplos" },
   { href: "/blocos", label: "blocos" },
@@ -66,6 +67,7 @@ const portugueseNames: Record<string, string[]> = {
 const commandEntries: SiteCommandEntry[] = [
   { href: "/primeiros-passos", label: "Primeiros passos: instalar o @mw/ui num projeto", group: "Páginas", keywords: ["instalar", "instalação", "setup", "começar", "registry", "shadcn"] },
   { href: "/", label: "Fundação: cor, tipografia, espaçamento, movimento e mais", group: "Páginas", keywords: ["tokens", "cores", "raio", "camadas", "z-index", "densidade", "ícones"] },
+  { href: "/escrita", label: "Escrita: voz, tom e formatos pt-BR", group: "Páginas", keywords: ["tom", "voz", "texto", "mensagem de erro", "microcopy", "formatos", "datas", "moeda"] },
   { href: "/componentes", label: "Catálogo de componentes", group: "Páginas" },
   { href: "/exemplos", label: "Telas de exemplo", group: "Páginas" },
   { href: "/blocos", label: "Blocos", group: "Páginas", keywords: ["telas prontas", "templates"] },
