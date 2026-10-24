@@ -4,6 +4,44 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.10.0] - 2026-10-24
+
+### Novo
+
+- `size` (`sm`, `md`, `lg`) em Input, SelectTrigger, Combobox, DatePicker, DateRangePicker e NumberInput, com as mesmas alturas do Button. A densidade mostra campo e botão lado a lado.
+- Input com slots `start` e `end`, dentro do contorno: ícone, prefixo ou botão. O `className` continua indo para o input.
+- `size` em DialogContent e AlertDialogContent.
+- Item `marcio-tema`, que cria `app/tema.css` para personalizar tokens sem perder as mudanças no próximo add.
+- [ADR 0018](docs/adr/0018-api-congelada.md): convenções de size, variant, tone, erro e loading, e a lista de APIs congeladas até o 2.0.
+
+### Mudou
+
+- Switch e as opções do RadioGroup mostram a borda de erro com `aria-invalid`.
+- O erro próprio do DatePicker é anunciado (`role="alert"`), e os botões dele ficam no slot de fim do Input.
+- Select, Combobox e DateRangePicker usam as classes de gatilho exportadas pelo Input.
+- Typography, Separator, Kbd, Accordion, Collapsible e Calendar passam a estáveis.
+- O 1.0 sai com a API dos primitivos congelada e uso real em produção, não mais quando todos os componentes forem estáveis (ADR 0016 revisado).
+
+### Quebra compatibilidade
+
+- `size` em Input e NumberInput deixa de ser o atributo nativo de largura em caracteres e passa a ser a altura (`sm`, `md`, `lg`).
+- CurrencyInput mostra o R$ no slot de início: o texto do campo passa de `R$ 1.234,56` para `1.234,56`. O valor entregue continua em centavos.
+
+**Como migrar**
+
+```bash
+npx shadcn@latest add @marcio/input @marcio/masked-input @marcio/number-input --overwrite
+```
+
+```tsx
+// antes: largura pelo atributo nativo
+<Input size={20} />
+// depois: largura por classe
+<Input className="w-48" />
+```
+
+Testes que liam o texto do CurrencyInput passam a esperar o número sem o R$.
+
 ## [0.9.1] - 2026-10-24
 
 ### Novo
