@@ -27,10 +27,11 @@ export function ContrastSection() {
   return (
     <FoundationSection
       id="contraste"
-      index="12"
+      index="13"
       kicker="wcag aa"
       title="Contraste de cada par"
-      intro={<p>Gerado por npm run contrast. Texto precisa de 4,5:1; bordas de controle, borda acesa e foco precisam de 3:1.</p>}
+      band
+      intro={<p>Gerado por npm run contrast. Texto precisa de 4,5:1; bordas de controle, borda acesa, foco e séries de gráfico precisam de 3:1; os passos da rampa sequencial, de 2:1.</p>}
     >
       <SpecTable
         head={["frente", "fundo", "uso", "mín.", "escuro", "claro"]}
