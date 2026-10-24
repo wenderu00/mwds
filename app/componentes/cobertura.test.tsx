@@ -15,7 +15,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 // Itens de infraestrutura: entram por dependência e não têm página própria.
-const infra = new Set(["marcio-tokens", "font-bricolage", "font-plex-sans", "font-plex-mono", "utils", "br", "marcio-ui"]);
+const infra = new Set(["marcio-tokens", "marcio-tema", "font-bricolage", "font-plex-sans", "font-plex-mono", "utils", "br", "marcio-ui"]);
 
 const uiItems = registry.items.filter((item) => item.type === "registry:ui").map((item) => item.name);
 const blockItems = registry.items.filter((item) => item.type === "registry:block").map((item) => item.name);

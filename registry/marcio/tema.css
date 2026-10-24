@@ -1,0 +1,22 @@
+/*
+ * Personalização do @mw/ui neste projeto.
+ *
+ * Importe este arquivo depois do globals.css no app/layout.tsx:
+ *   import "./globals.css";
+ *   import "./tema.css";
+ *
+ * Todo `npx shadcn add @marcio/...` reescreve os tokens no globals.css, então
+ * as mudanças ficam aqui. Se um token também muda dentro de um tema, repita o
+ * seletor daquele bloco, por exemplo:
+ *
+ * :root {
+ *   --mw-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+ * }
+ *
+ * [data-theme="light"] {
+ *   --mw-band: var(--mw-surface);
+ * }
+ *
+ * Depois de trocar uma cor, rode o npm run contrast do repositório do @mw/ui
+ * com os mesmos valores para conferir o contraste.
+ */

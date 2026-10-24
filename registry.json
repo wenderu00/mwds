@@ -526,6 +526,19 @@
       }
     },
     {
+      "name": "marcio-tema",
+      "type": "registry:file",
+      "title": "Arquivo de personalização",
+      "description": "Cria app/tema.css, vazio e comentado, para sobrescrever tokens sem perder as mudanças no próximo add.",
+      "files": [
+        {
+          "path": "registry/marcio/tema.css",
+          "type": "registry:file",
+          "target": "app/tema.css"
+        }
+      ]
+    },
+    {
       "name": "font-bricolage",
       "type": "registry:font",
       "title": "Bricolage Grotesque",

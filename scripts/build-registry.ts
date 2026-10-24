@@ -143,6 +143,15 @@ export function buildRegistry() {
     css: tokensCss().css,
   };
 
+  // Separado do marcio-tokens: init e add sobrescrevem arquivos, e este é do projeto.
+  const theme: RegistryItem = {
+    name: "marcio-tema",
+    type: "registry:file",
+    title: "Arquivo de personalização",
+    description: "Cria app/tema.css, vazio e comentado, para sobrescrever tokens sem perder as mudanças no próximo add.",
+    files: [{ path: "registry/marcio/tema.css", type: "registry:file", target: "app/tema.css" }],
+  };
+
   const utils: RegistryItem = {
     name: "utils",
     type: "registry:lib",
@@ -222,7 +231,7 @@ export function buildRegistry() {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "marcio",
     homepage: baseUrl,
-    items: [tokens, ...fontItems, utils, br, ...uiItems, ...blockItems, all],
+    items: [tokens, theme, ...fontItems, utils, br, ...uiItems, ...blockItems, all],
   };
 }
 
