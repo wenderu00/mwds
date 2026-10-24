@@ -1,6 +1,17 @@
-import { Pencil } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/registry/marcio/ui/alert-dialog";
 import { Avatar, AvatarGroup } from "@/registry/marcio/ui/avatar";
 import { Badge } from "@/registry/marcio/ui/badge";
 import { BreadcrumbTrail } from "@/registry/marcio/ui/breadcrumb";
@@ -33,6 +44,7 @@ import { FormField } from "@/registry/marcio/ui/form-field";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { DotGrid } from "@/registry/marcio/ui/dot-grid";
 import { GlitchText } from "@/registry/marcio/ui/glitch-text";
+import { IconButton } from "@/registry/marcio/ui/icon-button";
 import { Input } from "@/registry/marcio/ui/input";
 import { Kicker } from "@/registry/marcio/ui/kicker";
 import { Label } from "@/registry/marcio/ui/label";
@@ -86,6 +98,8 @@ export type DocExample = {
   stacked?: boolean;
 };
 
+export type DocKey = { keys: string; action: string };
+
 export type ComponentDoc = {
   slug: string;
   name: string;
@@ -95,6 +109,7 @@ export type ComponentDoc = {
   props: DocProp[];
   examples: DocExample[];
   a11y: string[];
+  keyboard?: DocKey[];
 };
 
 const classNameProp: DocProp = { name: "className", type: "string", description: "Mesclado com as classes do componente via cn." };
@@ -358,6 +373,96 @@ export const docs: ComponentDoc[] = [
       "type é button por padrão, para não enviar formulários sem querer. Use type=\"submit\" quando precisar.",
       "Use no máximo um botão primário por área da tela.",
       "Durante o loading o rótulo continua visível e o estado é anunciado.",
+      "Botão só com ícone: use IconButton, que exige aria-label.",
+    ],
+  },
+  {
+    slug: "icon-button",
+    name: "IconButton",
+    group: "primitivos",
+    summary: "Botão quadrado só com ícone. Exige aria-label; combine com Tooltip para mostrar o mesmo texto a quem usa o mouse.",
+    file: "icon-button.tsx",
+    props: [
+      { name: "aria-label", type: "string", description: "Obrigatório. É o nome do botão para leitor de tela e comando de voz." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "36px, altura de controle (acompanha a densidade) ou 48px." },
+      { name: "variant", type: '"ghost" | "secondary" | "primary" | "danger"', default: '"ghost"', description: "As mesmas variantes do Button." },
+      { name: "loading", type: "boolean", default: "false", description: "Troca o ícone pelo spinner, desabilita e marca aria-busy." },
+      asChildProp,
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Tamanhos",
+        code: `<IconButton size="sm" variant="secondary" aria-label="Editar projeto"><Pencil aria-hidden="true" /></IconButton>\n<IconButton variant="secondary" aria-label="Editar projeto"><Pencil aria-hidden="true" /></IconButton>\n<IconButton size="lg" variant="secondary" aria-label="Editar projeto"><Pencil aria-hidden="true" /></IconButton>`,
+        render: () => (
+          <>
+            <IconButton size="sm" variant="secondary" aria-label="Editar projeto">
+              <Pencil aria-hidden="true" />
+            </IconButton>
+            <IconButton variant="secondary" aria-label="Editar projeto">
+              <Pencil aria-hidden="true" />
+            </IconButton>
+            <IconButton size="lg" variant="secondary" aria-label="Editar projeto">
+              <Pencil aria-hidden="true" />
+            </IconButton>
+          </>
+        ),
+      },
+      {
+        title: "Variantes",
+        code: `<IconButton aria-label="Editar projeto"><Pencil aria-hidden="true" /></IconButton>\n<IconButton variant="secondary" aria-label="Editar projeto"><Pencil aria-hidden="true" /></IconButton>\n<IconButton variant="primary" aria-label="Editar projeto"><Pencil aria-hidden="true" /></IconButton>\n<IconButton variant="danger" aria-label="Excluir projeto"><Trash2 aria-hidden="true" /></IconButton>`,
+        render: () => (
+          <>
+            <IconButton aria-label="Editar projeto">
+              <Pencil aria-hidden="true" />
+            </IconButton>
+            <IconButton variant="secondary" aria-label="Editar projeto">
+              <Pencil aria-hidden="true" />
+            </IconButton>
+            <IconButton variant="primary" aria-label="Editar projeto">
+              <Pencil aria-hidden="true" />
+            </IconButton>
+            <IconButton variant="danger" aria-label="Excluir projeto">
+              <Trash2 aria-hidden="true" />
+            </IconButton>
+          </>
+        ),
+      },
+      {
+        title: "Com Tooltip",
+        description: "O Tooltip repete o aria-label para quem usa o mouse. Os dois textos devem ser iguais.",
+        code: `<Tooltip>\n  <TooltipTrigger asChild>\n    <IconButton aria-label="Editar projeto">\n      <Pencil aria-hidden="true" />\n    </IconButton>\n  </TooltipTrigger>\n  <TooltipContent>Editar projeto</TooltipContent>\n</Tooltip>`,
+        render: () => (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <IconButton aria-label="Editar projeto">
+                <Pencil aria-hidden="true" />
+              </IconButton>
+            </TooltipTrigger>
+            <TooltipContent>Editar projeto</TooltipContent>
+          </Tooltip>
+        ),
+      },
+      {
+        title: "Carregando",
+        code: `<IconButton variant="secondary" aria-label="Salvar" loading><Pencil aria-hidden="true" /></IconButton>`,
+        render: () => (
+          <IconButton variant="secondary" aria-label="Salvar" loading>
+            <Pencil aria-hidden="true" />
+          </IconButton>
+        ),
+      },
+    ],
+    a11y: [
+      "O nome vem do aria-label, que o tipo exige: sem ele o código não compila.",
+      "O ícone leva aria-hidden, para o leitor de tela anunciar só o nome.",
+      "Use o mesmo texto no aria-label e no Tooltip.",
+      "Em loading, o ícone dá lugar ao spinner e o botão fica com aria-busy.",
+    ],
+    keyboard: [
+      { keys: "Tab", action: "Leva o foco ao botão. Com Tooltip, mostra a dica." },
+      { keys: "Enter / Espaço", action: "Ativa o botão." },
+      { keys: "Esc", action: "Fecha o Tooltip, quando houver." },
     ],
   },
   {
@@ -1302,24 +1407,27 @@ export const docs: ComponentDoc[] = [
     ],
     examples: [
       {
-        title: "Confirmação destrutiva",
-        code: `<Dialog>\n  <DialogTrigger asChild><Button variant="danger">Excluir projeto</Button></DialogTrigger>\n  <DialogContent>\n    <DialogHeader>\n      <DialogTitle>Excluir projeto?</DialogTitle>\n      <DialogDescription>Essa ação não pode ser desfeita.</DialogDescription>\n    </DialogHeader>\n    <DialogFooter>\n      <DialogClose asChild><Button variant="secondary">Cancelar</Button></DialogClose>\n      <Button variant="danger">Excluir</Button>\n    </DialogFooter>\n  </DialogContent>\n</Dialog>`,
+        title: "Formulário curto",
+        code: `<Dialog>\n  <DialogTrigger asChild><Button variant="secondary">Renomear projeto</Button></DialogTrigger>\n  <DialogContent>\n    <DialogHeader>\n      <DialogTitle>Renomear projeto</DialogTitle>\n      <DialogDescription>O nome aparece na lista e nos relatórios.</DialogDescription>\n    </DialogHeader>\n    <FormField label="Nome"><Input defaultValue="ResenhaHub" /></FormField>\n    <DialogFooter>\n      <DialogClose asChild><Button variant="secondary">Cancelar</Button></DialogClose>\n      <DialogClose asChild><Button>Salvar</Button></DialogClose>\n    </DialogFooter>\n  </DialogContent>\n</Dialog>`,
         render: () => (
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="danger">Excluir projeto</Button>
+              <Button variant="secondary">Renomear projeto</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Excluir projeto?</DialogTitle>
-                <DialogDescription>O ResenhaHub e todos os dados ligados a ele serão apagados. Essa ação não pode ser desfeita.</DialogDescription>
+                <DialogTitle>Renomear projeto</DialogTitle>
+                <DialogDescription>O nome aparece na lista e nos relatórios.</DialogDescription>
               </DialogHeader>
+              <FormField label="Nome">
+                <Input defaultValue="ResenhaHub" />
+              </FormField>
               <DialogFooter>
                 <DialogClose asChild>
                   <Button variant="secondary">Cancelar</Button>
                 </DialogClose>
                 <DialogClose asChild>
-                  <Button variant="danger">Excluir</Button>
+                  <Button>Salvar</Button>
                 </DialogClose>
               </DialogFooter>
             </DialogContent>
@@ -1331,6 +1439,75 @@ export const docs: ComponentDoc[] = [
       "O foco vai para dentro do diálogo e fica preso nele; Esc fecha e devolve o foco ao gatilho.",
       "DialogTitle e DialogDescription dão nome e descrição ao diálogo.",
       "O diálogo abre no tema da página, não no painel do exemplo.",
+      "Para confirmar uma ação destrutiva, use AlertDialog: ele não fecha com clique fora e abre com o foco em Cancelar.",
+    ],
+  },
+  {
+    slug: "alert-dialog",
+    name: "AlertDialog",
+    group: "compostos",
+    summary: "Confirmação de ação destrutiva ou sem volta. Abre com o foco em Cancelar e não fecha com clique fora.",
+    file: "alert-dialog.tsx",
+    props: [
+      { name: "open / onOpenChange", type: "boolean / (open) => void", description: "Uso controlado, por exemplo para abrir a partir de um item de menu." },
+      { name: "AlertDialogAction variant", type: '"danger" | "primary" | "secondary" | "ghost"', default: '"danger"', description: "Botão de confirmação. Aceita as props do Button, como onClick e loading." },
+      { name: "AlertDialogCancel variant", type: '"secondary" | "ghost" | "primary" | "danger"', default: '"secondary"', description: "Botão que fecha sem confirmar. Recebe o foco ao abrir." },
+    ],
+    examples: [
+      {
+        title: "Confirmação destrutiva",
+        code: `<AlertDialog>\n  <AlertDialogTrigger asChild><Button variant="danger">Excluir projeto</Button></AlertDialogTrigger>\n  <AlertDialogContent>\n    <AlertDialogHeader>\n      <AlertDialogTitle>Excluir projeto?</AlertDialogTitle>\n      <AlertDialogDescription>Essa ação não pode ser desfeita.</AlertDialogDescription>\n    </AlertDialogHeader>\n    <AlertDialogFooter>\n      <AlertDialogCancel>Cancelar</AlertDialogCancel>\n      <AlertDialogAction onClick={excluir}>Excluir</AlertDialogAction>\n    </AlertDialogFooter>\n  </AlertDialogContent>\n</AlertDialog>`,
+        render: () => (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="danger">Excluir projeto</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Excluir projeto?</AlertDialogTitle>
+                <AlertDialogDescription>O ResenhaHub e todos os dados ligados a ele serão apagados. Essa ação não pode ser desfeita.</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction>Excluir</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        ),
+      },
+      {
+        title: "Ação sem volta, não destrutiva",
+        description: "Quando a ação não apaga nada mas não pode ser desfeita, troque a variante da confirmação.",
+        code: `<AlertDialogAction variant="primary">Publicar</AlertDialogAction>`,
+        render: () => (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="secondary">Publicar versão</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Publicar a versão 2.0?</AlertDialogTitle>
+                <AlertDialogDescription>Todos os usuários passam a ver a versão nova. Uma versão publicada não volta para rascunho.</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction variant="primary">Publicar</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        ),
+      },
+    ],
+    a11y: [
+      "Tem role alertdialog, com nome no AlertDialogTitle e descrição no AlertDialogDescription.",
+      "Abre com o foco em Cancelar: um Enter apressado não confirma nada.",
+      "Clicar fora não fecha. A pessoa precisa escolher Cancelar, a confirmação ou Esc.",
+      "Use só para ação destrutiva ou sem volta. Ação que pode ser desfeita usa Dialog ou um toast com Desfazer.",
+    ],
+    keyboard: [
+      { keys: "Tab / Shift + Tab", action: "Alterna entre Cancelar e a confirmação. O foco não sai do diálogo." },
+      { keys: "Enter / Espaço", action: "Ativa o botão com foco." },
+      { keys: "Esc", action: "Fecha sem confirmar, como Cancelar, e devolve o foco ao gatilho." },
     ],
   },
   {
@@ -1471,14 +1648,14 @@ export const docs: ComponentDoc[] = [
     examples: [
       {
         title: "Em botão de ícone",
-        code: `<Tooltip>\n  <TooltipTrigger asChild>\n    <Button variant="ghost" size="sm" aria-label="Editar">\n      <Pencil aria-hidden="true" />\n    </Button>\n  </TooltipTrigger>\n  <TooltipContent>Editar projeto</TooltipContent>\n</Tooltip>`,
+        code: `<Tooltip>\n  <TooltipTrigger asChild>\n    <IconButton aria-label="Editar projeto">\n      <Pencil aria-hidden="true" />\n    </IconButton>\n  </TooltipTrigger>\n  <TooltipContent>Editar projeto</TooltipContent>\n</Tooltip>`,
         render: () => (
           <>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="sm" aria-label="Editar">
+                <IconButton aria-label="Editar projeto">
                   <Pencil aria-hidden="true" />
-                </Button>
+                </IconButton>
               </TooltipTrigger>
               <TooltipContent>Editar projeto</TooltipContent>
             </Tooltip>

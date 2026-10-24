@@ -525,6 +525,29 @@
       ]
     },
     {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "AlertDialog",
+      "description": "Confirmação de ação destrutiva ou sem volta. Abre com o foco em Cancelar e não fecha com clique fora.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
@@ -534,6 +557,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/utils.json"
       ],
@@ -557,6 +581,7 @@
         "radix-ui"
       ],
       "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/sheet.json",
         "http://localhost:3000/r/tooltip.json",
@@ -808,6 +833,7 @@
         "radix-ui"
       ],
       "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/utils.json"
       ],
@@ -927,6 +953,27 @@
       ],
       "categories": [
         "identidade"
+      ]
+    },
+    {
+      "name": "icon-button",
+      "type": "registry:ui",
+      "title": "IconButton",
+      "description": "Botão quadrado só com ícone. Exige aria-label; combine com Tooltip para mostrar o mesmo texto a quem usa o mouse.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/icon-button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
       ]
     },
     {
@@ -1204,6 +1251,7 @@
       ],
       "registryDependencies": [
         "http://localhost:3000/r/dialog.json",
+        "http://localhost:3000/r/icon-button.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/utils.json"
       ],
@@ -1376,6 +1424,7 @@
         "radix-ui"
       ],
       "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/utils.json"
       ],
@@ -1592,12 +1641,12 @@
       ],
       "registryDependencies": [
         "http://localhost:3000/r/admin-shell.json",
+        "http://localhost:3000/r/alert-dialog.json",
         "http://localhost:3000/r/alert.json",
         "http://localhost:3000/r/avatar.json",
         "http://localhost:3000/r/button.json",
         "http://localhost:3000/r/card.json",
         "http://localhost:3000/r/combobox.json",
-        "http://localhost:3000/r/dialog.json",
         "http://localhost:3000/r/form-field.json",
         "http://localhost:3000/r/input.json",
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1632,6 +1681,7 @@
       "title": "@mw/ui completo",
       "description": "Instala tokens, fontes e todos os componentes.",
       "registryDependencies": [
+        "http://localhost:3000/r/alert-dialog.json",
         "http://localhost:3000/r/alert.json",
         "http://localhost:3000/r/app-shell.json",
         "http://localhost:3000/r/avatar.json",
@@ -1650,6 +1700,7 @@
         "http://localhost:3000/r/empty-state.json",
         "http://localhost:3000/r/form-field.json",
         "http://localhost:3000/r/glitch-text.json",
+        "http://localhost:3000/r/icon-button.json",
         "http://localhost:3000/r/input.json",
         "http://localhost:3000/r/kicker.json",
         "http://localhost:3000/r/label.json",

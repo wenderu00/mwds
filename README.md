@@ -81,8 +81,8 @@ Todos os pares usados passam WCAG AA nos dois temas. A tabela completa está em 
 | `font-bricolage`, `font-plex-sans`, `font-plex-mono` | font | Fontes via `next/font` |
 | `utils` | lib | Helper `cn` |
 | `kicker`, `section-title`, `code-comment`, `logo-block`, `dot-grid`, `typing-text`, `glitch-text` | ui | Identidade |
-| `button`, `input`, `textarea`, `label`, `checkbox`, `switch`, `radio-group`, `badge`, `avatar`, `skeleton`, `spinner`, `link` | ui | Primitivos |
-| `form-field`, `card`, `select`, `combobox`, `command`, `popover`, `dropdown-menu`, `dialog`, `sheet`, `toast`, `alert`, `tabs`, `table`, `pagination`, `breadcrumb`, `progress`, `tooltip` | ui | Compostos |
+| `button`, `icon-button`, `input`, `textarea`, `label`, `checkbox`, `switch`, `radio-group`, `badge`, `avatar`, `skeleton`, `spinner`, `link` | ui | Primitivos |
+| `form-field`, `card`, `select`, `combobox`, `command`, `popover`, `dropdown-menu`, `dialog`, `alert-dialog`, `sheet`, `toast`, `alert`, `tabs`, `table`, `pagination`, `breadcrumb`, `progress`, `tooltip` | ui | Compostos |
 | `page-header`, `empty-state`, `theme-toggle`, `command-palette`, `app-shell` | ui | Padrões |
 | `login`, `not-found`, `dashboard`, `settings` | block | Telas prontas (ver abaixo) |
 | `admin-shell` | block | Casca de painel usada por `dashboard` e `settings` |

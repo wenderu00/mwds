@@ -12,6 +12,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
+import { IconButton } from "@/registry/marcio/ui/icon-button";
 import { Sheet, SheetContent, SheetTitle } from "@/registry/marcio/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/registry/marcio/ui/tooltip";
 
@@ -229,28 +230,25 @@ export function AppShellHeader({
   ...props
 }: AppShellHeaderProps) {
   const { collapsed, setCollapsed, setMobileOpen, sidebarId } = useAppShell();
-  const iconButtonClass =
-    "inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-control text-ink-muted transition-colors duration-base hover:bg-surface hover:text-ink";
-
   return (
     <header
       data-slot="app-shell-header"
       className={cn("sticky top-0 z-sticky flex h-16 shrink-0 items-center gap-3 border-b border-line bg-ground px-4", className)}
       {...props}
     >
-      <button type="button" aria-label={menuLabel} onClick={() => setMobileOpen(true)} className={cn(iconButtonClass, "lg:hidden")}>
-        <Menu aria-hidden="true" className="size-5" />
-      </button>
-      <button
-        type="button"
+      <IconButton aria-label={menuLabel} size="sm" onClick={() => setMobileOpen(true)} className="[&_svg]:size-5 lg:hidden">
+        <Menu aria-hidden="true" />
+      </IconButton>
+      <IconButton
         aria-label={collapsed ? expandLabel : collapseLabel}
         aria-controls={sidebarId}
         aria-expanded={!collapsed}
+        size="sm"
         onClick={() => setCollapsed(!collapsed)}
-        className={cn(iconButtonClass, "hidden lg:inline-flex")}
+        className="hidden [&_svg]:size-5 lg:inline-flex"
       >
-        {collapsed ? <PanelLeftOpen aria-hidden="true" className="size-5" /> : <PanelLeftClose aria-hidden="true" className="size-5" />}
-      </button>
+        {collapsed ? <PanelLeftOpen aria-hidden="true" /> : <PanelLeftClose aria-hidden="true" />}
+      </IconButton>
       {children}
     </header>
   );
