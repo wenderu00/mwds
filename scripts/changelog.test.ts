@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { inline, parseChangelog, readChangelog } from "../app/novidades/changelog";
+import { componentsOf, entriesOf, inline, parseChangelog, readChangelog } from "../app/novidades/changelog";
 
 const pkg = JSON.parse(readFileSync("package.json", "utf8")) as { version: string };
 const releases = readChangelog();
@@ -60,6 +60,22 @@ describe("parser do CHANGELOG", () => {
     expect(() => parseChangelog("## 1.0.0\n")).toThrow(/linha 1/);
     expect(() => parseChangelog("## [1.0.0] - 2026-01-01\n\n### Adicionado\n")).toThrow(/seção desconhecida/);
     expect(() => parseChangelog("## [1.0.0] - 2026-01-01\n\n- solto\n")).toThrow(/fora de uma seção/);
+  });
+
+  it("acha os componentes citados em cada item, na ordem do texto", () => {
+    const names = ["Table", "DataTable", "Select", "CommandPalette", "Kbd"];
+    expect(componentsOf("O gatilho do CommandPalette usa o Kbd.", names)).toEqual(["CommandPalette", "Kbd"]);
+    expect(componentsOf("A listagem usa o DataTable; o select saiu.", names)).toEqual(["DataTable"]);
+    expect(componentsOf("Bloco `login`: o painel vira aside.", names)).toEqual(["bloco login"]);
+    expect(componentsOf("O CI roda nos PRs.", names)).toEqual([]);
+  });
+
+  it("transforma os itens de lista em linhas com o tipo da seção", () => {
+    const [release] = parseChangelog("## [1.0.0] - 2026-01-01\n\n### Novo\n\n- Select: busca.\n\n### Quebra compatibilidade\n\n- Table muda.\n\n**Como migrar**\n");
+    expect(entriesOf(release!, ["Select", "Table"])).toEqual([
+      { section: "Novo", components: ["Select"], text: "Select: busca." },
+      { section: "Quebra compatibilidade", components: ["Table"], text: "Table muda." },
+    ]);
   });
 
   it("separa código, negrito e link no texto", () => {

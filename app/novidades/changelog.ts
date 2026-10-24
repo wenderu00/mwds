@@ -99,3 +99,28 @@ export function inline(text: string): InlinePart[] {
   if (last < text.length) parts.push({ kind: "text", value: text.slice(last) });
   return parts;
 }
+
+export type ChangelogEntry = { section: string; components: string[]; text: string };
+
+const escape = (name: string) => name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Nomes de componente citados no item, na ordem em que aparecem; "Bloco `login`" vira "bloco login".
+export function componentsOf(text: string, names: string[]) {
+  const found: { name: string; index: number }[] = [];
+  for (const name of names) {
+    const match = text.match(new RegExp(`(?<![\\w-])${escape(name)}(?![\\w-])`));
+    if (match?.index !== undefined) found.push({ name, index: match.index });
+  }
+  for (const match of text.matchAll(/\b[Bb]loco `([\w-]+)`/g)) found.push({ name: `bloco ${match[1]}`, index: match.index });
+  return [...new Set(found.sort((a, b) => a.index - b.index).map((item) => item.name))];
+}
+
+export function entriesOf(release: ChangelogRelease, names: string[]): ChangelogEntry[] {
+  return release.sections.flatMap((section) =>
+    section.blocks.flatMap((block) =>
+      block.type === "list" ? block.items.map((text) => ({ section: section.title, components: componentsOf(text, names), text })) : [],
+    ),
+  );
+}
+
+export const isBreaking = (release: ChangelogRelease) => release.sections.some((section) => section.title === "Quebra compatibilidade");

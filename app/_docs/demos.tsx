@@ -1,7 +1,7 @@
 "use client";
 
 import { Folder, LayoutDashboard, Settings, Users } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
 import {
   AppShell,
@@ -34,6 +34,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/registry/marcio/ui/dropdown-menu";
+import { FileUpload, type FileUploadStatus } from "@/registry/marcio/ui/file-upload";
+import { FormField } from "@/registry/marcio/ui/form-field";
 import { LogoBlock } from "@/registry/marcio/ui/logo-block";
 import { Pagination } from "@/registry/marcio/ui/pagination";
 import { Progress } from "@/registry/marcio/ui/progress";
@@ -305,5 +307,47 @@ export function StepperDemo() {
         </Button>
       </div>
     </div>
+  );
+}
+
+// Envio simulado: 20% a cada 300ms; o segundo arquivo da lista cai em 60% na primeira tentativa.
+export function FileUploadProgressDemo({ id }: { id: string }) {
+  const [files, setFiles] = useState<File[]>([]);
+  const [status, setStatus] = useState(new Map<File, FileUploadStatus>());
+  const failed = useRef(new Set<File>());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setStatus((current) => {
+        let changed = false;
+        const next = new Map(current);
+        files.forEach((file, index) => {
+          const state = next.get(file) ?? { progress: 0 };
+          if (state.done || state.error || state.progress === undefined || state.progress === null) return;
+          changed = true;
+          const progress = state.progress + 20;
+          if (index === 1 && progress >= 60 && !failed.current.has(file)) {
+            failed.current.add(file);
+            next.set(file, { error: "A conexão caiu em 60%. Envie de novo." });
+          } else next.set(file, progress >= 100 ? { done: true } : { progress });
+        });
+        return changed ? next : current;
+      });
+    }, 300);
+    return () => clearInterval(timer);
+  }, [files]);
+
+  return (
+    <FormField label="Documentos" id={id} className="w-full">
+      <FileUpload
+        multiple
+        maxFiles={3}
+        hint="Escolha dois ou três arquivos para ver o envio"
+        value={files}
+        onValueChange={setFiles}
+        fileStatus={(file) => status.get(file) ?? { progress: 0 }}
+        onRetry={(file) => setStatus((current) => new Map(current).set(file, { progress: 0 }))}
+      />
+    </FormField>
   );
 }

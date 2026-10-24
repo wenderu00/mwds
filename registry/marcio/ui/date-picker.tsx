@@ -1,13 +1,15 @@
 "use client";
 
 import { CalendarDays, X } from "lucide-react";
-import { useId, useRef, useState, type ComponentProps, type ReactNode } from "react";
+import { useId, useRef, useState, type ChangeEvent, type ComponentProps, type FocusEvent, type ReactNode } from "react";
 import type { DateRange } from "react-day-picker";
+import { formatDateInput, parseDateBR } from "@/registry/marcio/lib/br";
 import { cn } from "@/registry/marcio/lib/utils";
 import { Calendar } from "@/registry/marcio/ui/calendar";
 import { useFormField } from "@/registry/marcio/ui/form-field";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/registry/marcio/ui/popover";
+import { Input } from "@/registry/marcio/ui/input";
+import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "@/registry/marcio/ui/popover";
 
 export type { DateRange };
 
@@ -119,11 +121,29 @@ function boundsOf(fromDate?: Date, toDate?: Date) {
   return { startMonth: fromDate, endMonth: toDate, disabled: disabled.length ? disabled : undefined };
 }
 
-export type DatePickerProps = PickerBaseProps & {
+export type DatePickerProps = Omit<
+  ComponentProps<"input">,
+  "value" | "defaultValue" | "onChange" | "children" | "type" | "placeholder"
+> & {
   value?: Date | null;
   defaultValue?: Date | null;
   onValueChange?: (date: Date | null) => void;
+  placeholder?: string;
+  fromDate?: Date;
+  toDate?: Date;
+  clearable?: boolean;
+  clearLabel?: string;
+  calendarLabel?: string;
+  invalidMessage?: string;
 };
+
+function rangeMessage(fromDate?: Date, toDate?: Date) {
+  if (fromDate && toDate) return `Escolha uma data entre ${formatDate(fromDate)} e ${formatDate(toDate)}.`;
+  if (fromDate) return `Escolha uma data a partir de ${formatDate(fromDate)}.`;
+  return `Escolha uma data até ${formatDate(toDate!)}.`;
+}
+
+const startOfDay = (date: Date) => new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
 
 export function DatePicker({
   value: controlledValue,
@@ -132,41 +152,163 @@ export function DatePicker({
   placeholder = "dd/mm/aaaa",
   fromDate,
   toDate,
+  clearable = false,
+  clearLabel = "Limpar data",
+  calendarLabel = "Abrir calendário",
+  invalidMessage = "Data inválida. Digite no formato dd/mm/aaaa.",
+  name,
+  className,
+  disabled,
+  ref,
+  onBlur,
+  onKeyDown,
+  "aria-describedby": ariaDescribedBy,
+  "aria-invalid": ariaInvalid,
   ...props
 }: DatePickerProps) {
+  const field = useFormField();
+  const contentId = useId();
+  const errorId = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [innerValue, setInnerValue] = useState(defaultValue);
+  const [draft, setDraft] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const value = controlledValue === undefined ? innerValue : controlledValue;
+  const text = draft ?? (value ? formatDate(value) : "");
 
   function change(next: Date | null) {
     if (controlledValue === undefined) setInnerValue(next);
     onValueChange?.(next);
   }
 
+  function check(date: Date | null) {
+    if (!date) return invalidMessage;
+    if ((fromDate && startOfDay(date) < startOfDay(fromDate)) || (toDate && startOfDay(date) > startOfDay(toDate))) {
+      return rangeMessage(fromDate, toDate);
+    }
+    return null;
+  }
+
+  function commit(next: Date | null) {
+    setDraft(null);
+    setError(null);
+    if (next?.getTime() !== value?.getTime()) change(next);
+  }
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const masked = formatDateInput(event.target.value);
+    setError(null);
+    if (masked === "") return commit(null);
+    if (masked.length < 10) return setDraft(masked);
+    const date = parseDateBR(masked);
+    const problem = check(date);
+    if (problem) {
+      setDraft(masked);
+      setError(problem);
+      if (value) change(null);
+    } else commit(date);
+  }
+
+  function handleBlur(event: FocusEvent<HTMLInputElement>) {
+    if (draft !== null && draft.length < 10) {
+      setError(invalidMessage);
+      if (value) change(null);
+    }
+    onBlur?.(event);
+  }
+
+  function focusInput() {
+    inputRef.current?.focus();
+  }
+
+  const describedBy = [ariaDescribedBy ?? field?.controlProps["aria-describedby"], error ? errorId : null].filter(Boolean).join(" ") || undefined;
+  const hasValue = text !== "";
+
   return (
-    <PickerShell
-      {...props}
-      placeholder={placeholder}
-      label={value ? formatDate(value) : null}
-      hiddenValue={value ? isoDate(value) : ""}
-      hasValue={value !== null}
-      onClear={() => change(null)}
-      open={open}
-      onOpenChange={setOpen}
-      calendar={
+    <Popover open={open} onOpenChange={setOpen}>
+      <div data-slot="date-picker" className={cn("flex w-full min-w-0 flex-col gap-1.5", className)}>
+        <PopoverAnchor asChild>
+          <div className="relative flex w-full min-w-0 items-center">
+            <Input
+              {...field?.controlProps}
+              type="text"
+              inputMode="numeric"
+              autoComplete="off"
+              maxLength={10}
+              placeholder={placeholder}
+              disabled={disabled}
+              {...props}
+              aria-describedby={describedBy}
+              aria-invalid={ariaInvalid ?? field?.controlProps["aria-invalid"] ?? (error ? true : undefined)}
+              value={text}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              onKeyDown={(event) => {
+                if (event.altKey && event.key === "ArrowDown") {
+                  event.preventDefault();
+                  setOpen(true);
+                }
+                onKeyDown?.(event);
+              }}
+              className={cn("font-mono tabular-nums", clearable && hasValue ? "pr-20" : "pr-11")}
+              ref={(node) => {
+                inputRef.current = node;
+                if (typeof ref === "function") return ref(node);
+                if (ref) ref.current = node;
+              }}
+            />
+            <div className="absolute right-1 flex items-center">
+              {clearable && hasValue && !disabled && (
+                <IconButton
+                  size="sm"
+                  aria-label={clearLabel}
+                  onClick={() => {
+                    commit(null);
+                    focusInput();
+                  }}
+                >
+                  <X aria-hidden="true" />
+                </IconButton>
+              )}
+              <PopoverTrigger asChild>
+                <IconButton size="sm" aria-label={calendarLabel} aria-controls={contentId} disabled={disabled}>
+                  <CalendarDays aria-hidden="true" />
+                </IconButton>
+              </PopoverTrigger>
+            </div>
+          </div>
+        </PopoverAnchor>
+        {error && (
+          <p id={errorId} className="text-sm text-danger-text">
+            {error}
+          </p>
+        )}
+      </div>
+      {name && <input type="hidden" name={name} value={value ? isoDate(value) : ""} />}
+      <PopoverContent
+        id={contentId}
+        aria-labelledby={field?.labelId}
+        aria-label={field ? undefined : (props["aria-label"] ?? "Calendário")}
+        className="w-auto p-3"
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          focusInput();
+        }}
+      >
         <Calendar
           mode="single"
           autoFocus
           selected={value ?? undefined}
           defaultMonth={value ?? undefined}
           onSelect={(date) => {
-            change(date ?? null);
+            commit(date ?? null);
             setOpen(false);
           }}
           {...boundsOf(fromDate, toDate)}
         />
-      }
-    />
+      </PopoverContent>
+    </Popover>
   );
 }
 

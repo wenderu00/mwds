@@ -35,6 +35,7 @@ export const pairs: Pair[] = [
   { fg: "ground", bg: "ink", kind: "text", usage: "Tooltip invertido" },
   ...onSurfaces("line-control", "ui", "Borda de input, checkbox e botão secundário"),
   ...onSurfaces("accent-line", "ui", "Borda acesa no hover e aba ativa"),
+  ...onSurfaces("accent-edge", "ui", "Contorno do preenchimento amarelo: botão primário, checkbox, radio, switch, página atual e dia selecionado"),
   ...onSurfaces("focus", "ui", "Outline de foco"),
   ...[1, 2, 3, 4, 5, 6, 7, 8].flatMap((n) => onSurfaces(`chart-${n}`, "ui", `Série ${n} da paleta categórica de gráficos`)),
   ...[1, 2, 3, 4, 5].flatMap((n) =>

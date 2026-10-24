@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatBRL, formatCep, formatCnpj, formatCpf, formatPhone, isValidCnpj, isValidCpf, onlyDigits } from "./br";
+import { formatBRL, formatCep, formatCnpj, formatCpf, formatDateInput, formatPhone, isValidCnpj, isValidCpf, onlyDigits, parseDateBR } from "./br";
 
 describe("máscaras", () => {
   it("tira tudo que não é dígito", () => {
@@ -25,6 +25,23 @@ describe("máscaras", () => {
     expect(formatBRL(123456)).toBe("R$ 1.234,56");
     expect(formatBRL(5)).toBe("R$ 0,05");
     expect(formatBRL(0)).toBe("R$ 0,00");
+  });
+});
+
+describe("datas", () => {
+  it("formata dd/mm/aaaa enquanto a pessoa digita", () => {
+    expect(formatDateInput("1")).toBe("1");
+    expect(formatDateInput("151")).toBe("15/1");
+    expect(formatDateInput("15102026")).toBe("15/10/2026");
+    expect(formatDateInput("15/10/20261")).toBe("15/10/2026");
+  });
+
+  it("lê dd/mm/aaaa e recusa datas que não existem ou incompletas", () => {
+    expect(parseDateBR("15/10/2026")).toEqual(new Date(2026, 9, 15));
+    expect(parseDateBR("29/02/2028")).toEqual(new Date(2028, 1, 29));
+    expect(parseDateBR("31/02/2026")).toBeNull();
+    expect(parseDateBR("15/13/2026")).toBeNull();
+    expect(parseDateBR("15/10/26")).toBeNull();
   });
 });
 

@@ -55,6 +55,7 @@ Regra única: **o amarelo puro é sempre preenchimento com texto preto. Quando o
 | on-accent | #000000 | #000000 | Texto sobre accent |
 | accent-text | #ece41f | #6e6600 | Links, Kicker, número de seção, ícones de destaque |
 | accent-line | #ece41f | #6e6600 | Borda que acende no hover, aba ativa, cursor do terminal, DotGrid |
+| accent-edge | #ece41f | #6e6600 | Contorno de 1px de todo preenchimento amarelo que marca estado: botão primário, checkbox, radio, switch, página atual, dia selecionado ([ADR 0017](adr/0017-contorno-do-accent.md)) |
 | accent-soft | #29280d | #f9f9cc | Fundo suave: item selecionado, badge suave |
 | focus | #ece41f | #6e6600 | Outline de foco (3px, offset 3px) |
 

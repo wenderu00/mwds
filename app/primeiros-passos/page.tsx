@@ -9,6 +9,7 @@ import { Preview } from "../_docs/preview";
 import { publishedRegistryUrl } from "../_docs/registry-url";
 import { FoundationSection, SpecTable } from "../_docs/section";
 import { container, SiteHeader } from "../_docs/site-header";
+import { SiteFooter } from "../_docs/site-footer";
 
 export const metadata: Metadata = { title: "Primeiros passos · @mw/ui" };
 
@@ -87,6 +88,17 @@ const themeOverrideCode = `:root {
   --mw-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 }`;
 
+const themeInlineCode = `@theme inline {
+  --color-*: initial;
+  --color-accent: var(--mw-accent);
+  --color-ink: var(--mw-ink);
+  --radius-*: initial;
+  --radius-control: 6px;
+  --radius-card: 12px;
+  --z-index-popover: 40;
+  /* ... */
+}`;
+
 const manualCss = `@import "tailwindcss";
 @import "./tokens.css";`;
 
@@ -155,6 +167,21 @@ export default function GettingStartedPage() {
             <p>É este trecho, gravado pelo init no components.json, que faz os comandos com @marcio/ funcionarem nos próximos passos:</p>
           </div>
           <CodeBlock title="components.json" code={registriesCode} />
+          <div className="flex max-w-measure flex-col gap-3 text-ink-soft">
+            <h3 className="font-display text-display-sm font-extrabold text-ink">E o Tailwind?</h3>
+            <p>
+              Não há tailwind.config. No Tailwind v4 a configuração mora no CSS: o bloco @theme inline que o init escreve no globals.css transforma cada token em
+              utilitário. Nada mais precisa ser configurado.
+            </p>
+          </div>
+          <CodeBlock title="app/globals.css, trecho gravado pelo init" code={themeInlineCode} />
+          <CodeComment>
+            o bloco zera --color-*, --radius-* e --shadow-*: bg-blue-500, rounded-md e shadow-lg deixam de existir, de propósito
+          </CodeComment>
+          <p className="max-w-measure text-ink-soft">
+            Use os nomes do sistema: bg-accent, text-ink-soft, border-line-control, rounded-control, rounded-card, z-popover, duration-base. Uma classe padrão que
+            sumiu não dá erro: ela só não gera CSS, então confira no navegador se algo ficou sem cor ou sem raio.
+          </p>
         </FoundationSection>
 
         <FoundationSection
@@ -283,6 +310,7 @@ export default function GettingStartedPage() {
           </ol>
         </FoundationSection>
       </main>
+      <SiteFooter />
     </div>
   );
 }

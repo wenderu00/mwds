@@ -1,9 +1,10 @@
 "use client";
 
-import { FileText, Upload, X } from "lucide-react";
+import { Check, FileText, RotateCw, Upload, X } from "lucide-react";
 import { useId, useRef, useState, type ChangeEvent, type ComponentProps, type DragEvent, type ReactNode } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
+import { Progress } from "@/registry/marcio/ui/progress";
 
 const decimal = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
 
@@ -31,6 +32,9 @@ export function matchesAccept(file: File, accept?: string) {
 
 export type FileRejection = { file: File; reason: "type" | "size" | "count"; message: string };
 
+// Estado do envio de um arquivo, controlado por quem faz o upload. progress null é progresso indeterminado.
+export type FileUploadStatus = { progress?: number | null; error?: ReactNode; done?: boolean };
+
 const sameFile = (a: File, b: File) => a.name === b.name && a.size === b.size && a.lastModified === b.lastModified;
 
 export type FileUploadProps = Omit<ComponentProps<"input">, "type" | "value" | "defaultValue" | "onChange" | "children"> & {
@@ -45,6 +49,11 @@ export type FileUploadProps = Omit<ComponentProps<"input">, "type" | "value" | "
   acceptLabel?: string;
   listLabel?: string;
   removeLabel?: (file: File) => string;
+  fileStatus?: (file: File) => FileUploadStatus | undefined;
+  onRetry?: (file: File) => void;
+  retryLabel?: (file: File) => string;
+  progressLabel?: (file: File) => string;
+  doneLabel?: ReactNode;
 };
 
 export function FileUpload({
@@ -61,6 +70,11 @@ export function FileUpload({
   acceptLabel,
   listLabel = "Arquivos selecionados",
   removeLabel = (file) => `Remover ${file.name}`,
+  fileStatus,
+  onRetry,
+  retryLabel = (file) => `Enviar ${file.name} de novo`,
+  progressLabel = (file) => `Enviando ${file.name}`,
+  doneLabel = "enviado",
   disabled,
   className,
   id,
@@ -178,16 +192,39 @@ export function FileUpload({
 
       {files.length > 0 && (
         <ul aria-label={listLabel} className="flex flex-col divide-y divide-line rounded-card border border-line">
-          {files.map((file) => (
-            <li key={`${file.name}-${file.size}-${file.lastModified}`} className="flex items-center gap-3 py-2 pr-2 pl-4">
-              <FileText aria-hidden="true" className="size-5 shrink-0 text-ink-muted" />
-              <span className="min-w-0 flex-1 truncate text-ink">{file.name}</span>
-              <span className="shrink-0 font-mono text-mono-xs text-ink-muted">{formatBytes(file.size)}</span>
-              <IconButton size="sm" aria-label={removeLabel(file)} onClick={() => remove(file)} disabled={disabled}>
-                <X aria-hidden="true" />
-              </IconButton>
-            </li>
-          ))}
+          {files.map((file) => {
+            const status = fileStatus?.(file);
+            const uploading = status !== undefined && !status.error && !status.done && status.progress !== undefined;
+            return (
+              <li key={`${file.name}-${file.size}-${file.lastModified}`} className="flex flex-col gap-2 py-2 pr-2 pl-4">
+                <div className="flex items-center gap-3">
+                  <FileText aria-hidden="true" className="size-5 shrink-0 text-ink-muted" />
+                  <span className="min-w-0 flex-1 truncate text-ink">{file.name}</span>
+                  {status?.done && (
+                    <span className="flex shrink-0 items-center gap-1 font-mono text-mono-xs text-success-text">
+                      <Check aria-hidden="true" className="size-3.5" />
+                      {doneLabel}
+                    </span>
+                  )}
+                  <span className="shrink-0 font-mono text-mono-xs text-ink-muted">{formatBytes(file.size)}</span>
+                  {status?.error && onRetry && (
+                    <IconButton size="sm" aria-label={retryLabel(file)} onClick={() => onRetry(file)} disabled={disabled}>
+                      <RotateCw aria-hidden="true" />
+                    </IconButton>
+                  )}
+                  <IconButton size="sm" aria-label={removeLabel(file)} onClick={() => remove(file)} disabled={disabled}>
+                    <X aria-hidden="true" />
+                  </IconButton>
+                </div>
+                {uploading && <Progress size="sm" value={status.progress} aria-label={progressLabel(file)} className="pr-2 pl-8" />}
+                {status?.error && (
+                  <p role="alert" className="pr-2 pl-8 text-sm text-danger-text">
+                    {status.error}
+                  </p>
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

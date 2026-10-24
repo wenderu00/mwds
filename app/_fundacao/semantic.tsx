@@ -26,6 +26,7 @@ const tokenGroups: { title: string; items: { name: string; swatchClass: string }
       { name: "on-accent", swatchClass: "bg-on-accent" },
       { name: "accent-text", swatchClass: "bg-accent-text" },
       { name: "accent-line", swatchClass: "bg-accent-line" },
+      { name: "accent-edge", swatchClass: "bg-accent-edge" },
       { name: "accent-soft", swatchClass: "bg-accent-soft" },
       { name: "focus", swatchClass: "bg-focus" },
       { name: "mutant", swatchClass: "bg-mutant" },

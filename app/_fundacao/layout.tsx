@@ -3,10 +3,16 @@ import { FoundationSection, SpecTable, ThemePair } from "../_docs/section";
 
 const breakpoints = [
   ["sm", "640px", "formulários passam a duas colunas"],
-  ["md", "768px", "exemplos lado a lado, tabelas completas"],
-  ["lg", "1024px", "barra lateral fixa, pares de painéis em duas colunas"],
-  ["xl", "1280px", "sem mudança de layout; o conteúdo para em 1200px"],
+  ["md", "768px", "exemplos lado a lado, tabelas completas; a Navbar mostra os links"],
+  ["lg", "1024px", "AppShell com barra lateral fixa, pares de painéis em duas colunas"],
+  ["xl", "1280px", "o menu deste site sai do painel e vai para o cabeçalho; o conteúdo para em 1200px"],
   ["2xl", "1536px", "sem mudança de layout"],
+];
+
+const cutoffs = [
+  ["AppShell", "abaixo de lg (1024px)", "a barra lateral vira Sheet, aberta pelo botão de menu no cabeçalho"],
+  ["Navbar", "abaixo de md (768px)", "os links vão para um Sheet aberto pelo botão de menu"],
+  ["Cabeçalho deste site", "abaixo de xl (1280px)", "a navegação e o ThemeToggle vão para o menu"],
 ];
 
 const widths = [
@@ -48,6 +54,8 @@ export function LayoutSection() {
         <div className="flex flex-col gap-3">
           <CodeComment>breakpoints</CodeComment>
           <SpecTable head={["prefixo", "a partir de", "o que muda"]} rows={breakpoints} />
+          <CodeComment>pontos de corte dos componentes</CodeComment>
+          <SpecTable head={["componente", "quando", "o que acontece"]} rows={cutoffs} />
         </div>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-3">

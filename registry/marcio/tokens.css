@@ -45,6 +45,7 @@
   --mw-on-accent: #000000;
   --mw-accent-text: var(--mw-accent-300);
   --mw-accent-line: var(--mw-accent-300);
+  --mw-accent-edge: var(--mw-accent-300);
   --mw-accent-soft: var(--mw-accent-950);
   --mw-focus: var(--mw-accent-300);
 
@@ -103,6 +104,7 @@
     --mw-on-accent: #000000;
     --mw-accent-text: var(--mw-accent-700);
     --mw-accent-line: var(--mw-accent-700);
+    --mw-accent-edge: var(--mw-accent-700);
     --mw-accent-soft: var(--mw-accent-100);
     --mw-focus: var(--mw-accent-700);
 
@@ -162,6 +164,7 @@
   --mw-on-accent: #000000;
   --mw-accent-text: var(--mw-accent-700);
   --mw-accent-line: var(--mw-accent-700);
+  --mw-accent-edge: var(--mw-accent-700);
   --mw-accent-soft: var(--mw-accent-100);
   --mw-focus: var(--mw-accent-700);
 
@@ -253,6 +256,7 @@
   --color-on-accent: var(--mw-on-accent);
   --color-accent-text: var(--mw-accent-text);
   --color-accent-line: var(--mw-accent-line);
+  --color-accent-edge: var(--mw-accent-edge);
   --color-accent-soft: var(--mw-accent-soft);
   --color-focus: var(--mw-focus);
 

@@ -83,6 +83,29 @@ describe("FileUpload", () => {
     expect(screen.getByText("contrato.pdf")).toBeInTheDocument();
   });
 
+  it("mostra progresso, envio concluído e erro com nova tentativa por arquivo", async () => {
+    const user = userEvent.setup();
+    const onRetry = vi.fn();
+    const files = [pdf("a.pdf"), pdf("b.pdf"), pdf("c.pdf")];
+    const status = { "a.pdf": { progress: 40 }, "b.pdf": { done: true }, "c.pdf": { error: "A conexão caiu. Tente de novo." } } as const;
+    render(<FileUpload aria-label="Anexos" multiple value={files} fileStatus={(file) => status[file.name as keyof typeof status]} onRetry={onRetry} />);
+    expect(screen.getByRole("progressbar", { name: "Enviando a.pdf" })).toHaveAttribute("aria-valuenow", "40");
+    expect(screen.getAllByRole("progressbar")).toHaveLength(1);
+    expect(screen.getByText("enviado")).toBeInTheDocument();
+    expect(screen.getByText("A conexão caiu. Tente de novo.")).toHaveAttribute("role", "alert");
+    await user.click(screen.getByRole("button", { name: "Enviar c.pdf de novo" }));
+    expect(onRetry).toHaveBeenCalledWith(files[2]);
+  });
+
+  it("passa no axe com progresso e erro", async () => {
+    const files = [pdf("a.pdf"), pdf("c.pdf")];
+    await expectAccessibleInThemes(
+      <FormField label="Anexos">
+        <FileUpload multiple value={files} fileStatus={(file) => (file.name === "a.pdf" ? { progress: 60 } : { error: "Falhou." })} onRetry={() => {}} />
+      </FormField>,
+    );
+  });
+
   it("passa no axe nos dois temas", async () => {
     await expectAccessibleInThemes(
       <FormField label="Anexos" description="Até 3 arquivos.">

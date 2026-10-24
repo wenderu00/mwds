@@ -22,6 +22,14 @@ describe("página de fundação", () => {
     expect(section!.querySelector('[data-theme="light"]'), `${id} claro`).not.toBeNull();
   });
 
+  it("o layout documenta o ponto de corte do AppShell", () => {
+    const { container } = render(<FoundationPage />);
+    const section = container.querySelector<HTMLElement>("section#layout")!;
+    const row = within(section).getByRole("row", { name: /^AppShell/ });
+    expect(row).toHaveTextContent("abaixo de lg (1024px)");
+    expect(row).toHaveTextContent("Sheet");
+  });
+
   it("os gráficos têm nome, legenda, tooltip por categoria e tabela", async () => {
     const { container } = render(<FoundationPage />);
     const section = container.querySelector<HTMLElement>("section#graficos")!;

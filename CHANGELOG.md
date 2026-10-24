@@ -4,6 +4,45 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.9.0] - 2026-10-24
+
+### Novo
+
+- Cada página de componente mostra o comando `npx shadcn@latest add @marcio/<nome>` e as dependências, lidos do `registry.json`.
+- Exemplos certo e errado lado a lado em Button, Link, RadioGroup, Switch, Alert e GlitchText.
+- FileUpload: progresso, envio concluído e erro por arquivo, com `fileStatus`, `onRetry` e o botão Enviar de novo.
+- Token `accent-edge` e o [ADR 0017](docs/adr/0017-contorno-do-accent.md): todo preenchimento amarelo que marca estado tem contorno de 1px, oliva no tema claro.
+- `npm run contrast` verifica `accent-edge` sobre ground, band e surface, com mínimo de 3:1.
+- Lib `br`: `formatDateInput` e `parseDateBR`, para datas em dd/mm/aaaa.
+- Novidades em tabela: resumo das versões e, em cada versão, tipo, componente e mudança.
+- Rodapé do site com a versão atual e o link para Novidades.
+- Primeiros passos explica o `@theme inline` do Tailwind v4; Layout documenta os pontos de corte de AppShell e Navbar; Escrita ganha a regra de navegação e rótulos.
+
+### Mudou
+
+- Button primary, Checkbox, Radio e Switch marcados, a página atual da Pagination e o dia selecionado do Calendar ganham borda em `accent-edge`. No escuro nada muda na tela.
+- Quando usar: os blocos passam a se chamar use quando e prefira outro quando.
+
+### Quebra compatibilidade
+
+- DatePicker: o campo deixa de ser um botão com `role="combobox"` e vira um campo de texto com máscara dd/mm/aaaa, ao lado de um botão Abrir calendário. A data digitada é validada: inexistente, incompleta ou fora de `fromDate` e `toDate` marca o campo como inválido e devolve `null`. As props passam a ser as de `input`, e `placeholder` aceita só texto. O DateRangePicker não muda.
+
+**Como migrar**
+
+```bash
+npx shadcn@latest add @marcio/date-picker --overwrite
+```
+
+```tsx
+// antes, nos testes
+screen.getByRole("combobox", { name: "Vencimento" });
+// depois
+screen.getByRole("textbox", { name: "Vencimento" });
+screen.getByRole("button", { name: "Abrir calendário" });
+```
+
+Se você passava um `ReactNode` em `placeholder`, troque por texto.
+
 ## [0.8.0] - 2026-10-24
 
 ### Novo

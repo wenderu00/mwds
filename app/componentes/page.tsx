@@ -4,6 +4,7 @@ import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
 import { docs, groups } from "../_docs/catalog";
 import { container, SiteHeader } from "../_docs/site-header";
+import { SiteFooter } from "../_docs/site-footer";
 import { StatusBadge } from "../_docs/status-badge";
 
 export const metadata: Metadata = { title: "Componentes · @mw/ui" };
@@ -48,6 +49,7 @@ export default function ComponentsIndex() {
           </section>
         ))}
       </main>
+      <SiteFooter />
     </div>
   );
 }

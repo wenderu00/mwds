@@ -12,7 +12,7 @@ export function Checkbox({ className, ...props }: CheckboxProps) {
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       className={cn(
-        "peer group inline-flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-mark border border-line-control bg-ground text-on-accent transition-colors duration-base ease-standard hover:border-accent-line disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-danger-text data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=indeterminate]:border-accent data-[state=indeterminate]:bg-accent",
+        "peer group inline-flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-mark border border-line-control bg-ground text-on-accent transition-colors duration-base ease-standard hover:border-accent-line disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-danger-text data-[state=checked]:border-accent-edge data-[state=checked]:bg-accent data-[state=indeterminate]:border-accent-edge data-[state=indeterminate]:bg-accent",
         className,
       )}
       {...props}

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { Badge } from "@/registry/marcio/ui/badge";
 import { Link } from "@/registry/marcio/ui/link";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/marcio/ui/table";
+import { docs } from "../_docs/catalog";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { CodeBlock } from "../_docs/code-block";
 import { FoundationSection } from "../_docs/section";
 import { container, SiteHeader } from "../_docs/site-header";
-import { inline, readChangelog, type ChangelogBlock, type ChangelogSection } from "./changelog";
+import { SiteFooter } from "../_docs/site-footer";
+import { entriesOf, inline, isBreaking, readChangelog, type ChangelogBlock, type ChangelogRelease, type ChangelogSection } from "./changelog";
 
 export const metadata: Metadata = { title: "Novidades · @mw/ui" };
 
@@ -17,6 +20,10 @@ const tones: Record<string, "accent" | "info" | "success" | "danger"> = {
 };
 
 const dateFormat = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC" });
+
+const formatDay = (date: string) => dateFormat.format(new Date(`${date}T00:00:00Z`));
+
+const componentNames = [...docs.flatMap((doc) => doc.name.split(" e ")), "DateRangePicker", "CurrencyInput"];
 
 const anchor = (version: string) => `v${version.replaceAll(".", "-")}`;
 
@@ -55,8 +62,10 @@ function Block({ block, version }: { block: ChangelogBlock; version: string }) {
   );
 }
 
+// Os itens de lista vão para a tabela da versão; aqui ficam as instruções, como o passo a passo de migração.
 function Section({ section, version }: { section: ChangelogSection; version: string }) {
   const breaking = section.title === "Quebra compatibilidade";
+  const blocks = section.blocks.filter((block) => block.type !== "list");
   return (
     <div className={breaking ? "flex flex-col gap-4 rounded-card border border-danger-text p-5" : "flex flex-col gap-4"}>
       <h3>
@@ -64,10 +73,40 @@ function Section({ section, version }: { section: ChangelogSection; version: str
           {section.title.toLowerCase()}
         </Badge>
       </h3>
-      {section.blocks.map((block, i) => (
+      {blocks.map((block, i) => (
         <Block key={i} block={block} version={version} />
       ))}
     </div>
+  );
+}
+
+function ReleaseTable({ release }: { release: ChangelogRelease }) {
+  const entries = entriesOf(release, componentNames);
+  return (
+    <Table aria-label={`Mudanças da versão ${release.version}`} className="min-w-[640px]">
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-40">tipo</TableHead>
+          <TableHead className="w-44">componente</TableHead>
+          <TableHead>mudança</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {entries.map((entry) => (
+          <TableRow key={entry.text} className="align-top">
+            <TableCell>
+              <Badge tone={tones[entry.section]} appearance={entry.section === "Quebra compatibilidade" ? "solid" : "soft"}>
+                {entry.section.toLowerCase()}
+              </Badge>
+            </TableCell>
+            <TableCell className="font-mono text-mono-xs text-ink-soft">{entry.components.join(", ") || "geral"}</TableCell>
+            <TableCell className="text-ink-soft">
+              <Inline text={entry.text} />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }
 
@@ -86,16 +125,31 @@ export default function ChangelogPage() {
             description="O que mudou em cada versão do @mw/ui. Antes de atualizar um componente, confira se a versão nova quebra compatibilidade: cada quebra traz como migrar."
           />
           <nav aria-label="Versões">
-            <ol className="flex flex-wrap gap-x-4 gap-y-2 font-mono text-mono-xs">
-              {releases.map((release) => (
-                <li key={release.version}>
-                  <a href={`#${anchor(release.version)}`} className="rounded-mark text-accent-text underline-offset-4 hover:underline">
-                    {release.version}
-                    {release.sections.some((section) => section.title === "Quebra compatibilidade") && <span className="text-ink-muted"> · quebra</span>}
-                  </a>
-                </li>
-              ))}
-            </ol>
+            <Table aria-label="Resumo das versões" className="font-mono text-mono-xs">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>versão</TableHead>
+                  <TableHead>data</TableHead>
+                  <TableHead>mudanças</TableHead>
+                  <TableHead>quebra compatibilidade</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {releases.map((release) => (
+                  <TableRow key={release.version}>
+                    <TableCell>
+                      <a href={`#${anchor(release.version)}`} className="rounded-mark text-accent-text underline-offset-4 hover:underline">
+                        {release.version}
+                        {isBreaking(release) && <span className="text-ink-muted"> · quebra</span>}
+                      </a>
+                    </TableCell>
+                    <TableCell className="text-ink-soft">{formatDay(release.date)}</TableCell>
+                    <TableCell className="text-ink-soft">{entriesOf(release, componentNames).length}</TableCell>
+                    <TableCell className={isBreaking(release) ? "text-danger-text" : "text-ink-muted"}>{isBreaking(release) ? "sim" : "não"}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </nav>
         </div>
 
@@ -104,19 +158,25 @@ export default function ChangelogPage() {
             key={release.version}
             id={anchor(release.version)}
             index={String(releases.length - i).padStart(2, "0")}
-            kicker={dateFormat.format(new Date(`${release.date}T00:00:00Z`))}
+            kicker={formatDay(release.date)}
             title={release.version}
             // Alterna a partir da versão mais antiga, para uma versão nova não trocar o fundo das anteriores.
             band={(releases.length - i) % 2 === 0}
           >
-            <div className="flex max-w-measure flex-col gap-8">
-              {release.sections.map((section) => (
-                <Section key={section.title} section={section} version={release.version} />
-              ))}
-            </div>
+            <ReleaseTable release={release} />
+            {release.sections.some((section) => section.blocks.some((block) => block.type !== "list")) && (
+              <div className="flex max-w-measure flex-col gap-8">
+                {release.sections
+                  .filter((section) => section.blocks.some((block) => block.type !== "list"))
+                  .map((section) => (
+                    <Section key={section.title} section={section} version={release.version} />
+                  ))}
+              </div>
+            )}
           </FoundationSection>
         ))}
       </main>
+      <SiteFooter />
     </div>
   );
 }

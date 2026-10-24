@@ -23,6 +23,7 @@ import { SectionTitle } from "@/registry/marcio/ui/section-title";
 import { Preview } from "../_docs/preview";
 import { FoundationSection, SpecTable } from "../_docs/section";
 import { container, SiteHeader } from "../_docs/site-header";
+import { SiteFooter } from "../_docs/site-footer";
 
 export const metadata: Metadata = { title: "Escrita · @mw/ui" };
 
@@ -64,7 +65,7 @@ const formats = [
   ["intervalo", `${dayMonth.format(rangeStart)} a ${formatDate(rangeEnd)}`, "dois formatos e a palavra a, sem hífen nem travessão"],
   ["hora em texto corrido", hourText(sample), "14h30; hora cheia sem minutos: 9h"],
   ["hora em tabela e campo", clock.format(sample), 'Intl.DateTimeFormat("pt-BR", { hour, minute })'],
-  ["número", number.format(1234.5), 'Intl.NumberFormat("pt-BR")'],
+  ["número", number.format(1234.56), 'Intl.NumberFormat("pt-BR")'],
   ["moeda", formatBRL(123456), "formatBRL (lib/br), em centavos"],
   ["porcentagem", percent.format(0.74), 'Intl.NumberFormat("pt-BR", { style: "percent" })'],
   ["tamanho de arquivo", formatMegabytes(2.5 * 1024 * 1024), "formatBytes (file-upload)"],
@@ -74,6 +75,12 @@ const kickerRules = [
   ["projetos", "Lista de projetos do mês", "uma a três palavras; é etiqueta, não frase"],
   ["configurações", "CONFIGURAÇÕES", "escreva em minúsculas; a caixa alta vem do CSS"],
   ["painel", "painel.", "sem pontuação final"],
+];
+
+const navRules = [
+  ["componentes", "Componentes", "itens de navegação e abas do site em minúsculas, como no cabeçalho"],
+  ["tipo · componente · mudança", "Tipo · Componente · Mudança", "cabeçalho de tabela técnica em mono, em minúsculas"],
+  ["Nome completo", "nome completo", "rótulo de campo começa com maiúscula: é texto para a pessoa, não etiqueta"],
 ];
 
 const commentRules = [
@@ -169,6 +176,8 @@ export default function WritingPage() {
             )}
           />
           <SpecTable head={head} rows={kickerRules} />
+          <CodeComment>navegação e rótulos</CodeComment>
+          <SpecTable head={head} rows={navRules} />
         </FoundationSection>
 
         <FoundationSection
@@ -332,6 +341,7 @@ export default function WritingPage() {
           </div>
         </FoundationSection>
       </main>
+      <SiteFooter />
     </div>
   );
 }

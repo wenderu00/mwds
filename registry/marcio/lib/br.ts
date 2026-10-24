@@ -13,6 +13,19 @@ function applyPattern(digits: string, pattern: string) {
   return result;
 }
 
+export function formatDateInput(value: string) {
+  return applyPattern(onlyDigits(value).slice(0, 8), "99/99/9999");
+}
+
+// dd/mm/aaaa para Date local; recusa datas que não existem, como 31/02.
+export function parseDateBR(value: string): Date | null {
+  const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!match) return null;
+  const [day, month, year] = [Number(match[1]), Number(match[2]), Number(match[3])];
+  const date = new Date(year, month - 1, day);
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day ? date : null;
+}
+
 export function formatCpf(value: string) {
   return applyPattern(onlyDigits(value).slice(0, 11), "999.999.999-99");
 }

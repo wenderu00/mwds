@@ -63,6 +63,7 @@
           "color-on-accent": "var(--mw-on-accent)",
           "color-accent-text": "var(--mw-accent-text)",
           "color-accent-line": "var(--mw-accent-line)",
+          "color-accent-edge": "var(--mw-accent-edge)",
           "color-accent-soft": "var(--mw-accent-soft)",
           "color-focus": "var(--mw-focus)",
           "color-danger": "var(--mw-danger)",
@@ -202,6 +203,7 @@
           "--mw-on-accent": "#000000",
           "--mw-accent-text": "var(--mw-accent-300)",
           "--mw-accent-line": "var(--mw-accent-300)",
+          "--mw-accent-edge": "var(--mw-accent-300)",
           "--mw-accent-soft": "var(--mw-accent-950)",
           "--mw-focus": "var(--mw-accent-300)",
           "--mw-danger": "#ff5c5c",
@@ -254,6 +256,7 @@
             "--mw-on-accent": "#000000",
             "--mw-accent-text": "var(--mw-accent-700)",
             "--mw-accent-line": "var(--mw-accent-700)",
+            "--mw-accent-edge": "var(--mw-accent-700)",
             "--mw-accent-soft": "var(--mw-accent-100)",
             "--mw-focus": "var(--mw-accent-700)",
             "--mw-danger": "#ff5c5c",
@@ -306,6 +309,7 @@
           "--mw-on-accent": "#000000",
           "--mw-accent-text": "var(--mw-accent-700)",
           "--mw-accent-line": "var(--mw-accent-700)",
+          "--mw-accent-edge": "var(--mw-accent-700)",
           "--mw-accent-soft": "var(--mw-accent-100)",
           "--mw-focus": "var(--mw-accent-700)",
           "--mw-danger": "#ff5c5c",
@@ -1008,15 +1012,17 @@
       "name": "date-picker",
       "type": "registry:ui",
       "title": "DatePicker",
-      "description": "Campo de data em dd/mm/aaaa que abre o Calendar num Popover. Tem versão de intervalo, o DateRangePicker.",
+      "description": "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Tem versão de intervalo, o DateRangePicker.",
       "dependencies": [
         "lucide-react",
         "react-day-picker"
       ],
       "registryDependencies": [
+        "http://localhost:3000/r/br.json",
         "http://localhost:3000/r/calendar.json",
         "http://localhost:3000/r/form-field.json",
         "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/input.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/popover.json",
         "http://localhost:3000/r/utils.json"
@@ -1143,13 +1149,14 @@
       "name": "file-upload",
       "type": "registry:ui",
       "title": "FileUpload",
-      "description": "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção e limites de tipo, tamanho e quantidade.",
+      "description": "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção, limites de tipo, tamanho e quantidade, e progresso e erro por arquivo.",
       "dependencies": [
         "lucide-react"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
         "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/progress.json",
         "http://localhost:3000/r/utils.json"
       ],
       "files": [

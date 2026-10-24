@@ -99,6 +99,7 @@ import {
   CommandPaletteDemo,
   DataTableDemo,
   DropdownMenuDemo,
+  FileUploadProgressDemo,
   PaginationDemo,
   ProgressDemo,
   StepperDemo,
@@ -126,6 +127,10 @@ export const statusLabel: Record<DocStatus, string> = { estavel: "estável", bet
 
 export type DocUsage = { use: string[]; avoid: string[] };
 
+export type DocSample = { render: () => ReactNode; caption: string };
+
+export type DocDoDont = { do: DocSample; dont: DocSample };
+
 export type ComponentDoc = {
   slug: string;
   name: string;
@@ -134,6 +139,7 @@ export type ComponentDoc = {
   file: string;
   status: DocStatus;
   usage: DocUsage;
+  dosDonts?: DocDoDont[];
   props: DocProp[];
   examples: DocExample[];
   a11y: string[];
@@ -356,6 +362,23 @@ export const docs: ComponentDoc[] = [
       use: ["Um efeito pontual em títulos de telas de destaque, como a 404."],
       avoid: ["Telas de sistema e formulários.", "Textos longos ou mais de um por tela: o efeito perde a graça e cansa."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "Um título de destaque, uma vez na tela.",
+          render: () => <GlitchText className="font-display text-display-md font-extrabold text-accent-text">404</GlitchText>,
+        },
+        dont: {
+          caption: "Em tela de trabalho o efeito atrapalha a leitura e cansa.",
+          render: () => (
+            <div className="flex flex-col gap-2">
+              <GlitchText className="font-display text-display-sm font-extrabold">Dados pessoais</GlitchText>
+              <Input aria-label="Nome completo" placeholder="Nome completo" />
+            </div>
+          ),
+        },
+      },
+    ],
     props: [
       { name: "trigger", type: '"hover" | "mount"', default: '"hover"', description: "Dispara ao passar o mouse ou uma vez ao montar." },
       classNameProp,
@@ -429,6 +452,28 @@ export const docs: ComponentDoc[] = [
       use: ["Disparar uma ação: salvar, enviar, abrir um diálogo.", "No máximo um botão primário por área da tela; o resto vai em secondary ou ghost.", "danger só para a ação destrutiva, de preferência confirmada por AlertDialog."],
       avoid: ["Navegar para outra página: use Link.", "Botão só com ícone: use IconButton, que exige aria-label.", "Ligar e desligar uma preferência: use Switch."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "Um primário por área; a ação secundária vai em secondary.",
+          render: () => (
+            <>
+              <Button>Salvar</Button>
+              <Button variant="secondary">Cancelar</Button>
+            </>
+          ),
+        },
+        dont: {
+          caption: "Dois primários lado a lado disputam a atenção e escondem qual é a ação principal.",
+          render: () => (
+            <>
+              <Button>Salvar</Button>
+              <Button>Cancelar</Button>
+            </>
+          ),
+        },
+      },
+    ],
     keyboard: [
       { keys: "Tab", action: "Leva o foco ao botão." },
       { keys: "Enter / Espaço", action: "Ativa o botão. Em loading, o botão fica desabilitado." },
@@ -862,6 +907,31 @@ export const docs: ComponentDoc[] = [
       use: ["Ligar e desligar uma preferência com efeito imediato, como notificações."],
       avoid: ["Escolha que só vale ao enviar um formulário: use Checkbox.", "Escolha entre duas opções que não são ligado e desligado: use RadioGroup."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "O efeito é imediato: ligou, as notificações começam.",
+          render: () => (
+            <div className="flex items-center gap-3">
+              <Switch id="dd-switch-certo" defaultChecked />
+              <Label htmlFor="dd-switch-certo">Notificações por e-mail</Label>
+            </div>
+          ),
+        },
+        dont: {
+          caption: "Se nada acontece até salvar, a pessoa acha que já ligou. Use Checkbox.",
+          render: () => (
+            <div className="flex flex-col items-start gap-4">
+              <div className="flex items-center gap-3">
+                <Switch id="dd-switch-errado" defaultChecked />
+                <Label htmlFor="dd-switch-errado">Aceito os termos</Label>
+              </div>
+              <Button size="sm">Enviar cadastro</Button>
+            </div>
+          ),
+        },
+      },
+    ],
     keyboard: [
       { keys: "Tab", action: "Leva o foco ao interruptor." },
       { keys: "Espaço / Enter", action: "Liga e desliga." },
@@ -997,6 +1067,26 @@ export const docs: ComponentDoc[] = [
       use: ["Navegar para outra página ou âncora.", "Links dentro de texto corrido, sempre sublinhados."],
       avoid: ["Disparar uma ação na mesma página: use Button.", "Texto como clique aqui: o texto do link precisa dizer o destino."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "O texto do link diz para onde ele leva.",
+          render: () => (
+            <p className="text-ink-soft">
+              Antes de enviar, leia a <Link href="#">política de privacidade</Link>.
+            </p>
+          ),
+        },
+        dont: {
+          caption: "Clique aqui não diz o destino, e lista de links do leitor de tela fica sem sentido.",
+          render: () => (
+            <p className="text-ink-soft">
+              Para ler a política de privacidade, <Link href="#">clique aqui</Link>.
+            </p>
+          ),
+        },
+      },
+    ],
     keyboard: [
       { keys: "Tab", action: "Leva o foco ao link." },
       { keys: "Enter", action: "Segue o link." },
@@ -1058,6 +1148,33 @@ export const docs: ComponentDoc[] = [
       use: ["Escolha única entre até cinco opções, todas visíveis ao mesmo tempo.", "Opções que precisam de descrição ao lado para a escolha fazer sentido."],
       avoid: ["Mais de cinco opções ou pouco espaço: use Select.", "Lista longa ou que precisa de busca: use Combobox.", "Várias escolhas ao mesmo tempo: use Checkbox."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "Até cinco opções, todas visíveis: a comparação é imediata.",
+          render: () => (
+            <FormField label="Plano">
+              <RadioGroup defaultValue="mensal">
+                <RadioGroupOption value="mensal" label="Mensal" />
+                <RadioGroupOption value="anual" label="Anual" description="Dois meses grátis." />
+              </RadioGroup>
+            </FormField>
+          ),
+        },
+        dont: {
+          caption: "Uma lista longa de estados ocupa a tela inteira: use Select ou Combobox.",
+          render: () => (
+            <FormField label="Estado">
+              <RadioGroup defaultValue="pe" className="grid-cols-2">
+                {["AC", "AL", "AM", "BA", "CE", "PE", "PB", "RN"].map((uf) => (
+                  <RadioGroupOption key={uf} value={uf.toLowerCase()} label={uf} />
+                ))}
+              </RadioGroup>
+            </FormField>
+          ),
+        },
+      },
+    ],
     keyboard: [
       { keys: "Tab", action: "Entra no grupo pela opção marcada, ou pela primeira, e sai do grupo." },
       { keys: "Setas", action: "Movem e marcam a opção anterior ou a próxima." },
@@ -1660,6 +1777,26 @@ export const docs: ComponentDoc[] = [
       use: ["Um estado que continua valendo enquanto a pessoa está na página: sessão expirando, conta pendente, erro ao carregar.", "Avisos que pedem ação, com o botão dentro do Alert."],
       avoid: ["Resultado passageiro de uma ação, como Salvo: use Toast.", "Erro de um campo: use o error do FormField.", "Confirmar uma ação: use AlertDialog."],
     },
+    dosDonts: [
+      {
+        do: {
+          caption: "Um estado que continua valendo e pede ação fica na tela.",
+          render: () => (
+            <Alert tone="warning" title="Sessão expirando" className="w-full">
+              Salve o rascunho: a sessão termina em 5 minutos.
+            </Alert>
+          ),
+        },
+        dont: {
+          caption: "Confirmação passageira presa na página vira ruído. Use Toast.",
+          render: () => (
+            <Alert tone="success" title="Salvo" className="w-full">
+              As alterações foram salvas.
+            </Alert>
+          ),
+        },
+      },
+    ],
     keyboard: [
       { keys: "Tab", action: "Percorre a ação e o botão de fechar, quando houver." },
       { keys: "Enter / Espaço", action: "Ativa o botão com foco." },
@@ -2242,19 +2379,21 @@ export const docs: ComponentDoc[] = [
     slug: "date-picker",
     name: "DatePicker",
     group: "compostos",
-    summary: "Campo de data em dd/mm/aaaa que abre o Calendar num Popover. Tem versão de intervalo, o DateRangePicker.",
+    summary: "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Tem versão de intervalo, o DateRangePicker.",
     file: "date-picker.tsx",
     status: "beta",
     usage: {
-      use: ["Campo de data em formulário: vencimento, início, agendamento.", "DateRangePicker para períodos, como filtros de relatório."],
-      avoid: ["Data de nascimento e datas muito distantes: use Input com a máscara dd/mm/aaaa.", "Calendário sempre visível: use Calendar."],
+      use: ["Campo de data em formulário: vencimento, início, agendamento, nascimento. Quem sabe a data digita; quem não sabe abre o calendário.", "DateRangePicker para períodos, como filtros de relatório."],
+      avoid: ["Calendário sempre visível: use Calendar.", "Mês e ano sem dia: use dois Select."],
     },
     props: [
       { name: "value / onValueChange", type: "Date | null / (date) => void", description: "Uso controlado, como no Controller do React Hook Form." },
       { name: "defaultValue", type: "Date | null", description: "Valor inicial não controlado." },
       { name: "fromDate / toDate", type: "Date", description: "Primeiro e último dia que podem ser escolhidos." },
       { name: "clearable", type: "boolean", default: "false", description: "Mostra o botão de limpar quando há data." },
-      { name: "placeholder", type: "ReactNode", default: '"dd/mm/aaaa"', description: "Texto sem data escolhida." },
+      { name: "placeholder", type: "string", default: '"dd/mm/aaaa"', description: "Texto do campo vazio." },
+      { name: "calendarLabel", type: "string", default: '"Abrir calendário"', description: "Nome do botão que abre o calendário." },
+      { name: "invalidMessage", type: "string", default: '"Data inválida. Digite no formato dd/mm/aaaa."', description: "Mensagem para data incompleta ou que não existe. Fora de fromDate e toDate, a mensagem diz o intervalo aceito." },
       { name: "name", type: "string", description: "Cria um input escondido com a data em aaaa-mm-dd." },
       { name: "DateRangePicker value", type: "{ from?: Date; to?: Date } | null", description: "Intervalo. Fecha quando início e fim estão escolhidos." },
       { name: "DateRangePicker numberOfMonths", type: "number", default: "2", description: "Meses lado a lado no intervalo." },
@@ -2296,26 +2435,30 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: [
-      "O gatilho tem role combobox, abre um diálogo (aria-haspopup dialog) e recebe o rótulo, a descrição, o erro e o obrigatório do FormField.",
-      "Ao abrir, o foco vai para o dia escolhido ou para hoje. Ao escolher ou fechar, volta ao gatilho.",
+      "O DatePicker é um campo de texto com teclado numérico no celular. Recebe o rótulo, a descrição, o erro e o obrigatório do FormField.",
+      "Data incompleta, inexistente ou fora do intervalo marca o campo com aria-invalid e liga a mensagem por aria-describedby. O valor vira null até a data ser corrigida.",
+      "O botão Abrir calendário abre um diálogo. O foco vai para o dia escolhido ou para hoje; ao escolher ou fechar, volta ao campo.",
+      "O DateRangePicker mantém o gatilho com role combobox.",
       "O botão de limpar tem nome próprio (Limpar data) e devolve o foco ao campo.",
     ],
     keyboard: [
-      { keys: "Enter / Espaço", action: "No gatilho, abre o calendário. Num dia, escolhe e fecha." },
+      { keys: "Dígitos", action: "No campo, preenchem dd/mm/aaaa; as barras entram sozinhas." },
+      { keys: "Alt + seta para baixo", action: "No campo, abre o calendário." },
+      { keys: "Enter / Espaço", action: "No botão do calendário, abre. Num dia, escolhe e fecha." },
       { keys: "Setas, Page Up / Page Down, Home / End", action: "Navegam no calendário, como no Calendar." },
-      { keys: "Esc", action: "Fecha sem mudar a data e devolve o foco ao gatilho." },
+      { keys: "Esc", action: "Fecha sem mudar a data e devolve o foco ao campo." },
     ],
   },
   {
     slug: "file-upload",
     name: "FileUpload",
     group: "compostos",
-    summary: "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção e limites de tipo, tamanho e quantidade.",
+    summary: "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção, limites de tipo, tamanho e quantidade, e progresso e erro por arquivo.",
     file: "file-upload.tsx",
     status: "beta",
     usage: {
       use: ["Anexar arquivos num formulário, com limites claros de tipo e tamanho.", "Diga os limites no hint: tipo, tamanho e quantidade."],
-      avoid: ["Trocar a foto de perfil com recorte: o componente não edita a imagem.", "Envio de muitos arquivos grandes com progresso individual: ainda não há suporte."],
+      avoid: ["Trocar a foto de perfil com recorte: o componente não edita a imagem.", "Envio em segundo plano que continua depois de sair da página: o estado do envio vive no componente que faz o upload."],
     },
     props: [
       { name: "value / onValueChange", type: "File[] / (files) => void", description: "Uso controlado." },
@@ -2326,6 +2469,10 @@ export const docs: ComponentDoc[] = [
       { name: "onReject", type: "(rejections) => void", description: "Recebe os arquivos recusados, com motivo e mensagem." },
       { name: "title / hint", type: "ReactNode", description: "Texto principal da área e linha de apoio em mono." },
       { name: "removeLabel", type: "(file) => string", default: '"Remover <nome>"', description: "Nome do botão de remover." },
+      { name: "fileStatus", type: "(file) => { progress?: number | null; error?: ReactNode; done?: boolean }", description: "Estado do envio de cada arquivo: barra de progresso (null é indeterminado), mensagem de erro ou enviado." },
+      { name: "onRetry", type: "(file) => void", description: "Mostra o botão de enviar de novo nos arquivos com erro." },
+      { name: "progressLabel / retryLabel", type: "(file) => string", default: '"Enviando <nome>" / "Enviar <nome> de novo"', description: "Nome da barra de progresso e do botão de nova tentativa." },
+      { name: "doneLabel", type: "ReactNode", default: '"enviado"', description: "Texto ao lado do arquivo enviado." },
     ],
     examples: [
       {
@@ -2348,12 +2495,20 @@ export const docs: ComponentDoc[] = [
           </FormField>
         ),
       },
+      {
+        title: "Progresso e erro de envio",
+        description: "Quem faz o upload controla o estado de cada arquivo. Nesta demonstração o segundo arquivo falha em 60% na primeira tentativa.",
+        className: "w-full flex-col items-stretch",
+        code: `const [status, setStatus] = useState(new Map<File, FileUploadStatus>());\n\n<FileUpload\n  multiple\n  value={files}\n  onValueChange={(next) => { setFiles(next); next.forEach(enviar); }}\n  fileStatus={(file) => status.get(file)}\n  onRetry={enviar}\n/>\n\n// em enviar: { progress: 40 }, depois { done: true } ou { error: "A conexão caiu. Envie de novo." }`,
+        render: (theme) => <FileUploadProgressDemo id={`fu-c-${theme}`} />,
+      },
     ],
     a11y: [
       "A área inteira é o rótulo de um input de arquivo nativo, então funciona com clique, teclado e leitor de tela sem script extra.",
       "Arquivos recusados aparecem numa região role alert, com o nome do arquivo, o motivo e como resolver.",
       "Cada arquivo da lista tem um botão Remover com o nome do arquivo. Depois de remover, o foco volta para o campo.",
       "Arrastar não é a única forma: o texto da área sempre diz que dá para clicar.",
+      "A barra de progresso de cada arquivo é um progressbar com o nome Enviando <nome>. O erro de envio aparece em role alert, ao lado do botão Enviar <nome> de novo.",
     ],
     keyboard: [
       { keys: "Tab", action: "Foca a área (contorno de foco nela inteira) e depois cada botão Remover." },

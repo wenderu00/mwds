@@ -7,6 +7,7 @@ import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
 import { blocks } from "../_docs/blocks";
 import { container, SiteHeader } from "../_docs/site-header";
+import { SiteFooter } from "../_docs/site-footer";
 
 export const metadata: Metadata = { title: "Blocos · @mw/ui" };
 
@@ -53,6 +54,7 @@ export default function BlocksIndex() {
           );
         })}
       </main>
+      <SiteFooter />
     </div>
   );
 }

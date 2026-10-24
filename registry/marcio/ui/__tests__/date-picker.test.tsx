@@ -30,7 +30,55 @@ describe("DatePicker", () => {
     expect(formatDate(new Date(2026, 0, 5))).toBe("05/01/2026");
   });
 
-  it("abre com o foco no dia escolhido e troca de dia pelo teclado", async () => {
+  it("aceita a data digitada, com a máscara dd/mm/aaaa", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <FormField label="Vencimento">
+        <DatePicker onValueChange={onValueChange} name="vencimento" />
+      </FormField>,
+    );
+    const input = screen.getByRole("textbox", { name: /vencimento/i });
+    await user.type(input, "1510");
+    expect(input).toHaveValue("15/10");
+    expect(onValueChange).not.toHaveBeenCalled();
+    await user.type(input, "2026");
+    expect(input).toHaveValue("15/10/2026");
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 9, 15));
+    expect(document.querySelector('input[name="vencimento"]')).toHaveValue("2026-10-15");
+  });
+
+  it("marca como inválida a data que não existe e a incompleta ao sair do campo", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(<DatePicker aria-label="Vencimento" defaultValue={october} onValueChange={onValueChange} />);
+    const input = screen.getByRole("textbox", { name: "Vencimento" });
+    await user.clear(input);
+    await user.type(input, "31022026");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+    expect(input).toHaveAccessibleDescription("Data inválida. Digite no formato dd/mm/aaaa.");
+
+    await user.clear(input);
+    expect(onValueChange).toHaveBeenLastCalledWith(null);
+    expect(input).not.toHaveAttribute("aria-invalid");
+    await user.type(input, "1510");
+    await user.tab();
+    expect(input).toHaveAttribute("aria-invalid", "true");
+  });
+
+  it("recusa a data digitada fora de fromDate e toDate", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <DatePicker aria-label="Vencimento" fromDate={new Date(2026, 9, 10)} toDate={new Date(2026, 9, 20)} onValueChange={onValueChange} />,
+    );
+    const input = screen.getByRole("textbox", { name: "Vencimento" });
+    await user.type(input, "21102026");
+    expect(input).toHaveAccessibleDescription("Escolha uma data entre 10/10/2026 e 20/10/2026.");
+    expect(onValueChange).not.toHaveBeenCalled();
+  });
+
+  it("abre o calendário com o foco no dia escolhido e devolve o foco ao campo", async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();
     render(
@@ -38,27 +86,30 @@ describe("DatePicker", () => {
         <DatePicker defaultValue={october} onValueChange={onValueChange} />
       </FormField>,
     );
-    const trigger = screen.getByRole("combobox", { name: /vencimento/i });
-    expect(trigger).toHaveTextContent("15/10/2026");
+    const input = screen.getByRole("textbox", { name: /vencimento/i });
+    expect(input).toHaveValue("15/10/2026");
 
-    await user.click(trigger);
+    await user.click(screen.getByRole("button", { name: "Abrir calendário" }));
     const dialog = screen.getByRole("dialog", { name: "Vencimento" });
     expect(within(dialog).getByRole("button", { name: /15 de outubro de 2026/i })).toHaveFocus();
 
     await user.keyboard("{ArrowRight}{Enter}");
     expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 9, 16));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(trigger).toHaveTextContent("16/10/2026");
-    expect(trigger).toHaveFocus();
+    expect(input).toHaveValue("16/10/2026");
+    expect(input).toHaveFocus();
   });
 
-  it("Esc fecha sem mudar a data", async () => {
+  it("Alt+seta para baixo abre o calendário e Esc fecha sem mudar a data", async () => {
     const user = userEvent.setup();
     render(<DatePicker aria-label="Vencimento" defaultValue={october} />);
-    await user.click(screen.getByRole("combobox", { name: "Vencimento" }));
+    const input = screen.getByRole("textbox", { name: "Vencimento" });
+    await user.click(input);
+    await user.keyboard("{Alt>}{ArrowDown}{/Alt}");
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
     await user.keyboard("{ArrowRight}{Escape}");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(screen.getByRole("combobox", { name: "Vencimento" })).toHaveTextContent("15/10/2026");
+    expect(input).toHaveValue("15/10/2026");
   });
 
   it("limpa a data e devolve o foco ao campo", async () => {
@@ -70,16 +121,16 @@ describe("DatePicker", () => {
     );
     expect(document.querySelector('input[name="vencimento"]')).toHaveValue("2026-10-15");
     await user.click(screen.getByRole("button", { name: "Limpar data" }));
-    const trigger = screen.getByRole("combobox", { name: /vencimento/i });
-    expect(trigger).toHaveTextContent("dd/mm/aaaa");
-    expect(trigger).toHaveFocus();
+    const input = screen.getByRole("textbox", { name: /vencimento/i });
+    expect(input).toHaveValue("");
+    expect(input).toHaveFocus();
     expect(document.querySelector('input[name="vencimento"]')).toHaveValue("");
   });
 
-  it("bloqueia datas fora de fromDate e toDate", async () => {
+  it("bloqueia no calendário as datas fora de fromDate e toDate", async () => {
     const user = userEvent.setup();
     render(<DatePicker aria-label="Vencimento" defaultValue={october} fromDate={new Date(2026, 9, 10)} toDate={new Date(2026, 9, 20)} />);
-    await user.click(screen.getByRole("combobox", { name: "Vencimento" }));
+    await user.click(screen.getByRole("button", { name: "Abrir calendário" }));
     expect(screen.getByRole("button", { name: /, 9 de outubro de 2026/i })).toBeDisabled();
     expect(screen.getByRole("button", { name: /, 21 de outubro de 2026/i })).toBeDisabled();
     expect(screen.getByRole("button", { name: /, 20 de outubro de 2026/i })).toBeEnabled();
@@ -109,7 +160,7 @@ describe("DatePicker", () => {
     render(<Form />);
     await user.click(screen.getByRole("button", { name: "Salvar" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("Escolha a data de vencimento.");
-    expect(screen.getByRole("combobox", { name: /vencimento/i })).toHaveAttribute("aria-invalid", "true");
+    expect(screen.getByRole("textbox", { name: /vencimento/i })).toHaveAttribute("aria-invalid", "true");
     expect(onSubmit).not.toHaveBeenCalled();
   });
 

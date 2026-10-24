@@ -5,9 +5,12 @@ import { cn } from "@/registry/marcio/lib/utils";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
 import { docs, getDoc, groups } from "../../_docs/catalog";
+import { CodeBlock } from "../../_docs/code-block";
+import { installInfo } from "../../_docs/install";
 import { StatusBadge } from "../../_docs/status-badge";
 import { Preview } from "../../_docs/preview";
 import { container, SiteHeader } from "../../_docs/site-header";
+import { SiteFooter } from "../../_docs/site-footer";
 
 type Params = { slug: string };
 
@@ -26,6 +29,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
   const { slug } = await params;
   const doc = getDoc(slug);
   if (!doc) notFound();
+  const install = installInfo(doc.file.replace(/\.tsx$/, ""));
 
   const sections = ["uso", "exemplos", "props", ...(doc.keyboard ? ["teclado"] : []), "acessibilidade"];
   const index = (id: string) => String(sections.indexOf(id) + 1).padStart(2, "0");
@@ -68,6 +72,17 @@ export default async function ComponentPage({ params }: { params: Promise<Params
             <StatusBadge status={doc.status} className="self-start" />
             <p className="max-w-measure text-lead text-ink-soft">{doc.summary}</p>
             <CodeComment>{`registry/marcio/ui/${doc.file}`}</CodeComment>
+            {install && (
+              <div className="flex max-w-measure flex-col gap-3">
+                <CodeBlock title="terminal · instalar" code={install.command} />
+                <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 font-mono text-mono-xs">
+                  <dt className="text-ink-muted">{"// pacotes npm"}</dt>
+                  <dd className="text-ink-soft">{install.dependencies.join(", ") || "nenhum"}</dd>
+                  <dt className="text-ink-muted">{"// componentes"}</dt>
+                  <dd className="text-ink-soft">{install.registryDependencies.join(", ") || "nenhum"}</dd>
+                </dl>
+              </div>
+            )}
           </div>
 
           <section className="flex flex-col gap-6">
@@ -77,8 +92,8 @@ export default async function ComponentPage({ params }: { params: Promise<Params
             <div className="grid gap-6 md:grid-cols-2">
               {(
                 [
-                  ["use para", doc.usage.use, "marker:text-success-text"],
-                  ["não use para", doc.usage.avoid, "marker:text-danger-text"],
+                  ["use quando", doc.usage.use, "marker:text-success-text"],
+                  ["prefira outro quando", doc.usage.avoid, "marker:text-danger-text"],
                 ] as const
               ).map(([title, rules, marker]) => (
                 <div key={title} className="flex flex-col gap-3 rounded-card border border-line p-5">
@@ -91,6 +106,24 @@ export default async function ComponentPage({ params }: { params: Promise<Params
                 </div>
               ))}
             </div>
+            {doc.dosDonts?.map((pair) => (
+              <div key={pair.do.caption} className="grid gap-6 md:grid-cols-2">
+                {(
+                  [
+                    ["certo", pair.do, "border-t-success-text", "text-success-text"],
+                    ["errado", pair.dont, "border-t-danger-text", "text-danger-text"],
+                  ] as const
+                ).map(([label, sample, border, text]) => (
+                  <figure key={label} className={cn("flex flex-col overflow-hidden rounded-card border border-line border-t-2", border)}>
+                    <div className="flex flex-1 flex-wrap items-center gap-3 p-6">{sample.render()}</div>
+                    <figcaption className="flex flex-col gap-1 border-t border-line bg-band px-5 py-4">
+                      <span className={cn("font-mono text-mono-xs", text)}>{`// ${label}`}</span>
+                      <span className="text-ink-soft">{sample.caption}</span>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            ))}
           </section>
 
           <section className="flex flex-col gap-8">
@@ -174,6 +207,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
           </section>
         </main>
       </div>
+      <SiteFooter />
     </div>
   );
 }
