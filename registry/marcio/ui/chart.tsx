@@ -27,11 +27,12 @@ export type ChartProps = {
 
 const number = new Intl.NumberFormat("pt-BR");
 
-// Cores só por variável: os tokens chart-1..8 e seq-1..5 mudam com o tema.
+// Cores só por variável, e nas --mw-* do tokens.css: as --color-* do @theme inline só existem
+// quando o Tailwind acha a classe no código, e aqui o nome é montado em tempo de execução.
 const colorOf = (palette: ChartProps["palette"], index: number) =>
-  palette === "sequencial" ? `var(--color-seq-${5 - (index % 5)})` : `var(--color-chart-${(index % 8) + 1})`;
+  palette === "sequencial" ? `var(--mw-seq-${5 - (index % 5)})` : `var(--mw-chart-${(index % 8) + 1})`;
 
-const axisTick = { fill: "var(--color-ink-muted)", fontSize: 12, fontFamily: "var(--font-mono)" };
+const axisTick = { fill: "var(--mw-ink-muted)", fontSize: 12, fontFamily: "var(--font-plex-mono), ui-monospace, monospace" };
 
 export function Chart({
   kind,
@@ -53,13 +54,13 @@ export function Chart({
 
   const tooltip = (
     <Tooltip
-      cursor={{ fill: "var(--color-surface)", stroke: "var(--color-line-strong)" }}
+      cursor={{ fill: "var(--mw-surface)", stroke: "var(--mw-line-strong)" }}
       content={(props: TooltipContentProps<ValueType, NameType>) => <ChartTooltip {...props} format={format} series={series} />}
       isAnimationActive={false}
     />
   );
-  const grid = <CartesianGrid vertical={false} stroke="var(--color-line)" />;
-  const xAxis = <XAxis dataKey={categoryKey} tick={axisTick} tickLine={false} axisLine={{ stroke: "var(--color-line-strong)" }} />;
+  const grid = <CartesianGrid vertical={false} stroke="var(--mw-line)" />;
+  const xAxis = <XAxis dataKey={categoryKey} tick={axisTick} tickLine={false} axisLine={{ stroke: "var(--mw-line-strong)" }} />;
   const yAxis = <YAxis tick={axisTick} tickLine={false} axisLine={false} width={48} tickFormatter={(value: number) => number.format(value)} />;
   const stackId = stacked ? "total" : undefined;
 
@@ -103,8 +104,8 @@ export function Chart({
                   name={item.label}
                   stroke={color(index)}
                   strokeWidth={2}
-                  dot={{ r: 3, fill: color(index), stroke: "var(--color-ground)", strokeWidth: 1 }}
-                  activeDot={{ r: 5, stroke: "var(--color-ground)" }}
+                  dot={{ r: 3, fill: color(index), stroke: "var(--mw-ground)", strokeWidth: 1 }}
+                  activeDot={{ r: 5, stroke: "var(--mw-ground)" }}
                   isAnimationActive={false}
                 />
               ))}

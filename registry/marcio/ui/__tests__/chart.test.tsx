@@ -30,9 +30,9 @@ describe("Chart", () => {
   it("usa as variáveis das paletas, nunca cor crua", () => {
     const { container, rerender } = render(<Chart kind="bar" title="A" data={data} categoryKey="mês" series={series} />);
     const swatches = () => [...container.querySelectorAll<HTMLElement>("ul[aria-label=Legenda] span[aria-hidden]")].map((el) => el.style.background);
-    expect(swatches()).toEqual(["var(--color-chart-1)", "var(--color-chart-2)"]);
+    expect(swatches()).toEqual(["var(--mw-chart-1)", "var(--mw-chart-2)"]);
     rerender(<Chart kind="bar" palette="sequencial" title="A" data={data} categoryKey="mês" series={series} />);
-    expect(swatches()).toEqual(["var(--color-seq-5)", "var(--color-seq-4)"]);
+    expect(swatches()).toEqual(["var(--mw-seq-5)", "var(--mw-seq-4)"]);
   });
 
   it("passa no axe nos dois temas", async () => {

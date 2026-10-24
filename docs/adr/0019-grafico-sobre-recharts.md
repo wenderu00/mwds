@@ -9,7 +9,7 @@ Até a 0.11 a paleta de gráficos existia só como tokens (`chart-1` a `chart-8`
 ## Decisão
 
 - `registry/marcio/ui/chart.tsx` usa o Recharts 3 e é instalado com `npx shadcn@latest add @marcio/chart`, que traz o `recharts` como dependência.
-- As cores vêm só de variáveis (`var(--color-chart-N)` e `var(--color-seq-N)`), então mudam com o tema e passam pelo lint de cores. Eixos, grade e tooltip usam `ink-muted`, `line`, `line-strong` e `surface`.
+- As cores vêm só de variáveis (`var(--mw-chart-N)` e `var(--mw-seq-N)`), então mudam com o tema e passam pelo lint de cores. São as `--mw-*` do tokens.css porque as `--color-*` do `@theme inline` só existem quando o Tailwind acha a classe no código, e o Chart monta o nome em tempo de execução. Eixos, grade e tooltip usam `ink-muted`, `line`, `line-strong` e `surface`.
 - A legenda é HTML do próprio componente, não a do Recharts, para ficar na tipografia do sistema e ser lida como lista.
 - Todo Chart traz um `details` com a tabela dos dados, e o título nomeia a área do gráfico.
 - Sem animação de entrada: o gráfico aparece pronto, o que também respeita o movimento reduzido e deixa as capturas estáveis.
