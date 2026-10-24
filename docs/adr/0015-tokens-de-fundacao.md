@@ -20,6 +20,7 @@ Até aqui só cor, tipografia e animação eram tokens. Raio, duração, z-index
   - Durações: `duration-fast` 100ms, `duration-base` 200ms, `duration-slow` 300ms.
   - Curvas: `ease-standard`, `ease-enter`, `ease-exit`.
   - Transição sem duração explícita usa base e standard.
+  - Os loops decorativos têm durações próprias no `:root`: `--mw-duration-blink` (900ms), `--mw-duration-type` (1800ms, padrão do TypingText), `--mw-duration-glitch` (320ms) e `--mw-duration-drift` (18s). Não viram classe porque só servem às animações `mw-*`.
   - Com `prefers-reduced-motion: reduce`, as três durações viram 0,01ms. Animações de deslocamento e os loops decorativos continuam atrás de `motion-safe`.
 - **Camadas.** A ordem é: behind (-1) < base (0) < sticky (10) < sheet (20) < dialog (30) < popover (40) < toast (50) < tooltip (60).
   - O plano pedia popover abaixo de sheet e dialog. Isso esconderia um Select aberto dentro de um Dialog e um Combobox dentro de um Sheet, os dois casos que o próprio plano manda testar. Por isso flutuantes ficam acima de modais.

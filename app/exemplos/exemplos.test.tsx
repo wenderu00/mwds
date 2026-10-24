@@ -99,6 +99,19 @@ describe("signup example", () => {
     expect(await screen.findByText("Revise o formulário")).toBeInTheDocument();
   });
 
+  it("masks the CPF and checks its digits", async () => {
+    const user = userEvent.setup();
+    withProviders(<SignupForm />);
+    const cpf = screen.getByRole("textbox", { name: "CPF" });
+    await user.type(cpf, "52998224724");
+    expect(cpf).toHaveValue("529.982.247-24");
+    await user.tab();
+    expect(await screen.findByText("Confira o CPF: os dígitos finais não batem.")).toBeInTheDocument();
+    await user.clear(cpf);
+    await user.type(cpf, "52998224725");
+    await waitFor(() => expect(screen.queryByText("Confira o CPF: os dígitos finais não batem.")).not.toBeInTheDocument());
+  });
+
   it("validates password rules and confirmation", async () => {
     const user = userEvent.setup();
     withProviders(<SignupForm />);
@@ -115,6 +128,7 @@ describe("signup example", () => {
     const user = userEvent.setup();
     withProviders(<SignupForm />);
     await user.type(screen.getByRole("textbox", { name: "Nome completo" }), "Márcio Wendell");
+    await user.type(screen.getByRole("textbox", { name: "CPF" }), "52998224725");
     await user.type(screen.getByRole("textbox", { name: "E-mail" }), "marcio@exemplo.com");
     await user.type(screen.getByLabelText(/^Senha/), "segredo123");
     await user.type(screen.getByLabelText(/Confirme a senha/), "segredo123");

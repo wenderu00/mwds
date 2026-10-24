@@ -29,6 +29,7 @@ export function MotionSection() {
             Com prefers-reduced-motion, as três durações viram 0,01ms e toda transição fica instantânea. Animações de deslocamento e os loops decorativos (cursor, DotGrid,
             TypingText, GlitchText, Skeleton) só rodam atrás de motion-safe.
           </p>
+          <p>Os loops decorativos têm durações próprias em tokens.css: --mw-duration-blink (900ms), --mw-duration-type (1800ms), --mw-duration-glitch (320ms) e --mw-duration-drift (18s).</p>
         </>
       }
     >

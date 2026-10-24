@@ -1,6 +1,7 @@
 "use client";
 
 import { Controller, useForm, useWatch } from "react-hook-form";
+import { isValidCpf } from "@/registry/marcio/lib/br";
 import { Button } from "@/registry/marcio/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/marcio/ui/card";
 import { Checkbox } from "@/registry/marcio/ui/checkbox";
@@ -17,6 +18,7 @@ import {
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { Input } from "@/registry/marcio/ui/input";
 import { Link } from "@/registry/marcio/ui/link";
+import { MaskedInput } from "@/registry/marcio/ui/masked-input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/registry/marcio/ui/select";
 import { Switch } from "@/registry/marcio/ui/switch";
 import { Textarea } from "@/registry/marcio/ui/textarea";
@@ -24,6 +26,7 @@ import { toast } from "@/registry/marcio/ui/toast";
 
 type SignupValues = {
   name: string;
+  cpf: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -35,6 +38,7 @@ type SignupValues = {
 
 const defaultValues: SignupValues = {
   name: "",
+  cpf: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -88,6 +92,20 @@ export function SignupForm() {
           <FormField label="Nome completo" required error={errors.name?.message}>
             <Input autoComplete="name" {...register("name", { required: "Informe seu nome.", minLength: { value: 3, message: "Use pelo menos 3 letras." } })} />
           </FormField>
+
+          <Controller
+            control={control}
+            name="cpf"
+            rules={{
+              required: "Informe seu CPF.",
+              validate: (cpf) => isValidCpf(cpf) || "Confira o CPF: os dígitos finais não batem.",
+            }}
+            render={({ field, fieldState }) => (
+              <FormField label="CPF" required error={fieldState.error?.message}>
+                <MaskedInput mask="cpf" ref={field.ref} name={field.name} value={field.value} onValueChange={field.onChange} onBlur={field.onBlur} />
+              </FormField>
+            )}
+          />
 
           <FormField label="E-mail" required description="Usado para entrar e receber avisos." error={errors.email?.message}>
             <Input

@@ -15,6 +15,9 @@
   --mw-duration-base: 200ms;
   --mw-duration-slow: 300ms;
   --mw-duration-blink: 900ms;
+  --mw-duration-type: 1800ms;
+  --mw-duration-glitch: 320ms;
+  --mw-duration-drift: 18s;
 
   --mw-ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
   --mw-ease-enter: cubic-bezier(0, 0, 0.2, 1);
@@ -295,8 +298,8 @@
   --default-transition-timing-function: var(--mw-ease-standard);
 
   --animate-mw-blink: mw-blink var(--mw-duration-blink) step-end infinite;
-  --animate-mw-drift: mw-drift 18s ease-in-out infinite;
-  --animate-mw-glitch: mw-glitch 320ms steps(6) both;
+  --animate-mw-drift: mw-drift var(--mw-duration-drift) ease-in-out infinite;
+  --animate-mw-glitch: mw-glitch var(--mw-duration-glitch) steps(6) both;
   --animate-mw-fade-in: mw-fade-in var(--mw-duration-base) var(--mw-ease-enter) both;
   --animate-mw-pop-in: mw-pop-in var(--mw-duration-base) var(--mw-ease-enter) both;
   --animate-mw-slide-in: mw-slide-in var(--mw-duration-slow) var(--mw-ease-enter) both;
@@ -365,7 +368,7 @@
     width: calc(var(--mw-chars) * 1ch + 0.6ch);
     border-right: 0.6ch solid var(--color-accent-line);
     animation:
-      mw-type var(--mw-type-duration, 1800ms) steps(var(--mw-chars)) var(--mw-type-delay, 0ms) both,
+      mw-type var(--mw-type-duration, var(--mw-duration-type)) steps(var(--mw-chars)) var(--mw-type-delay, 0ms) both,
       mw-border-blink var(--mw-duration-blink) step-end infinite;
   }
 }
