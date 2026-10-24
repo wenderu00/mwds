@@ -1,4 +1,4 @@
-import { Columns3, LayoutGrid, List, Pencil, Trash2 } from "lucide-react";
+import { Code, Columns3, LayoutGrid, List, Pencil, ShieldCheck, Sparkles, Trash2, Workflow } from "lucide-react";
 import type { ReactNode } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
 import {
@@ -44,11 +44,14 @@ import {
 } from "@/registry/marcio/ui/dialog";
 import { DatePicker, DateRangePicker } from "@/registry/marcio/ui/date-picker";
 import { EmptyState } from "@/registry/marcio/ui/empty-state";
+import { FeatureGrid } from "@/registry/marcio/ui/feature-grid";
 import { FileUpload } from "@/registry/marcio/ui/file-upload";
+import { Footer } from "@/registry/marcio/ui/footer";
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { DotGrid } from "@/registry/marcio/ui/dot-grid";
 import { GlitchText } from "@/registry/marcio/ui/glitch-text";
+import { Hero } from "@/registry/marcio/ui/hero";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
 import { Input } from "@/registry/marcio/ui/input";
 import { Kbd } from "@/registry/marcio/ui/kbd";
@@ -58,6 +61,7 @@ import { Link } from "@/registry/marcio/ui/link";
 import { LogoBlock } from "@/registry/marcio/ui/logo-block";
 import { NumberInput } from "@/registry/marcio/ui/number-input";
 import { CurrencyInput, MaskedInput } from "@/registry/marcio/ui/masked-input";
+import { Navbar } from "@/registry/marcio/ui/navbar";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { Progress } from "@/registry/marcio/ui/progress";
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/marcio/ui/popover";
@@ -2709,6 +2713,44 @@ export const docs: ComponentDoc[] = [
     ],
   },
   {
+    slug: "feature-grid",
+    name: "FeatureGrid",
+    group: "compostos",
+    status: "beta",
+    summary: "Grade de recursos ou serviços em cards: ícone em accent, índice em mono, título e texto. De duas a quatro colunas.",
+    file: "feature-grid.tsx",
+    usage: {
+      use: ["O que um produto faz ou os serviços de uma pessoa, de três a oito itens.", "Seções de landing page logo abaixo do Hero."],
+      avoid: ["Itens que levam a outras páginas: use Cards com link.", "Dados para comparar: use Table.", "Um item só: um parágrafo basta."],
+    },
+    props: [
+      { name: "items", type: "{ title, description, icon? }[]", description: "Itens da grade. O ícone é um elemento lucide com aria-hidden." },
+      { name: "columns", type: "2 | 3 | 4", default: "2", description: "Colunas em telas largas; no celular, uma." },
+      { name: "numbered", type: "boolean", default: "true", description: "Mostra o índice 01, 02 em mono, decorativo." },
+      { name: "headingLevel", type: '"h3" | "h4"', default: '"h3"', description: "Nível do título de cada item." },
+    ],
+    examples: [
+      {
+        title: "Serviços",
+        className: "w-full",
+        stacked: true,
+        code: `<FeatureGrid\n  items={[\n    { icon: <Code aria-hidden="true" />, title: "Desenvolvimento full-stack", description: "Do layout ao deploy." },\n    { icon: <ShieldCheck aria-hidden="true" />, title: "Qualidade e testes", description: "BDD, E2E e testes de mutação." },\n  ]}\n/>`,
+        render: () => (
+          <FeatureGrid
+            className="w-full"
+            items={[
+              { icon: <Code aria-hidden="true" />, title: "Desenvolvimento full-stack", description: "Interfaces em Next.js e Tailwind, APIs em NestJS e Effect-TS, banco PostgreSQL. Do layout ao deploy." },
+              { icon: <ShieldCheck aria-hidden="true" />, title: "Qualidade e testes", description: "BDD com playwright-bdd, testes E2E e testes de mutação com Stryker." },
+              { icon: <Workflow aria-hidden="true" />, title: "Infraestrutura e CI/CD", description: "Docker, pipelines no GitLab CI e GitHub Actions, deploy em Vercel e Render." },
+              { icon: <Sparkles aria-hidden="true" />, title: "Arquitetura e IA aplicada", description: "Clean Architecture, DDD, ADRs e times de agentes para requisitos." },
+            ]}
+          />
+        ),
+      },
+    ],
+    a11y: ["É uma lista: o leitor de tela anuncia quantos itens há.", "Ícones e índices são decorativos; o título de cada item diz o que ele é."],
+  },
+  {
     slug: "tooltip",
     name: "Tooltip",
     group: "compostos",
@@ -2754,6 +2796,167 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: ["Abre também com foco de teclado e fecha com Esc.", "Não coloque conteúdo interativo dentro do tooltip.", "O tooltip abre no tema da página."],
+  },
+  {
+    slug: "navbar",
+    name: "Navbar",
+    group: "padroes",
+    status: "beta",
+    summary: "Cabeçalho de site público: marca, links com a página atual marcada e ações. No celular, os links vão para um painel lateral.",
+    file: "navbar.tsx",
+    usage: {
+      use: ["Navegação principal de sites públicos e landing pages, com até seis links.", "Links para as seções de uma página longa, como no portfólio."],
+      avoid: ["Sistemas internos com muitas telas: use AppShell.", "Ações da página, como salvar: elas ficam no conteúdo, não na navegação."],
+    },
+    props: [
+      { name: "brand", type: "ReactNode", description: "Marca à esquerda, normalmente um LogoBlock com link para o início." },
+      { name: "links", type: "{ href, label, current? }[]", description: "Links da navegação. current marca a página atual com aria-current." },
+      { name: "actions", type: "ReactNode", description: "Ações à direita, como ThemeToggle ou um Button." },
+      { name: "menuFooter", type: "ReactNode", description: "Conteúdo extra no fim do painel do celular." },
+      { name: "label / menuLabel", type: "string", default: '"Principal" / "Menu"', description: "Nome da navegação e do botão do painel." },
+      { name: "sticky", type: "boolean", default: "true", description: "Fixa no topo, na camada z-sticky." },
+    ],
+    examples: [
+      {
+        title: "Site com seções",
+        className: "w-full",
+        stacked: true,
+        code: `<Navbar\n  brand={<LogoBlock asChild size="sm"><a href="#topo" aria-label="Márcio Wendell, início">MW</a></LogoBlock>}\n  links={[\n    { href: "#quem-sou", label: "01 Quem sou eu", current: true },\n    { href: "#o-que-faco", label: "02 O que faço" },\n    { href: "#trabalhos", label: "03 Trabalhos" },\n  ]}\n  actions={<ThemeToggle />}\n/>`,
+        render: (theme) => (
+          <Navbar
+            sticky={false}
+            className="w-full"
+            label={`Seções, exemplo no tema ${theme === "dark" ? "escuro" : "claro"}`}
+            brand={
+              <LogoBlock asChild size="sm">
+                <a href="#topo" aria-label="Márcio Wendell, início">
+                  MW
+                </a>
+              </LogoBlock>
+            }
+            links={[
+              { href: "#quem-sou", label: "01 Quem sou eu", current: true },
+              { href: "#o-que-faco", label: "02 O que faço" },
+              { href: "#trabalhos", label: "03 Trabalhos" },
+            ]}
+          />
+        ),
+      },
+    ],
+    a11y: [
+      "É um header (banner) com um nav rotulado; o link da página ou seção atual tem aria-current page e ganha sublinhado, não só cor.",
+      "No celular, o botão Menu abre um Sheet que prende o foco; escolher um link fecha o painel.",
+      "Se a página tiver mais de uma navegação, dê um label diferente a cada uma.",
+    ],
+    keyboard: [
+      { keys: "Tab", action: "Percorre a marca, os links e as ações." },
+      { keys: "Enter", action: "Segue o link com foco." },
+      { keys: "Enter / Espaço no Menu", action: "Abre o painel no celular; Esc fecha e devolve o foco ao botão." },
+    ],
+  },
+  {
+    slug: "hero",
+    name: "Hero",
+    group: "padroes",
+    status: "beta",
+    summary: "Abertura de página pública: kicker, título em display-xl, descrição, linha digitando e ações, sobre a DotGrid.",
+    file: "hero.tsx",
+    usage: {
+      use: ["Topo de landing pages e portfólios, uma vez por página.", "Uma ação principal e no máximo uma secundária."],
+      avoid: ["Telas de sistema: use PageHeader.", "Textos longos: o hero apresenta, as seções explicam."],
+    },
+    props: [
+      { name: "title", type: "ReactNode", description: "Título em display-xl. É o h1 da página por padrão." },
+      { name: "kicker / description", type: "ReactNode", description: "Etiqueta acima do título e texto de apoio em lead." },
+      { name: "typing", type: "string", description: "Linha em mono que aparece letra a letra, com TypingText." },
+      { name: "actions / aside", type: "ReactNode", description: "Botões abaixo do texto e conteúdo ao lado, como uma foto." },
+      { name: "decorated", type: "boolean", default: "true", description: "Mostra a DotGrid animada ao fundo." },
+      { name: "headingLevel", type: '"h1" | "h2"', default: '"h1"', description: "Nível do título." },
+    ],
+    examples: [
+      {
+        title: "Portfólio",
+        className: "w-full",
+        stacked: true,
+        code: `<Hero\n  kicker="Desenvolvedor full-stack · Recife, PE"\n  title="Márcio Wendell"\n  description="Construo sistemas web de ponta a ponta, do Next.js ao banco de dados."\n  typing="// disponível para projetos full-stack"\n  actions={<><Button size="lg">Ver trabalhos</Button><Button size="lg" variant="secondary">E-mail</Button></>}\n/>`,
+        render: () => (
+          <Hero
+            headingLevel="h2"
+            className="w-full"
+            kicker="Desenvolvedor full-stack · Recife, PE"
+            title="Márcio Wendell"
+            description="Construo sistemas web de ponta a ponta, do Next.js ao banco de dados."
+            typing="// disponível para projetos full-stack"
+            actions={
+              <>
+                <Button size="lg">Ver trabalhos</Button>
+                <Button size="lg" variant="secondary">
+                  E-mail
+                </Button>
+              </>
+            }
+          />
+        ),
+      },
+    ],
+    a11y: [
+      "O título é o h1 da página; use headingLevel h2 só quando o hero não abre a página.",
+      "A DotGrid é decorativa e para com movimento reduzido; a linha digitando aparece inteira.",
+      "O texto digitado está todo no DOM, então o leitor de tela lê a frase completa de uma vez.",
+    ],
+  },
+  {
+    slug: "footer",
+    name: "Footer",
+    group: "padroes",
+    status: "beta",
+    summary: "Rodapé de site público: chamada de contato com ações, grupos de links, copyright em CodeComment e voltar ao topo.",
+    file: "footer.tsx",
+    usage: {
+      use: ["Fim de landing pages e sites públicos, com o contato e os links secundários.", "Grupos de links como Produto, Recursos e Contato."],
+      avoid: ["Sistemas internos: o AppShell não tem rodapé.", "Links principais: eles ficam na Navbar, o rodapé repete só se ajudar."],
+    },
+    props: [
+      { name: "title / description / actions", type: "ReactNode", description: "Chamada no topo do rodapé, como Vamos conversar? com um botão de e-mail." },
+      { name: "groups", type: "{ title, links }[]", description: "Grupos de links, cada um num nav rotulado pelo título." },
+      { name: "copyright", type: "ReactNode", description: "Texto em CodeComment na linha final." },
+      { name: "backToTop", type: "{ href, label? }", description: "Link de voltar ao topo, padrão voltar ao topo ↑." },
+    ],
+    examples: [
+      {
+        title: "Contato e links",
+        className: "w-full",
+        stacked: true,
+        code: `<Footer\n  title="Vamos conversar?"\n  description="Aberto a oportunidades full-stack, projetos e parcerias."\n  actions={<Button>Enviar e-mail</Button>}\n  groups={[{ title: "Perfis", links: [{ href: "https://github.com/wenderu00", label: "GitHub" }] }]}\n  copyright="2026 Márcio Wendell · Recife, PE"\n  backToTop={{ href: "#topo" }}\n/>`,
+        render: (theme) => (
+          <Footer
+            className="w-full"
+            title="Vamos conversar?"
+            description="Aberto a oportunidades full-stack, projetos e parcerias."
+            actions={<Button>Enviar e-mail</Button>}
+            groups={[
+              {
+                title: `Perfis, tema ${theme === "dark" ? "escuro" : "claro"}`,
+                links: [
+                  { href: "https://github.com/wenderu00", label: "GitHub" },
+                  { href: "https://www.linkedin.com/in/marcio-wendell", label: "LinkedIn" },
+                ],
+              },
+            ]}
+            copyright="2026 Márcio Wendell · Recife, PE"
+            backToTop={{ href: "#topo" }}
+          />
+        ),
+      },
+    ],
+    a11y: [
+      "É um footer (contentinfo); cada grupo de links é um nav rotulado pelo título do grupo.",
+      "O título da chamada é h2, para seguir a hierarquia das seções da página.",
+    ],
+    keyboard: [
+      { keys: "Tab", action: "Percorre as ações, os links dos grupos e o voltar ao topo." },
+      { keys: "Enter", action: "Segue o link com foco." },
+    ],
   },
   {
     slug: "page-header",

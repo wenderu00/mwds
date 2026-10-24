@@ -24,6 +24,7 @@ const pages: SitePage[] = [
   { name: "login", path: "/login/" },
   { name: "dashboard", path: "/dashboard/" },
   { name: "configuracoes", path: "/configuracoes/" },
+  { name: "landing", path: "/landing/" },
 ];
 
 for (const { name, path, capture, mask } of pages) {
