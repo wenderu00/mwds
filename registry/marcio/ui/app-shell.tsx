@@ -229,7 +229,7 @@ export function AppShellHeader({
   ...props
 }: AppShellHeaderProps) {
   const { collapsed, setCollapsed, setMobileOpen, sidebarId } = useAppShell();
-  const iconButton =
+  const iconButtonClass =
     "inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-control text-ink-muted transition-colors duration-base hover:bg-surface hover:text-ink";
 
   return (
@@ -238,7 +238,7 @@ export function AppShellHeader({
       className={cn("sticky top-0 z-sticky flex h-16 shrink-0 items-center gap-3 border-b border-line bg-ground px-4", className)}
       {...props}
     >
-      <button type="button" aria-label={menuLabel} onClick={() => setMobileOpen(true)} className={cn(iconButton, "lg:hidden")}>
+      <button type="button" aria-label={menuLabel} onClick={() => setMobileOpen(true)} className={cn(iconButtonClass, "lg:hidden")}>
         <Menu aria-hidden="true" className="size-5" />
       </button>
       <button
@@ -247,7 +247,7 @@ export function AppShellHeader({
         aria-controls={sidebarId}
         aria-expanded={!collapsed}
         onClick={() => setCollapsed(!collapsed)}
-        className={cn(iconButton, "hidden lg:inline-flex")}
+        className={cn(iconButtonClass, "hidden lg:inline-flex")}
       >
         {collapsed ? <PanelLeftOpen aria-hidden="true" className="size-5" /> : <PanelLeftClose aria-hidden="true" className="size-5" />}
       </button>

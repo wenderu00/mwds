@@ -38,6 +38,7 @@ Até aqui só cor, tipografia e animação eram tokens. Raio, duração, z-index
 
 ## Consequências
 
+- **O projeto que instala mantém os padrões do Tailwind.** Os resets não vão no registry, então `rounded-md`, `shadow-lg` e `z-50` continuam existindo lá. Componentes de terceiros com `z-50` ficam acima do Dialog do @mw/ui (30) e empatam com o Toast (50). Se for misturar, troque o `z-50` deles pela camada nomeada correspondente.
 - **Mudança que quebra compatibilidade para quem já instalou componentes.** Os componentes novos usam `rounded-control`, `z-dialog`, `duration-base` e `h-control`. Quem atualizar um componente precisa atualizar também `marcio-tokens`.
 - **Mudança visual pequena.** Fade e pop passam de 160 e 200ms para 200ms; slide e Sheet, de 240 e 260ms para 300ms. Badge passa a ícone de 16px e EmptyState a 24px.
 - A densidade compacta deixa controles com 36px. Isso passa no mínimo do WCAG 2.5.8 (24px), mas fica abaixo dos 44px recomendados para toque.

@@ -15,7 +15,7 @@ export function RadiusSection() {
       kicker="raio"
       title="Quatro raios com nome"
       band
-      intro={<p>O raio diz o tamanho do objeto: marcas pequenas, controles, superfícies. Os raios padrão do Tailwind (rounded-md, rounded-xl) não existem no @mw/ui.</p>}
+      intro={<p>O raio diz o tamanho do objeto: marcas pequenas, controles, superfícies. Os raios padrão do Tailwind (rounded-md, rounded-xl) não são usados nos componentes e o lint os barra.</p>}
     >
       <ThemePair>
         {() => (
