@@ -9,7 +9,7 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "border-transparent bg-accent font-semibold text-on-accent enabled:hover:bg-accent-hover",
+        primary: "border-accent-edge bg-accent font-semibold text-on-accent enabled:hover:bg-accent-hover",
         secondary:
           "border-line-control bg-ground font-medium text-ink enabled:hover:border-accent-line enabled:hover:text-accent-text",
         ghost: "border-transparent bg-transparent font-medium text-ink-soft enabled:hover:bg-surface enabled:hover:text-ink",

@@ -39,7 +39,7 @@ export function Calendar({ className, classNames, components, formatters, labels
         week: "flex",
         day: "group/day size-control p-0 text-center",
         day_button:
-          "inline-flex size-full cursor-pointer items-center justify-center rounded-control border border-transparent text-sm transition-colors duration-fast hover:border-accent-line group-data-[today]/day:border-line-strong group-data-[today]/day:font-semibold group-data-[outside]/day:text-ink-muted group-data-[selected]/day:bg-accent group-data-[selected]/day:font-semibold group-data-[selected]/day:text-on-accent disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-transparent",
+          "inline-flex size-full cursor-pointer items-center justify-center rounded-control border border-transparent text-sm transition-colors duration-fast hover:border-accent-line group-data-[today]/day:border-line-strong group-data-[today]/day:font-semibold group-data-[outside]/day:text-ink-muted group-data-[selected]/day:border-accent-edge group-data-[selected]/day:bg-accent group-data-[selected]/day:font-semibold group-data-[selected]/day:text-on-accent disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-transparent",
         range_middle: "[&>button]:rounded-none [&>button]:bg-accent-soft! [&>button]:text-ink! [&>button]:font-normal!",
         range_start: "[&>button]:rounded-r-none",
         range_end: "[&>button]:rounded-l-none",
