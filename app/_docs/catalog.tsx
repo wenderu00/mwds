@@ -1,4 +1,4 @@
-import { Code, Columns3, LayoutGrid, List, Pencil, ShieldCheck, Sparkles, Trash2, Workflow } from "lucide-react";
+import { AtSign, Code, Columns3, LayoutGrid, List, Pencil, ShieldCheck, Sparkles, Trash2, Workflow } from "lucide-react";
 import type { ReactNode } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
 import {
@@ -480,8 +480,8 @@ export const docs: ComponentDoc[] = [
     ],
     props: [
       { name: "variant", type: '"primary" | "secondary" | "ghost" | "danger"', default: '"primary"', description: "Peso visual da ação." },
-      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Altura de 36, 44 ou 48px." },
-      { name: "loading", type: "boolean", default: "false", description: "Mostra spinner, desabilita e marca aria-busy." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "sm tem 36px e lg 48px; md segue a altura de controle da densidade (36, 44 ou 48px), igual a Input e Select." },
+      { name: "loading", type: "boolean", default: "false", description: "Mostra spinner, desabilita e marca aria-busy. Só Button e IconButton têm loading: num campo, desabilite enquanto carrega." },
       { name: "loadingLabel", type: "string", default: '"Carregando"', description: "Texto anunciado durante o loading." },
       asChildProp,
       classNameProp,
@@ -653,7 +653,9 @@ export const docs: ComponentDoc[] = [
     ],
     props: [
       { name: "type", type: "string", default: '"text"', description: "Qualquer tipo nativo de input." },
-      { name: "aria-invalid", type: "boolean", description: "Pinta a borda com danger-text." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button: 36px, a altura de controle da densidade (44px na padrão) e 48px." },
+      { name: "start / end", type: "ReactNode", description: "Conteúdo dentro do contorno, antes e depois do texto: ícone, prefixo como R$, botão de limpar. Com slots, className continua indo para o input." },
+      { name: "aria-invalid", type: "boolean", description: "Borda de erro. Dentro do FormField, vem do error." },
       classNameProp,
     ],
     examples: [
@@ -666,6 +668,21 @@ export const docs: ComponentDoc[] = [
             <Input aria-label="E-mail" placeholder="nome@empresa.com" id={`input-a-${theme}`} />
             <Input aria-label="E-mail com erro" aria-invalid defaultValue="email-invalido" />
             <Input aria-label="Desabilitado" disabled defaultValue="Desabilitado" />
+          </>
+        ),
+      },
+      {
+        title: "Tamanhos e slots",
+        description: "start e end ficam dentro do contorno. Ícone de início é decorativo; conteúdo de fim pode ser botão.",
+        className: "w-full flex-col items-stretch",
+        code: `<Input size="sm" placeholder="sm, 36px" />\n<Input placeholder="md, altura de controle" />\n<Input size="lg" placeholder="lg, 48px" />\n<Input start={<AtSign aria-hidden="true" />} placeholder="usuario" />\n<Input end={<span>.gov.br</span>} placeholder="orgao" />`,
+        render: () => (
+          <>
+            <Input aria-label="Tamanho pequeno" size="sm" placeholder="sm, 36px" />
+            <Input aria-label="Tamanho médio" placeholder="md, altura de controle" />
+            <Input aria-label="Tamanho grande" size="lg" placeholder="lg, 48px" />
+            <Input aria-label="Usuário" start={<AtSign aria-hidden="true" />} placeholder="usuario" />
+            <Input aria-label="Domínio" end={<span className="pr-2 font-mono text-mono-xs text-ink-muted">.gov.br</span>} placeholder="orgao" />
           </>
         ),
       },
@@ -790,6 +807,7 @@ export const docs: ComponentDoc[] = [
       { name: "step", type: "number", default: "1", description: "Passo das setas e dos botões. Também define as casas decimais exibidas." },
       { name: "formatOptions", type: "Intl.NumberFormatOptions", description: 'Formato de exibição, por exemplo { style: "percent" } ou unidade.' },
       { name: "decrementLabel / incrementLabel", type: "string", default: '"Diminuir" / "Aumentar"', description: "Nomes dos botões." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button: 36px, a altura de controle da densidade (44px na padrão) e 48px." },
     ],
     examples: [
       {
@@ -897,6 +915,7 @@ export const docs: ComponentDoc[] = [
       { name: "checked", type: 'boolean | "indeterminate"', description: "Estado controlado." },
       { name: "defaultChecked", type: "boolean", description: "Estado inicial não controlado." },
       { name: "onCheckedChange", type: "(checked) => void", description: "Chamado ao alternar." },
+      { name: "aria-invalid", type: "boolean", description: "Borda de erro. Dentro do FormField, vem do error." },
       classNameProp,
     ],
     examples: [
@@ -965,6 +984,7 @@ export const docs: ComponentDoc[] = [
     props: [
       { name: "checked", type: "boolean", description: "Estado controlado." },
       { name: "onCheckedChange", type: "(checked: boolean) => void", description: "Chamado ao alternar." },
+      { name: "aria-invalid", type: "boolean", description: "Borda de erro. Dentro do FormField, vem do error." },
       classNameProp,
     ],
     examples: [
@@ -1212,6 +1232,7 @@ export const docs: ComponentDoc[] = [
       { name: "orientation", type: '"vertical" | "horizontal"', description: "Direção das setas do teclado." },
       { name: "RadioGroupOption label", type: "ReactNode", description: "Rótulo clicável da opção." },
       { name: "RadioGroupOption description", type: "ReactNode", description: "Texto de apoio ligado por aria-describedby." },
+      { name: "aria-invalid", type: "boolean", description: "No RadioGroup, pinta a borda de todas as opções. Dentro do FormField, vem do error." },
       classNameProp,
     ],
     examples: [
@@ -1409,6 +1430,7 @@ export const docs: ComponentDoc[] = [
       { name: "searchPlaceholder", type: "string", default: '"Buscar"', description: "Texto e nome do campo de busca." },
       { name: "emptyText", type: "ReactNode", default: '"Nada encontrado"', description: "Estado sem resultado." },
       { name: "name", type: "string", description: "Cria um input escondido para formulários nativos." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button: 36px, a altura de controle da densidade (44px na padrão) e 48px." },
       classNameProp,
     ],
     examples: [
@@ -2178,7 +2200,8 @@ export const docs: ComponentDoc[] = [
       { name: "value / onValueChange", type: "string / (value) => void", description: "Uso controlado, como no Controller do React Hook Form." },
       { name: "defaultValue", type: "string", description: "Valor inicial não controlado." },
       { name: "disabled", type: "boolean", description: "Desabilita o gatilho." },
-      { name: "SelectTrigger aria-invalid", type: "boolean", description: "Borda de erro." },
+      { name: "SelectTrigger size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button e do Input." },
+      { name: "SelectTrigger aria-invalid", type: "boolean", description: "Borda de erro. Dentro do FormField, vem do error." },
     ],
     examples: [
       {
@@ -2226,6 +2249,7 @@ export const docs: ComponentDoc[] = [
       { name: "open / onOpenChange", type: "boolean / (open) => void", description: "Uso controlado." },
       { name: "DialogContent showClose", type: "boolean", default: "true", description: "Mostra o botão de fechar no canto." },
       { name: "DialogContent closeLabel", type: "string", default: '"Fechar"', description: "Nome acessível do botão de fechar." },
+      { name: "DialogContent size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Largura máxima: 384, 512 ou 672px." },
     ],
     examples: [
       {
@@ -2417,6 +2441,7 @@ export const docs: ComponentDoc[] = [
       { name: "defaultValue", type: "Date | null", description: "Valor inicial não controlado." },
       { name: "fromDate / toDate", type: "Date", description: "Primeiro e último dia que podem ser escolhidos." },
       { name: "clearable", type: "boolean", default: "false", description: "Mostra o botão de limpar quando há data." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button e do Input." },
       { name: "placeholder", type: "string", default: '"dd/mm/aaaa"', description: "Texto do campo vazio." },
       { name: "calendarLabel", type: "string", default: '"Abrir calendário"', description: "Nome do botão que abre o calendário." },
       { name: "invalidMessage", type: "string", default: '"Data inválida. Digite no formato dd/mm/aaaa."', description: "Mensagem para data incompleta ou que não existe. Fora de fromDate e toDate, a mensagem diz o intervalo aceito." },
@@ -2479,6 +2504,7 @@ export const docs: ComponentDoc[] = [
       { name: "numberOfMonths", type: "number", default: "2", description: "Meses lado a lado." },
       { name: "fromDate / toDate", type: "Date", description: "Primeiro e último dia que podem ser escolhidos." },
       { name: "clearable", type: "boolean", default: "false", description: "Mostra o botão Limpar período." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button e do Input." },
       { name: "name", type: "string", description: "Cria um input escondido com aaaa-mm-dd/aaaa-mm-dd." },
     ],
     examples: [
@@ -2585,6 +2611,7 @@ export const docs: ComponentDoc[] = [
       { name: "open / onOpenChange", type: "boolean / (open) => void", description: "Uso controlado, por exemplo para abrir a partir de um item de menu." },
       { name: "AlertDialogAction variant", type: '"danger" | "primary" | "secondary" | "ghost"', default: '"danger"', description: "Botão de confirmação. Aceita as props do Button, como onClick e loading." },
       { name: "AlertDialogCancel variant", type: '"secondary" | "ghost" | "primary" | "danger"', default: '"secondary"', description: "Botão que fecha sem confirmar. Recebe o foco ao abrir." },
+      { name: "AlertDialogContent size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Largura máxima: 384, 448 ou 512px." },
     ],
     examples: [
       {
