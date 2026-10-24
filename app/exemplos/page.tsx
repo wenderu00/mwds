@@ -15,7 +15,7 @@ const examples = [
     kicker: "Listagem",
     title: "Projetos com filtros",
     description: "Busca, filtro por status, ordenação, seleção de linhas, tabela paginada, confirmação em diálogo e estado vazio.",
-    uses: "PageHeader · FormField · Select · Table · Checkbox · Tooltip · Dialog · Toast · EmptyState",
+    uses: "PageHeader · FormField · SearchInput · Select · Table · Checkbox · Tooltip · Dialog · Toast · EmptyState",
   },
   {
     href: "/exemplos/cadastro",
@@ -23,6 +23,20 @@ const examples = [
     title: "Cadastro com validação",
     description: "React Hook Form com mensagens de erro acessíveis, Select e Checkbox controlados, termos em diálogo e toast de sucesso.",
     uses: "Card · FormField · Input · Textarea · Select · Switch · Checkbox · Dialog · Button loading · Toast",
+  },
+  {
+    href: "/exemplos/detalhe",
+    kicker: "Detalhe",
+    title: "Detalhe de um projeto",
+    description: "Tela de registro dentro do AdminShell: dados em pares rótulo e valor, trâmite com o passo atual e arquivamento confirmado.",
+    uses: "AdminShell · PageHeader · DescriptionList · Timeline · Badge · AlertDialog · Toast",
+  },
+  {
+    href: "/exemplos/wizard",
+    kicker: "Etapas",
+    title: "Cadastro em etapas",
+    description: "Stepper com validação por etapa, foco no título da etapa nova e revisão antes de enviar.",
+    uses: "Stepper · FormField · MaskedInput · MultiSelect · Switch · DescriptionList · Button loading · Toast",
   },
 ];
 
@@ -34,7 +48,7 @@ export default function ExamplesIndex() {
         <PageHeader
           kicker="Prova de uso"
           title="Telas de exemplo"
-          description="Duas telas de sistema montadas só com componentes e tokens do @mw/ui."
+          description="Quatro telas de sistema montadas só com componentes e tokens do @mw/ui. Listagem, detalhe e painel também foram conferidos em largura de celular."
         />
         <ul className="grid gap-4 md:grid-cols-2">
           {examples.map((example) => (

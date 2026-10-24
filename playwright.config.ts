@@ -22,8 +22,10 @@ export default defineConfig({
     reducedMotion: "reduce",
   },
   projects: [
-    { name: "escuro", use: { colorScheme: "dark" } },
-    { name: "claro", use: { colorScheme: "light" } },
+    { name: "escuro", use: { colorScheme: "dark" }, testIgnore: /movel\.spec\.ts/ },
+    { name: "claro", use: { colorScheme: "light" }, testIgnore: /movel\.spec\.ts/ },
+    // Largura de celular só para as telas de sistema; o resto do site já é testado nos dois temas.
+    { name: "movel", use: { colorScheme: "dark", viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, testMatch: /movel\.spec\.ts/ },
   ],
   webServer: {
     command: "tsx scripts/serve-out.ts",

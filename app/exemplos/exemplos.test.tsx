@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/registry/marcio/ui/tooltip";
 import { axe } from "@/test/a11y";
 import { SignupForm } from "./cadastro/signup-form";
 import { ProjectsView } from "./listagem/projects-view";
+import { WizardForm } from "./wizard/wizard-form";
 
 function withProviders(ui: React.ReactNode) {
   return render(
@@ -154,5 +155,41 @@ describe("signup example", () => {
   it("has no axe violations", async () => {
     const { container } = withProviders(<SignupForm />);
     expect(await axe(container)).toHaveNoViolations();
+  });
+});
+
+describe("wizard example", () => {
+  it("só avança com a etapa válida e revisa antes de enviar", async () => {
+    const user = userEvent.setup();
+    withProviders(<WizardForm />);
+    await user.click(screen.getByRole("button", { name: "Continuar" }));
+    expect(await screen.findByText("Informe seu nome.")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "1. Dados pessoais" })).toBeInTheDocument();
+
+    await user.type(screen.getByRole("textbox", { name: /Nome completo/ }), "Ana Souza");
+    await user.type(screen.getByRole("textbox", { name: /CPF/ }), "52998224725");
+    await user.type(screen.getByRole("textbox", { name: /E-mail/ }), "ana@exemplo.gov.br");
+    await user.click(screen.getByRole("button", { name: "Continuar" }));
+    const heading = await screen.findByRole("heading", { name: "2. Endereço" });
+    await waitFor(() => expect(heading).toHaveFocus());
+
+    await user.type(screen.getByRole("textbox", { name: /CEP/ }), "50030230");
+    await user.type(screen.getByRole("textbox", { name: /Número/ }), "100");
+    await user.type(screen.getByRole("textbox", { name: /Cidade/ }), "Recife");
+    await user.click(screen.getByRole("button", { name: "Continuar" }));
+    await screen.findByRole("heading", { name: "3. Interesses" });
+    await user.click(screen.getByRole("button", { name: "Continuar" }));
+    expect(await screen.findByText("Escolha pelo menos uma área.")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("combobox", { name: /Áreas de interesse/ }));
+    await user.click(screen.getByRole("option", { name: "Saúde" }));
+    await user.keyboard("{Escape}");
+    await user.click(screen.getByRole("button", { name: "Continuar" }));
+    await screen.findByRole("heading", { name: "4. Revisão" });
+    expect(screen.getByText("100, CEP 50030-230, Recife")).toBeInTheDocument();
+    expect(screen.getByText("Saúde")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Enviar cadastro" }));
+    expect(await screen.findByText("Cadastro enviado")).toBeInTheDocument();
   });
 });
