@@ -26,7 +26,7 @@ export function RadioGroupItem({ className, ...props }: ComponentProps<typeof Ra
     <RadioGroupPrimitive.Item
       data-slot="radio-group-item"
       className={cn(
-        "peer inline-flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full border border-line-control bg-ground transition-colors duration-base ease-standard hover:border-accent-line disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-accent-edge data-[state=checked]:bg-accent",
+        "peer inline-flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full border border-line-control bg-ground transition-colors duration-base ease-standard hover:border-accent-line in-aria-invalid:border-danger-text disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-accent-edge data-[state=checked]:bg-accent",
         className,
       )}
       {...props}

@@ -30,18 +30,17 @@ describe("página de fundação", () => {
     expect(row).toHaveTextContent("Sheet");
   });
 
-  it("os gráficos têm nome, legenda, tooltip por categoria e tabela", async () => {
+  it("os gráficos têm nome, legenda e tabela com os dados", async () => {
     const { container } = render(<FoundationPage />);
     const section = container.querySelector<HTMLElement>("section#graficos")!;
-    const groups = within(section).getAllByRole("group", { name: "Horas por trimestre" });
-    expect(groups).toHaveLength(2);
+    expect(within(section).getAllByRole("group", { name: "Horas por trimestre" })).toHaveLength(2);
     expect(within(section).getAllByRole("group", { name: "Entregas por mês" })).toHaveLength(2);
-    expect(within(groups[0]!).getByRole("img", { name: "T1: Portal 120 h, App 90 h, API 60 h" })).toHaveAttribute("tabindex", "0");
     expect(within(section).getAllByRole("list", { name: "Legenda" })).toHaveLength(4);
-    expect(within(section).getAllByText("ver os dados em tabela")).toHaveLength(4);
     const user = userEvent.setup();
-    await user.hover(within(groups[0]!).getByRole("img", { name: /^T2/ }));
-    expect(within(section).getAllByText("180 h").length).toBeGreaterThan(1);
+    const summary = within(section).getAllByText("ver os dados em tabela")[0]!;
+    await user.click(summary);
+    const table = summary.closest("details")!.querySelector("table")!;
+    expect(within(table).getByRole("row", { name: /T2/ })).toHaveTextContent("180 h");
   });
 
   it("não tem violações de axe nos dois temas (contraste fica com npm run contrast)", async () => {

@@ -8,7 +8,7 @@ import { cn } from "@/registry/marcio/lib/utils";
 import { Calendar } from "@/registry/marcio/ui/calendar";
 import { useFormField } from "@/registry/marcio/ui/form-field";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
-import { Input } from "@/registry/marcio/ui/input";
+import { controlHeights, Input, triggerClasses, type ControlSize } from "@/registry/marcio/ui/input";
 import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "@/registry/marcio/ui/popover";
 
 export type { DateRange };
@@ -19,9 +19,6 @@ export function formatDate(date: Date) {
   return dateFormat.format(date);
 }
 
-const triggerClasses =
-  "flex h-control w-full min-w-0 cursor-pointer items-center gap-2 rounded-control border border-line-control bg-ground px-3 text-left text-base text-ink transition-colors duration-base ease-standard hover:border-accent-line disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-danger-text data-[placeholder]:text-ink-muted";
-
 type PickerBaseProps = Omit<ComponentProps<"button">, "value" | "defaultValue" | "onChange" | "children"> & {
   placeholder?: ReactNode;
   fromDate?: Date;
@@ -29,6 +26,7 @@ type PickerBaseProps = Omit<ComponentProps<"button">, "value" | "defaultValue" |
   clearable?: boolean;
   clearLabel?: string;
   name?: string;
+  size?: ControlSize;
 };
 
 type PickerShellProps = Omit<PickerBaseProps, "fromDate" | "toDate"> & {
@@ -53,6 +51,7 @@ function PickerShell({
   clearable = false,
   clearLabel = "Limpar data",
   name,
+  size = "md",
   className,
   disabled,
   ref,
@@ -74,7 +73,7 @@ function PickerShell({
             data-placeholder={hasValue ? undefined : ""}
             disabled={disabled}
             {...field?.controlProps}
-            className={cn(triggerClasses, clearable && hasValue && "pr-12")}
+            className={cn(triggerClasses, "justify-start", controlHeights[size], clearable && hasValue && "pr-12")}
             {...props}
             ref={(node) => {
               triggerRef.current = node;
@@ -123,7 +122,7 @@ function boundsOf(fromDate?: Date, toDate?: Date) {
 
 export type DatePickerProps = Omit<
   ComponentProps<"input">,
-  "value" | "defaultValue" | "onChange" | "children" | "type" | "placeholder"
+  "value" | "defaultValue" | "onChange" | "children" | "type" | "placeholder" | "size"
 > & {
   value?: Date | null;
   defaultValue?: Date | null;
@@ -135,6 +134,7 @@ export type DatePickerProps = Omit<
   clearLabel?: string;
   calendarLabel?: string;
   invalidMessage?: string;
+  size?: ControlSize;
 };
 
 function rangeMessage(fromDate?: Date, toDate?: Date) {
@@ -156,6 +156,7 @@ export function DatePicker({
   clearLabel = "Limpar data",
   calendarLabel = "Abrir calendário",
   invalidMessage = "Data inválida. Digite no formato dd/mm/aaaa.",
+  size = "md",
   name,
   className,
   disabled,
@@ -229,7 +230,7 @@ export function DatePicker({
     <Popover open={open} onOpenChange={setOpen}>
       <div data-slot="date-picker" className={cn("flex w-full min-w-0 flex-col gap-1.5", className)}>
         <PopoverAnchor asChild>
-          <div className="relative flex w-full min-w-0 items-center">
+          <div className="w-full min-w-0">
             <Input
               {...field?.controlProps}
               type="text"
@@ -238,6 +239,7 @@ export function DatePicker({
               maxLength={10}
               placeholder={placeholder}
               disabled={disabled}
+              size={size}
               {...props}
               aria-describedby={describedBy}
               aria-invalid={ariaInvalid ?? field?.controlProps["aria-invalid"] ?? (error ? true : undefined)}
@@ -251,36 +253,39 @@ export function DatePicker({
                 }
                 onKeyDown?.(event);
               }}
-              className={cn("font-mono tabular-nums", clearable && hasValue ? "pr-20" : "pr-11")}
+              className="font-mono tabular-nums"
               ref={(node) => {
                 inputRef.current = node;
                 if (typeof ref === "function") return ref(node);
                 if (ref) ref.current = node;
               }}
+              end={
+                <>
+                  {clearable && hasValue && !disabled && (
+                    <IconButton
+                      size="sm"
+                      aria-label={clearLabel}
+                      className={cn(size === "sm" && "size-7")}
+                      onClick={() => {
+                        commit(null);
+                        focusInput();
+                      }}
+                    >
+                      <X aria-hidden="true" />
+                    </IconButton>
+                  )}
+                  <PopoverTrigger asChild>
+                    <IconButton size="sm" aria-label={calendarLabel} aria-controls={contentId} disabled={disabled} className={cn(size === "sm" && "size-7")}>
+                      <CalendarDays aria-hidden="true" />
+                    </IconButton>
+                  </PopoverTrigger>
+                </>
+              }
             />
-            <div className="absolute right-1 flex items-center">
-              {clearable && hasValue && !disabled && (
-                <IconButton
-                  size="sm"
-                  aria-label={clearLabel}
-                  onClick={() => {
-                    commit(null);
-                    focusInput();
-                  }}
-                >
-                  <X aria-hidden="true" />
-                </IconButton>
-              )}
-              <PopoverTrigger asChild>
-                <IconButton size="sm" aria-label={calendarLabel} aria-controls={contentId} disabled={disabled}>
-                  <CalendarDays aria-hidden="true" />
-                </IconButton>
-              </PopoverTrigger>
-            </div>
           </div>
         </PopoverAnchor>
         {error && (
-          <p id={errorId} className="text-sm text-danger-text">
+          <p id={errorId} role="alert" className="text-sm text-danger-text">
             {error}
           </p>
         )}

@@ -20,6 +20,8 @@ const pages: SitePage[] = [
   { name: "exemplos", path: "/exemplos/" },
   { name: "listagem", path: "/exemplos/listagem/" },
   { name: "cadastro", path: "/exemplos/cadastro/" },
+  { name: "detalhe", path: "/exemplos/detalhe/" },
+  { name: "wizard", path: "/exemplos/wizard/" },
   { name: "blocos", path: "/blocos/" },
   { name: "login", path: "/login/" },
   { name: "dashboard", path: "/dashboard/" },

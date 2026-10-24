@@ -14,7 +14,7 @@ O registry do shadcn não tem versão por item. Quem instala recebe sempre o arq
 - **Semver com a regra de antes do 1.0:**
   - **MINOR (0.x.0):** componente, token ou bloco novo, e também qualquer mudança que quebra compatibilidade.
   - **PATCH (0.x.y):** correção sem mudança de API nem mudança visual intencional.
-  - **1.0.0:** quando nenhum componente estiver em beta. A partir dali, quebra sobe a MAJOR.
+  - **1.0.0:** quando a API dos primitivos estiver congelada e houver uso real em produção ([ADR 0018](0018-api-congelada.md)). A partir dali, quebra em componente estável sobe a MAJOR.
 - **Quebra sempre com migração.** Toda entrada em Quebra compatibilidade traz um bloco Como migrar com os comandos e o antes e depois do código.
 - **Status por componente continua valendo.** Componente beta pode mudar de API numa MINOR. Componente estável só muda de API com entrada em Quebra compatibilidade.
 - **Formato fixo do CHANGELOG.** Cada versão é `## [x.y.z] - aaaa-mm-dd`, com as seções `### Novo`, `### Mudou`, `### Corrigido` e `### Quebra compatibilidade`, e textos em português sem travessão. A página Novidades lê esse arquivo no build, e um formato fora do esperado quebra o build.

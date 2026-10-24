@@ -74,7 +74,8 @@ const interactive = [
   "pagination", "popover", "command", "combobox", "dropdown-menu", "breadcrumb", "alert", "sheet", "command-palette",
   "app-shell", "card", "select", "dialog", "calendar", "date-picker", "file-upload", "alert-dialog", "toast", "tabs",
   "tooltip", "theme-toggle", "accordion", "collapsible", "toggle-group", "slider",
-  "number-input", "data-table", "stepper", "navbar", "footer",
+  "number-input", "data-table", "stepper", "navbar", "footer", "currency-input", "date-range-picker",
+  "password-input", "search-input", "scroll-area", "multi-select", "context-menu", "chart",
 ];
 
 describe("catálogo", () => {

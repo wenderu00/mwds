@@ -1,6 +1,6 @@
 import tokens from "../_data/tokens.json";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
-import { Chart } from "./charts-demo";
+import { Chart } from "@/registry/marcio/ui/chart";
 import { FoundationSection, ThemePair, themes } from "../_docs/section";
 
 const categorical = [
@@ -16,19 +16,27 @@ const categorical = [
 
 const sequential = ["bg-seq-1", "bg-seq-2", "bg-seq-3", "bg-seq-4", "bg-seq-5"];
 
-const quarters = ["T1", "T2", "T3", "T4"];
 const hoursByQuarter = [
-  { name: "Portal", values: [120, 180, 150, 210] },
-  { name: "App", values: [90, 110, 160, 140] },
-  { name: "API", values: [60, 80, 70, 120] },
+  { trimestre: "T1", portal: 120, app: 90, api: 60 },
+  { trimestre: "T2", portal: 180, app: 110, api: 80 },
+  { trimestre: "T3", portal: 150, app: 160, api: 70 },
+  { trimestre: "T4", portal: 210, app: 140, api: 120 },
 ];
 
-const months = ["mai", "jun", "jul", "ago", "set", "out"];
 const deliveries = [
-  { name: "Portal", values: [4, 6, 5, 8, 9, 12] },
-  { name: "App", values: [2, 3, 6, 5, 7, 8] },
-  { name: "API", values: [1, 2, 2, 4, 3, 5] },
-  { name: "Site", values: [3, 1, 2, 1, 2, 2] },
+  { mês: "mai", portal: 4, app: 2, api: 1, site: 3 },
+  { mês: "jun", portal: 6, app: 3, api: 2, site: 1 },
+  { mês: "jul", portal: 5, app: 6, api: 2, site: 2 },
+  { mês: "ago", portal: 8, app: 5, api: 4, site: 1 },
+  { mês: "set", portal: 9, app: 7, api: 3, site: 2 },
+  { mês: "out", portal: 12, app: 8, api: 5, site: 2 },
+];
+
+const projects = [
+  { key: "portal", label: "Portal" },
+  { key: "app", label: "App" },
+  { key: "api", label: "API" },
+  { key: "site", label: "Site" },
 ];
 
 const rules = [
@@ -98,8 +106,8 @@ export function ChartsSection() {
       <div className="flex flex-col gap-4">
         {themes.map((theme) => (
           <div key={theme} data-theme={theme} className="grid gap-10 rounded-card border border-line bg-ground p-6 text-ink lg:grid-cols-2">
-            <Chart kind="bar" title="Horas por trimestre" categories={quarters} series={hoursByQuarter} unit="h" />
-            <Chart kind="line" title="Entregas por mês" categories={months} series={deliveries} unit="entregas" />
+            <Chart kind="bar" title="Horas por trimestre" data={hoursByQuarter} categoryKey="trimestre" series={projects.slice(0, 3)} unit="h" />
+            <Chart kind="line" title="Entregas por mês" data={deliveries} categoryKey="mês" series={projects} unit="entregas" />
           </div>
         ))}
       </div>

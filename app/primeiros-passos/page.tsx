@@ -284,9 +284,12 @@ export default function GettingStartedPage() {
           </p>
           <CodeComment>por isso, não edite valores de token dentro do globals.css: o próximo add desfaz a edição</CodeComment>
           <p className="max-w-measure text-ink-soft">
-            Para personalizar, crie um arquivo seu e importe depois do globals.css no layout. Se o token também muda dentro de um tema, de um @media ou de um
-            data-density no globals.css, repita o seletor daquele bloco no seu arquivo; senão a sua versão anula a variação.
+            Para personalizar, instale uma vez o arquivo de tema: ele cria app/tema.css, vazio e comentado, que nenhum add reescreve. Importe depois do globals.css no layout.
+            Se o token também muda dentro de um tema, de um @media ou de um data-density no globals.css, repita o seletor daquele bloco no arquivo; senão a sua versão
+            anula a variação.
           </p>
+          <CodeBlock title="terminal · criar app/tema.css" code={add("@marcio/marcio-tema")} />
+          <CodeComment>o init não cria esse arquivo de propósito: rodar o init de novo sobrescreveria as suas mudanças</CodeComment>
           <CodeBlock title="app/tema.css" code={themeOverrideCode} />
           <CodeBlock title="app/layout.tsx, imports" code={`import "./globals.css";\nimport "./tema.css";`} />
         </FoundationSection>

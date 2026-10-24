@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import NextLink from "next/link";
 import { AdminShell } from "@/registry/marcio/blocks/admin-shell/admin-shell";
-import { deadlines, metrics } from "@/registry/marcio/blocks/dashboard/data";
+import { deadlines, hoursByWeek, metrics, workstreams } from "@/registry/marcio/blocks/dashboard/data";
 import { RecentActivity } from "@/registry/marcio/blocks/dashboard/recent-activity";
 import { Alert } from "@/registry/marcio/ui/alert";
 import { Badge } from "@/registry/marcio/ui/badge";
 import { Button } from "@/registry/marcio/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/registry/marcio/ui/card";
+import { Chart } from "@/registry/marcio/ui/chart";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
 import { StatCard } from "@/registry/marcio/ui/stat-card";
@@ -54,16 +55,33 @@ export default function DashboardPage() {
         ))}
       </section>
 
+      <section id="horas" className="flex scroll-mt-24 flex-col gap-4">
+        <SectionTitle index="01" as="h2" size="md">
+          Horas por semana
+        </SectionTitle>
+        <Chart
+          kind="area"
+          stacked
+          title="Produto concentra as horas desde setembro"
+          description="Horas registradas por frente de trabalho nas últimas 8 semanas."
+          data={hoursByWeek}
+          categoryKey="semana"
+          series={workstreams}
+          unit="h"
+          height={240}
+        />
+      </section>
+
       <div className="grid gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <section id="atividade" className="flex min-w-0 scroll-mt-24 flex-col gap-4">
-          <SectionTitle index="01" as="h2" size="md">
+          <SectionTitle index="02" as="h2" size="md">
             Atividade recente
           </SectionTitle>
           <RecentActivity />
         </section>
 
         <section id="prazos" className="flex scroll-mt-24 flex-col gap-4">
-          <SectionTitle index="02" as="h2" size="md">
+          <SectionTitle index="03" as="h2" size="md">
             Prazos da semana
           </SectionTitle>
           <ul className="flex flex-col gap-3">

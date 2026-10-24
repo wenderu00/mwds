@@ -11,10 +11,10 @@ export const DropdownMenuGroup = DropdownMenuPrimitive.Group;
 export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
 export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
-const contentClasses =
+export const menuContentClasses =
   "z-popover min-w-48 overflow-hidden rounded-control border border-line-strong bg-surface p-1 text-ink motion-safe:data-[state=open]:animate-mw-fade-in";
 
-const itemClasses =
+export const menuItemClasses =
   "relative flex min-h-9 cursor-pointer items-center gap-2 rounded-mark px-2 py-1.5 text-base outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[highlighted]:bg-accent-soft [&_svg]:size-4 [&_svg]:shrink-0";
 
 export function DropdownMenuContent({ className, sideOffset = 6, align = "end", ...props }: ComponentProps<typeof DropdownMenuPrimitive.Content>) {
@@ -24,7 +24,7 @@ export function DropdownMenuContent({ className, sideOffset = 6, align = "end", 
         data-slot="dropdown-menu-content"
         sideOffset={sideOffset}
         align={align}
-        className={cn(contentClasses, className)}
+        className={cn(menuContentClasses, className)}
         {...props}
       />
     </DropdownMenuPrimitive.Portal>
@@ -42,7 +42,7 @@ export function DropdownMenuItem({ className, variant = "default", inset = false
       data-slot="dropdown-menu-item"
       data-variant={variant}
       className={cn(
-        itemClasses,
+        menuItemClasses,
         variant === "danger" ? "text-danger-text data-[highlighted]:bg-danger-soft" : "text-ink",
         inset && "pl-8",
         className,
@@ -58,7 +58,7 @@ export function DropdownMenuCheckboxItem({ className, children, ...props }: Comp
   return (
     <DropdownMenuPrimitive.CheckboxItem
       data-slot="dropdown-menu-checkbox-item"
-      className={cn(itemClasses, "pl-8 text-ink", className)}
+      className={cn(menuItemClasses, "pl-8 text-ink", className)}
       {...props}
     >
       <span className="absolute left-2 inline-flex size-4 items-center justify-center">
@@ -71,7 +71,7 @@ export function DropdownMenuCheckboxItem({ className, children, ...props }: Comp
 
 export function DropdownMenuRadioItem({ className, children, ...props }: ComponentProps<typeof DropdownMenuPrimitive.RadioItem>) {
   return (
-    <DropdownMenuPrimitive.RadioItem data-slot="dropdown-menu-radio-item" className={cn(itemClasses, "pl-8 text-ink", className)} {...props}>
+    <DropdownMenuPrimitive.RadioItem data-slot="dropdown-menu-radio-item" className={cn(menuItemClasses, "pl-8 text-ink", className)} {...props}>
       <span className="absolute left-2 inline-flex size-4 items-center justify-center">
         <DropdownMenuPrimitive.ItemIndicator>
           <span className="block size-2 rounded-full bg-accent-text" />
@@ -104,7 +104,7 @@ export function DropdownMenuSubTrigger({ className, children, ...props }: Compon
   return (
     <DropdownMenuPrimitive.SubTrigger
       data-slot="dropdown-menu-sub-trigger"
-      className={cn(itemClasses, "text-ink data-[state=open]:bg-accent-soft", className)}
+      className={cn(menuItemClasses, "text-ink data-[state=open]:bg-accent-soft", className)}
       {...props}
     >
       {children}
@@ -116,7 +116,7 @@ export function DropdownMenuSubTrigger({ className, children, ...props }: Compon
 export function DropdownMenuSubContent({ className, ...props }: ComponentProps<typeof DropdownMenuPrimitive.SubContent>) {
   return (
     <DropdownMenuPrimitive.Portal>
-      <DropdownMenuPrimitive.SubContent data-slot="dropdown-menu-sub-content" className={cn(contentClasses, className)} {...props} />
+      <DropdownMenuPrimitive.SubContent data-slot="dropdown-menu-sub-content" className={cn(menuContentClasses, className)} {...props} />
     </DropdownMenuPrimitive.Portal>
   );
 }

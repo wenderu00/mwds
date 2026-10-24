@@ -1,4 +1,4 @@
-import { Code, Columns3, LayoutGrid, List, Pencil, ShieldCheck, Sparkles, Trash2, Workflow } from "lucide-react";
+import { AtSign, Code, Columns3, LayoutGrid, List, Pencil, ShieldCheck, Sparkles, Trash2, Workflow } from "lucide-react";
 import type { ReactNode } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
 import {
@@ -54,6 +54,14 @@ import { GlitchText } from "@/registry/marcio/ui/glitch-text";
 import { Hero } from "@/registry/marcio/ui/hero";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
 import { Input } from "@/registry/marcio/ui/input";
+import { Chart } from "@/registry/marcio/ui/chart";
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "@/registry/marcio/ui/context-menu";
+import { DescriptionList } from "@/registry/marcio/ui/description-list";
+import { MultiSelect } from "@/registry/marcio/ui/multi-select";
+import { PasswordInput } from "@/registry/marcio/ui/password-input";
+import { ScrollArea } from "@/registry/marcio/ui/scroll-area";
+import { SearchInput } from "@/registry/marcio/ui/search-input";
+import { Timeline } from "@/registry/marcio/ui/timeline";
 import { Kbd } from "@/registry/marcio/ui/kbd";
 import { Kicker } from "@/registry/marcio/ui/kicker";
 import { Label } from "@/registry/marcio/ui/label";
@@ -396,7 +404,7 @@ export const docs: ComponentDoc[] = [
     slug: "typography",
     name: "Heading e Text",
     group: "identidade",
-    status: "beta",
+    status: "estavel",
     summary: "Títulos em display e textos de corpo e mono com a escala do @mw/ui. A prop as escolhe a tag sem mudar o estilo.",
     file: "typography.tsx",
     usage: {
@@ -480,8 +488,8 @@ export const docs: ComponentDoc[] = [
     ],
     props: [
       { name: "variant", type: '"primary" | "secondary" | "ghost" | "danger"', default: '"primary"', description: "Peso visual da ação." },
-      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Altura de 36, 44 ou 48px." },
-      { name: "loading", type: "boolean", default: "false", description: "Mostra spinner, desabilita e marca aria-busy." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "sm tem 36px e lg 48px; md segue a altura de controle da densidade (36, 44 ou 48px), igual a Input e Select." },
+      { name: "loading", type: "boolean", default: "false", description: "Mostra spinner, desabilita e marca aria-busy. Só Button e IconButton têm loading: num campo, desabilite enquanto carrega." },
       { name: "loadingLabel", type: "string", default: '"Carregando"', description: "Texto anunciado durante o loading." },
       asChildProp,
       classNameProp,
@@ -653,7 +661,9 @@ export const docs: ComponentDoc[] = [
     ],
     props: [
       { name: "type", type: "string", default: '"text"', description: "Qualquer tipo nativo de input." },
-      { name: "aria-invalid", type: "boolean", description: "Pinta a borda com danger-text." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button: 36px, a altura de controle da densidade (44px na padrão) e 48px." },
+      { name: "start / end", type: "ReactNode", description: "Conteúdo dentro do contorno, antes e depois do texto: ícone, prefixo como R$, botão de limpar. Com slots, className continua indo para o input." },
+      { name: "aria-invalid", type: "boolean", description: "Borda de erro. Dentro do FormField, vem do error." },
       classNameProp,
     ],
     examples: [
@@ -669,6 +679,21 @@ export const docs: ComponentDoc[] = [
           </>
         ),
       },
+      {
+        title: "Tamanhos e slots",
+        description: "start e end ficam dentro do contorno. Ícone de início é decorativo; conteúdo de fim pode ser botão.",
+        className: "w-full flex-col items-stretch",
+        code: `<Input size="sm" placeholder="sm, 36px" />\n<Input placeholder="md, altura de controle" />\n<Input size="lg" placeholder="lg, 48px" />\n<Input start={<AtSign aria-hidden="true" />} placeholder="usuario" />\n<Input end={<span>.gov.br</span>} placeholder="orgao" />`,
+        render: () => (
+          <>
+            <Input aria-label="Tamanho pequeno" size="sm" placeholder="sm, 36px" />
+            <Input aria-label="Tamanho médio" placeholder="md, altura de controle" />
+            <Input aria-label="Tamanho grande" size="lg" placeholder="lg, 48px" />
+            <Input aria-label="Usuário" start={<AtSign aria-hidden="true" />} placeholder="usuario" />
+            <Input aria-label="Domínio" end={<span className="pr-2 font-mono text-mono-xs text-ink-muted">.gov.br</span>} placeholder="orgao" />
+          </>
+        ),
+      },
     ],
     a11y: ["Sempre associe um Label (ou aria-label). Placeholder não substitui rótulo."],
   },
@@ -676,12 +701,12 @@ export const docs: ComponentDoc[] = [
     slug: "masked-input",
     name: "MaskedInput",
     group: "primitivos",
-    summary: "Input com máscara brasileira: CPF, CNPJ, telefone, CEP e moeda. Mostra o valor formatado e entrega só os dígitos.",
+    summary: "Input com máscara brasileira: CPF, CNPJ, telefone e CEP. Mostra o valor formatado e entrega só os dígitos. Para reais, veja o CurrencyInput.",
     file: "masked-input.tsx",
     status: "beta",
     usage: {
-      use: ["Documentos e contatos brasileiros com formato fixo: CPF, CNPJ, telefone, CEP.", "Valores em reais com CurrencyInput.", "Validar CPF e CNPJ com isValidCpf e isValidCnpj na regra do formulário."],
-      avoid: ["Números sem formato fixo, como quantidade: use NumberInput.", "Telefones internacionais: a máscara é só para o Brasil."],
+      use: ["Documentos e contatos brasileiros com formato fixo: CPF, CNPJ, telefone, CEP.", "Validar CPF e CNPJ com isValidCpf e isValidCnpj na regra do formulário."],
+      avoid: ["Números sem formato fixo, como quantidade: use NumberInput.", "Valores em reais: use CurrencyInput.", "Telefones internacionais: a máscara é só para o Brasil."],
     },
     keyboard: [
       { keys: "Tab", action: "Leva o foco ao campo." },
@@ -693,7 +718,6 @@ export const docs: ComponentDoc[] = [
       { name: "value / onValueChange", type: "string / (value) => void", description: "Valor sem máscara, só dígitos. Use com o Controller do React Hook Form." },
       { name: "defaultValue", type: "string", description: "Valor inicial não controlado, com ou sem máscara." },
       { name: "name", type: "string", description: "Cria um input escondido com o valor sem máscara, para formulários nativos." },
-      { name: "CurrencyInput value / onValueChange", type: "number | null / (cents) => void", description: "Moeda em centavos inteiros: 123456 aparece como R$ 1.234,56." },
       classNameProp,
     ],
     examples: [
@@ -719,17 +743,6 @@ export const docs: ComponentDoc[] = [
         ),
       },
       {
-        title: "Moeda",
-        description: "Os dígitos entram pela direita, como em caixa eletrônico.",
-        className: "w-full flex-col items-stretch",
-        code: `<FormField label="Valor do contrato">\n  <CurrencyInput value={centavos} onValueChange={setCentavos} />\n</FormField>`,
-        render: (theme) => (
-          <FormField label="Valor do contrato" id={`mask-brl-${theme}`}>
-            <CurrencyInput defaultValue={123456} />
-          </FormField>
-        ),
-      },
-      {
         title: "Validação de CPF e CNPJ",
         description: "A máscara só formata. O dígito verificador fica em registry/marcio/lib/br.ts, para usar nas regras do formulário.",
         code: `import { isValidCpf } from "@/lib/br";\n\nrules={{ validate: (cpf) => isValidCpf(cpf) || "Confira o CPF: os dígitos finais não batem." }}`,
@@ -744,6 +757,44 @@ export const docs: ComponentDoc[] = [
       "Abre o teclado numérico no celular (inputmode numeric) e usa autocomplete de telefone e CEP.",
       "O placeholder mostra o formato, mas não substitui o rótulo.",
       "O cursor vai para o fim depois de cada dígito. Para corrigir no meio, apague até o ponto e digite de novo.",
+    ],
+  },
+  {
+    slug: "currency-input",
+    name: "CurrencyInput",
+    group: "primitivos",
+    summary: "Campo de valor em reais. Os dígitos entram pela direita, como em caixa eletrônico, e o valor sai em centavos inteiros.",
+    file: "masked-input.tsx",
+    status: "beta",
+    usage: {
+      use: ["Valores em reais: preço, contrato, reembolso.", "Guarde e envie em centavos inteiros, sem ponto flutuante."],
+      avoid: ["Quantidades e números sem moeda: use NumberInput.", "Outras moedas: o formato é só o do real."],
+    },
+    keyboard: [
+      { keys: "Dígitos", action: "Entram pela direita: 1, 12, 123 viram R$ 0,01, R$ 0,12, R$ 1,23." },
+      { keys: "Backspace", action: "Apaga o último dígito." },
+    ],
+    props: [
+      { name: "value / onValueChange", type: "number | null / (cents) => void", description: "Valor em centavos inteiros: 123456 aparece como R$ 1.234,56. Campo vazio é null." },
+      { name: "defaultValue", type: "number | null", description: "Valor inicial não controlado, em centavos." },
+      { name: "name", type: "string", description: "Cria um input escondido com os centavos, para formulários nativos." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Valor do contrato",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Valor do contrato">\n  <CurrencyInput value={centavos} onValueChange={setCentavos} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Valor do contrato" id={`brl-${theme}`}>
+            <CurrencyInput defaultValue={123456} />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "Abre o teclado numérico no celular (inputmode numeric).",
+      "O valor lido pelo leitor de tela já vem formatado, com R$ e vírgula.",
     ],
   },
   {
@@ -764,6 +815,7 @@ export const docs: ComponentDoc[] = [
       { name: "step", type: "number", default: "1", description: "Passo das setas e dos botões. Também define as casas decimais exibidas." },
       { name: "formatOptions", type: "Intl.NumberFormatOptions", description: 'Formato de exibição, por exemplo { style: "percent" } ou unidade.' },
       { name: "decrementLabel / incrementLabel", type: "string", default: '"Diminuir" / "Aumentar"', description: "Nomes dos botões." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button: 36px, a altura de controle da densidade (44px na padrão) e 48px." },
     ],
     examples: [
       {
@@ -871,6 +923,7 @@ export const docs: ComponentDoc[] = [
       { name: "checked", type: 'boolean | "indeterminate"', description: "Estado controlado." },
       { name: "defaultChecked", type: "boolean", description: "Estado inicial não controlado." },
       { name: "onCheckedChange", type: "(checked) => void", description: "Chamado ao alternar." },
+      { name: "aria-invalid", type: "boolean", description: "Borda de erro. Dentro do FormField, vem do error." },
       classNameProp,
     ],
     examples: [
@@ -939,6 +992,7 @@ export const docs: ComponentDoc[] = [
     props: [
       { name: "checked", type: "boolean", description: "Estado controlado." },
       { name: "onCheckedChange", type: "(checked: boolean) => void", description: "Chamado ao alternar." },
+      { name: "aria-invalid", type: "boolean", description: "Borda de erro. Dentro do FormField, vem do error." },
       classNameProp,
     ],
     examples: [
@@ -1186,6 +1240,7 @@ export const docs: ComponentDoc[] = [
       { name: "orientation", type: '"vertical" | "horizontal"', description: "Direção das setas do teclado." },
       { name: "RadioGroupOption label", type: "ReactNode", description: "Rótulo clicável da opção." },
       { name: "RadioGroupOption description", type: "ReactNode", description: "Texto de apoio ligado por aria-describedby." },
+      { name: "aria-invalid", type: "boolean", description: "No RadioGroup, pinta a borda de todas as opções. Dentro do FormField, vem do error." },
       classNameProp,
     ],
     examples: [
@@ -1383,6 +1438,7 @@ export const docs: ComponentDoc[] = [
       { name: "searchPlaceholder", type: "string", default: '"Buscar"', description: "Texto e nome do campo de busca." },
       { name: "emptyText", type: "ReactNode", default: '"Nada encontrado"', description: "Estado sem resultado." },
       { name: "name", type: "string", description: "Cria um input escondido para formulários nativos." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button: 36px, a altura de controle da densidade (44px na padrão) e 48px." },
       classNameProp,
     ],
     examples: [
@@ -1544,7 +1600,7 @@ export const docs: ComponentDoc[] = [
     slug: "separator",
     name: "Separator",
     group: "primitivos",
-    status: "beta",
+    status: "estavel",
     summary: "Linha de 1px em line, horizontal ou vertical, para separar grupos de conteúdo.",
     file: "separator.tsx",
     usage: {
@@ -1698,7 +1754,7 @@ export const docs: ComponentDoc[] = [
     slug: "kbd",
     name: "Kbd",
     group: "primitivos",
-    status: "beta",
+    status: "estavel",
     summary: "Tecla de atalho em mono com borda, como no gatilho da busca.",
     file: "kbd.tsx",
     usage: {
@@ -2152,7 +2208,8 @@ export const docs: ComponentDoc[] = [
       { name: "value / onValueChange", type: "string / (value) => void", description: "Uso controlado, como no Controller do React Hook Form." },
       { name: "defaultValue", type: "string", description: "Valor inicial não controlado." },
       { name: "disabled", type: "boolean", description: "Desabilita o gatilho." },
-      { name: "SelectTrigger aria-invalid", type: "boolean", description: "Borda de erro." },
+      { name: "SelectTrigger size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button e do Input." },
+      { name: "SelectTrigger aria-invalid", type: "boolean", description: "Borda de erro. Dentro do FormField, vem do error." },
     ],
     examples: [
       {
@@ -2200,6 +2257,7 @@ export const docs: ComponentDoc[] = [
       { name: "open / onOpenChange", type: "boolean / (open) => void", description: "Uso controlado." },
       { name: "DialogContent showClose", type: "boolean", default: "true", description: "Mostra o botão de fechar no canto." },
       { name: "DialogContent closeLabel", type: "string", default: '"Fechar"', description: "Nome acessível do botão de fechar." },
+      { name: "DialogContent size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Largura máxima: 384, 512 ou 672px." },
     ],
     examples: [
       {
@@ -2242,7 +2300,7 @@ export const docs: ComponentDoc[] = [
     slug: "accordion",
     name: "Accordion",
     group: "compostos",
-    status: "beta",
+    status: "estavel",
     summary: "Lista de seções que abrem e fecham, separadas por linhas. Para perguntas frequentes e configurações longas.",
     file: "accordion.tsx",
     usage: {
@@ -2294,7 +2352,7 @@ export const docs: ComponentDoc[] = [
     slug: "collapsible",
     name: "Collapsible",
     group: "compostos",
-    status: "beta",
+    status: "estavel",
     summary: "Um bloco que abre e fecha a partir de um gatilho, sem estilo próprio no gatilho. Base para mostrar mais e opções avançadas.",
     file: "collapsible.tsx",
     usage: {
@@ -2336,7 +2394,7 @@ export const docs: ComponentDoc[] = [
     group: "compostos",
     summary: "Calendário em português, semana começando no domingo, com seleção de um dia ou de um intervalo. Base do DatePicker.",
     file: "calendar.tsx",
-    status: "beta",
+    status: "estavel",
     usage: {
       use: ["Calendário sempre visível na página, como numa agenda ou num filtro lateral.", "Base de DatePicker e DateRangePicker."],
       avoid: ["Campo de data em formulário: use DatePicker, que ocupa uma linha.", "Datas muito distantes, como nascimento: digitar é mais rápido que navegar mês a mês."],
@@ -2379,24 +2437,23 @@ export const docs: ComponentDoc[] = [
     slug: "date-picker",
     name: "DatePicker",
     group: "compostos",
-    summary: "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Tem versão de intervalo, o DateRangePicker.",
+    summary: "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Para períodos, veja o DateRangePicker.",
     file: "date-picker.tsx",
     status: "beta",
     usage: {
-      use: ["Campo de data em formulário: vencimento, início, agendamento, nascimento. Quem sabe a data digita; quem não sabe abre o calendário.", "DateRangePicker para períodos, como filtros de relatório."],
-      avoid: ["Calendário sempre visível: use Calendar.", "Mês e ano sem dia: use dois Select."],
+      use: ["Campo de data em formulário: vencimento, início, agendamento, nascimento. Quem sabe a data digita; quem não sabe abre o calendário."],
+      avoid: ["Período com início e fim: use DateRangePicker.", "Calendário sempre visível: use Calendar.", "Mês e ano sem dia: use dois Select."],
     },
     props: [
       { name: "value / onValueChange", type: "Date | null / (date) => void", description: "Uso controlado, como no Controller do React Hook Form." },
       { name: "defaultValue", type: "Date | null", description: "Valor inicial não controlado." },
       { name: "fromDate / toDate", type: "Date", description: "Primeiro e último dia que podem ser escolhidos." },
       { name: "clearable", type: "boolean", default: "false", description: "Mostra o botão de limpar quando há data." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button e do Input." },
       { name: "placeholder", type: "string", default: '"dd/mm/aaaa"', description: "Texto do campo vazio." },
       { name: "calendarLabel", type: "string", default: '"Abrir calendário"', description: "Nome do botão que abre o calendário." },
       { name: "invalidMessage", type: "string", default: '"Data inválida. Digite no formato dd/mm/aaaa."', description: "Mensagem para data incompleta ou que não existe. Fora de fromDate e toDate, a mensagem diz o intervalo aceito." },
       { name: "name", type: "string", description: "Cria um input escondido com a data em aaaa-mm-dd." },
-      { name: "DateRangePicker value", type: "{ from?: Date; to?: Date } | null", description: "Intervalo. Fecha quando início e fim estão escolhidos." },
-      { name: "DateRangePicker numberOfMonths", type: "number", default: "2", description: "Meses lado a lado no intervalo." },
     ],
     examples: [
       {
@@ -2415,16 +2472,6 @@ export const docs: ComponentDoc[] = [
         ),
       },
       {
-        title: "Intervalo",
-        className: "w-full flex-col items-stretch",
-        code: `<FormField label="Período">\n  <DateRangePicker value={periodo} onValueChange={setPeriodo} />\n</FormField>`,
-        render: (theme) => (
-          <FormField label="Período" id={`dp-range-${theme}`}>
-            <DateRangePicker defaultValue={{ from: new Date(2026, 9, 12), to: new Date(2026, 9, 16) }} clearable />
-          </FormField>
-        ),
-      },
-      {
         title: "Com React Hook Form",
         code: `<Controller\n  control={control}\n  name="vencimento"\n  rules={{ required: "Escolha a data de vencimento." }}\n  render={({ field, fieldState }) => (\n    <FormField label="Vencimento" required error={fieldState.error?.message}>\n      <DatePicker value={field.value} onValueChange={field.onChange} />\n    </FormField>\n  )}\n/>`,
         render: (theme) => (
@@ -2438,7 +2485,6 @@ export const docs: ComponentDoc[] = [
       "O DatePicker é um campo de texto com teclado numérico no celular. Recebe o rótulo, a descrição, o erro e o obrigatório do FormField.",
       "Data incompleta, inexistente ou fora do intervalo marca o campo com aria-invalid e liga a mensagem por aria-describedby. O valor vira null até a data ser corrigida.",
       "O botão Abrir calendário abre um diálogo. O foco vai para o dia escolhido ou para hoje; ao escolher ou fechar, volta ao campo.",
-      "O DateRangePicker mantém o gatilho com role combobox.",
       "O botão de limpar tem nome próprio (Limpar data) e devolve o foco ao campo.",
     ],
     keyboard: [
@@ -2447,6 +2493,49 @@ export const docs: ComponentDoc[] = [
       { keys: "Enter / Espaço", action: "No botão do calendário, abre. Num dia, escolhe e fecha." },
       { keys: "Setas, Page Up / Page Down, Home / End", action: "Navegam no calendário, como no Calendar." },
       { keys: "Esc", action: "Fecha sem mudar a data e devolve o foco ao campo." },
+    ],
+  },
+  {
+    slug: "date-range-picker",
+    name: "DateRangePicker",
+    group: "compostos",
+    summary: "Período com início e fim, escolhido em dois meses lado a lado do Calendar, num Popover.",
+    file: "date-picker.tsx",
+    status: "beta",
+    usage: {
+      use: ["Filtros de relatório e listagem por período.", "Reservas e vigências com início e fim."],
+      avoid: ["Uma data só: use DatePicker.", "Períodos fixos, como este mês ou últimos 30 dias: use ToggleGroup ou Select."],
+    },
+    props: [
+      { name: "value / onValueChange", type: "{ from?: Date; to?: Date } | null / (range) => void", description: "Uso controlado. Fecha quando início e fim estão escolhidos." },
+      { name: "defaultValue", type: "{ from?: Date; to?: Date } | null", description: "Valor inicial não controlado." },
+      { name: "numberOfMonths", type: "number", default: "2", description: "Meses lado a lado." },
+      { name: "fromDate / toDate", type: "Date", description: "Primeiro e último dia que podem ser escolhidos." },
+      { name: "clearable", type: "boolean", default: "false", description: "Mostra o botão Limpar período." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button e do Input." },
+      { name: "name", type: "string", description: "Cria um input escondido com aaaa-mm-dd/aaaa-mm-dd." },
+    ],
+    examples: [
+      {
+        title: "Período",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Período">\n  <DateRangePicker value={periodo} onValueChange={setPeriodo} clearable />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Período" id={`drp-${theme}`}>
+            <DateRangePicker defaultValue={{ from: new Date(2026, 9, 12), to: new Date(2026, 9, 16) }} clearable />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "O gatilho tem role combobox, abre um diálogo e recebe o rótulo, a descrição e o erro do FormField.",
+      "O texto do gatilho diz o período inteiro: 12/10/2026 até 16/10/2026.",
+      "Ao fechar, o foco volta ao gatilho.",
+    ],
+    keyboard: [
+      { keys: "Enter / Espaço", action: "No gatilho, abre o calendário. Num dia, marca o início e depois o fim." },
+      { keys: "Setas, Page Up / Page Down, Home / End", action: "Navegam no calendário, como no Calendar." },
+      { keys: "Esc", action: "Fecha sem mudar o período." },
     ],
   },
   {
@@ -2530,6 +2619,7 @@ export const docs: ComponentDoc[] = [
       { name: "open / onOpenChange", type: "boolean / (open) => void", description: "Uso controlado, por exemplo para abrir a partir de um item de menu." },
       { name: "AlertDialogAction variant", type: '"danger" | "primary" | "secondary" | "ghost"', default: '"danger"', description: "Botão de confirmação. Aceita as props do Button, como onClick e loading." },
       { name: "AlertDialogCancel variant", type: '"secondary" | "ghost" | "primary" | "danger"', default: '"secondary"', description: "Botão que fecha sem confirmar. Recebe o foco ao abrir." },
+      { name: "AlertDialogContent size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Largura máxima: 384, 448 ou 512px." },
     ],
     examples: [
       {
@@ -3243,6 +3333,432 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: ["É um radiogroup: setas trocam a opção e só a marcada entra no Tab."],
+  },
+  {
+    slug: "password-input",
+    name: "PasswordInput",
+    group: "primitivos",
+    summary: "Campo de senha com botão de mostrar e ocultar, sobre o slot end do Input.",
+    file: "password-input.tsx",
+    status: "beta",
+    usage: {
+      use: ["Login, cadastro e troca de senha.", "Deixe a pessoa conferir o que digitou antes de enviar, em vez de pedir a senha duas vezes."],
+      avoid: ["Códigos de uso único: use Input com inputMode numeric e autocomplete one-time-code.", "Dados que não são segredo: use Input."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Vai do campo para o botão Mostrar senha." },
+      { keys: "Enter / Espaço", action: "No botão, mostra ou oculta a senha." },
+    ],
+    props: [
+      { name: "showLabel", type: "string", default: '"Mostrar senha"', description: "Nome do botão. O estado vem do aria-pressed." },
+      { name: "autoComplete", type: "string", default: '"current-password"', description: 'Use "new-password" em cadastro e troca de senha.' },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button e do Input." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Login e cadastro",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Senha">\n  <PasswordInput />\n</FormField>\n<FormField label="Nova senha" description="Pelo menos 8 caracteres, com um número.">\n  <PasswordInput autoComplete="new-password" />\n</FormField>`,
+        render: (theme) => (
+          <>
+            <FormField label="Senha" id={`pw-a-${theme}`}>
+              <PasswordInput defaultValue="mw-demo-123" />
+            </FormField>
+            <FormField label="Nova senha" description="Pelo menos 8 caracteres, com um número." id={`pw-b-${theme}`}>
+              <PasswordInput autoComplete="new-password" />
+            </FormField>
+          </>
+        ),
+      },
+    ],
+    a11y: [
+      "O botão é uma alternância: aria-pressed diz se a senha está visível, e o nome não muda.",
+      "Desliga correção ortográfica e maiúscula automática, que atrapalham senha no celular.",
+    ],
+  },
+  {
+    slug: "search-input",
+    name: "SearchInput",
+    group: "primitivos",
+    summary: "Campo de busca com ícone de lupa e botão de limpar, que também limpa com Esc.",
+    file: "search-input.tsx",
+    status: "beta",
+    usage: {
+      use: ["Filtrar uma listagem ou tabela pelo texto.", "Busca dentro de uma seção, perto do que ela filtra."],
+      avoid: ["Busca global com atalhos e comandos: use CommandPalette.", "Escolher um valor de uma lista conhecida: use Combobox."],
+    },
+    keyboard: [
+      { keys: "Esc", action: "Limpa o texto. Com o campo vazio, não faz nada." },
+      { keys: "Tab", action: "Vai do campo para o botão Limpar busca, quando há texto." },
+    ],
+    props: [
+      { name: "value / onValueChange", type: "string / (value) => void", description: "Uso controlado." },
+      { name: "defaultValue", type: "string", description: "Valor inicial não controlado." },
+      { name: "clearLabel", type: "string", default: '"Limpar busca"', description: "Nome do botão de limpar." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button e do Input." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Filtro de listagem",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Buscar projetos">\n  <SearchInput value={busca} onValueChange={setBusca} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Buscar projetos" id={`search-${theme}`}>
+            <SearchInput defaultValue="ouvidoria" />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "É um input type search, anunciado como campo de busca.",
+      "A lupa é decorativa; o nome vem do rótulo do FormField ou de aria-label.",
+      "Depois de limpar pelo botão, o foco volta ao campo.",
+    ],
+  },
+  {
+    slug: "scroll-area",
+    name: "ScrollArea",
+    group: "primitivos",
+    summary: "Área com rolagem própria e barra nos tokens, para listas longas dentro de Sheet, Popover e Card.",
+    file: "scroll-area.tsx",
+    status: "beta",
+    usage: {
+      use: ["Lista longa dentro de um painel com altura fixa: notificações, termos, filtros.", "Rolagem horizontal de conteúdo largo, com orientation horizontal."],
+      avoid: ["A página inteira: deixe a rolagem do navegador.", "Tabelas: o Table já rola na horizontal e entra no Tab."],
+    },
+    keyboard: [
+      { keys: "Tab", action: "Foca a área rolável." },
+      { keys: "Setas, Page Up / Page Down, Home / End", action: "Rolam a área focada." },
+    ],
+    props: [
+      { name: "orientation", type: '"vertical" | "horizontal" | "both"', default: '"vertical"', description: "Quais barras aparecem." },
+      { name: "aria-label", type: "string", description: "Nomeia a área como região. Use quando o conteúdo não tem título próprio." },
+      { name: "viewportClassName", type: "string", description: "Classes da área que rola, por exemplo um padding." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Notificações num painel",
+        code: `<ScrollArea aria-label="Notificações" className="h-56 rounded-card border border-line">\n  <ul>{notificacoes.map(...)}</ul>\n</ScrollArea>`,
+        render: () => (
+          <ScrollArea aria-label="Notificações" className="h-56 w-full rounded-card border border-line" viewportClassName="p-4">
+            <ul className="flex flex-col gap-3">
+              {Array.from({ length: 12 }, (_, index) => (
+                <li key={index} className="flex flex-col gap-0.5 border-b border-line pb-3 last:border-b-0">
+                  <span className="text-ink">Pedido {String(index + 41).padStart(4, "0")} atualizado</span>
+                  <span className="font-mono text-mono-xs text-ink-muted">{`// há ${index + 2} min`}</span>
+                </li>
+              ))}
+            </ul>
+          </ScrollArea>
+        ),
+      },
+    ],
+    a11y: [
+      "A área rolável entra no Tab, para quem usa teclado conseguir rolar.",
+      "Com aria-label, vira uma região nomeada no leitor de tela.",
+      "A barra é visual; a rolagem por toque, roda e teclado continua a do navegador.",
+    ],
+  },
+  {
+    slug: "multi-select",
+    name: "MultiSelect",
+    group: "compostos",
+    summary: "Escolha de várias opções com busca, mostradas como chips removíveis dentro do campo.",
+    file: "multi-select.tsx",
+    status: "beta",
+    usage: {
+      use: ["Filtros e categorias com várias escolhas numa lista longa.", "Até umas dez escolhas visíveis como chips."],
+      avoid: ["Até cinco opções: use Checkbox, todas visíveis.", "Uma escolha só: use Select ou Combobox."],
+    },
+    keyboard: [
+      { keys: "Enter / Espaço / seta para baixo", action: "No gatilho, abre a lista com a busca focada." },
+      { keys: "Setas", action: "Navegam nas opções." },
+      { keys: "Enter", action: "Marca ou desmarca a opção, sem fechar." },
+      { keys: "Esc", action: "Fecha e devolve o foco ao gatilho." },
+      { keys: "Backspace", action: "No gatilho, remove a última escolha." },
+    ],
+    props: [
+      { name: "options", type: "MultiSelectOption[]", description: "{ value, label, keywords?, disabled? }, o mesmo formato do Combobox." },
+      { name: "value / onValueChange", type: "string[] / (value) => void", description: "Uso controlado, na ordem em que foram escolhidas." },
+      { name: "defaultValue", type: "string[]", description: "Valor inicial não controlado." },
+      { name: "placeholder / addLabel", type: "ReactNode", default: '"Selecione" / "Adicionar"', description: "Texto do gatilho sem e com escolhas." },
+      { name: "removeLabel", type: "(label) => string", default: '"Remover <rótulo>"', description: "Nome do botão de cada chip." },
+      { name: "name", type: "string", description: "Cria um input escondido por valor escolhido." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Altura mínima; o campo cresce quando os chips quebram linha." },
+    ],
+    examples: [
+      {
+        title: "Estados atendidos",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Estados atendidos">\n  <MultiSelect options={estados} value={escolhidos} onValueChange={setEscolhidos} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Estados atendidos" id={`ms-${theme}`}>
+            <MultiSelect
+              defaultValue={["pe", "pb"]}
+              options={[
+                { value: "al", label: "Alagoas" },
+                { value: "ba", label: "Bahia" },
+                { value: "ce", label: "Ceará" },
+                { value: "pb", label: "Paraíba" },
+                { value: "pe", label: "Pernambuco" },
+                { value: "rn", label: "Rio Grande do Norte" },
+                { value: "se", label: "Sergipe" },
+              ]}
+            />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "O gatilho tem role combobox e diz quantas e quais opções estão escolhidas.",
+      "Cada opção da lista tem aria-checked, e cada chip tem um botão Remover com o rótulo.",
+      "Depois de remover um chip, o foco volta ao gatilho.",
+    ],
+  },
+  {
+    slug: "context-menu",
+    name: "ContextMenu",
+    group: "compostos",
+    summary: "Menu de ações aberto com o botão direito, com os mesmos itens e estilos do DropdownMenu.",
+    file: "context-menu.tsx",
+    status: "beta",
+    usage: {
+      use: ["Atalho para ações de uma linha de tabela ou de um card, para quem já conhece a tela."],
+      avoid: ["Ação que só existe ali: ninguém descobre o clique direito. Repita a ação num DropdownMenu ou botão visível.", "Celular: não há clique direito; use DropdownMenu."],
+    },
+    keyboard: [
+      { keys: "Shift + F10 / tecla Menu", action: "Abre o menu no elemento focado." },
+      { keys: "Setas", action: "Navegam nos itens e abrem submenus." },
+      { keys: "Enter / Espaço", action: "Executa o item." },
+      { keys: "Esc", action: "Fecha o menu." },
+    ],
+    props: [
+      { name: "ContextMenuTrigger asChild", type: "boolean", description: "Usa o filho, como uma linha de tabela, como área do clique direito." },
+      { name: "ContextMenuItem variant", type: '"default" | "danger"', default: '"default"', description: "danger para ação destrutiva." },
+      { name: "ContextMenuItem inset", type: "boolean", default: "false", description: "Alinha com itens que têm indicador." },
+      { name: "onSelect", type: "(event) => void", description: "Ação do item." },
+    ],
+    examples: [
+      {
+        title: "Ações de um registro",
+        className: "w-full",
+        code: `<ContextMenu>\n  <ContextMenuTrigger asChild>\n    <div>Pedido 0042</div>\n  </ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Abrir</ContextMenuItem>\n    <ContextMenuItem>Duplicar</ContextMenuItem>\n    <ContextMenuSeparator />\n    <ContextMenuItem variant="danger">Excluir</ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>`,
+        render: () => (
+          <ContextMenu>
+            <ContextMenuTrigger asChild>
+              <div className="flex w-full flex-col gap-1 rounded-card border border-dashed border-line-control p-5">
+                <span className="text-ink">Pedido 0042 · Portal da Transparência</span>
+                <span className="font-mono text-mono-xs text-ink-muted">{"// clique com o botão direito"}</span>
+              </div>
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+              <ContextMenuItem>
+                Abrir
+                <ContextMenuShortcut>Enter</ContextMenuShortcut>
+              </ContextMenuItem>
+              <ContextMenuItem>Duplicar</ContextMenuItem>
+              <ContextMenuSeparator />
+              <ContextMenuItem variant="danger">Excluir</ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
+        ),
+      },
+    ],
+    a11y: [
+      "O menu tem role menu, itens menuitem e navegação por setas do Radix.",
+      "Como o clique direito não aparece na tela, toda ação do ContextMenu precisa existir também num controle visível.",
+    ],
+  },
+  {
+    slug: "description-list",
+    name: "DescriptionList",
+    group: "compostos",
+    summary: "Pares de rótulo e valor para telas de detalhe, em pilha, colunas ou linhas.",
+    file: "description-list.tsx",
+    status: "beta",
+    usage: {
+      use: ["Tela de detalhe de um registro: protocolo, responsável, datas, status.", "Resumo antes de confirmar, como a revisão de um cadastro."],
+      avoid: ["Vários registros com os mesmos campos: use Table.", "Campos editáveis: use FormField."],
+    },
+    props: [
+      { name: "items", type: "{ term: ReactNode; description: ReactNode }[]", description: "Pares na ordem de leitura." },
+      { name: "orientation", type: '"vertical" | "horizontal"', default: '"vertical"', description: "Rótulo em cima do valor, ou ao lado, em linhas com divisória." },
+      { name: "columns", type: "1 | 2 | 3", default: "1", description: "Colunas no vertical, a partir de sm." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Em colunas",
+        className: "w-full",
+        code: `<DescriptionList columns={3} items={[{ term: "protocolo", description: "2026.10.0042" }, ...]} />`,
+        render: () => (
+          <DescriptionList
+            columns={3}
+            className="w-full"
+            items={[
+              { term: "protocolo", description: "2026.10.0042" },
+              { term: "aberto em", description: "21/10/2026" },
+              { term: "status", description: <Badge tone="info">em análise</Badge> },
+              { term: "responsável", description: "Márcio Wendell" },
+              { term: "órgão", description: "Secretaria de Planejamento" },
+              { term: "prazo", description: "31/10/2026" },
+            ]}
+          />
+        ),
+      },
+      {
+        title: "Em linhas",
+        className: "w-full",
+        code: `<DescriptionList orientation="horizontal" items={itens} />`,
+        render: () => (
+          <DescriptionList
+            orientation="horizontal"
+            className="w-full"
+            items={[
+              { term: "solicitante", description: "Ana Souza" },
+              { term: "e-mail", description: "ana.souza@exemplo.gov.br" },
+              { term: "assunto", description: "Acesso aos contratos de 2025" },
+            ]}
+          />
+        ),
+      },
+    ],
+    a11y: [
+      "Usa dl, dt e dd: o leitor de tela anuncia a lista de definições e liga cada valor ao rótulo.",
+      "Valor vazio deve dizer que está vazio (Não informado), não ficar em branco.",
+    ],
+  },
+  {
+    slug: "timeline",
+    name: "Timeline",
+    group: "compostos",
+    summary: "Histórico de status ou trâmite de um processo, do mais antigo ao mais novo, com o passo atual marcado.",
+    file: "timeline.tsx",
+    status: "beta",
+    usage: {
+      use: ["Trâmite de pedido, protocolo ou processo.", "Histórico de mudanças de status de um registro."],
+      avoid: ["Etapas de um formulário que a pessoa percorre: use Stepper.", "Muitos eventos com filtros e colunas: use Table."],
+    },
+    props: [
+      { name: "items", type: "TimelineItem[]", description: "{ title, description?, date?, dateTime?, status?, tone? } na ordem do tempo." },
+      { name: "status", type: '"complete" | "current" | "pending"', default: '"complete"', description: "Por item. current ganha aria-current step." },
+      { name: "tone", type: '"neutral" | "accent" | "success" | "warning" | "danger" | "info"', default: '"accent"', description: "Cor do marcador dos itens concluídos." },
+      { name: "dateTime", type: "string", description: "Data em aaaa-mm-dd para o atributo datetime do time." },
+      { name: "aria-label", type: "string", default: '"Histórico"', description: "Nome da lista." },
+    ],
+    examples: [
+      {
+        title: "Trâmite de um pedido",
+        code: `<Timeline aria-label="Trâmite do pedido" items={[{ title: "Pedido aberto", date: "21/10/2026", dateTime: "2026-10-21" }, ...]} />`,
+        render: () => (
+          <Timeline
+            aria-label="Trâmite do pedido"
+            className="w-full"
+            items={[
+              { title: "Pedido aberto", description: "Pelo portal, com 2 anexos.", date: "21/10/2026", dateTime: "2026-10-21" },
+              { title: "Encaminhado à Secretaria de Planejamento", date: "22/10/2026", dateTime: "2026-10-22", tone: "info" },
+              { title: "Prazo prorrogado", description: "Mais 10 dias, com justificativa.", date: "23/10/2026", dateTime: "2026-10-23", tone: "warning" },
+              { title: "Em análise", date: "24/10/2026", dateTime: "2026-10-24", status: "current" },
+              { title: "Resposta ao solicitante", status: "pending" },
+            ]}
+          />
+        ),
+      },
+    ],
+    a11y: [
+      "É uma lista ordenada; o item atual tem aria-current step e cada item diz o status em texto para o leitor de tela.",
+      "A data fica num time com datetime, e a cor do marcador nunca é a única informação: o título diz o que aconteceu.",
+    ],
+  },
+  {
+    slug: "chart",
+    name: "Chart",
+    group: "compostos",
+    summary: "Gráfico de barras, linha ou área sobre o Recharts, nas paletas chart-1 a chart-8 e seq-1 a seq-5, com legenda e tabela dos dados.",
+    file: "chart.tsx",
+    status: "beta",
+    usage: {
+      use: ["Uma medida ao longo do tempo ou comparada entre poucas categorias.", "Painéis e relatórios, sempre com título que diz a conclusão ou a pergunta."],
+      avoid: ["Dois ou três números: escreva a frase ou use StatCard.", "Valores que a pessoa precisa ler um por um: use Table.", "Mais de oito séries: junte em Outros ou divida o gráfico."],
+    },
+    props: [
+      { name: "kind", type: '"bar" | "line" | "area"', description: "Barras para comparar categorias, linha para tendência, área para volume acumulado." },
+      { name: "title / description", type: "ReactNode", description: "Título e apoio no figcaption; o título também nomeia o gráfico." },
+      { name: "data", type: "Record<string, string | number>[]", description: "Uma linha por categoria do eixo x." },
+      { name: "categoryKey", type: "string", description: "Campo de data usado no eixo x e na primeira coluna da tabela." },
+      { name: "series", type: "{ key: string; label: string }[]", description: "Séries na ordem das cores: a primeira é chart-1." },
+      { name: "palette", type: '"categorica" | "sequencial"', default: '"categorica"', description: "Sequencial para séries ordenadas, como faixas de valor." },
+      { name: "unit", type: "string", description: "Unidade no tooltip e na tabela, como h ou entregas." },
+      { name: "stacked", type: "boolean", default: "false", description: "Empilha barras ou áreas quando as séries somam um total." },
+      { name: "height", type: "number", default: "260", description: "Altura do gráfico em px; a largura acompanha o contêiner." },
+      { name: "tableLabel", type: "string", default: '"ver os dados em tabela"', description: "Texto que abre a tabela com os dados." },
+    ],
+    examples: [
+      {
+        title: "Barras",
+        className: "w-full flex-col items-stretch",
+        code: `<Chart\n  kind="bar"\n  title="Horas por trimestre"\n  data={[{ trimestre: "T1", portal: 120, app: 90 }, ...]}\n  categoryKey="trimestre"\n  series={[{ key: "portal", label: "Portal" }, { key: "app", label: "App" }]}\n  unit="h"\n/>`,
+        render: () => (
+          <Chart
+            kind="bar"
+            title="Horas por trimestre"
+            data={[
+              { trimestre: "T1", portal: 120, app: 90 },
+              { trimestre: "T2", portal: 180, app: 110 },
+              { trimestre: "T3", portal: 150, app: 160 },
+              { trimestre: "T4", portal: 210, app: 140 },
+            ]}
+            categoryKey="trimestre"
+            series={[
+              { key: "portal", label: "Portal" },
+              { key: "app", label: "App" },
+            ]}
+            unit="h"
+          />
+        ),
+      },
+      {
+        title: "Área empilhada",
+        description: "Use stacked quando as séries somam um total que faz sentido.",
+        className: "w-full flex-col items-stretch",
+        code: `<Chart kind="area" stacked title="Pedidos por canal" data={pedidos} categoryKey="mês" series={canais} />`,
+        render: () => (
+          <Chart
+            kind="area"
+            stacked
+            title="Pedidos por canal"
+            data={[
+              { mês: "mai", portal: 40, telefone: 22, presencial: 12 },
+              { mês: "jun", portal: 52, telefone: 20, presencial: 10 },
+              { mês: "jul", portal: 61, telefone: 18, presencial: 11 },
+              { mês: "ago", portal: 70, telefone: 15, presencial: 9 },
+              { mês: "set", portal: 84, telefone: 14, presencial: 8 },
+              { mês: "out", portal: 96, telefone: 12, presencial: 8 },
+            ]}
+            categoryKey="mês"
+            series={[
+              { key: "portal", label: "Portal" },
+              { key: "telefone", label: "Telefone" },
+              { key: "presencial", label: "Presencial" },
+            ]}
+            unit="pedidos"
+          />
+        ),
+      },
+    ],
+    a11y: [
+      "O gráfico fica num figure com figcaption; o título nomeia a área do gráfico.",
+      "Toda série aparece na legenda em texto, e a tabela com os dados fica num details logo abaixo, para quem não enxerga as cores ou usa leitor de tela.",
+      "O tooltip do Recharts também abre pelo teclado: foque o gráfico e use as setas.",
+      "Sem animação: o gráfico aparece pronto, inclusive com movimento reduzido.",
+    ],
+    keyboard: [
+      { keys: "Tab", action: "Foca o gráfico e depois o link da tabela." },
+      { keys: "Setas", action: "No gráfico, passam de uma categoria para outra e mostram o tooltip." },
+    ],
   },
 ];
 

@@ -11,9 +11,29 @@ const levels = [
 ];
 
 const affected = [
-  ["h-control", "Button md, Input, Select, Combobox, busca do Command, Tabs, cabeçalho de Table"],
+  ["h-control", "size md de Button, IconButton, Input, Select, Combobox, DatePicker e NumberInput; busca do Command, Tabs, cabeçalho de Table"],
   ["py-cell-y", "células e legenda de Table"],
 ];
+
+// size alinha Button e campos lado a lado: sm e lg são fixos, md acompanha a densidade.
+const heights = [
+  ["sm", "36px", "36px", "36px"],
+  ["md", "36px", "44px", "48px"],
+  ["lg", "48px", "48px", "48px"],
+];
+
+function SizeRow({ theme }: { theme: Theme }) {
+  return (
+    <div className="flex flex-col gap-3">
+      {(["sm", "md", "lg"] as const).map((size) => (
+        <div key={size} className="flex items-center gap-2">
+          <Input size={size} aria-label={`Campo ${size} (${theme})`} placeholder={`size ${size}`} />
+          <Button size={size}>Filtrar</Button>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function Sample({ density, theme }: { density: string; theme: Theme }) {
   return (
@@ -81,6 +101,15 @@ export function DensitySection() {
           <CodeComment>quem muda</CodeComment>
           <SpecTable head={["token", "componentes"]} rows={affected} />
         </div>
+      </div>
+      <div className="flex flex-col gap-3">
+        <CodeComment>size: campo e botão na mesma linha</CodeComment>
+        <p className="max-w-measure text-ink-soft">
+          Button, IconButton, Input, Select, Combobox, DatePicker e NumberInput aceitam o mesmo size. Com o mesmo valor, campo e botão ficam com a mesma altura em qualquer
+          densidade.
+        </p>
+        <ThemePair>{(theme) => <SizeRow theme={theme} />}</ThemePair>
+        <SpecTable head={["size", "compacta", "normal", "ampla"]} rows={heights} />
       </div>
     </FoundationSection>
   );

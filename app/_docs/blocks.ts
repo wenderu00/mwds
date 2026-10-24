@@ -40,6 +40,14 @@ export const blocks: BlockDoc[] = [
     setup: "Os dados de exemplo ficam em data.ts; troque pela sua fonte.",
   },
   {
+    slug: "record-detail",
+    name: "Detalhe de registro",
+    summary: "Tela de detalhe dentro do AdminShell: cabeçalho com ações, dados em DescriptionList, histórico em Timeline e confirmação de arquivamento.",
+    route: "/exemplos/detalhe",
+    targets: { "page.tsx": "app/projeto/page.tsx" },
+    setup: "Os dados de exemplo ficam em components/blocks/record-detail/data.ts; troque pela sua fonte e leve a página para a rota do seu registro.",
+  },
+  {
     slug: "settings",
     name: "Configurações",
     summary: "Abas de perfil (formulário validado), preferências (tema, densidade, fuso, notificações) e conta (exclusão com confirmação).",

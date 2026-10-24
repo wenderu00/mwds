@@ -5,6 +5,7 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/registry/marcio/lib/utils";
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/registry/marcio/ui/command";
 import { useFormField } from "@/registry/marcio/ui/form-field";
+import { controlHeights, triggerClasses, type ControlSize } from "@/registry/marcio/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/marcio/ui/popover";
 
 export type ComboboxOption = {
@@ -24,6 +25,7 @@ export type ComboboxProps = Omit<ComponentProps<"button">, "value" | "defaultVal
   emptyText?: ReactNode;
   listLabel?: string;
   name?: string;
+  size?: ControlSize;
 };
 
 export function Combobox({
@@ -36,6 +38,7 @@ export function Combobox({
   emptyText = "Nada encontrado",
   listLabel = "Opções",
   name,
+  size = "md",
   className,
   disabled,
   ...props
@@ -68,7 +71,8 @@ export function Combobox({
           disabled={disabled}
           {...field?.controlProps}
           className={cn(
-            "flex h-control w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-control border border-line-control bg-ground px-3 text-left text-base text-ink transition-colors duration-base ease-standard hover:border-accent-line disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-danger-text data-[placeholder]:text-ink-muted",
+            triggerClasses,
+            controlHeights[size],
             className,
           )}
           {...props}

@@ -4,6 +4,88 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.12.0] - 2026-10-24
+
+### Novo
+
+- Chart: barras, linha e área sobre o Recharts, nas paletas `chart-1` a `chart-8` e `seq-1` a `seq-5`, com legenda em texto e tabela dos dados ([ADR 0019](docs/adr/0019-grafico-sobre-recharts.md)).
+- Bloco `record-detail`: tela de detalhe com DescriptionList, Timeline e arquivamento confirmado, com rota `/exemplos/detalhe` no site.
+- Exemplo de cadastro em etapas, com Stepper, validação por etapa, foco no título da etapa nova e revisão antes de enviar.
+- Testes em largura de celular (390px) para painel, listagem, detalhe e cadastro em etapas, com axe, sem rolagem horizontal e com o menu do AppShell aberto.
+
+### Mudou
+
+- O bloco `dashboard` ganha o gráfico de horas por semana, e as seções seguintes passam a 02 e 03.
+- A seção Gráficos da fundação usa o Chart; o gráfico feito à mão saiu.
+
+## [0.11.0] - 2026-10-24
+
+### Novo
+
+- PasswordInput: campo de senha com botão de mostrar e ocultar (`aria-pressed`), sobre o slot `end` do Input.
+- SearchInput: busca com lupa, botão de limpar e Esc para limpar.
+- MultiSelect: várias escolhas com busca, chips removíveis e Backspace para tirar a última, a partir do Combobox.
+- DescriptionList: pares de rótulo e valor em pilha, colunas ou linhas, com `dl`, `dt` e `dd`.
+- Timeline: histórico e trâmite de processos, com passo atual, tons e datas em `time`.
+- ScrollArea: rolagem com barra nos tokens, focável pelo teclado.
+- ContextMenu: menu do botão direito com os itens e estilos do DropdownMenu.
+
+### Mudou
+
+- O bloco `login` usa o PasswordInput, e a listagem de exemplo, o SearchInput.
+- DropdownMenu exporta `menuContentClasses` e `menuItemClasses`, usadas também pelo ContextMenu.
+
+## [0.10.0] - 2026-10-24
+
+### Novo
+
+- `size` (`sm`, `md`, `lg`) em Input, SelectTrigger, Combobox, DatePicker, DateRangePicker e NumberInput, com as mesmas alturas do Button. A densidade mostra campo e botão lado a lado.
+- Input com slots `start` e `end`, dentro do contorno: ícone, prefixo ou botão. O `className` continua indo para o input.
+- `size` em DialogContent e AlertDialogContent.
+- Item `marcio-tema`, que cria `app/tema.css` para personalizar tokens sem perder as mudanças no próximo add.
+- [ADR 0018](docs/adr/0018-api-congelada.md): convenções de size, variant, tone, erro e loading, e a lista de APIs congeladas até o 2.0.
+
+### Mudou
+
+- Switch e as opções do RadioGroup mostram a borda de erro com `aria-invalid`.
+- O erro próprio do DatePicker é anunciado (`role="alert"`), e os botões dele ficam no slot de fim do Input.
+- Select, Combobox e DateRangePicker usam as classes de gatilho exportadas pelo Input.
+- Typography, Separator, Kbd, Accordion, Collapsible e Calendar passam a estáveis.
+- O 1.0 sai com a API dos primitivos congelada e uso real em produção, não mais quando todos os componentes forem estáveis (ADR 0016 revisado).
+
+### Quebra compatibilidade
+
+- `size` em Input e NumberInput deixa de ser o atributo nativo de largura em caracteres e passa a ser a altura (`sm`, `md`, `lg`).
+- CurrencyInput mostra o R$ no slot de início: o texto do campo passa de `R$ 1.234,56` para `1.234,56`. O valor entregue continua em centavos.
+
+**Como migrar**
+
+```bash
+npx shadcn@latest add @marcio/input @marcio/masked-input @marcio/number-input --overwrite
+```
+
+```tsx
+// antes: largura pelo atributo nativo
+<Input size={20} />
+// depois: largura por classe
+<Input className="w-48" />
+```
+
+Testes que liam o texto do CurrencyInput passam a esperar o número sem o R$.
+
+## [0.9.1] - 2026-10-24
+
+### Novo
+
+- CurrencyInput e DateRangePicker ganham página própria no catálogo e entrada na barra lateral. Continuam instalados por `@marcio/masked-input` e `@marcio/date-picker`.
+- Teste no CI que percorre o site e falha se algum link interno não responder 200.
+- Teste que confere se todo item do `registry.json` tem página no catálogo ou em Blocos, e se a barra lateral lista todas as páginas.
+
+### Corrigido
+
+- Os links para arquivos do repositório em Novidades, como o do ADR 0017, abrem o arquivo no GitHub em vez de dar 404.
+- O rodapé conta componentes instaláveis, não páginas do catálogo.
+
 ## [0.9.0] - 2026-10-24
 
 ### Novo

@@ -4,7 +4,7 @@ import { Minus, Plus } from "lucide-react";
 import { useState, type ChangeEvent, type FocusEvent, type KeyboardEvent } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
-import { fieldClasses, type InputProps } from "@/registry/marcio/ui/input";
+import { controlHeights, fieldClasses, type InputProps } from "@/registry/marcio/ui/input";
 
 function decimalsOf(step: number) {
   const text = String(step);
@@ -20,7 +20,7 @@ export function parseNumber(text: string) {
   return Number.isFinite(value) ? value : null;
 }
 
-export type NumberInputProps = Omit<InputProps, "value" | "defaultValue" | "type" | "min" | "max" | "step"> & {
+export type NumberInputProps = Omit<InputProps, "value" | "defaultValue" | "type" | "min" | "max" | "step" | "start" | "end"> & {
   value?: number | null;
   defaultValue?: number | null;
   onValueChange?: (value: number | null) => void;
@@ -42,6 +42,7 @@ export function NumberInput({
   formatOptions,
   decrementLabel = "Diminuir",
   incrementLabel = "Aumentar",
+  size = "md",
   disabled,
   readOnly,
   className,
@@ -103,7 +104,7 @@ export function NumberInput({
 
   return (
     <div data-slot="number-input" className={cn("flex w-full min-w-0 items-stretch gap-1", className)}>
-      <IconButton variant="secondary" aria-label={decrementLabel} tabIndex={-1} disabled={!editable || (value !== null && value <= min)} onClick={() => nudge(-1)}>
+      <IconButton variant="secondary" size={size} aria-label={decrementLabel} tabIndex={-1} disabled={!editable || (value !== null && value <= min)} onClick={() => nudge(-1)}>
         <Minus aria-hidden="true" />
       </IconButton>
       <input
@@ -117,7 +118,7 @@ export function NumberInput({
         aria-valuetext={value === null ? undefined : format.format(value)}
         disabled={disabled}
         readOnly={readOnly}
-        className={cn(fieldClasses, "h-control text-center font-mono")}
+        className={cn(fieldClasses, controlHeights[size], "text-center font-mono")}
         {...props}
         value={shown}
         onChange={handleChange}
@@ -128,7 +129,7 @@ export function NumberInput({
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
       />
-      <IconButton variant="secondary" aria-label={incrementLabel} tabIndex={-1} disabled={!editable || (value !== null && value >= max)} onClick={() => nudge(1)}>
+      <IconButton variant="secondary" size={size} aria-label={incrementLabel} tabIndex={-1} disabled={!editable || (value !== null && value >= max)} onClick={() => nudge(1)}>
         <Plus aria-hidden="true" />
       </IconButton>
     </div>

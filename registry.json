@@ -526,6 +526,19 @@
       }
     },
     {
+      "name": "marcio-tema",
+      "type": "registry:file",
+      "title": "Arquivo de personalização",
+      "description": "Cria app/tema.css, vazio e comentado, para sobrescrever tokens sem perder as mudanças no próximo add.",
+      "files": [
+        {
+          "path": "registry/marcio/tema.css",
+          "type": "registry:file",
+          "target": "app/tema.css"
+        }
+      ]
+    },
+    {
       "name": "font-bricolage",
       "type": "registry:font",
       "title": "Bricolage Grotesque",
@@ -847,6 +860,29 @@
       ]
     },
     {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "Gráfico de barras, linha ou área sobre o Recharts, nas paletas chart-1 a chart-8 e seq-1 a seq-5, com legenda e tabela dos dados.",
+      "dependencies": [
+        "recharts"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/table.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/chart.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
@@ -922,6 +958,7 @@
       "registryDependencies": [
         "http://localhost:3000/r/command.json",
         "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/input.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/popover.json",
         "http://localhost:3000/r/utils.json"
@@ -984,6 +1021,30 @@
       ]
     },
     {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "ContextMenu",
+      "description": "Menu de ações aberto com o botão direito, com os mesmos itens e estilos do DropdownMenu.",
+      "dependencies": [
+        "lucide-react",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/dropdown-menu.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "data-table",
       "type": "registry:ui",
       "title": "DataTable",
@@ -1012,7 +1073,7 @@
       "name": "date-picker",
       "type": "registry:ui",
       "title": "DatePicker",
-      "description": "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Tem versão de intervalo, o DateRangePicker.",
+      "description": "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Para períodos, veja o DateRangePicker.",
       "dependencies": [
         "lucide-react",
         "react-day-picker"
@@ -1030,6 +1091,26 @@
       "files": [
         {
           "path": "registry/marcio/ui/date-picker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "description-list",
+      "type": "registry:ui",
+      "title": "DescriptionList",
+      "description": "Pares de rótulo e valor para telas de detalhe, em pilha, colunas ou linhas.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/description-list.tsx",
           "type": "registry:ui"
         }
       ],
@@ -1412,7 +1493,7 @@
       "name": "masked-input",
       "type": "registry:ui",
       "title": "MaskedInput",
-      "description": "Input com máscara brasileira: CPF, CNPJ, telefone, CEP e moeda. Mostra o valor formatado e entrega só os dígitos.",
+      "description": "Input com máscara brasileira: CPF, CNPJ, telefone e CEP. Mostra o valor formatado e entrega só os dígitos. Para reais, veja o CurrencyInput.",
       "dependencies": [],
       "registryDependencies": [
         "http://localhost:3000/r/br.json",
@@ -1427,6 +1508,34 @@
       ],
       "categories": [
         "primitivos"
+      ]
+    },
+    {
+      "name": "multi-select",
+      "type": "registry:ui",
+      "title": "MultiSelect",
+      "description": "Escolha de várias opções com busca, mostradas como chips removíveis dentro do campo.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/badge.json",
+        "http://localhost:3000/r/combobox.json",
+        "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/popover.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/multi-select.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
       ]
     },
     {
@@ -1519,6 +1628,30 @@
       ]
     },
     {
+      "name": "password-input",
+      "type": "registry:ui",
+      "title": "PasswordInput",
+      "description": "Campo de senha com botão de mostrar e ocultar, sobre o slot end do Input.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/password-input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -1587,6 +1720,52 @@
       ]
     },
     {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "ScrollArea",
+      "description": "Área com rolagem própria e barra nos tokens, para listas longas dentro de Sheet, Popover e Card.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "search-input",
+      "type": "registry:ui",
+      "title": "SearchInput",
+      "description": "Campo de busca com ícone de lupa e botão de limpar, que também limpa com Esc.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/search-input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
       "name": "section-title",
       "type": "registry:ui",
       "title": "SectionTitle",
@@ -1617,6 +1796,7 @@
       ],
       "registryDependencies": [
         "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/input.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/utils.json"
       ],
@@ -1895,6 +2075,26 @@
       "docs": "Coloque <ThemeScript /> dentro do <head> do layout raiz e adicione suppressHydrationWarning no <html>."
     },
     {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "Histórico de status ou trâmite de um processo, do mais antigo ao mais novo, com o passo atual marcado.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/timeline.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "toast",
       "type": "registry:ui",
       "title": "Toast",
@@ -2054,6 +2254,7 @@
         "http://localhost:3000/r/badge.json",
         "http://localhost:3000/r/button.json",
         "http://localhost:3000/r/card.json",
+        "http://localhost:3000/r/chart.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/page-header.json",
         "http://localhost:3000/r/section-title.json",
@@ -2142,6 +2343,7 @@
         "http://localhost:3000/r/link.json",
         "http://localhost:3000/r/logo-block.json",
         "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/password-input.json",
         "http://localhost:3000/r/toast.json",
         "http://localhost:3000/r/typing-text.json"
       ],
@@ -2190,6 +2392,49 @@
       "categories": [
         "blocos"
       ]
+    },
+    {
+      "name": "record-detail",
+      "type": "registry:block",
+      "title": "Detalhe de registro",
+      "description": "Tela de detalhe dentro do AdminShell: cabeçalho com ações, dados em DescriptionList, histórico em Timeline e confirmação de arquivamento.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/admin-shell.json",
+        "http://localhost:3000/r/alert-dialog.json",
+        "http://localhost:3000/r/badge.json",
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/card.json",
+        "http://localhost:3000/r/description-list.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/page-header.json",
+        "http://localhost:3000/r/section-title.json",
+        "http://localhost:3000/r/timeline.json",
+        "http://localhost:3000/r/toast.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/blocks/record-detail/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/record-detail/data.ts"
+        },
+        {
+          "path": "registry/marcio/blocks/record-detail/page.tsx",
+          "type": "registry:page",
+          "target": "app/projeto/page.tsx"
+        },
+        {
+          "path": "registry/marcio/blocks/record-detail/record-actions.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/record-detail/record-actions.tsx"
+        }
+      ],
+      "categories": [
+        "blocos"
+      ],
+      "docs": "Os dados de exemplo ficam em components/blocks/record-detail/data.ts; troque pela sua fonte e leve a página para a rota do seu registro."
     },
     {
       "name": "settings",
@@ -2251,14 +2496,17 @@
         "http://localhost:3000/r/button.json",
         "http://localhost:3000/r/calendar.json",
         "http://localhost:3000/r/card.json",
+        "http://localhost:3000/r/chart.json",
         "http://localhost:3000/r/checkbox.json",
         "http://localhost:3000/r/code-comment.json",
         "http://localhost:3000/r/collapsible.json",
         "http://localhost:3000/r/combobox.json",
         "http://localhost:3000/r/command-palette.json",
         "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/context-menu.json",
         "http://localhost:3000/r/data-table.json",
         "http://localhost:3000/r/date-picker.json",
+        "http://localhost:3000/r/description-list.json",
         "http://localhost:3000/r/dialog.json",
         "http://localhost:3000/r/dot-grid.json",
         "http://localhost:3000/r/dropdown-menu.json",
@@ -2277,13 +2525,17 @@
         "http://localhost:3000/r/link.json",
         "http://localhost:3000/r/logo-block.json",
         "http://localhost:3000/r/masked-input.json",
+        "http://localhost:3000/r/multi-select.json",
         "http://localhost:3000/r/navbar.json",
         "http://localhost:3000/r/number-input.json",
         "http://localhost:3000/r/page-header.json",
         "http://localhost:3000/r/pagination.json",
+        "http://localhost:3000/r/password-input.json",
         "http://localhost:3000/r/popover.json",
         "http://localhost:3000/r/progress.json",
         "http://localhost:3000/r/radio-group.json",
+        "http://localhost:3000/r/scroll-area.json",
+        "http://localhost:3000/r/search-input.json",
         "http://localhost:3000/r/section-title.json",
         "http://localhost:3000/r/select.json",
         "http://localhost:3000/r/separator.json",
@@ -2298,6 +2550,7 @@
         "http://localhost:3000/r/tabs.json",
         "http://localhost:3000/r/textarea.json",
         "http://localhost:3000/r/theme-toggle.json",
+        "http://localhost:3000/r/timeline.json",
         "http://localhost:3000/r/toast.json",
         "http://localhost:3000/r/toggle-group.json",
         "http://localhost:3000/r/tooltip.json",
