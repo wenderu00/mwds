@@ -85,7 +85,7 @@ Cada pasta vira um item `registry:block`. Os componentes de um bloco são instal
 
 Fase 6 acrescentou: RadioGroup, Avatar, Skeleton (primitivos); Pagination, Popover, Command, Combobox, DropdownMenu, Breadcrumb, Alert, Sheet, Progress (compostos); CommandPalette e AppShell (padrões).
 
-Etapa 3 acrescentou: IconButton e MaskedInput (primitivos); AlertDialog, Calendar, DatePicker e FileUpload (compostos); a lib `br` com máscaras e validação de CPF e CNPJ.
+Etapa 3 acrescentou: IconButton e MaskedInput (primitivos); AlertDialog, Calendar, DatePicker e FileUpload (compostos); a lib `br` com máscaras e validação de CPF e CNPJ. Depois: Heading e Text (identidade, em `typography.tsx`); Separator, ToggleGroup, Slider e Kbd (primitivos); Accordion e Collapsible (compostos).
 
 - Identidade: Kicker, SectionTitle, CodeComment, LogoBlock, DotGrid, TypingText, GlitchText
 - Primitivos: Button, Input, Textarea, Label, Checkbox, Switch, Badge, Spinner, Link

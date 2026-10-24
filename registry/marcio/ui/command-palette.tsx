@@ -14,6 +14,7 @@ import {
 import { cn } from "@/registry/marcio/lib/utils";
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/registry/marcio/ui/command";
 import { DialogOverlay } from "@/registry/marcio/ui/dialog";
+import { Kbd } from "@/registry/marcio/ui/kbd";
 
 const subscribeNothing = () => () => {};
 
@@ -151,7 +152,7 @@ export function CommandPaletteTrigger({ label = "Buscar", className, ...props }:
         {">"}
       </span>
       <span>{label}</span>
-      <kbd className="ml-auto rounded-mark border border-line-strong px-1.5 font-mono text-mono-xs text-ink-muted">{isMac ? "⌘K" : "Ctrl K"}</kbd>
+      <Kbd className="ml-auto">{isMac ? "⌘K" : "Ctrl K"}</Kbd>
     </button>
   );
 }

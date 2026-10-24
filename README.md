@@ -81,9 +81,9 @@ Todos os pares usados passam WCAG AA nos dois temas. A tabela completa está em 
 | `font-bricolage`, `font-plex-sans`, `font-plex-mono` | font | Fontes via `next/font` |
 | `utils` | lib | Helper `cn` |
 | `br` | lib | Máscaras de CPF, CNPJ, telefone, CEP e moeda; validação de CPF e CNPJ |
-| `kicker`, `section-title`, `code-comment`, `logo-block`, `dot-grid`, `typing-text`, `glitch-text` | ui | Identidade |
-| `button`, `icon-button`, `input`, `masked-input`, `textarea`, `label`, `checkbox`, `switch`, `radio-group`, `badge`, `avatar`, `skeleton`, `spinner`, `link` | ui | Primitivos |
-| `form-field`, `card`, `select`, `combobox`, `calendar`, `date-picker`, `file-upload`, `command`, `popover`, `dropdown-menu`, `dialog`, `alert-dialog`, `sheet`, `toast`, `alert`, `tabs`, `table`, `pagination`, `breadcrumb`, `progress`, `tooltip` | ui | Compostos |
+| `typography`, `kicker`, `section-title`, `code-comment`, `logo-block`, `dot-grid`, `typing-text`, `glitch-text` | ui | Identidade |
+| `button`, `icon-button`, `input`, `masked-input`, `textarea`, `separator`, `toggle-group`, `slider`, `kbd`, `label`, `checkbox`, `switch`, `radio-group`, `badge`, `avatar`, `skeleton`, `spinner`, `link` | ui | Primitivos |
+| `form-field`, `card`, `select`, `combobox`, `calendar`, `date-picker`, `file-upload`, `accordion`, `collapsible`, `command`, `popover`, `dropdown-menu`, `dialog`, `alert-dialog`, `sheet`, `toast`, `alert`, `tabs`, `table`, `pagination`, `breadcrumb`, `progress`, `tooltip` | ui | Compostos |
 | `page-header`, `empty-state`, `theme-toggle`, `command-palette`, `app-shell` | ui | Padrões |
 | `login`, `not-found`, `dashboard`, `settings` | block | Telas prontas (ver abaixo) |
 | `admin-shell` | block | Casca de painel usada por `dashboard` e `settings` |

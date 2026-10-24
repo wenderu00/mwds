@@ -1,4 +1,4 @@
-import { Pencil, Trash2 } from "lucide-react";
+import { Columns3, LayoutGrid, List, Pencil, Trash2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
 import {
@@ -15,10 +15,12 @@ import {
 import { Avatar, AvatarGroup } from "@/registry/marcio/ui/avatar";
 import { Badge } from "@/registry/marcio/ui/badge";
 import { BreadcrumbTrail } from "@/registry/marcio/ui/breadcrumb";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/registry/marcio/ui/accordion";
 import { Button } from "@/registry/marcio/ui/button";
 import { Calendar } from "@/registry/marcio/ui/calendar";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/marcio/ui/card";
 import { Checkbox } from "@/registry/marcio/ui/checkbox";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/registry/marcio/ui/collapsible";
 import { Combobox } from "@/registry/marcio/ui/combobox";
 import {
   Command,
@@ -49,6 +51,7 @@ import { DotGrid } from "@/registry/marcio/ui/dot-grid";
 import { GlitchText } from "@/registry/marcio/ui/glitch-text";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
 import { Input } from "@/registry/marcio/ui/input";
+import { Kbd } from "@/registry/marcio/ui/kbd";
 import { Kicker } from "@/registry/marcio/ui/kicker";
 import { Label } from "@/registry/marcio/ui/label";
 import { Link } from "@/registry/marcio/ui/link";
@@ -59,6 +62,7 @@ import { Progress } from "@/registry/marcio/ui/progress";
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/marcio/ui/popover";
 import { RadioGroup, RadioGroupOption } from "@/registry/marcio/ui/radio-group";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
+import { Separator } from "@/registry/marcio/ui/separator";
 import {
   Select,
   SelectContent,
@@ -71,14 +75,17 @@ import {
 } from "@/registry/marcio/ui/select";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/registry/marcio/ui/sheet";
 import { LoadingRegion, Skeleton, SkeletonText } from "@/registry/marcio/ui/skeleton";
+import { Slider } from "@/registry/marcio/ui/slider";
 import { Spinner } from "@/registry/marcio/ui/spinner";
 import { Switch } from "@/registry/marcio/ui/switch";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/registry/marcio/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/registry/marcio/ui/tabs";
 import { Textarea } from "@/registry/marcio/ui/textarea";
 import { ThemeToggle } from "@/registry/marcio/ui/theme-toggle";
+import { ToggleGroup, ToggleGroupItem } from "@/registry/marcio/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/registry/marcio/ui/tooltip";
 import { TypingText } from "@/registry/marcio/ui/typing-text";
+import { Heading, Text } from "@/registry/marcio/ui/typography";
 import {
   AlertDismissDemo,
   AppShellDemo,
@@ -352,6 +359,55 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: ["Animação curta (320ms), sem repetição infinita.", "Com movimento reduzido, não anima."],
+  },
+  {
+    slug: "typography",
+    name: "Heading e Text",
+    group: "identidade",
+    status: "beta",
+    summary: "Títulos em display e textos de corpo e mono com a escala do @mw/ui. A prop as escolhe a tag sem mudar o estilo.",
+    file: "typography.tsx",
+    usage: {
+      use: ["Títulos e parágrafos fora dos componentes que já trazem tipografia, como páginas de conteúdo.", "Escolher o nível certo da hierarquia com as, mantendo o tamanho visual."],
+      avoid: ["Título de seção numerada: use SectionTitle.", "Título de tela de sistema: use PageHeader.", "Pular níveis de heading para conseguir um tamanho: troque o size, não o as."],
+    },
+    props: [
+      { name: "Heading size", type: '"display-xl" | "display-lg" | "display-md" | "display-sm"', default: '"display-md"', description: "Tamanho do título. Define a tag padrão: h1, h2, h2 e h3." },
+      { name: "Heading as", type: '"h1" a "h6" | "p" | "span"', description: "Troca a tag sem mudar o tamanho." },
+      { name: "Text size", type: '"lead" | "base" | "mono-sm" | "mono-xs"', default: '"base"', description: "Tamanho. Os tamanhos mono usam IBM Plex Mono." },
+      { name: "Text tone", type: '"ink" | "soft" | "muted"', default: '"soft"', description: "Cor do texto: ink, ink-soft ou ink-muted." },
+      { name: "Text as", type: '"p" | "span" | "div" | "small" | "li" | ...', default: '"p"', description: "Tag do texto." },
+      asChildProp,
+    ],
+    examples: [
+      {
+        title: "Escala de títulos",
+        className: "flex-col items-start",
+        code: `<Heading size="display-xl">Display XL</Heading>\n<Heading size="display-lg">Display LG</Heading>\n<Heading>Display MD</Heading>\n<Heading size="display-sm">Display SM</Heading>`,
+        render: () => (
+          <>
+            <Heading size="display-xl" as="p">Display XL</Heading>
+            <Heading size="display-lg" as="p">Display LG</Heading>
+            <Heading as="p">Display MD</Heading>
+            <Heading size="display-sm" as="p">Display SM</Heading>
+          </>
+        ),
+      },
+      {
+        title: "Textos",
+        className: "flex-col items-start",
+        code: `<Text size="lead">Texto de abertura.</Text>\n<Text>Corpo do texto.</Text>\n<Text size="mono-sm" tone="muted">metadado em mono</Text>`,
+        render: () => (
+          <>
+            <Text size="lead">Um design system com visual de terminal.</Text>
+            <Text>Corpo do texto em IBM Plex Sans, 17px, com altura de linha confortável para leitura.</Text>
+            <Text size="mono-sm" tone="muted">atualizado em 24/10/2026</Text>
+            <Text size="mono-xs" tone="muted">v0.1.0 · beta</Text>
+          </>
+        ),
+      },
+    ],
+    a11y: ["A tag padrão do Heading segue o tamanho, mas a hierarquia da página manda: use as para não pular níveis.", "Text com tone muted fica em ink-muted, que passa 4,5:1 nos dois temas."],
   },
   {
     slug: "button",
@@ -1312,6 +1368,194 @@ export const docs: ComponentDoc[] = [
     a11y: ["Os blocos têm aria-hidden; use LoadingRegion para anunciar o carregamento e marcar aria-busy."],
   },
   {
+    slug: "separator",
+    name: "Separator",
+    group: "primitivos",
+    status: "beta",
+    summary: "Linha de 1px em line, horizontal ou vertical, para separar grupos de conteúdo.",
+    file: "separator.tsx",
+    usage: {
+      use: ["Separar grupos dentro de um card, menu ou barra de ferramentas.", "Linha vertical entre ações agrupadas."],
+      avoid: ["Separar seções de página: espaço e títulos bastam.", "Linhas de tabela: a Table já traz as bordas."],
+    },
+    props: [
+      { name: "orientation", type: '"horizontal" | "vertical"', default: '"horizontal"', description: "Direção da linha. Na vertical, estica até a altura do pai." },
+      { name: "decorative", type: "boolean", default: "true", description: "Sem semântica. Com false, vira role separator para leitores de tela." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Horizontal e vertical",
+        className: "w-full flex-col items-stretch",
+        code: `<Separator />\n<div className="flex h-6 items-center gap-3">\n  <span>Editar</span>\n  <Separator orientation="vertical" />\n  <span>Duplicar</span>\n</div>`,
+        render: () => (
+          <>
+            <Text size="mono-sm" tone="muted">projetos</Text>
+            <Separator />
+            <div className="flex h-6 items-center gap-3 font-mono text-mono-sm text-ink-soft">
+              <span>Editar</span>
+              <Separator orientation="vertical" />
+              <span>Duplicar</span>
+              <Separator orientation="vertical" />
+              <span>Arquivar</span>
+            </div>
+          </>
+        ),
+      },
+    ],
+    a11y: ["Por padrão é decorativo e fica fora da árvore de acessibilidade.", "Use decorative={false} só quando a divisão tiver significado, como entre grupos de um menu."],
+  },
+  {
+    slug: "toggle-group",
+    name: "ToggleGroup",
+    group: "primitivos",
+    status: "beta",
+    summary: "Botões agrupados em controle segmentado, para trocar a visualização ou ligar filtros. O item ativo fica amarelo.",
+    file: "toggle-group.tsx",
+    usage: {
+      use: ["Trocar a visualização dos mesmos dados: lista, grade, quadro.", "Filtros rápidos de duas a cinco opções sobre uma lista, com type multiple quando combinam.", "Formatação de texto, como negrito e itálico, com type multiple."],
+      avoid: ["Trocar de painel de conteúdo: use Tabs.", "Valor de formulário enviado depois: use RadioGroup ou Checkbox.", "Mais de cinco opções: use Select."],
+    },
+    props: [
+      { name: "type", type: '"single" | "multiple"', description: "Um item ativo por vez (radio) ou vários (botões de alternar)." },
+      { name: "value / onValueChange", type: "string | string[] / (value) => void", description: "Uso controlado. Em single, clicar no ativo desmarca; passe o valor de volta para impedir." },
+      { name: "aria-label", type: "string", description: "Obrigatório. Nome do grupo." },
+      { name: "size", type: '"sm" | "md"', default: '"md"', description: "md acompanha h-control e a densidade." },
+      { name: "ToggleGroupItem value", type: "string", description: "Valor do item." },
+    ],
+    examples: [
+      {
+        title: "Visualização",
+        code: `<ToggleGroup type="single" defaultValue="lista" aria-label="Visualização">\n  <ToggleGroupItem value="lista"><List aria-hidden="true" />Lista</ToggleGroupItem>\n  <ToggleGroupItem value="grade"><LayoutGrid aria-hidden="true" />Grade</ToggleGroupItem>\n  <ToggleGroupItem value="quadro"><Columns3 aria-hidden="true" />Quadro</ToggleGroupItem>\n</ToggleGroup>`,
+        render: () => (
+          <ToggleGroup type="single" defaultValue="lista" aria-label="Visualização">
+            <ToggleGroupItem value="lista">
+              <List aria-hidden="true" />
+              Lista
+            </ToggleGroupItem>
+            <ToggleGroupItem value="grade">
+              <LayoutGrid aria-hidden="true" />
+              Grade
+            </ToggleGroupItem>
+            <ToggleGroupItem value="quadro">
+              <Columns3 aria-hidden="true" />
+              Quadro
+            </ToggleGroupItem>
+          </ToggleGroup>
+        ),
+      },
+      {
+        title: "Filtros combináveis",
+        code: `<ToggleGroup type="multiple" size="sm" defaultValue={["ativos"]} aria-label="Filtrar projetos">\n  <ToggleGroupItem value="ativos">ativos</ToggleGroupItem>\n  <ToggleGroupItem value="pausados">pausados</ToggleGroupItem>\n  <ToggleGroupItem value="arquivados">arquivados</ToggleGroupItem>\n</ToggleGroup>`,
+        render: () => (
+          <ToggleGroup type="multiple" size="sm" defaultValue={["ativos"]} aria-label="Filtrar projetos">
+            <ToggleGroupItem value="ativos">ativos</ToggleGroupItem>
+            <ToggleGroupItem value="pausados">pausados</ToggleGroupItem>
+            <ToggleGroupItem value="arquivados">arquivados</ToggleGroupItem>
+          </ToggleGroup>
+        ),
+      },
+    ],
+    a11y: [
+      "Com type single, o grupo é um radiogroup e cada item um radio com aria-checked. Com multiple, cada item é um botão com aria-pressed.",
+      "Item só com ícone precisa de aria-label.",
+      "O item ativo usa accent com texto on-accent: a diferença não depende só de cor, porque o fundo inteiro muda.",
+    ],
+    keyboard: [
+      { keys: "Tab", action: "Entra no grupo pelo item ativo, ou pelo primeiro, e sai do grupo." },
+      { keys: "Setas", action: "Movem o foco entre os itens." },
+      { keys: "Home / End", action: "Vão para o primeiro e o último item." },
+      { keys: "Espaço / Enter", action: "Ativa ou desativa o item com foco." },
+    ],
+  },
+  {
+    slug: "slider",
+    name: "Slider",
+    group: "primitivos",
+    status: "beta",
+    summary: "Controle deslizante para um valor ou um intervalo dentro de uma faixa, com valor anunciado em pt-BR.",
+    file: "slider.tsx",
+    usage: {
+      use: ["Ajustes aproximados em que a pessoa vê o efeito na hora: volume, zoom, opacidade.", "Faixas de filtro, como preço mínimo e máximo, com dois thumbs."],
+      avoid: ["Valores exatos que a pessoa já sabe: use Input ou CurrencyInput.", "Faixas muito grandes, em que cada passo é minúsculo: digitar é mais rápido."],
+    },
+    props: [
+      { name: "value / onValueChange", type: "number[] / (value) => void", description: "Um número por thumb. Dois números criam um intervalo." },
+      { name: "defaultValue", type: "number[]", description: "Valor inicial não controlado." },
+      { name: "min / max / step", type: "number", default: "0 / 100 / 1", description: "Faixa e passo." },
+      { name: "formatValue", type: "(value) => string", description: "Texto anunciado pelo leitor de tela. Padrão: número em pt-BR." },
+      { name: "thumbLabels", type: "string[]", description: "Nome de cada thumb, como Mínimo e Máximo." },
+      { name: "orientation", type: '"horizontal" | "vertical"', default: '"horizontal"', description: "Direção." },
+    ],
+    examples: [
+      {
+        title: "Valor único",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Volume">\n  <Slider defaultValue={[40]} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Volume" id={`slider-a-${theme}`}>
+            <Slider defaultValue={[40]} />
+          </FormField>
+        ),
+      },
+      {
+        title: "Intervalo",
+        className: "w-full flex-col items-stretch",
+        code: `<FormField label="Faixa de preço">\n  <Slider defaultValue={[200, 800]} min={0} max={1000} step={50} thumbLabels={["Mínimo", "Máximo"]} />\n</FormField>`,
+        render: (theme) => (
+          <FormField label="Faixa de preço" id={`slider-b-${theme}`}>
+            <Slider defaultValue={[200, 800]} min={0} max={1000} step={50} thumbLabels={["Preço mínimo", "Preço máximo"]} />
+          </FormField>
+        ),
+      },
+    ],
+    a11y: [
+      "Cada thumb tem role slider, com valor, mínimo, máximo e o texto de formatValue em aria-valuetext.",
+      "Dentro de FormField, o thumb recebe o nome do rótulo. Em intervalos, dê nome a cada thumb com thumbLabels.",
+      "Mostre o valor também em texto perto do controle quando ele for importante: arrastar não é preciso.",
+    ],
+    keyboard: [
+      { keys: "Setas", action: "Aumentam e diminuem um passo." },
+      { keys: "Page Up / Page Down", action: "Aumentam e diminuem dez passos." },
+      { keys: "Home / End", action: "Vão para o mínimo e o máximo." },
+      { keys: "Tab", action: "Passa de um thumb para o outro no intervalo." },
+    ],
+  },
+  {
+    slug: "kbd",
+    name: "Kbd",
+    group: "primitivos",
+    status: "beta",
+    summary: "Tecla de atalho em mono com borda, como no gatilho da busca.",
+    file: "kbd.tsx",
+    usage: {
+      use: ["Mostrar atalhos de teclado em textos de ajuda, tooltips e gatilhos.", "Uma tecla por Kbd; combine com + no texto: Ctrl + K."],
+      avoid: ["Atalhos dentro de itens de menu: use DropdownMenuShortcut ou CommandShortcut, que alinham à direita.", "Código ou nomes de variável: use code."],
+    },
+    props: [classNameProp],
+    examples: [
+      {
+        title: "Atalhos",
+        code: `<Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>`,
+        render: () => (
+          <>
+            <span className="flex items-center gap-1 text-ink-soft">
+              <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
+            </span>
+            <span className="flex items-center gap-1 text-ink-soft">
+              <Kbd>Esc</Kbd> fecha
+            </span>
+            <span className="flex items-center gap-1 text-ink-soft">
+              <Kbd>↑</Kbd>
+              <Kbd>↓</Kbd> navegam
+            </span>
+          </>
+        ),
+      },
+    ],
+    a11y: ["Usa a tag kbd, que leitores de tela podem anunciar como entrada de teclado.", "Setas e símbolos: escreva também o nome por perto quando o símbolo sozinho não for claro."],
+  },
+  {
     slug: "breadcrumb",
     name: "Breadcrumb",
     group: "compostos",
@@ -1801,6 +2045,98 @@ export const docs: ComponentDoc[] = [
     ],
   },
   {
+    slug: "accordion",
+    name: "Accordion",
+    group: "compostos",
+    status: "beta",
+    summary: "Lista de seções que abrem e fecham, separadas por linhas. Para perguntas frequentes e configurações longas.",
+    file: "accordion.tsx",
+    usage: {
+      use: ["Perguntas frequentes e listas de seções em que a pessoa procura uma só.", "Reduzir uma página longa de configurações em grupos."],
+      avoid: ["Conteúdo que quase todo mundo precisa ler: deixe aberto.", "Um único bloco de abre e fecha: use Collapsible.", "Navegar entre painéis do mesmo nível: use Tabs."],
+    },
+    props: [
+      { name: "type", type: '"single" | "multiple"', description: "Uma seção aberta por vez ou várias." },
+      { name: "collapsible", type: "boolean", default: "false", description: "Em single, permite fechar a seção aberta." },
+      { name: "value / defaultValue", type: "string | string[]", description: "Seções abertas." },
+      { name: "AccordionItem value", type: "string", description: "Identificador da seção." },
+    ],
+    examples: [
+      {
+        title: "Perguntas frequentes",
+        className: "w-full flex-col items-stretch",
+        code: `<Accordion type="single" collapsible defaultValue="instalar">\n  <AccordionItem value="instalar">\n    <AccordionTrigger>Como instalo um componente?</AccordionTrigger>\n    <AccordionContent>Rode npx shadcn@latest add @marcio/button.</AccordionContent>\n  </AccordionItem>\n</Accordion>`,
+        render: () => (
+          <Accordion type="single" collapsible defaultValue="instalar">
+            <AccordionItem value="instalar">
+              <AccordionTrigger>Como instalo um componente?</AccordionTrigger>
+              <AccordionContent>Rode npx shadcn@latest add @marcio/button. O CLI instala o componente e as dependências.</AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="tema">
+              <AccordionTrigger>Dá para usar só o tema claro?</AccordionTrigger>
+              <AccordionContent>Sim. Coloque data-theme=&quot;light&quot; no html e não instale o ThemeToggle.</AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="atualizar">
+              <AccordionTrigger>Como atualizo um componente?</AccordionTrigger>
+              <AccordionContent>Rode o add de novo com --overwrite e confira a diferença antes de aceitar.</AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        ),
+      },
+    ],
+    a11y: [
+      "Cada gatilho é um botão dentro de um heading, com aria-expanded e aria-controls apontando para o conteúdo.",
+      "O chevron gira e o texto muda de cor no hover, mas o estado aberto é anunciado por aria-expanded.",
+      "Com movimento reduzido, abre e fecha sem animar a altura.",
+    ],
+    keyboard: [
+      { keys: "Tab", action: "Percorre os gatilhos e o conteúdo aberto." },
+      { keys: "Enter / Espaço", action: "Abre e fecha a seção com foco." },
+      { keys: "Setas para cima e para baixo", action: "Movem o foco entre os gatilhos." },
+      { keys: "Home / End", action: "Vão para o primeiro e o último gatilho." },
+    ],
+  },
+  {
+    slug: "collapsible",
+    name: "Collapsible",
+    group: "compostos",
+    status: "beta",
+    summary: "Um bloco que abre e fecha a partir de um gatilho, sem estilo próprio no gatilho. Base para mostrar mais e opções avançadas.",
+    file: "collapsible.tsx",
+    usage: {
+      use: ["Esconder opções avançadas de um formulário atrás de um Mostrar opções avançadas.", "Mostrar mais itens de uma lista curta."],
+      avoid: ["Várias seções do mesmo nível: use Accordion.", "Conteúdo sobre a página, como um painel flutuante: use Popover."],
+    },
+    props: [
+      { name: "open / onOpenChange", type: "boolean / (open) => void", description: "Uso controlado." },
+      { name: "defaultOpen", type: "boolean", default: "false", description: "Começa aberto." },
+      { name: "CollapsibleTrigger asChild", type: "boolean", description: "Usa o seu botão como gatilho, por exemplo um Button ghost." },
+    ],
+    examples: [
+      {
+        title: "Opções avançadas",
+        className: "w-full flex-col items-stretch",
+        code: `<Collapsible>\n  <CollapsibleTrigger asChild>\n    <Button variant="ghost" size="sm">Opções avançadas</Button>\n  </CollapsibleTrigger>\n  <CollapsibleContent>...</CollapsibleContent>\n</Collapsible>`,
+        render: (theme) => (
+          <Collapsible className="flex flex-col gap-3">
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="self-start">
+                Opções avançadas
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <FormField label="Webhook" description="Recebe um POST a cada mudança no projeto." id={`col-${theme}`}>
+                <Input placeholder="https://" />
+              </FormField>
+            </CollapsibleContent>
+          </Collapsible>
+        ),
+      },
+    ],
+    a11y: ["O gatilho recebe aria-expanded e aria-controls.", "Diga no texto do gatilho o que vai aparecer: Opções avançadas, não Mais."],
+    keyboard: [{ keys: "Enter / Espaço", action: "No gatilho, abre e fecha o conteúdo." }],
+  },
+  {
     slug: "calendar",
     name: "Calendar",
     group: "compostos",
@@ -2091,7 +2427,7 @@ export const docs: ComponentDoc[] = [
     status: "estavel",
     usage: {
       use: ["Alternar entre painéis de conteúdo relacionados na mesma página, como as seções de Configurações.", "De duas a seis abas com rótulos curtos."],
-      avoid: ["Filtrar ou ordenar os mesmos dados: Tabs troca de painel, não de visualização.", "Etapas que precisam ser feitas em ordem: use um fluxo em etapas.", "Navegar entre páginas: use links."],
+      avoid: ["Filtrar ou trocar a visualização dos mesmos dados: use ToggleGroup.", "Etapas que precisam ser feitas em ordem: use um fluxo em etapas.", "Navegar entre páginas: use links."],
     },
     keyboard: [
       { keys: "Tab", action: "Entra na aba ativa e depois vai para o painel." },
