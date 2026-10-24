@@ -6,6 +6,8 @@ const basePath = process.env.BASE_PATH ?? "";
 const nextConfig: NextConfig = {
   output: "export",
   basePath,
+  // O src de <iframe> não recebe o basePath sozinho como o NextLink.
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
   trailingSlash: true,
 };
 
