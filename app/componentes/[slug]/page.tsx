@@ -115,7 +115,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
                   ] as const
                 ).map(([label, sample, border, text]) => (
                   <figure key={label} className={cn("flex flex-col overflow-hidden rounded-card border border-line border-t-2", border)}>
-                    <div className="flex flex-wrap items-center gap-3 p-6">{sample.render()}</div>
+                    <div className="flex flex-1 flex-wrap items-center gap-3 p-6">{sample.render()}</div>
                     <figcaption className="flex flex-col gap-1 border-t border-line bg-band px-5 py-4">
                       <span className={cn("font-mono text-mono-xs", text)}>{`// ${label}`}</span>
                       <span className="text-ink-soft">{sample.caption}</span>
