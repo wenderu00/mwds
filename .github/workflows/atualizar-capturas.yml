@@ -43,6 +43,8 @@ jobs:
             echo "Capturas sem mudança."
           else
             git commit -m "Atualiza as capturas de regressão visual"
+            # A branch pode ter recebido commits enquanto as capturas eram geradas.
+            git pull --rebase origin "$BRANCH"
             git push origin "HEAD:$BRANCH"
           fi
       - name: Tira o rótulo para poder usar de novo

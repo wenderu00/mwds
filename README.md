@@ -130,8 +130,14 @@ npm run dev
 | `npm run contrast` | Tabela de contraste de todos os pares nos dois temas |
 | `npm run accent-scale` | Mostra a escala do accent gerada em OKLCH |
 | `npm run typecheck` | TypeScript sem emitir arquivos |
+| `npm run e2e` | Axe com contraste real e regressão visual (Playwright) em todas as páginas, nos dois temas. Precisa do `out/` do `npm run build` |
+| `npm run e2e:update` | Regrava as capturas localmente, só para conferir; as de referência vêm do CI |
 
 Rode `npm run registry:build` em outro terminal depois de mudar algo em `registry/` com o `dev` rodando; o `dev` serve o que estiver em `public/r`.
+
+### Regressão visual
+
+As capturas de referência ficam em `e2e/__screenshots__/` e são geradas no container do Playwright do CI, para a renderização não depender da máquina de quem desenvolve. Quando uma mudança visual for intencional, aplique o rótulo `atualizar-capturas` no PR (ou rode o workflow Atualizar capturas na aba Actions): ele regrava as capturas e faz commit na branch. Se o job qualidade falhar, o relatório com os diffs fica nos artefatos da execução.
 
 ### Regras do repositório
 
