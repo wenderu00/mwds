@@ -11,9 +11,9 @@ permissions:
   pages: write
   id-token: write
 
-# PRs só validam; publicar fica para o main, um deploy por vez.
+# PRs e branches só validam; publicar fica para o main, um deploy por vez.
 concurrency:
-  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || 'pages' }}
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || (github.ref == 'refs/heads/main' && 'pages' || format('ref-{0}', github.ref)) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -34,13 +34,36 @@ jobs:
           BASE_PATH: /mwds
           REGISTRY_URL: https://wenderu00.github.io/mwds
       - uses: actions/upload-pages-artifact@v3
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         with:
           path: out
 
+  # Axe com contraste real e regressão visual, no container do Playwright para a renderização
+  # ser sempre a mesma. As capturas de referência vêm do workflow atualizar-capturas.
+  qualidade:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run build
+      - run: npm run e2e
+        env:
+          CI: "true"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: relatorio-playwright
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
+
   deploy:
-    needs: build
-    if: github.event_name != 'pull_request'
+    needs: [build, qualidade]
+    # O workflow_dispatch numa branch (disparado pelo atualizar-capturas) só valida, não publica.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

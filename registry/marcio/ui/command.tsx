@@ -74,7 +74,7 @@ export function CommandGroup({ className, ...props }: ComponentProps<typeof Comm
 }
 
 export function CommandSeparator({ className, ...props }: ComponentProps<typeof CommandPrimitive.Separator>) {
-  return <CommandPrimitive.Separator data-slot="command-separator" className={cn("-mx-1 my-1 h-px bg-line", className)} {...props} />;
+  return <CommandPrimitive.Separator data-slot="command-separator" aria-hidden="true" className={cn("-mx-1 my-1 h-px bg-line", className)} {...props} />;
 }
 
 export function CommandItem({ className, ...props }: ComponentProps<typeof CommandPrimitive.Item>) {

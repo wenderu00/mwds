@@ -4,6 +4,26 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.7.0] - 2026-10-24
+
+### Novo
+
+- Axe com contraste real e regressão visual com Playwright em todas as páginas de componente e do site, nos dois temas, no job qualidade do CI. O deploy depende dele.
+- Workflow Atualizar capturas, disparado pelo rótulo `atualizar-capturas` no PR ou pela aba Actions.
+- `AppShellMain` aceita `as="div"` para quando o AppShell fica dentro de outro `main`.
+- O `aria-label` do Calendar também nomeia a barra de navegação.
+
+### Mudou
+
+- O gatilho do DatePicker e do DateRangePicker passa a ter `role="combobox"`, como o Select, porque um botão não aceita `aria-required`. Testes que buscavam o gatilho por `getByRole("button")` passam a usar `getByRole("combobox")`.
+- `Table`: o contêiner com rolagem horizontal entra no Tab, para quem usa teclado conseguir rolar a tabela.
+
+### Corrigido
+
+- `CommandSeparator` fica escondido do leitor de tela; antes era um `separator` dentro do `listbox`.
+- Bloco `login`: o painel de marca vira `aside` rotulado, e nada fica fora de landmark.
+- O CI roda também nos PRs, e os testes de axe de página inteira têm tempo próprio.
+
 ## [0.6.0] - 2026-10-24
 
 ### Novo

@@ -78,7 +78,7 @@ export function SignupForm() {
   return (
     <Card className="gap-8 p-6 md:p-8">
       <CardHeader>
-        <CardTitle>Dados da conta</CardTitle>
+        <CardTitle as="h2">Dados da conta</CardTitle>
         <CardDescription>Campos com asterisco são obrigatórios.</CardDescription>
       </CardHeader>
 

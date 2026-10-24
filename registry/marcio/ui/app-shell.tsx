@@ -258,6 +258,12 @@ export function AppShellBody({ className, ...props }: ComponentProps<"div">) {
   return <div data-slot="app-shell-body" className={cn("flex min-w-0 flex-1 flex-col", className)} {...props} />;
 }
 
-export function AppShellMain({ id = "conteudo", className, ...props }: ComponentProps<"main">) {
-  return <main data-slot="app-shell-main" id={id} tabIndex={-1} className={cn("flex-1 px-4 py-8 outline-none md:px-8", className)} {...props} />;
+export type AppShellMainProps = ComponentProps<"main"> & {
+  // div quando o AppShell está dentro de uma página que já tem o próprio main.
+  as?: "main" | "div";
+};
+
+export function AppShellMain({ id = "conteudo", as = "main", className, ...props }: AppShellMainProps) {
+  const Comp = as as "main";
+  return <Comp data-slot="app-shell-main" id={id} tabIndex={-1} className={cn("flex-1 px-4 py-8 outline-none md:px-8", className)} {...props} />;
 }

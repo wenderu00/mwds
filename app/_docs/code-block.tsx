@@ -40,7 +40,7 @@ export function CodeBlock({ title, code, className }: { title: string; code: str
           </IconButton>
         </div>
       </div>
-      <pre className="overflow-x-auto p-4 font-mono text-mono-xs text-ink-soft">
+      <pre tabIndex={0} className="overflow-x-auto p-4 font-mono text-mono-xs text-ink-soft">
         <code>{code}</code>
       </pre>
     </div>

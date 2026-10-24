@@ -7,7 +7,8 @@ export type TableProps = ComponentProps<"table"> & {
 
 export function Table({ className, containerClassName, ...props }: TableProps) {
   return (
-    <div data-slot="table-container" className={cn("relative w-full overflow-x-auto rounded-card border border-line", containerClassName)}>
+    // tabIndex: quando a tabela rola na horizontal, quem usa teclado precisa conseguir focar o contêiner para rolar.
+    <div data-slot="table-container" tabIndex={0} className={cn("relative w-full overflow-x-auto rounded-card border border-line", containerClassName)}>
       <table data-slot="table" className={cn("w-full caption-bottom border-collapse text-left text-base", className)} {...props} />
     </div>
   );

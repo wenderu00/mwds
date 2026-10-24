@@ -15,7 +15,9 @@ const weekdays = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
 
 export type CalendarProps = ComponentProps<typeof DayPicker>;
 
-export function Calendar({ className, classNames, components, formatters, showOutsideDays = true, ...props }: CalendarProps) {
+export function Calendar({ className, classNames, components, formatters, labels, showOutsideDays = true, ...props }: CalendarProps) {
+  // Com mais de um calendário na página, o aria-label distingue também a barra de navegação de cada um.
+  const name = props["aria-label"];
   return (
     <DayPicker
       data-slot="calendar"
@@ -48,6 +50,7 @@ export function Calendar({ className, classNames, components, formatters, showOu
         ...classNames,
       }}
       formatters={{ formatWeekdayName: (date) => weekdays[date.getDay()]!, ...formatters }}
+      labels={{ ...(name ? { labelNav: () => `Navegação, ${name}` } : {}), ...labels }}
       components={{
         Chevron: ({ orientation = "left", className: chevronClassName }) => {
           const Icon = chevrons[orientation];
