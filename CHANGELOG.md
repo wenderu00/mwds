@@ -4,6 +4,20 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.12.0] - 2026-10-24
+
+### Novo
+
+- Chart: barras, linha e área sobre o Recharts, nas paletas `chart-1` a `chart-8` e `seq-1` a `seq-5`, com legenda em texto e tabela dos dados ([ADR 0019](docs/adr/0019-grafico-sobre-recharts.md)).
+- Bloco `record-detail`: tela de detalhe com DescriptionList, Timeline e arquivamento confirmado, com rota `/exemplos/detalhe` no site.
+- Exemplo de cadastro em etapas, com Stepper, validação por etapa, foco no título da etapa nova e revisão antes de enviar.
+- Testes em largura de celular (390px) para painel, listagem, detalhe e cadastro em etapas, com axe, sem rolagem horizontal e com o menu do AppShell aberto.
+
+### Mudou
+
+- O bloco `dashboard` ganha o gráfico de horas por semana, e as seções seguintes passam a 02 e 03.
+- A seção Gráficos da fundação usa o Chart; o gráfico feito à mão saiu.
+
 ## [0.11.0] - 2026-10-24
 
 ### Novo
