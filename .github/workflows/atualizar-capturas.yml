@@ -13,6 +13,7 @@ on:
         required: true
 
 permissions:
+  actions: write
   contents: write
   pull-requests: write
 
@@ -46,6 +47,13 @@ jobs:
             # A branch pode ter recebido commits enquanto as capturas eram geradas.
             git pull --rebase origin "$BRANCH"
             git push origin "HEAD:$BRANCH"
+            # Push feito com o GITHUB_TOKEN não dispara workflows; workflow_dispatch dispara.
+            # Assim o commit das capturas ganha a verificação completa (build e qualidade).
+            curl -fsS -X POST \
+              -H "Authorization: Bearer ${{ github.token }}" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/workflows/pages.yml/dispatches" \
+              -d "{\"ref\": \"$BRANCH\"}"
           fi
       - name: Tira o rótulo para poder usar de novo
         if: github.event_name == 'pull_request'

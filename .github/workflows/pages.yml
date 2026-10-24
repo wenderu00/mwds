@@ -11,9 +11,9 @@ permissions:
   pages: write
   id-token: write
 
-# PRs só validam; publicar fica para o main, um deploy por vez.
+# PRs e branches só validam; publicar fica para o main, um deploy por vez.
 concurrency:
-  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || 'pages' }}
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || (github.ref == 'refs/heads/main' && 'pages' || format('ref-{0}', github.ref)) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
           BASE_PATH: /mwds
           REGISTRY_URL: https://wenderu00.github.io/mwds
       - uses: actions/upload-pages-artifact@v3
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         with:
           path: out
 
@@ -62,7 +62,8 @@ jobs:
 
   deploy:
     needs: [build, qualidade]
-    if: github.event_name != 'pull_request'
+    # O workflow_dispatch numa branch (disparado pelo atualizar-capturas) só valida, não publica.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
