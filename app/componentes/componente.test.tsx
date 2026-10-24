@@ -44,7 +44,7 @@ describe("página de componente", () => {
     await renderDoc("date-picker");
     expect(screen.getByText("npx shadcn@latest add @marcio/date-picker")).toBeInTheDocument();
     expect(screen.getByText("lucide-react, react-day-picker")).toBeInTheDocument();
-    expect(screen.getByText("calendar, form-field, icon-button, popover")).toBeInTheDocument();
+    expect(screen.getByText("br, calendar, form-field, icon-button, input, popover")).toBeInTheDocument();
   });
 
   it.each(docs.map((doc) => doc.file.replace(/\.tsx$/, "")))("%s existe no registry.json", (name) => {
