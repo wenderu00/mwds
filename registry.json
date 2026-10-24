@@ -142,7 +142,9 @@
           "animate-mw-sheet-left": "mw-sheet-left var(--mw-duration-slow) var(--mw-ease-enter) both",
           "animate-mw-sheet-top": "mw-sheet-top var(--mw-duration-slow) var(--mw-ease-enter) both",
           "animate-mw-sheet-bottom": "mw-sheet-bottom var(--mw-duration-slow) var(--mw-ease-enter) both",
-          "animate-mw-indeterminate": "mw-indeterminate 1.4s var(--mw-ease-standard) infinite"
+          "animate-mw-indeterminate": "mw-indeterminate 1.4s var(--mw-ease-standard) infinite",
+          "animate-mw-collapse-down": "mw-collapse-down var(--mw-duration-base) var(--mw-ease-standard)",
+          "animate-mw-collapse-up": "mw-collapse-up var(--mw-duration-base) var(--mw-ease-standard)"
         }
       },
       "css": {
@@ -379,6 +381,22 @@
             "translate": "0 100%"
           }
         },
+        "@keyframes mw-collapse-down": {
+          "from": {
+            "height": "0"
+          },
+          "to": {
+            "height": "var(--mw-content-height)"
+          }
+        },
+        "@keyframes mw-collapse-up": {
+          "from": {
+            "height": "var(--mw-content-height)"
+          },
+          "to": {
+            "height": "0"
+          }
+        },
         "@keyframes mw-indeterminate": {
           "from": {
             "translate": "-100% 0"
@@ -539,6 +557,29 @@
           "path": "registry/marcio/lib/br.ts",
           "type": "registry:lib"
         }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Lista de seções que abrem e fecham, separadas por linhas. Para perguntas frequentes e configurações longas.",
+      "dependencies": [
+        "lucide-react",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
       ]
     },
     {
@@ -793,6 +834,28 @@
       ]
     },
     {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "Um bloco que abre e fecha a partir de um gatilho, sem estilo próprio no gatilho. Base para mostrar mais e opções avançadas.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "combobox",
       "type": "registry:ui",
       "title": "Combobox",
@@ -828,6 +891,7 @@
       "registryDependencies": [
         "http://localhost:3000/r/command.json",
         "http://localhost:3000/r/dialog.json",
+        "http://localhost:3000/r/kbd.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/utils.json"
       ],
@@ -856,6 +920,31 @@
       "files": [
         {
           "path": "registry/marcio/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "DataTable",
+      "description": "Table com ordenação por coluna, seleção de linhas e paginação. Cada parte pode ser controlada por fora.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/checkbox.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/pagination.json",
+        "http://localhost:3000/r/table.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/data-table.tsx",
           "type": "registry:ui"
         }
       ],
@@ -1087,6 +1176,26 @@
       ]
     },
     {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Tecla de atalho em mono com borda, como no gatilho da busca.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/kbd.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
       "name": "kicker",
       "type": "registry:ui",
       "title": "Kicker",
@@ -1190,6 +1299,30 @@
       "files": [
         {
           "path": "registry/marcio/ui/masked-input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "NumberInput",
+      "description": "Campo numérico com botões de diminuir e aumentar, mínimo, máximo, passo e formatação pt-BR.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/number-input.tsx",
           "type": "registry:ui"
         }
       ],
@@ -1351,6 +1484,28 @@
       ]
     },
     {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "Linha de 1px em line, horizontal ou vertical, para separar grupos de conteúdo.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
       "name": "sheet",
       "type": "registry:ui",
       "title": "Sheet",
@@ -1397,6 +1552,29 @@
       ]
     },
     {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Controle deslizante para um valor ou um intervalo dentro de uma faixa, com valor anunciado em pt-BR.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/form-field.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/slider.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
       "name": "spinner",
       "type": "registry:ui",
       "title": "Spinner",
@@ -1416,6 +1594,51 @@
       ],
       "categories": [
         "primitivos"
+      ]
+    },
+    {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "StatCard",
+      "description": "Métrica em card: rótulo em mono, valor em display, variação com cor de estado e progresso opcional.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/badge.json",
+        "http://localhost:3000/r/card.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/progress.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/stat-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Etapas numeradas de um fluxo, com estados concluída, atual e pendente. Horizontal ou vertical.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/stepper.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
       ]
     },
     {
@@ -1551,6 +1774,29 @@
       "docs": "Coloque <Toaster /> uma vez no layout raiz."
     },
     {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "ToggleGroup",
+      "description": "Botões agrupados em controle segmentado, para trocar a visualização ou ligar filtros. O item ativo fica amarelo.",
+      "dependencies": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitivos"
+      ]
+    },
+    {
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
@@ -1586,6 +1832,28 @@
       "files": [
         {
           "path": "registry/marcio/ui/typing-text.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "identidade"
+      ]
+    },
+    {
+      "name": "typography",
+      "type": "registry:ui",
+      "title": "Heading e Text",
+      "description": "Títulos em display e textos de corpo e mono com a escala do @mw/ui. A prop as escolhe a tag sem mudar o estilo.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/typography.tsx",
           "type": "registry:ui"
         }
       ],
@@ -1641,9 +1909,9 @@
         "http://localhost:3000/r/card.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/page-header.json",
-        "http://localhost:3000/r/progress.json",
         "http://localhost:3000/r/section-title.json",
         "http://localhost:3000/r/skeleton.json",
+        "http://localhost:3000/r/stat-card.json",
         "http://localhost:3000/r/table.json"
       ],
       "files": [
@@ -1651,11 +1919,6 @@
           "path": "registry/marcio/blocks/dashboard/data.ts",
           "type": "registry:component",
           "target": "components/blocks/dashboard/data.ts"
-        },
-        {
-          "path": "registry/marcio/blocks/dashboard/metric-card.tsx",
-          "type": "registry:component",
-          "target": "components/blocks/dashboard/metric-card.tsx"
         },
         {
           "path": "registry/marcio/blocks/dashboard/page.tsx",
@@ -1792,6 +2055,7 @@
       "title": "@mw/ui completo",
       "description": "Instala tokens, fontes e todos os componentes.",
       "registryDependencies": [
+        "http://localhost:3000/r/accordion.json",
         "http://localhost:3000/r/alert-dialog.json",
         "http://localhost:3000/r/alert.json",
         "http://localhost:3000/r/app-shell.json",
@@ -1803,9 +2067,11 @@
         "http://localhost:3000/r/card.json",
         "http://localhost:3000/r/checkbox.json",
         "http://localhost:3000/r/code-comment.json",
+        "http://localhost:3000/r/collapsible.json",
         "http://localhost:3000/r/combobox.json",
         "http://localhost:3000/r/command-palette.json",
         "http://localhost:3000/r/command.json",
+        "http://localhost:3000/r/data-table.json",
         "http://localhost:3000/r/date-picker.json",
         "http://localhost:3000/r/dialog.json",
         "http://localhost:3000/r/dot-grid.json",
@@ -1816,11 +2082,13 @@
         "http://localhost:3000/r/glitch-text.json",
         "http://localhost:3000/r/icon-button.json",
         "http://localhost:3000/r/input.json",
+        "http://localhost:3000/r/kbd.json",
         "http://localhost:3000/r/kicker.json",
         "http://localhost:3000/r/label.json",
         "http://localhost:3000/r/link.json",
         "http://localhost:3000/r/logo-block.json",
         "http://localhost:3000/r/masked-input.json",
+        "http://localhost:3000/r/number-input.json",
         "http://localhost:3000/r/page-header.json",
         "http://localhost:3000/r/pagination.json",
         "http://localhost:3000/r/popover.json",
@@ -1828,17 +2096,23 @@
         "http://localhost:3000/r/radio-group.json",
         "http://localhost:3000/r/section-title.json",
         "http://localhost:3000/r/select.json",
+        "http://localhost:3000/r/separator.json",
         "http://localhost:3000/r/sheet.json",
         "http://localhost:3000/r/skeleton.json",
+        "http://localhost:3000/r/slider.json",
         "http://localhost:3000/r/spinner.json",
+        "http://localhost:3000/r/stat-card.json",
+        "http://localhost:3000/r/stepper.json",
         "http://localhost:3000/r/switch.json",
         "http://localhost:3000/r/table.json",
         "http://localhost:3000/r/tabs.json",
         "http://localhost:3000/r/textarea.json",
         "http://localhost:3000/r/theme-toggle.json",
         "http://localhost:3000/r/toast.json",
+        "http://localhost:3000/r/toggle-group.json",
         "http://localhost:3000/r/tooltip.json",
-        "http://localhost:3000/r/typing-text.json"
+        "http://localhost:3000/r/typing-text.json",
+        "http://localhost:3000/r/typography.json"
       ]
     }
   ]

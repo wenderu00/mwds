@@ -309,6 +309,8 @@
   --animate-mw-sheet-top: mw-sheet-top var(--mw-duration-slow) var(--mw-ease-enter) both;
   --animate-mw-sheet-bottom: mw-sheet-bottom var(--mw-duration-slow) var(--mw-ease-enter) both;
   --animate-mw-indeterminate: mw-indeterminate 1.4s var(--mw-ease-standard) infinite;
+  --animate-mw-collapse-down: mw-collapse-down var(--mw-duration-base) var(--mw-ease-standard);
+  --animate-mw-collapse-up: mw-collapse-up var(--mw-duration-base) var(--mw-ease-standard);
 }
 
 @layer base {
@@ -426,6 +428,25 @@
 @keyframes mw-sheet-bottom {
   from {
     translate: 0 100%;
+  }
+}
+
+/* Accordion e Collapsible passam a altura do Radix em --mw-content-height. */
+@keyframes mw-collapse-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--mw-content-height);
+  }
+}
+
+@keyframes mw-collapse-up {
+  from {
+    height: var(--mw-content-height);
+  }
+  to {
+    height: 0;
   }
 }
 

@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import ComponentPage from "@/app/componentes/[slug]/page";
-import { getDoc } from "@/app/_docs/catalog";
+import { docs, getDoc } from "@/app/_docs/catalog";
 import { TooltipProvider } from "@/registry/marcio/ui/tooltip";
 
 vi.mock("next/navigation", () => ({
@@ -26,8 +26,44 @@ describe("página de componente", () => {
   });
 
   it("omite a seção de teclado em componente sem atalhos documentados", async () => {
-    expect(getDoc("card")?.keyboard).toBeUndefined();
-    await renderDoc("card");
+    expect(getDoc("table")?.keyboard).toBeUndefined();
+    await renderDoc("table");
     expect(screen.queryByRole("table", { name: "Teclado" })).not.toBeInTheDocument();
   });
+
+  it.each([
+    ["select", "estável"],
+    ["date-picker", "beta"],
+  ])("%s mostra o selo de status e a seção Quando usar", async (slug, label) => {
+    const doc = getDoc(slug)!;
+    await renderDoc(slug);
+    expect(screen.getByText(label, { selector: "[data-slot=badge]" })).toHaveTextContent(`status: ${label}`);
+    const section = screen.getByRole("heading", { name: /Quando usar/ }).closest("section")!;
+    expect(within(section).getAllByRole("listitem")).toHaveLength(doc.usage.use.length + doc.usage.avoid.length);
+  });
 });
+
+const interactive = [
+  "button", "icon-button", "input", "masked-input", "textarea", "checkbox", "switch", "link", "radio-group",
+  "pagination", "popover", "command", "combobox", "dropdown-menu", "breadcrumb", "alert", "sheet", "command-palette",
+  "app-shell", "card", "select", "dialog", "calendar", "date-picker", "file-upload", "alert-dialog", "toast", "tabs",
+  "tooltip", "theme-toggle", "accordion", "collapsible", "toggle-group", "slider",
+  "number-input", "data-table", "stepper",
+];
+
+describe("catálogo", () => {
+  it.each(docs.map((doc) => [doc.slug, doc] as const))("%s tem status e regras de uso", (_slug, doc) => {
+    expect(["estavel", "beta", "experimental"]).toContain(doc.status);
+    expect(doc.usage.use.length).toBeGreaterThan(0);
+    expect(doc.usage.avoid.length).toBeGreaterThan(0);
+  });
+
+  it.each(interactive)("%s documenta o teclado", (slug) => {
+    expect(getDoc(slug)?.keyboard?.length).toBeGreaterThan(0);
+  });
+
+  it("não usa travessão nos textos", () => {
+    expect(JSON.stringify(docs)).not.toContain("\u2014");
+  });
+});
+

@@ -5,6 +5,7 @@ import { cn } from "@/registry/marcio/lib/utils";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
 import { docs, getDoc, groups } from "../../_docs/catalog";
+import { StatusBadge } from "../../_docs/status-badge";
 import { Preview } from "../../_docs/preview";
 import { container, SiteHeader } from "../../_docs/site-header";
 
@@ -25,6 +26,9 @@ export default async function ComponentPage({ params }: { params: Promise<Params
   const { slug } = await params;
   const doc = getDoc(slug);
   if (!doc) notFound();
+
+  const sections = ["uso", "exemplos", "props", ...(doc.keyboard ? ["teclado"] : []), "acessibilidade"];
+  const index = (id: string) => String(sections.indexOf(id) + 1).padStart(2, "0");
 
   return (
     <div className="min-h-screen bg-ground text-ink">
@@ -61,12 +65,36 @@ export default async function ComponentPage({ params }: { params: Promise<Params
             <SectionTitle as="h1" kicker={doc.group}>
               {doc.name}
             </SectionTitle>
+            <StatusBadge status={doc.status} className="self-start" />
             <p className="max-w-measure text-lead text-ink-soft">{doc.summary}</p>
             <CodeComment>{`registry/marcio/ui/${doc.file}`}</CodeComment>
           </div>
 
+          <section className="flex flex-col gap-6">
+            <SectionTitle index={index("uso")} as="h2" size="md" id="uso">
+              Quando usar
+            </SectionTitle>
+            <div className="grid gap-6 md:grid-cols-2">
+              {(
+                [
+                  ["use para", doc.usage.use, "marker:text-success-text"],
+                  ["não use para", doc.usage.avoid, "marker:text-danger-text"],
+                ] as const
+              ).map(([title, rules, marker]) => (
+                <div key={title} className="flex flex-col gap-3 rounded-card border border-line p-5">
+                  <h3 className="font-mono text-mono-sm text-ink-muted">{`// ${title}`}</h3>
+                  <ul className={cn("flex list-disc flex-col gap-2 pl-5 text-ink-soft", marker)}>
+                    {rules.map((rule) => (
+                      <li key={rule}>{rule}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+
           <section className="flex flex-col gap-8">
-            <SectionTitle index="01" as="h2" size="md" id="exemplos">
+            <SectionTitle index={index("exemplos")} as="h2" size="md" id="exemplos">
               Exemplos
             </SectionTitle>
             {doc.examples.map((example) => (
@@ -79,7 +107,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
           </section>
 
           <section className="flex flex-col gap-6">
-            <SectionTitle index="02" as="h2" size="md" id="props">
+            <SectionTitle index={index("props")} as="h2" size="md" id="props">
               Props
             </SectionTitle>
             <CodeComment>além destas, todas as props nativas do elemento e ref são repassadas</CodeComment>
@@ -109,7 +137,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
 
           {doc.keyboard && (
             <section className="flex flex-col gap-6">
-              <SectionTitle index="03" as="h2" size="md" id="teclado">
+              <SectionTitle index={index("teclado")} as="h2" size="md" id="teclado">
                 Teclado
               </SectionTitle>
               <div className="overflow-x-auto rounded-card border border-line">
@@ -134,7 +162,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
           )}
 
           <section className="flex flex-col gap-6">
-            <SectionTitle index={doc.keyboard ? "04" : "03"} as="h2" size="md" id="acessibilidade">
+            <SectionTitle index={index("acessibilidade")} as="h2" size="md" id="acessibilidade">
               Acessibilidade
             </SectionTitle>
             <ul className="flex list-disc flex-col gap-2 pl-5 text-ink-soft marker:text-accent-text">

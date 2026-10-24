@@ -18,6 +18,7 @@ import { BreadcrumbTrail } from "@/registry/marcio/ui/breadcrumb";
 import { Button } from "@/registry/marcio/ui/button";
 import { CommandGroup, CommandSeparator, CommandShortcut } from "@/registry/marcio/ui/command";
 import { CommandPalette, CommandPaletteItem, CommandPaletteTrigger } from "@/registry/marcio/ui/command-palette";
+import { DataTable, type DataTableColumn } from "@/registry/marcio/ui/data-table";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -36,6 +37,7 @@ import {
 import { LogoBlock } from "@/registry/marcio/ui/logo-block";
 import { Pagination } from "@/registry/marcio/ui/pagination";
 import { Progress } from "@/registry/marcio/ui/progress";
+import { Stepper } from "@/registry/marcio/ui/stepper";
 import { toast, type ToastTone } from "@/registry/marcio/ui/toast";
 
 export function AlertDismissDemo() {
@@ -241,6 +243,67 @@ export function AppShellDemo({ theme }: { theme: string }) {
           </AppShellMain>
         </AppShellBody>
       </AppShell>
+    </div>
+  );
+}
+
+type DemoProject = { id: string; name: string; owner: string; hours: number };
+
+const demoProjects: DemoProject[] = [
+  { id: "1", name: "ResenhaHub", owner: "Ana Lima", hours: 120 },
+  { id: "2", name: "Ouvidoria Digital", owner: "Bruno Costa", hours: 86 },
+  { id: "3", name: "Agenda de Vacinação", owner: "Carla Souza", hours: 240 },
+  { id: "4", name: "Ágora", owner: "Diego Rocha", hours: 12 },
+  { id: "5", name: "Bússola", owner: "Elisa Martins", hours: 58 },
+];
+
+const demoColumns: DataTableColumn<DemoProject>[] = [
+  { id: "nome", header: "Projeto", sortValue: (row) => row.name, cell: (row) => <span className="font-medium text-ink">{row.name}</span> },
+  { id: "responsavel", header: "Responsável", sortValue: (row) => row.owner, cell: (row) => row.owner },
+  { id: "horas", header: "Horas", align: "right", className: "font-mono text-mono-sm", sortValue: (row) => row.hours, cell: (row) => row.hours },
+];
+
+export function DataTableDemo() {
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  return (
+    <div className="flex w-full min-w-0 flex-col gap-2">
+      <DataTable
+        data={demoProjects}
+        columns={demoColumns}
+        getRowId={(row) => row.id}
+        pageSize={3}
+        selectable
+        selected={selected}
+        onSelectedChange={setSelected}
+        rowLabel={(row) => row.name}
+        caption={({ first, last, total }) => `Mostrando ${first} a ${last} de ${total}`}
+      />
+      <p aria-live="polite" className="font-mono text-mono-xs text-ink-muted">
+        {`// ${selected.size} selecionado${selected.size === 1 ? "" : "s"}`}
+      </p>
+    </div>
+  );
+}
+
+const demoSteps = [
+  { title: "Dados", description: "Nome e documento" },
+  { title: "Endereço", description: "CEP e número" },
+  { title: "Revisão", description: "Confira e envie" },
+];
+
+export function StepperDemo() {
+  const [current, setCurrent] = useState(1);
+  return (
+    <div className="flex w-full flex-col gap-4">
+      <Stepper steps={demoSteps} current={current} onStepChange={setCurrent} aria-label="Cadastro" />
+      <div className="flex gap-2">
+        <Button variant="secondary" size="sm" disabled={current === 0} onClick={() => setCurrent(current - 1)}>
+          Voltar
+        </Button>
+        <Button size="sm" disabled={current === demoSteps.length} onClick={() => setCurrent(current + 1)}>
+          {current >= demoSteps.length - 1 ? "Concluir" : "Continuar"}
+        </Button>
+      </div>
     </div>
   );
 }
