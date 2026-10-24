@@ -2,6 +2,7 @@
 
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
 import type { ComponentProps } from "react";
+import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/registry/marcio/lib/utils";
 
 export const DropdownMenu = DropdownMenuPrimitive.Root;
@@ -11,10 +12,10 @@ export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
 export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
 const contentClasses =
-  "z-50 min-w-48 overflow-hidden rounded-md border border-line-strong bg-surface p-1 text-ink motion-safe:data-[state=open]:animate-mw-fade-in";
+  "z-popover min-w-48 overflow-hidden rounded-control border border-line-strong bg-surface p-1 text-ink motion-safe:data-[state=open]:animate-mw-fade-in";
 
 const itemClasses =
-  "relative flex min-h-9 cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-base outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[highlighted]:bg-accent-soft [&_svg]:size-4 [&_svg]:shrink-0";
+  "relative flex min-h-9 cursor-pointer items-center gap-2 rounded-mark px-2 py-1.5 text-base outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[highlighted]:bg-accent-soft [&_svg]:size-4 [&_svg]:shrink-0";
 
 export function DropdownMenuContent({ className, sideOffset = 6, align = "end", ...props }: ComponentProps<typeof DropdownMenuPrimitive.Content>) {
   return (
@@ -51,11 +52,7 @@ export function DropdownMenuItem({ className, variant = "default", inset = false
   );
 }
 
-const indicator = (
-  <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" className="text-accent-text">
-    <path d="M3.5 8.5l3 3 6-7" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
+const indicator = <Check aria-hidden="true" className="text-accent-text" />;
 
 export function DropdownMenuCheckboxItem({ className, children, ...props }: ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem>) {
   return (
@@ -111,9 +108,7 @@ export function DropdownMenuSubTrigger({ className, children, ...props }: Compon
       {...props}
     >
       {children}
-      <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" className="ml-auto text-ink-muted">
-        <path d="M6 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+      <ChevronRight aria-hidden="true" className="ml-auto text-ink-muted" />
     </DropdownMenuPrimitive.SubTrigger>
   );
 }

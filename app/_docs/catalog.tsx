@@ -1,3 +1,4 @@
+import { Pencil } from "lucide-react";
 import type { ReactNode } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
 import { Avatar, AvatarGroup } from "@/registry/marcio/ui/avatar";
@@ -228,7 +229,7 @@ export const docs: ComponentDoc[] = [
         code: `<section className="relative isolate">\n  <DotGrid animated />\n  ...\n</section>`,
         className: "w-full",
         render: () => (
-          <div className="relative isolate flex h-40 w-full items-center justify-center rounded-md border border-line">
+          <div className="relative isolate flex h-40 w-full items-center justify-center rounded-control border border-line">
             <DotGrid animated />
             <span className="font-mono text-mono-xs text-ink-muted">conteúdo</span>
           </div>
@@ -921,7 +922,7 @@ export const docs: ComponentDoc[] = [
         className: "w-full",
         code: `<LoadingRegion loading={isLoading} label="Carregando projeto">\n  <Skeleton className="size-10 rounded-full" />\n  <SkeletonText lines={3} />\n</LoadingRegion>`,
         render: () => (
-          <LoadingRegion loading label="Carregando projeto" className="flex w-full flex-col gap-4 rounded-xl border border-line p-5">
+          <LoadingRegion loading label="Carregando projeto" className="flex w-full flex-col gap-4 rounded-card border border-line p-5">
             <div className="flex items-center gap-3">
               <Skeleton className="size-10 rounded-full" />
               <div className="flex flex-1 flex-col gap-2">
@@ -1215,7 +1216,7 @@ export const docs: ComponentDoc[] = [
     slug: "card",
     name: "Card",
     group: "compostos",
-    summary: "Superfície com borda e rounded-xl, sem sombra. A versão interactive acende a borda no hover.",
+    summary: "Superfície com borda e rounded-card, sem sombra. A versão interactive acende a borda no hover.",
     file: "card.tsx",
     props: [
       { name: "interactive", type: "boolean", default: "false", description: "Borda em accent-line no hover e quando algo dentro tem foco." },
@@ -1470,15 +1471,13 @@ export const docs: ComponentDoc[] = [
     examples: [
       {
         title: "Em botão de ícone",
-        code: `<Tooltip>\n  <TooltipTrigger asChild>\n    <Button variant="ghost" size="sm" aria-label="Editar">...</Button>\n  </TooltipTrigger>\n  <TooltipContent>Editar projeto</TooltipContent>\n</Tooltip>`,
+        code: `<Tooltip>\n  <TooltipTrigger asChild>\n    <Button variant="ghost" size="sm" aria-label="Editar">\n      <Pencil aria-hidden="true" />\n    </Button>\n  </TooltipTrigger>\n  <TooltipContent>Editar projeto</TooltipContent>\n</Tooltip>`,
         render: () => (
           <>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button variant="ghost" size="sm" aria-label="Editar">
-                  <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
-                    <path d="M10.5 2.5l3 3L6 13H3v-3z" strokeLinejoin="round" />
-                  </svg>
+                  <Pencil aria-hidden="true" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Editar projeto</TooltipContent>

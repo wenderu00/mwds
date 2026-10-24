@@ -11,7 +11,7 @@ describe("Button", () => {
     render(<Button>Salvar</Button>);
     const button = screen.getByRole("button", { name: "Salvar" });
     expect(button).toHaveAttribute("type", "button");
-    expect(button).toHaveClass("bg-accent", "text-on-accent", "h-11");
+    expect(button).toHaveClass("bg-accent", "text-on-accent", "h-control");
   });
 
   it.each([
@@ -25,7 +25,7 @@ describe("Button", () => {
 
   it.each([
     ["sm", "h-9"],
-    ["md", "h-11"],
+    ["md", "h-control"],
     ["lg", "h-12"],
   ] as const)("renders the %s size", (size, expected) => {
     render(<Button size={size}>Ação</Button>);

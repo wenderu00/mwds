@@ -4,7 +4,7 @@ import { ThemeToggle } from "@/registry/marcio/ui/theme-toggle";
 import { docs, groups } from "./catalog";
 import { SiteCommand, type SiteCommandEntry } from "./site-command";
 
-export const container = "mx-auto max-w-[1200px] px-6";
+export const container = "mx-auto max-w-content px-6";
 
 const nav = [
   { href: "/", label: "fundação" },
@@ -60,7 +60,7 @@ const portugueseNames: Record<string, string[]> = {
 };
 
 const commandEntries: SiteCommandEntry[] = [
-  { href: "/", label: "Fundação: paleta, tipografia e contraste", group: "Páginas", keywords: ["tokens", "cores"] },
+  { href: "/", label: "Fundação: cor, tipografia, espaçamento, movimento e mais", group: "Páginas", keywords: ["tokens", "cores", "raio", "camadas", "z-index", "densidade", "ícones"] },
   { href: "/componentes", label: "Catálogo de componentes", group: "Páginas" },
   { href: "/exemplos", label: "Telas de exemplo", group: "Páginas" },
   { href: "/blocos", label: "Blocos", group: "Páginas", keywords: ["telas prontas", "templates"] },
@@ -83,11 +83,11 @@ export function SiteHeader() {
     <>
       <a
         href="#conteudo"
-        className="sr-only z-20 bg-accent px-4 py-3 font-semibold text-on-accent focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+        className="sr-only z-tooltip bg-accent px-4 py-3 font-semibold text-on-accent focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
       >
         Pular para o conteúdo
       </a>
-      <header className="sticky top-0 z-10 border-b border-line bg-ground">
+      <header className="sticky top-0 z-sticky border-b border-line bg-ground">
         <div className={`${container} flex flex-wrap items-center justify-between gap-4 py-3`}>
           <div className="flex items-center gap-6">
             <LogoBlock asChild>
@@ -99,7 +99,7 @@ export function SiteHeader() {
               <ul className="flex gap-5 font-mono text-mono-sm">
                 {nav.map((item) => (
                   <li key={item.href}>
-                    <NextLink href={item.href} className="text-ink-muted transition-colors duration-200 hover:text-accent-text">
+                    <NextLink href={item.href} className="text-ink-muted transition-colors duration-base hover:text-accent-text">
                       {item.label}
                     </NextLink>
                   </li>

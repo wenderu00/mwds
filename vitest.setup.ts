@@ -22,4 +22,5 @@ if (!("ResizeObserver" in globalThis)) {
 afterEach(() => {
   cleanup();
   document.documentElement.removeAttribute("data-theme");
+  document.documentElement.removeAttribute("data-density");
 });

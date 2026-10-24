@@ -19,7 +19,7 @@ export function BreadcrumbLink({ asChild = false, className, ...props }: Compone
   return (
     <Comp
       data-slot="breadcrumb-link"
-      className={cn("rounded-sm text-ink-muted underline-offset-4 transition-colors duration-200 hover:text-accent-text hover:underline", className)}
+      className={cn("rounded-mark text-ink-muted underline-offset-4 transition-colors duration-base hover:text-accent-text hover:underline", className)}
       {...props}
     />
   );

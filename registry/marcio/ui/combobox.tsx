@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, type ComponentProps, type ReactNode } from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/registry/marcio/lib/utils";
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/registry/marcio/ui/command";
 import { useFormField } from "@/registry/marcio/ui/form-field";
@@ -67,15 +68,13 @@ export function Combobox({
           disabled={disabled}
           {...field?.controlProps}
           className={cn(
-            "flex h-11 w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-md border border-line-control bg-ground px-3 text-left text-base text-ink transition-colors duration-200 ease-out hover:border-accent-line disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-danger-text data-[placeholder]:text-ink-muted",
+            "flex h-control w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-control border border-line-control bg-ground px-3 text-left text-base text-ink transition-colors duration-base ease-standard hover:border-accent-line disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-danger-text data-[placeholder]:text-ink-muted",
             className,
           )}
           {...props}
         >
           <span className="truncate">{selected ? selected.label : placeholder}</span>
-          <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-4 shrink-0 text-ink-muted">
-            <path d="M5 6l3-3 3 3M5 10l3 3 3-3" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <ChevronsUpDown aria-hidden="true" className="size-4 shrink-0 text-ink-muted" />
         </button>
       </PopoverTrigger>
       {name && <input type="hidden" name={name} value={value} />}
@@ -100,9 +99,7 @@ export function Combobox({
               >
                 <span className="truncate">{option.label}</span>
                 {option.value === value && (
-                  <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" className="ml-auto text-accent-text">
-                    <path d="M3.5 8.5l3 3 6-7" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  <Check aria-hidden="true" className="ml-auto text-accent-text" />
                 )}
               </CommandItem>
             ))}

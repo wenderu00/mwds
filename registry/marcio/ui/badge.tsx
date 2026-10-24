@@ -4,7 +4,7 @@ import type { ComponentProps } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
 
 export const badgeVariants = cva(
-  "inline-flex w-fit shrink-0 items-center gap-1.5 rounded-md border px-2 py-0.5 font-mono text-mono-xs font-medium whitespace-nowrap [&_svg]:size-3.5 [&_svg]:shrink-0",
+  "inline-flex w-fit shrink-0 items-center gap-1.5 rounded-control border px-2 py-0.5 font-mono text-mono-xs font-medium whitespace-nowrap [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       tone: {

@@ -1,5 +1,6 @@
 "use client";
 
+import { Folder, LayoutDashboard, Settings, Users } from "lucide-react";
 import { useState } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
 import {
@@ -197,24 +198,18 @@ export function CommandPaletteDemo() {
   );
 }
 
-const demoIcon = (path: string) => (
-  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d={path} />
-  </svg>
-);
-
 const shellNav = [
-  { id: "painel", label: "Painel", icon: demoIcon("M2.5 2.5h4.5v5h-4.5zM9 2.5h4.5v3H9zM9 7.5h4.5v6H9zM2.5 9.5h4.5v4h-4.5z") },
-  { id: "projetos", label: "Projetos", icon: demoIcon("M2 4.5h4.5l1.5 1.5H14v7.5H2z") },
-  { id: "equipe", label: "Equipe", icon: demoIcon("M6 7a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM1.5 14c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5M11 7a2 2 0 1 0 0-4M12.5 9.7c1.2.6 2 1.9 2 3.3") },
-  { id: "configuracoes", label: "Configurações", icon: demoIcon("M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4") },
+  { id: "painel", label: "Painel", icon: <LayoutDashboard aria-hidden="true" /> },
+  { id: "projetos", label: "Projetos", icon: <Folder aria-hidden="true" /> },
+  { id: "equipe", label: "Equipe", icon: <Users aria-hidden="true" /> },
+  { id: "configuracoes", label: "Configurações", icon: <Settings aria-hidden="true" /> },
 ];
 
 export function AppShellDemo({ theme }: { theme: string }) {
   const [active, setActive] = useState("painel");
   const current = shellNav.find((item) => item.id === active)!;
   return (
-    <div className="h-[440px] w-full overflow-hidden rounded-md border border-line">
+    <div className="h-[440px] w-full overflow-hidden rounded-control border border-line">
       <AppShell className="h-full min-h-0" mainId={`shell-main-${theme}`}>
         <AppShellSidebar className="h-full" brand={<LogoBlock size="sm">MW</LogoBlock>} footer={<span className="font-mono text-mono-xs text-ink-muted">v0.1</span>}>
           <AppShellNav aria-label={`Principal (${theme})`}>

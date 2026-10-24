@@ -88,7 +88,7 @@ export function CommandPalette({
           data-slot="command-palette"
           aria-describedby={undefined}
           className={cn(
-            "fixed top-[12vh] left-1/2 z-50 w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 overflow-hidden rounded-xl border border-line-strong bg-surface motion-safe:data-[state=open]:animate-mw-pop-in",
+            "fixed top-[12vh] left-1/2 z-dialog w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 overflow-hidden rounded-card border border-line-strong bg-surface motion-safe:data-[state=open]:animate-mw-pop-in",
             className,
           )}
         >
@@ -142,7 +142,7 @@ export function CommandPaletteTrigger({ label = "Buscar", className, ...props }:
       data-slot="command-palette-trigger"
       aria-keyshortcuts={isMac ? "Meta+K" : "Control+K"}
       className={cn(
-        "inline-flex h-9 cursor-pointer items-center gap-3 rounded-md border border-line-control bg-ground px-3 text-sm text-ink-muted transition-colors duration-200 hover:border-accent-line hover:text-ink",
+        "inline-flex h-9 cursor-pointer items-center gap-3 rounded-control border border-line-control bg-ground px-3 text-sm text-ink-muted transition-colors duration-base hover:border-accent-line hover:text-ink",
         className,
       )}
       {...props}
@@ -151,7 +151,7 @@ export function CommandPaletteTrigger({ label = "Buscar", className, ...props }:
         {">"}
       </span>
       <span>{label}</span>
-      <kbd className="ml-auto rounded-sm border border-line-strong px-1.5 font-mono text-mono-xs text-ink-muted">{isMac ? "⌘K" : "Ctrl K"}</kbd>
+      <kbd className="ml-auto rounded-mark border border-line-strong px-1.5 font-mono text-mono-xs text-ink-muted">{isMac ? "⌘K" : "Ctrl K"}</kbd>
     </button>
   );
 }

@@ -42,7 +42,7 @@ export default function ExamplesIndex() {
                 <CardHeader>
                   <Kicker className="text-mono-xs">{example.kicker}</Kicker>
                   <CardTitle>
-                    <NextLink href={example.href} className="after:absolute after:inset-0 after:rounded-xl">
+                    <NextLink href={example.href} className="after:absolute after:inset-0 after:rounded-card">
                       {example.title}
                     </NextLink>
                   </CardTitle>

@@ -27,8 +27,8 @@ export default function BlocksIndex() {
               <SectionTitle index={String(index + 1).padStart(2, "0")} as="h2" size="md">
                 {block.name}
               </SectionTitle>
-              <p className="max-w-[720px] text-ink-soft">{block.summary}</p>
-              <pre className="overflow-x-auto rounded-md border border-line bg-band p-4 font-mono text-mono-xs text-ink-soft">
+              <p className="max-w-measure text-ink-soft">{block.summary}</p>
+              <pre className="overflow-x-auto rounded-control border border-line bg-band p-4 font-mono text-mono-xs text-ink-soft">
                 <code>npx shadcn@latest add @marcio/{block.slug}</code>
               </pre>
               <div className="flex flex-wrap items-center gap-2">
@@ -41,7 +41,7 @@ export default function BlocksIndex() {
               </div>
               {preview && (
                 <>
-                  <div className="overflow-hidden rounded-xl border border-line">
+                  <div className="overflow-hidden rounded-card border border-line">
                     <iframe src={preview} title={`Prévia do bloco ${block.name}`} loading="lazy" className="block h-[560px] w-full bg-ground" />
                   </div>
                   <Button asChild variant="secondary" className="self-start">

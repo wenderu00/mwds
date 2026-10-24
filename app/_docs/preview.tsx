@@ -17,7 +17,7 @@ export function Preview({
   stacked?: boolean;
 }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-xl border border-line">
+    <div className="flex flex-col overflow-hidden rounded-card border border-line">
       <div className={cn("grid", !stacked && "md:grid-cols-2")}>
         {(["dark", "light"] as const).map((theme) => (
           <div

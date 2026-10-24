@@ -124,9 +124,15 @@ function ProfileForm() {
 
 function Preferences() {
   const theme = useTheme();
-  const [density, setDensity] = useState("normal");
+  const [density, setDensity] = useState(() => (typeof document === "undefined" ? "normal" : (document.documentElement.dataset.density ?? "normal")));
   const [timezone, setTimezone] = useState("America/Recife");
   const [notifications, setNotifications] = useState({ email: true, weekly: true, mentions: false });
+
+  function changeDensity(value: string) {
+    setDensity(value);
+    if (value === "normal") document.documentElement.removeAttribute("data-density");
+    else document.documentElement.setAttribute("data-density", value);
+  }
 
   function toggle(key: keyof typeof notifications, value: boolean) {
     setNotifications((current) => ({ ...current, [key]: value }));
@@ -148,8 +154,8 @@ function Preferences() {
               <RadioGroupOption value="light" label="Claro" />
             </RadioGroup>
           </FormField>
-          <FormField label="Densidade das tabelas">
-            <RadioGroup value={density} onValueChange={setDensity} orientation="horizontal" className="flex flex-wrap gap-6">
+          <FormField label="Densidade" description="Altura dos controles e espaço das linhas de tabela.">
+            <RadioGroup value={density} onValueChange={changeDensity} orientation="horizontal" className="flex flex-wrap gap-6">
               <RadioGroupOption value="compacta" label="Compacta" />
               <RadioGroupOption value="normal" label="Normal" />
               <RadioGroupOption value="ampla" label="Ampla" />

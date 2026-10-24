@@ -54,7 +54,7 @@ export function ThemeToggle({ labels, label = "Tema", className, ...props }: The
       role="radiogroup"
       aria-label={label}
       data-slot="theme-toggle"
-      className={cn("inline-flex rounded-md border border-line-control p-1 font-mono text-mono-xs", className)}
+      className={cn("inline-flex rounded-control border border-line-control p-1 font-mono text-mono-xs", className)}
       {...props}
     >
       {options.map((option) => (
@@ -75,7 +75,7 @@ export function ThemeToggle({ labels, label = "Tema", className, ...props }: The
             buttons?.[options.indexOf(next)]?.focus();
           }}
           className={cn(
-            "cursor-pointer rounded-sm px-3 py-1.5 text-ink-muted transition-colors duration-200 hover:text-ink",
+            "cursor-pointer rounded-mark px-3 py-1.5 text-ink-muted transition-colors duration-base hover:text-ink",
             choice === option && "bg-accent text-on-accent hover:text-on-accent",
           )}
         >

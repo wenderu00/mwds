@@ -3,6 +3,7 @@
 import { cva } from "class-variance-authority";
 import { Toast as ToastPrimitive } from "radix-ui";
 import { useSyncExternalStore, type ComponentProps, type ReactNode } from "react";
+import { X } from "lucide-react";
 import { cn } from "@/registry/marcio/lib/utils";
 
 export type ToastTone = "neutral" | "success" | "danger" | "warning" | "info";
@@ -56,7 +57,7 @@ export function clearToasts() {
 }
 
 const toastVariants = cva(
-  "relative grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-3 gap-y-1 rounded-md border border-line-strong border-l-4 bg-surface py-3 pr-3 pl-4 text-ink motion-safe:data-[state=open]:animate-mw-slide-in data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x) data-[swipe=end]:translate-x-(--radix-toast-swipe-end-x)",
+  "relative grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-3 gap-y-1 rounded-control border border-line-strong border-l-4 bg-surface py-3 pr-3 pl-4 text-ink motion-safe:data-[state=open]:animate-mw-slide-in data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x) data-[swipe=end]:translate-x-(--radix-toast-swipe-end-x)",
   {
     variants: {
       tone: {
@@ -98,11 +99,9 @@ export function Toaster({ closeLabel = "Fechar", label = "Notificações", durat
           <ToastPrimitive.Title className="text-base font-semibold">{item.title}</ToastPrimitive.Title>
           <ToastPrimitive.Close
             aria-label={closeLabel}
-            className="row-span-2 inline-flex size-8 cursor-pointer items-center justify-center rounded-md text-ink-muted transition-colors duration-200 hover:bg-band hover:text-ink"
+            className="row-span-2 inline-flex size-8 cursor-pointer items-center justify-center rounded-control text-ink-muted transition-colors duration-base hover:bg-band hover:text-ink"
           >
-            <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-4">
-              <path d="M4 4l8 8M12 4l-8 8" strokeLinecap="round" />
-            </svg>
+            <X aria-hidden="true" className="size-4" />
           </ToastPrimitive.Close>
           {item.description && (
             <ToastPrimitive.Description className="text-sm text-ink-soft">{item.description}</ToastPrimitive.Description>
@@ -111,7 +110,7 @@ export function Toaster({ closeLabel = "Fechar", label = "Notificações", durat
             <ToastPrimitive.Action
               altText={item.action.altText}
               onClick={item.action.onClick}
-              className="col-start-1 mt-1 inline-flex h-8 w-fit cursor-pointer items-center rounded-md border border-line-control px-3 text-sm font-medium text-ink transition-colors duration-200 hover:border-accent-line hover:text-accent-text"
+              className="col-start-1 mt-1 inline-flex h-8 w-fit cursor-pointer items-center rounded-control border border-line-control px-3 text-sm font-medium text-ink transition-colors duration-base hover:border-accent-line hover:text-accent-text"
             >
               {item.action.label}
             </ToastPrimitive.Action>
@@ -121,7 +120,7 @@ export function Toaster({ closeLabel = "Fechar", label = "Notificações", durat
       <ToastPrimitive.Viewport
         data-slot="toast-viewport"
         className={cn(
-          "fixed right-0 bottom-0 z-[60] m-0 flex w-full max-w-sm list-none flex-col gap-2 p-4 outline-none",
+          "fixed right-0 bottom-0 z-toast m-0 flex w-full max-w-sm list-none flex-col gap-2 p-4 outline-none",
           className,
         )}
         {...props}

@@ -150,6 +150,20 @@ describe("settings block", () => {
     expect(document.documentElement).toHaveAttribute("data-theme", "light");
   });
 
+  it("applies the chosen density to the whole document", async () => {
+    const user = userEvent.setup();
+    withToaster(<SettingsPage />);
+    await user.click(screen.getByRole("tab", { name: "preferências" }));
+    const densityGroup = screen.getByRole("radiogroup", { name: "Densidade" });
+    await user.click(within(densityGroup).getByRole("radio", { name: "Compacta" }));
+    expect(within(densityGroup).getByRole("radio", { name: "Compacta" })).toBeChecked();
+    expect(document.documentElement).toHaveAttribute("data-density", "compacta");
+    await user.click(within(densityGroup).getByRole("radio", { name: "Ampla" }));
+    expect(document.documentElement).toHaveAttribute("data-density", "ampla");
+    await user.click(within(densityGroup).getByRole("radio", { name: "Normal" }));
+    expect(document.documentElement).not.toHaveAttribute("data-density");
+  });
+
   it("confirms account deletion in a dialog", async () => {
     const user = userEvent.setup();
     withToaster(<SettingsPage />);

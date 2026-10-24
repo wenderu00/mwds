@@ -26,7 +26,7 @@ export function TabsTrigger({ className, ...props }: ComponentProps<typeof TabsP
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        "relative inline-flex h-11 shrink-0 cursor-pointer items-center gap-2 border-b-2 border-transparent px-3 font-mono text-mono-sm whitespace-nowrap text-ink-muted transition-colors duration-200 ease-out hover:text-ink disabled:cursor-not-allowed disabled:opacity-50 data-[state=active]:border-accent-line data-[state=active]:text-ink focus-visible:outline-offset-[-3px]",
+        "relative inline-flex h-control shrink-0 cursor-pointer items-center gap-2 border-b-2 border-transparent px-3 font-mono text-mono-sm whitespace-nowrap text-ink-muted transition-colors duration-base ease-standard hover:text-ink disabled:cursor-not-allowed disabled:opacity-50 data-[state=active]:border-accent-line data-[state=active]:text-ink focus-visible:outline-offset-[-3px]",
         className,
       )}
       {...props}

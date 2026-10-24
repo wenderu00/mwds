@@ -43,7 +43,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
                         href={`/componentes/${item.slug}`}
                         aria-current={item.slug === doc.slug ? "page" : undefined}
                         className={cn(
-                          "font-mono text-mono-sm text-ink-soft transition-colors duration-200 hover:text-accent-text",
+                          "font-mono text-mono-sm text-ink-soft transition-colors duration-base hover:text-accent-text",
                           item.slug === doc.slug && "text-accent-text",
                         )}
                       >
@@ -61,7 +61,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
             <SectionTitle as="h1" kicker={doc.group}>
               {doc.name}
             </SectionTitle>
-            <p className="max-w-[680px] text-lead text-ink-soft">{doc.summary}</p>
+            <p className="max-w-measure text-lead text-ink-soft">{doc.summary}</p>
             <CodeComment>{`registry/marcio/ui/${doc.file}`}</CodeComment>
           </div>
 
@@ -83,7 +83,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
               Props
             </SectionTitle>
             <CodeComment>além destas, todas as props nativas do elemento e ref são repassadas</CodeComment>
-            <div className="overflow-x-auto rounded-xl border border-line">
+            <div className="overflow-x-auto rounded-card border border-line">
               <table className="w-full min-w-[640px] border-collapse text-left">
                 <thead className="bg-surface font-mono text-mono-xs text-ink-muted">
                   <tr>

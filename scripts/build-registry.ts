@@ -49,7 +49,7 @@ export function tokensCss(): { theme: Record<string, string>; css: CssTree } {
   const theme: Record<string, string> = {};
   for (const [prop, value] of Object.entries(themeBlock)) {
     if (typeof value !== "string") throw new Error(`@theme inline só pode ter declarações: ${prop}`);
-    if (!paletteReset.has(prop)) theme[prop.replace(/^--/, "")] = value;
+    if (!paletteReset.has(prop) && !prop.endsWith("-*")) theme[prop.replace(/^--/, "")] = value;
   }
   const base = tree["@layer base"];
   if (typeof base !== "object") throw new Error("tokens.css precisa de @layer base");

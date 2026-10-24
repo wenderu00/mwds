@@ -5,7 +5,7 @@ import { cn } from "@/registry/marcio/lib/utils";
 import { Spinner } from "@/registry/marcio/ui/spinner";
 
 export const buttonVariants = cva(
-  "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md border font-sans whitespace-nowrap no-underline transition-colors duration-200 ease-out disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0",
+  "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-control border font-sans whitespace-nowrap no-underline transition-colors duration-base ease-standard disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -17,7 +17,7 @@ export const buttonVariants = cva(
       },
       size: {
         sm: "h-9 px-3 text-sm",
-        md: "h-11 px-5 text-base",
+        md: "h-control px-5 text-base",
         lg: "h-12 px-6 text-base",
       },
     },

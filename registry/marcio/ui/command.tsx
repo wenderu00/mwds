@@ -19,7 +19,7 @@ export function Command({ className, filter = commandFilter, ...props }: Compone
     <CommandPrimitive
       data-slot="command"
       filter={filter}
-      className={cn("flex h-full w-full flex-col overflow-hidden rounded-md bg-surface text-ink", className)}
+      className={cn("flex h-full w-full flex-col overflow-hidden rounded-control bg-surface text-ink", className)}
       {...props}
     />
   );
@@ -33,7 +33,7 @@ export function CommandInput({ className, ...props }: ComponentProps<typeof Comm
       </span>
       <CommandPrimitive.Input
         data-slot="command-input"
-        className={cn("h-11 w-full bg-transparent text-base text-ink outline-none placeholder:text-ink-muted disabled:cursor-not-allowed disabled:opacity-50", className)}
+        className={cn("h-control w-full bg-transparent text-base text-ink outline-none placeholder:text-ink-muted disabled:cursor-not-allowed disabled:opacity-50", className)}
         {...props}
       />
     </div>
@@ -82,7 +82,7 @@ export function CommandItem({ className, ...props }: ComponentProps<typeof Comma
     <CommandPrimitive.Item
       data-slot="command-item"
       className={cn(
-        "relative flex min-h-9 cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-base text-ink outline-none select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 data-[selected=true]:bg-accent-soft [&_svg]:size-4 [&_svg]:shrink-0",
+        "relative flex min-h-9 cursor-pointer items-center gap-2 rounded-mark px-2 py-1.5 text-base text-ink outline-none select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 data-[selected=true]:bg-accent-soft [&_svg]:size-4 [&_svg]:shrink-0",
         className,
       )}
       {...props}

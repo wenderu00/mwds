@@ -1,5 +1,6 @@
 "use client";
 
+import { CircleAlert } from "lucide-react";
 import { Slot } from "radix-ui";
 import { createContext, useContext, useId, type ComponentProps, type ReactElement, type ReactNode } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
@@ -85,10 +86,7 @@ export function FormField({
       )}
       {error && (
         <p id={errorId} role="alert" className={cn("flex items-center gap-1.5 text-sm text-danger-text", horizontal && "basis-full")}>
-          <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-3.5 shrink-0">
-            <circle cx="8" cy="8" r="6.5" />
-            <path d="M8 4.5v4M8 11v.5" strokeLinecap="round" />
-          </svg>
+          <CircleAlert aria-hidden="true" className="size-4 shrink-0" />
           {error}
         </p>
       )}

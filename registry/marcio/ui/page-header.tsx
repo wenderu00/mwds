@@ -23,7 +23,7 @@ export function PageHeader({ title, kicker, description, actions, breadcrumb, cl
             <p className="font-mono text-mono-xs font-medium tracking-kicker text-accent-text uppercase">{kicker}</p>
           )}
           <h1 className="font-display text-display-md font-extrabold text-ink">{title}</h1>
-          {description && <p className="max-w-[680px] text-base text-ink-soft">{description}</p>}
+          {description && <p className="max-w-measure text-base text-ink-soft">{description}</p>}
         </div>
         {actions && <div className="flex flex-wrap items-center gap-3">{actions}</div>}
       </div>
