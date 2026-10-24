@@ -9,6 +9,7 @@ import { Preview } from "../_docs/preview";
 import { publishedRegistryUrl } from "../_docs/registry-url";
 import { FoundationSection, SpecTable } from "../_docs/section";
 import { container, SiteHeader } from "../_docs/site-header";
+import { SiteFooter } from "../_docs/site-footer";
 
 export const metadata: Metadata = { title: "Primeiros passos · @mw/ui" };
 
@@ -309,6 +310,7 @@ export default function GettingStartedPage() {
           </ol>
         </FoundationSection>
       </main>
+      <SiteFooter />
     </div>
   );
 }

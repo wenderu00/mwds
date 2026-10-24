@@ -5,6 +5,7 @@ import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { Kicker } from "@/registry/marcio/ui/kicker";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { container, SiteHeader } from "../_docs/site-header";
+import { SiteFooter } from "../_docs/site-footer";
 
 export const metadata: Metadata = { title: "Exemplos · @mw/ui" };
 
@@ -54,6 +55,7 @@ export default function ExamplesIndex() {
           ))}
         </ul>
       </main>
+      <SiteFooter />
     </div>
   );
 }

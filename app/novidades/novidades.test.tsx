@@ -21,10 +21,27 @@ describe("página novidades", () => {
     expect(nav.getAllByRole("link")).toHaveLength(releases.length);
   });
 
+  it("resume as versões numa tabela com data, número de mudanças e quebra", () => {
+    render(<ChangelogPage />);
+    const table = screen.getByRole("table", { name: "Resumo das versões" });
+    const rows = within(table).getAllByRole("row");
+    expect(rows).toHaveLength(releases.length + 1);
+    const breaking = rows.find((row) => row.textContent?.startsWith("0.4.0"))!;
+    expect(breaking).toHaveTextContent("sim");
+  });
+
+  it("lista as mudanças de cada versão com tipo e componente", () => {
+    render(<ChangelogPage />);
+    const table = screen.getByRole("table", { name: "Mudanças da versão 0.8.0" });
+    const navbar = within(table).getByRole("row", { name: /^novo Navbar/ });
+    expect(navbar).toHaveTextContent("Navbar: marca");
+    expect(within(table).getByRole("row", { name: /bloco landing/ })).toBeInTheDocument();
+  });
+
   it("destaca quebras de compatibilidade e mostra como migrar", () => {
     const { container } = render(<ChangelogPage />);
     const section = container.querySelector<HTMLElement>("section#v0-4-0")!;
-    expect(within(section).getByText("quebra compatibilidade")).toBeInTheDocument();
+    expect(within(section).getAllByText("quebra compatibilidade").length).toBeGreaterThan(1);
     expect(within(section).getByRole("heading", { name: "// como migrar" })).toBeInTheDocument();
     expect(within(section).getByText(/npx shadcn@latest add @marcio\/stat-card/)).toBeInTheDocument();
     expect(within(screen.getByRole("navigation", { name: "Versões" })).getByRole("link", { name: /0\.4\.0.*quebra/ })).toBeInTheDocument();

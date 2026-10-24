@@ -23,6 +23,7 @@ import { SectionTitle } from "@/registry/marcio/ui/section-title";
 import { Preview } from "../_docs/preview";
 import { FoundationSection, SpecTable } from "../_docs/section";
 import { container, SiteHeader } from "../_docs/site-header";
+import { SiteFooter } from "../_docs/site-footer";
 
 export const metadata: Metadata = { title: "Escrita · @mw/ui" };
 
@@ -332,6 +333,7 @@ export default function WritingPage() {
           </div>
         </FoundationSection>
       </main>
+      <SiteFooter />
     </div>
   );
 }

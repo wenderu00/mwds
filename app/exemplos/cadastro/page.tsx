@@ -5,6 +5,7 @@ import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { DotGrid } from "@/registry/marcio/ui/dot-grid";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { container, SiteHeader } from "../../_docs/site-header";
+import { SiteFooter } from "../../_docs/site-footer";
 import { SignupForm } from "./signup-form";
 
 export const metadata: Metadata = { title: "Cadastro · @mw/ui" };
@@ -41,6 +42,7 @@ export default function SignupExample() {
           <SignupForm />
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

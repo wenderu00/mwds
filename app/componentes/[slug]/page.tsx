@@ -10,6 +10,7 @@ import { installInfo } from "../../_docs/install";
 import { StatusBadge } from "../../_docs/status-badge";
 import { Preview } from "../../_docs/preview";
 import { container, SiteHeader } from "../../_docs/site-header";
+import { SiteFooter } from "../../_docs/site-footer";
 
 type Params = { slug: string };
 
@@ -206,6 +207,7 @@ export default async function ComponentPage({ params }: { params: Promise<Params
           </section>
         </main>
       </div>
+      <SiteFooter />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { container, SiteHeader } from "../../_docs/site-header";
+import { SiteFooter } from "../../_docs/site-footer";
 import { ProjectsView } from "./projects-view";
 
 export const metadata: Metadata = { title: "Listagem de projetos · @mw/ui" };
@@ -11,6 +12,7 @@ export default function ListingExample() {
       <main id="conteudo" className={`${container} py-12`}>
         <ProjectsView />
       </main>
+      <SiteFooter />
     </div>
   );
 }

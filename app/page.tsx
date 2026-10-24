@@ -1,12 +1,11 @@
 import NextLink from "next/link";
 import { Button } from "@/registry/marcio/ui/button";
-import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { DotGrid } from "@/registry/marcio/ui/dot-grid";
 import { Kicker } from "@/registry/marcio/ui/kicker";
 import { TypingText } from "@/registry/marcio/ui/typing-text";
 import contrastResults from "./_data/contrast.json";
-import { docs } from "./_docs/catalog";
 import { container, SiteHeader } from "./_docs/site-header";
+import { SiteFooter } from "./_docs/site-footer";
 import pkg from "@/package.json";
 import { ChartsSection } from "./_fundacao/charts";
 import { ContrastSection } from "./_fundacao/contrast";
@@ -91,11 +90,7 @@ export default function Home() {
         <ContrastSection />
       </main>
 
-      <footer className="border-t border-line bg-band">
-        <div className={`${container} py-10`}>
-          <CodeComment>{`${docs.length} componentes documentados`}</CodeComment>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
