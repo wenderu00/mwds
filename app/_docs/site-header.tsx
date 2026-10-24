@@ -14,6 +14,7 @@ const nav = [
   { href: "/componentes", label: "componentes" },
   { href: "/exemplos", label: "exemplos" },
   { href: "/blocos", label: "blocos" },
+  { href: "/novidades", label: "novidades" },
 ];
 
 const groupTitle = Object.fromEntries(groups.map((group) => [group.id, group.title]));
@@ -71,6 +72,7 @@ const commandEntries: SiteCommandEntry[] = [
   { href: "/componentes", label: "Catálogo de componentes", group: "Páginas" },
   { href: "/exemplos", label: "Telas de exemplo", group: "Páginas" },
   { href: "/blocos", label: "Blocos", group: "Páginas", keywords: ["telas prontas", "templates"] },
+  { href: "/novidades", label: "Novidades: o que mudou em cada versão", group: "Páginas", keywords: ["changelog", "versão", "migração", "atualizar"] },
   { href: "/login", label: "Bloco: Login", group: "Blocos", keywords: ["entrar", "acesso"] },
   { href: "/dashboard", label: "Bloco: Dashboard", group: "Blocos", keywords: ["painel", "métricas"] },
   { href: "/configuracoes", label: "Bloco: Configurações", group: "Blocos", keywords: ["preferências", "perfil"] },

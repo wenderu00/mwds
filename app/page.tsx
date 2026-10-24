@@ -7,6 +7,7 @@ import { TypingText } from "@/registry/marcio/ui/typing-text";
 import contrastResults from "./_data/contrast.json";
 import { docs } from "./_docs/catalog";
 import { container, SiteHeader } from "./_docs/site-header";
+import pkg from "@/package.json";
 import { ChartsSection } from "./_fundacao/charts";
 import { ContrastSection } from "./_fundacao/contrast";
 import { DensitySection } from "./_fundacao/density";
@@ -47,7 +48,7 @@ export default function Home() {
       <main id="conteudo">
         <section className={`${container} relative isolate flex flex-col gap-6 pt-20 pb-16`}>
           <DotGrid animated />
-          <Kicker>design system · fundação</Kicker>
+          <Kicker>design system · fundação · v{pkg.version}</Kicker>
           <h1 className="font-display text-display-xl font-extrabold">Tokens e fundação</h1>
           <p className="max-w-measure text-lead text-ink-soft">
             Cor, tipografia, espaçamento, raio, elevação, movimento, camadas, layout, ícones, densidade e gráficos do @mw/ui, nos temas escuro e claro. Tudo nesta página vem de

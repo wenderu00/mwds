@@ -11,6 +11,7 @@ A fonte da verdade da identidade é o portfólio em [wenderu00.github.io](https:
 - [Itens do registry](#itens-do-registry)
 - [Desenvolver o DS](#desenvolver-o-ds)
 - [Publicar o registry](#publicar-o-registry)
+- [Versões](#versões)
 - [Decisões](#decisões)
 
 ## Instalar num projeto novo
@@ -168,6 +169,12 @@ BASE_PATH=/mwds REGISTRY_URL=https://wenderu00.github.io/mwds npm run build
 O site sai em `out/`. Para publicar em outro host estático, ajuste as duas variáveis (sem `BASE_PATH` se o site ficar na raiz do domínio) e publique a pasta `out/`.
 
 O `registry.json` versionado usa `http://localhost:3000`. Isso não importa para quem instala: os arquivos servidos em `/r` são gerados no build com a `REGISTRY_URL` definida.
+
+## Versões
+
+O @mw/ui segue a semver, com uma versão para tokens, componentes e blocos juntos. Antes do 1.0, mudança que quebra compatibilidade sobe a versão do meio e sempre traz como migrar (ADR 0016). O histórico está no [CHANGELOG.md](CHANGELOG.md) e na página [Novidades](https://wenderu00.github.io/mwds/novidades/).
+
+Todo PR que muda o registry acrescenta a sua entrada no topo do CHANGELOG e sobe a versão no `package.json`; um teste garante que os dois concordam.
 
 ## Decisões
 
