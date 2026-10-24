@@ -24,11 +24,18 @@ describe("página escrita", () => {
     const { container } = render(<WritingPage />);
     const formats = within(container.querySelector<HTMLElement>("section#formatos")!);
     expect(formats.getByText("R$ 1.234,56")).toBeInTheDocument();
-    expect(formats.getByText("1.234,5")).toBeInTheDocument();
+    expect(formats.getByText("1.234,56")).toBeInTheDocument();
     expect(formats.getByText("24/10/2026")).toBeInTheDocument();
     expect(formats.getByText("12/10 a 16/10/2026")).toBeInTheDocument();
     expect(formats.getByText("14h30")).toBeInTheDocument();
     expect(formats.getByText("74%")).toBeInTheDocument();
+  });
+
+  it("tem a regra de navegação e rótulos em minúsculas", () => {
+    const { container } = render(<WritingPage />);
+    const kicker = within(container.querySelector<HTMLElement>("section#kicker")!);
+    expect(kicker.getByText("navegação e rótulos")).toBeInTheDocument();
+    expect(kicker.getByRole("row", { name: /^componentes Componentes/ })).toBeInTheDocument();
   });
 
   it("não usa travessão nem meia-risca", () => {
