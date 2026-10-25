@@ -4,6 +4,12 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.14.0] - 2026-10-25
+
+### Mudou
+
+- Navbar: a prop `collapseBelow` (`"md"` ou `"lg"`, padrão `"md"`) escolhe abaixo de que largura os links vão para o painel. Com `"lg"`, cabeçalhos com links e várias ações não estouram no tablet.
+
 ## [0.13.0] - 2026-10-24
 
 ### Novo

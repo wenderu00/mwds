@@ -4,14 +4,14 @@ import { FoundationSection, SpecTable, ThemePair } from "../_docs/section";
 const breakpoints = [
   ["sm", "640px", "formulários passam a duas colunas"],
   ["md", "768px", "exemplos lado a lado, tabelas completas; a Navbar mostra os links"],
-  ["lg", "1024px", "AppShell com barra lateral fixa, pares de painéis em duas colunas"],
+  ["lg", "1024px", "AppShell com barra lateral fixa, pares de painéis em duas colunas; a Navbar com collapseBelow=\"lg\" mostra os links"],
   ["xl", "1280px", "o menu deste site sai do painel e vai para o cabeçalho; o conteúdo para em 1200px"],
   ["2xl", "1536px", "sem mudança de layout"],
 ];
 
 const cutoffs = [
   ["AppShell", "abaixo de lg (1024px)", "a barra lateral vira Sheet, aberta pelo botão de menu no cabeçalho"],
-  ["Navbar", "abaixo de md (768px)", "os links vão para um Sheet aberto pelo botão de menu"],
+  ["Navbar", "abaixo de md (768px), ou de lg com collapseBelow=\"lg\"", "os links vão para um Sheet aberto pelo botão de menu"],
   ["Cabeçalho deste site", "abaixo de xl (1280px)", "a navegação e o ThemeToggle vão para o menu"],
 ];
 
