@@ -160,7 +160,7 @@ export function DataTable<T>({
                       )}
                     >
                       {column.header}
-                      <Icon aria-hidden="true" className={cn("size-3.5", !active && "opacity-60")} />
+                      <Icon aria-hidden="true" className={cn("size-4", !active && "opacity-60")} />
                     </button>
                   ) : (
                     column.header

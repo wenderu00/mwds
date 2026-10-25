@@ -23,7 +23,7 @@ export function IconsSection() {
           <p>A biblioteca padrão é lucide-react, com traço 2 e cantos arredondados. A cor vem de currentColor, então o ícone segue o texto ao redor.</p>
           <p>
             Ícone decorativo leva aria-hidden. Botão só de ícone precisa de aria-label e, de preferência, de um Tooltip com o mesmo texto. A única exceção de tamanho é a marca
-            do Checkbox, com 14px dentro da caixa de 20px.
+            do Checkbox, com 14px dentro da caixa de 20px. Outro tamanho é barrado pelo lint (mw/icon-size).
           </p>
         </>
       }

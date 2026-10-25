@@ -44,6 +44,7 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 │   └── check-colors.ts
 ├── eslint-rules/
 │   ├── class-context.js           # detecta strings de classe (className, cn, cva, variáveis *class*)
+│   ├── icon-size.js               # ícones do lucide-react fora de size-4, size-5 e size-6 (ADR 0015)
 │   ├── no-raw-color.js
 │   └── no-raw-token.js            # raio, duração, easing, camada, sombra e medidas soltas (ADR 0015)
 ├── docs/
@@ -63,7 +64,7 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 | Script | Faz |
 |---|---|
 | `dev` / `build` | Site de documentação. `build` gera o registry.json e roda `shadcn build` antes do `next build` |
-| `lint` | ESLint com as regras `no-raw-color` e `no-raw-token`, e `check-colors` |
+| `lint` | ESLint com as regras `no-raw-color`, `no-raw-token` e `icon-size`, e `check-colors` |
 | `test` | `contrast` e depois `vitest run` |
 | `contrast` | Valida os pares de contraste nos dois temas |
 | `registry:build` | `shadcn build` |
