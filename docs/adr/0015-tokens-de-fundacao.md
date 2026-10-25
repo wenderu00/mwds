@@ -31,6 +31,7 @@ Até aqui só cor, tipografia e animação eram tokens. Raio, duração, z-index
   - A biblioteca é `lucide-react`, com traço 2.
   - Tamanhos: `size-4`, `size-5` e `size-6`.
   - A exceção é a marca do Checkbox, com 14px.
+  - A regra `mw/icon-size` reprova, num componente importado de `lucide-react`, classe `size-*`, `w-*` ou `h-*` fora da escala e as props `size`, `width` e `height`. A exceção do Checkbox é a opção `allow: ["size-3.5"]`, ligada no `eslint.config.mjs` só para `registry/marcio/ui/checkbox.tsx`.
 - **Densidade.** O atributo `data-density="compacta"` ou `"ampla"`, em qualquer ancestral, muda `h-control` (36, 44 ou 48px) e `py-cell-y` (8, 12 ou 16px). Sem atributo, vale a densidade normal.
 - **Lint.** A regra `mw/no-raw-token` reprova raio, duração, easing, z-index e sombra fora dos nomes acima, além de espaçamento, `max-w` e `size` arbitrários em px ou rem.
 - **Testes.**

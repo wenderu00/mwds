@@ -4,6 +4,21 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.15.0] - 2026-10-25
+
+### Novo
+
+- Regra de lint `mw/icon-size`: um ícone do `lucide-react` só aceita `size-4`, `size-5` ou `size-6`. Ela reprova `size-12`, `size-3.5`, `w-8 h-8` e as props `size`, `width` e `height`. A única exceção é a marca do Checkbox, com 14px ([ADR 0015](docs/adr/0015-tokens-de-fundacao.md)).
+
+### Mudou
+
+- DataTable: o ícone de ordenação passa de 14 para 16px.
+- FileUpload: o ícone de envio concluído passa de 14 para 16px.
+
+### Corrigido
+
+- MultiSelect: a marca da opção escolhida saía com 16px dentro de uma caixa de 16px com borda e vazava. A caixa passa a 20px, como a do Checkbox, e a marca fica em 16px.
+
 ## [0.14.0] - 2026-10-25
 
 ### Mudou

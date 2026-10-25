@@ -14,6 +14,17 @@ export function isClassContext(node, attributes) {
   return false;
 }
 
+export function utilityOf(className) {
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < className.length; i++) {
+    if (className[i] === "[") depth++;
+    if (className[i] === "]") depth--;
+    if (className[i] === ":" && depth === 0) start = i + 1;
+  }
+  return className.slice(start).replace(/^!|!$/g, "");
+}
+
 export function classRule({ description, message, inspect, attributes }) {
   return {
     meta: { type: "problem", docs: { description }, schema: [], messages: { raw: message } },

@@ -202,7 +202,7 @@ export function FileUpload({
                   <span className="min-w-0 flex-1 truncate text-ink">{file.name}</span>
                   {status?.done && (
                     <span className="flex shrink-0 items-center gap-1 font-mono text-mono-xs text-success-text">
-                      <Check aria-hidden="true" className="size-3.5" />
+                      <Check aria-hidden="true" className="size-4" />
                       {doneLabel}
                     </span>
                   )}

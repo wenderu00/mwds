@@ -99,7 +99,7 @@ export function MultiSelect({
                 }}
                 className="inline-flex cursor-pointer items-center rounded-mark p-0.5 text-ink-muted transition-colors duration-base hover:bg-line hover:text-ink disabled:cursor-not-allowed"
               >
-                <X aria-hidden="true" className="size-3.5" />
+                <X aria-hidden="true" className="size-4" />
               </button>
             </Badge>
           ))}
@@ -156,11 +156,11 @@ export function MultiSelect({
                   <span
                     aria-hidden="true"
                     className={cn(
-                      "flex size-4 shrink-0 items-center justify-center rounded-mark border",
+                      "flex size-5 shrink-0 items-center justify-center rounded-mark border",
                       checked ? "border-accent-edge bg-accent text-on-accent" : "border-line-control",
                     )}
                   >
-                    {checked && <Check className="size-3" strokeWidth={3} />}
+                    {checked && <Check className="size-4" strokeWidth={3} />}
                   </span>
                   <span className="truncate">{option.label}</span>
                 </CommandItem>
