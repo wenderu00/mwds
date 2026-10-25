@@ -18,6 +18,6 @@ for (const slug of slugs) {
     await expectNoAxeViolations(page);
     // As prévias de #exemplos já mostram os dois temas lado a lado; o projeto troca o tema da página.
     const examples = page.locator("section", { has: page.locator("#exemplos") });
-    await expect(examples).toHaveScreenshot(`${slug}.png`);
+    await expect(examples).toHaveScreenshot(`${slug}.png`, { stylePath: "e2e/captura-de-secao.css" });
   });
 }

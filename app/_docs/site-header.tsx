@@ -98,7 +98,7 @@ export function SiteHeader() {
       >
         Pular para o conteúdo
       </a>
-      <header className="sticky top-0 z-sticky border-b border-line bg-ground">
+      <header data-site-header className="sticky top-0 z-sticky border-b border-line bg-ground">
         <div className={`${container} flex items-center justify-between gap-4 py-3`}>
           <div className="flex items-center gap-6">
             <LogoBlock asChild>

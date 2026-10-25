@@ -3061,6 +3061,12 @@ export const docs: ComponentDoc[] = [
       { name: "menuFooter", type: "ReactNode", description: "Conteúdo extra no fim do painel do celular." },
       { name: "label / menuLabel", type: "string", default: '"Principal" / "Menu"', description: "Nome da navegação e do botão do painel." },
       { name: "sticky", type: "boolean", default: "true", description: "Fixa no topo, na camada z-sticky." },
+      {
+        name: "collapseBelow",
+        type: '"md" | "lg"',
+        default: '"md"',
+        description: "Largura abaixo da qual os links vão para o painel. Use lg quando links e ações não cabem juntos no tablet.",
+      },
     ],
     examples: [
       {
@@ -3085,6 +3091,34 @@ export const docs: ComponentDoc[] = [
               { href: "#o-que-faco", label: "02 O que faço" },
               { href: "#trabalhos", label: "03 Trabalhos" },
             ]}
+          />
+        ),
+      },
+      {
+        title: "Links e ações recolhidos no tablet",
+        className: "w-full",
+        stacked: true,
+        code: `<Navbar\n  collapseBelow="lg"\n  brand={<LogoBlock asChild size="sm"><a href="#topo" aria-label="XPomodoro, início">XP</a></LogoBlock>}\n  links={[\n    { href: "#sessao", label: "sessão", current: true },\n    { href: "#manual", label: "manual xp" },\n    { href: "#filosofia", label: "a filosofia" },\n  ]}\n  actions={<Badge tone="accent">12 XP</Badge>}\n/>`,
+        render: (theme) => (
+          <Navbar
+            sticky={false}
+            collapseBelow="lg"
+            className="w-full"
+            label={`Navegação com ações, exemplo no tema ${theme === "dark" ? "escuro" : "claro"}`}
+            menuLabel={`Menu, exemplo no tema ${theme === "dark" ? "escuro" : "claro"}`}
+            brand={
+              <LogoBlock asChild size="sm">
+                <a href="#topo" aria-label="XPomodoro, início">
+                  XP
+                </a>
+              </LogoBlock>
+            }
+            links={[
+              { href: "#sessao", label: "sessão", current: true },
+              { href: "#manual", label: "manual xp" },
+              { href: "#filosofia", label: "a filosofia" },
+            ]}
+            actions={<Badge tone="accent">12 XP</Badge>}
           />
         ),
       },
