@@ -2167,6 +2167,30 @@
       "docs": "Envolva a aplicação com <TooltipProvider> no layout raiz."
     },
     {
+      "name": "tour",
+      "type": "registry:ui",
+      "title": "Tour",
+      "description": "Tour de onboarding em passos, com recorte em volta do alvo, balão ancorado e os botões Pular, Voltar e Avançar.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/popover.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/tour.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "typing-text",
       "type": "registry:ui",
       "title": "TypingText",
@@ -2554,6 +2578,7 @@
         "http://localhost:3000/r/toast.json",
         "http://localhost:3000/r/toggle-group.json",
         "http://localhost:3000/r/tooltip.json",
+        "http://localhost:3000/r/tour.json",
         "http://localhost:3000/r/typing-text.json",
         "http://localhost:3000/r/typography.json"
       ]

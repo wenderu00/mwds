@@ -4,6 +4,12 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.13.0] - 2026-10-24
+
+### Novo
+
+- Tour: onboarding em passos com recorte em volta do alvo, balão ancorado sobre o Popover, contador e os botões Pular, Voltar e Avançar (Entendi no último passo). Diálogo modal com foco preso, Esc para pular, foco devolvido ao fechar e cada passo anunciado ([ADR 0020](docs/adr/0020-tour-sobre-o-popover.md)).
+
 ## [0.12.0] - 2026-10-24
 
 ### Novo
