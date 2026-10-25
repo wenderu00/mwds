@@ -1,0 +1,5 @@
+/* Para capturar uma seção mais alta que a janela, o Playwright rola a página por partes;
+   com o cabeçalho fixo, ele aparece por cima do meio da captura. */
+[data-site-header] {
+  position: static !important;
+}
