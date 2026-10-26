@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { tokensCss } from "./build-registry";
+import { hexToOklch } from "./lib/color";
+import { loadTokens } from "./lib/tokens";
 
 type Tree = { [key: string]: string | Tree };
 
@@ -39,6 +41,28 @@ describe("tokens de fundação", () => {
     expect(new Set(names.slice(0, 8).map((name) => dark[`--mw-${name}`])).size).toBe(8);
   });
 
+  it("faz cada série de gráfico usar a linha da categoria de mesmo número nos dois temas", () => {
+    const tokens = loadTokens();
+    for (const mode of ["dark", "light"] as const) {
+      for (let n = 1; n <= 8; n++) {
+        expect(tokens[mode][`category-${n}-line`], `category-${n}-line ${mode}`).toMatch(/^#[0-9a-f]{6}$/);
+        expect(tokens[mode][`chart-${n}`], `chart-${n} ${mode}`).toBe(tokens[mode][`category-${n}-line`]);
+      }
+    }
+  });
+
+  it("deixa por último as categorias que colidem com accent e perigo", () => {
+    const tokens = loadTokens();
+    const hue = (hex: string) => hexToOklch(hex)[2];
+    const distance = (a: number, b: number) => Math.min(Math.abs(a - b), 360 - Math.abs(a - b));
+    const nearest = (target: string) =>
+      Array.from({ length: 8 }, (_, i) => i + 1).reduce((best, n) =>
+        distance(hue(tokens.dark[`category-${n}-line`]!), hue(target)) < distance(hue(tokens.dark[`category-${best}-line`]!), hue(target)) ? n : best,
+      );
+    expect(nearest(tokens.dark["accent"]!)).toBe(7);
+    expect(nearest(tokens.dark["danger"]!)).toBe(8);
+  });
+
   it("empilha as camadas com flutuantes acima de modais", () => {
     const order = ["behind", "base", "sticky", "sheet", "dialog", "popover", "toast", "tooltip"];
     const values = order.map((layer) => Number(theme[`z-index-${layer}`]));
@@ -66,6 +90,34 @@ describe("tokens de fundação", () => {
       expect(value, key).toMatch(/var\(--mw-duration-(fast|base|slow)\)/);
       expect(value, key).not.toMatch(/(^|[\s(,])[\d.]+m?s\b/);
     }
+  });
+
+  it("tem keyframes para toda animação mw exposta ao Tailwind", () => {
+    for (const [key, value] of Object.entries(theme).filter(([key]) => key.startsWith("animate-mw-"))) {
+      const name = value.split(/\s+/)[0]!;
+      expect(css[`@keyframes ${name}`], key).toBeTruthy();
+    }
+  });
+
+  it("faz o destaque voltar do accent-soft uma vez só, sem piscar repetido", () => {
+    const flash = theme["animate-mw-flash"];
+    expect(flash).toMatch(/var\(--mw-duration-base\)/);
+    expect(flash).toBe("mw-flash var(--mw-duration-base) var(--mw-ease-standard)");
+    expect(JSON.stringify(css["@keyframes mw-flash"])).toMatch(/var\(--color-accent-soft\)/);
+  });
+
+  it("aumenta as distâncias de movimento de sm para lg e usa o token no deslocamento", () => {
+    const values = (["sm", "md", "lg"] as const).map((name) => px(root[`--mw-distance-${name}`] as string));
+    expect(values[0]).toBeLessThan(values[1]!);
+    expect(values[1]).toBeLessThan(values[2]!);
+    expect(JSON.stringify(css["@keyframes mw-slide-in"])).toMatch(/var\(--mw-distance-md\)/);
+    expect(theme["animate-mw-shift"]).toMatch(/var\(--mw-duration-(fast|base|slow)\)/);
+    expect(JSON.stringify(css["@keyframes mw-shift"])).toMatch(/var\(--mw-distance-sm\)/);
+  });
+
+  it("atrasa cada item do stagger pelo índice vezes o passo", () => {
+    expect(ms(root["--mw-stagger"] as string)).toBeGreaterThan(0);
+    expect(JSON.stringify(css["@utility mw-stagger"])).toMatch(/var\(--mw-i, 0\) \* var\(--mw-stagger\)/);
   });
 
   it("aumenta controles e células da densidade compacta para a ampla", () => {

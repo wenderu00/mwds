@@ -3,7 +3,9 @@
 import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Slot } from "radix-ui";
 import {
+  Children,
   createContext,
+  isValidElement,
   useContext,
   useId,
   useState,
@@ -44,7 +46,15 @@ function writeCollapsed(collapsed: boolean) {
   window.dispatchEvent(new Event(sidebarEvent));
 }
 
+const breakpoints = {
+  md: { sidebar: "md:flex", menu: "md:hidden", toggle: "md:inline-flex", bottomNav: "md:hidden", body: "md:pb-0" },
+  lg: { sidebar: "lg:flex", menu: "lg:hidden", toggle: "lg:inline-flex", bottomNav: "lg:hidden", body: "lg:pb-0" },
+};
+
 type AppShellContextValue = {
+  mobileNav: "sheet" | "bottom";
+  breakpoint: keyof typeof breakpoints;
+  inBottomNav: boolean;
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
   mobileOpen: boolean;
@@ -61,19 +71,59 @@ export function useAppShell() {
   return context;
 }
 
+// Conta os AppShellNavItem escritos direto na árvore. Um item embrulhado em outro componente não é contado.
+function countNavItems(node: ReactNode): number {
+  return Children.toArray(node).reduce<number>((count, child) => {
+    if (!isValidElement<{ children?: ReactNode }>(child)) return count;
+    if (child.type === AppShellNavItem) return count + 1;
+    return count + countNavItems(child.props.children);
+  }, 0);
+}
+
 export type AppShellProps = ComponentProps<"div"> & {
   skipLinkLabel?: string;
   mainId?: string;
+  mobileNav?: "sheet" | "bottom";
+  sidebarBreakpoint?: keyof typeof breakpoints;
 };
 
-export function AppShell({ skipLinkLabel = "Pular para o conteúdo", mainId = "conteudo", className, children, ...props }: AppShellProps) {
+export function AppShell({
+  skipLinkLabel = "Pular para o conteúdo",
+  mainId = "conteudo",
+  mobileNav = "sheet",
+  sidebarBreakpoint = "lg",
+  className,
+  children,
+  ...props
+}: AppShellProps) {
   const collapsed = useSyncExternalStore(subscribeCollapsed, readCollapsed, () => false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const sidebarId = useId();
 
+  let effectiveMobileNav = mobileNav;
+  if (mobileNav === "bottom") {
+    const items = countNavItems(children);
+    if (items < 3 || items > 5) {
+      effectiveMobileNav = "sheet";
+      if (process.env.NODE_ENV !== "production") {
+        console.warn(`AppShell: mobileNav="bottom" aceita de 3 a 5 itens e recebeu ${items}. A navegação volta para o painel lateral.`);
+      }
+    }
+  }
+
   return (
     <AppShellContext.Provider
-      value={{ collapsed, setCollapsed: writeCollapsed, mobileOpen, setMobileOpen, sidebarId, inMobileSheet: false }}
+      value={{
+        mobileNav: effectiveMobileNav,
+        breakpoint: sidebarBreakpoint,
+        inBottomNav: false,
+        collapsed,
+        setCollapsed: writeCollapsed,
+        mobileOpen,
+        setMobileOpen,
+        sidebarId,
+        inMobileSheet: false,
+      }}
     >
       <TooltipProvider>
         <div
@@ -118,7 +168,8 @@ export function AppShellSidebar({ brand, footer, mobileTitle = "Menu", className
         id={shell.sidebarId}
         data-slot="app-shell-sidebar"
         className={cn(
-          "sticky top-0 hidden h-dvh shrink-0 flex-col border-r border-line bg-band transition-[width] duration-base ease-standard motion-reduce:transition-none lg:flex",
+          "sticky top-0 hidden h-dvh shrink-0 flex-col border-r border-line bg-band transition-[width] duration-base ease-standard motion-reduce:transition-none",
+          breakpoints[shell.breakpoint].sidebar,
           shell.collapsed ? "w-16" : "w-64",
           className,
         )}
@@ -126,18 +177,40 @@ export function AppShellSidebar({ brand, footer, mobileTitle = "Menu", className
       >
         {content(false)}
       </aside>
-      <Sheet open={shell.mobileOpen} onOpenChange={shell.setMobileOpen}>
-        <SheetContent side="left" className="w-72 gap-0 bg-band p-0" closeLabel="Fechar menu" aria-describedby={undefined}>
-          <SheetTitle className="sr-only">{mobileTitle}</SheetTitle>
-          {content(true)}
-        </SheetContent>
-      </Sheet>
+      {shell.mobileNav === "bottom" ? (
+        <div
+          data-slot="app-shell-bottom-nav"
+          className={cn(
+            "fixed inset-x-0 bottom-0 z-sticky border-t border-line bg-band pb-[env(safe-area-inset-bottom)]",
+            breakpoints[shell.breakpoint].bottomNav,
+          )}
+        >
+          <AppShellContext.Provider value={{ ...shell, collapsed: false, inBottomNav: true }}>
+            {Children.toArray(children).filter((child) => isValidElement(child) && child.type === AppShellNav)}
+          </AppShellContext.Provider>
+        </div>
+      ) : (
+        <Sheet open={shell.mobileOpen} onOpenChange={shell.setMobileOpen}>
+          <SheetContent side="left" className="w-72 gap-0 bg-band p-0" closeLabel="Fechar menu" aria-describedby={undefined}>
+            <SheetTitle className="sr-only">{mobileTitle}</SheetTitle>
+            {content(true)}
+          </SheetContent>
+        </Sheet>
+      )}
     </>
   );
 }
 
 export function AppShellNav({ "aria-label": ariaLabel = "Principal", className, ...props }: ComponentProps<"nav">) {
-  return <nav data-slot="app-shell-nav" aria-label={ariaLabel} className={cn("flex flex-col gap-6", className)} {...props} />;
+  const { inBottomNav } = useAppShell();
+  return (
+    <nav
+      data-slot="app-shell-nav"
+      aria-label={ariaLabel}
+      className={cn(inBottomNav ? "flex h-16 items-stretch" : "flex flex-col gap-6", className)}
+      {...props}
+    />
+  );
 }
 
 export type AppShellNavGroupProps = ComponentProps<"div"> & {
@@ -145,16 +218,19 @@ export type AppShellNavGroupProps = ComponentProps<"div"> & {
 };
 
 export function AppShellNavGroup({ label, className, children, ...props }: AppShellNavGroupProps) {
-  const { collapsed } = useAppShell();
+  const { collapsed, inBottomNav } = useAppShell();
   const labelId = useId();
   return (
-    <div data-slot="app-shell-nav-group" className={cn("flex flex-col gap-1", className)} {...props}>
+    <div data-slot="app-shell-nav-group" className={cn(inBottomNav ? "contents" : "flex flex-col gap-1", className)} {...props}>
       {label && (
-        <p id={labelId} className={cn("px-3 pb-1 font-mono text-mono-xs tracking-kicker text-ink-muted uppercase", collapsed && "sr-only")}>
+        <p
+          id={labelId}
+          className={cn("px-3 pb-1 font-mono text-mono-xs tracking-kicker text-ink-muted uppercase", (collapsed || inBottomNav) && "sr-only")}
+        >
           {label}
         </p>
       )}
-      <ul aria-labelledby={label ? labelId : undefined} className="flex flex-col gap-1">
+      <ul aria-labelledby={label ? labelId : undefined} className={inBottomNav ? "contents" : "flex flex-col gap-1"}>
         {children}
       </ul>
     </div>
@@ -171,7 +247,7 @@ export type AppShellNavItemProps = Omit<ComponentProps<"a">, "children"> & {
 };
 
 export function AppShellNavItem({ icon, label, active = false, badge, asChild = false, className, children, ...props }: AppShellNavItemProps) {
-  const { collapsed, inMobileSheet, setMobileOpen } = useAppShell();
+  const { collapsed, inMobileSheet, inBottomNav, setMobileOpen } = useAppShell();
   const Comp = asChild ? Slot.Root : "a";
   const link = (
     <Comp
@@ -182,9 +258,13 @@ export function AppShellNavItem({ icon, label, active = false, badge, asChild = 
         if (inMobileSheet) setMobileOpen(false);
       }}
       className={cn(
-        "relative flex h-10 items-center gap-3 rounded-control px-3 text-sm font-medium text-ink-soft no-underline transition-colors duration-base hover:bg-surface hover:text-ink [&_svg]:size-5 [&_svg]:shrink-0",
+        inBottomNav
+          ? "relative flex h-full min-h-control flex-col items-center justify-center gap-1 px-1 font-mono text-mono-xs text-ink-soft no-underline transition-colors duration-base hover:bg-surface hover:text-ink [&_svg]:size-5 [&_svg]:shrink-0"
+          : "relative flex h-10 items-center gap-3 rounded-control px-3 text-sm font-medium text-ink-soft no-underline transition-colors duration-base hover:bg-surface hover:text-ink [&_svg]:size-5 [&_svg]:shrink-0",
         active &&
-          "bg-accent-soft text-ink before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-accent-line hover:bg-accent-soft",
+          (inBottomNav
+            ? "bg-accent-soft text-ink before:absolute before:inset-x-3 before:top-0 before:h-0.5 before:rounded-full before:bg-accent-line hover:bg-accent-soft"
+            : "bg-accent-soft text-ink before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-accent-line hover:bg-accent-soft"),
         collapsed && "justify-center px-0",
         className,
       )}
@@ -196,13 +276,13 @@ export function AppShellNavItem({ icon, label, active = false, badge, asChild = 
           {icon}
         </span>
       )}
-      <span className={cn("truncate", collapsed && "sr-only")}>{label}</span>
-      {badge && !collapsed && <span className="ml-auto">{badge}</span>}
+      <span className={cn("truncate", collapsed && "sr-only", inBottomNav && "max-w-full")}>{label}</span>
+      {badge && !collapsed && !inBottomNav && <span className="ml-auto">{badge}</span>}
     </Comp>
   );
 
   return (
-    <li>
+    <li className={inBottomNav ? "flex-1" : undefined}>
       {collapsed ? (
         <Tooltip>
           <TooltipTrigger asChild>{link}</TooltipTrigger>
@@ -229,23 +309,25 @@ export function AppShellHeader({
   children,
   ...props
 }: AppShellHeaderProps) {
-  const { collapsed, setCollapsed, setMobileOpen, sidebarId } = useAppShell();
+  const { collapsed, setCollapsed, setMobileOpen, sidebarId, mobileNav, breakpoint } = useAppShell();
   return (
     <header
       data-slot="app-shell-header"
-      className={cn("sticky top-0 z-sticky flex h-16 shrink-0 items-center gap-3 border-b border-line bg-ground px-4", className)}
+      className={cn("sticky top-0 z-sticky col-span-full flex min-h-16 shrink-0 items-center gap-3 border-b border-line bg-ground px-4", className)}
       {...props}
     >
-      <IconButton aria-label={menuLabel} size="sm" onClick={() => setMobileOpen(true)} className="[&_svg]:size-5 lg:hidden">
-        <Menu aria-hidden="true" />
-      </IconButton>
+      {mobileNav === "sheet" && (
+        <IconButton aria-label={menuLabel} size="sm" onClick={() => setMobileOpen(true)} className={cn("[&_svg]:size-5", breakpoints[breakpoint].menu)}>
+          <Menu aria-hidden="true" />
+        </IconButton>
+      )}
       <IconButton
         aria-label={collapsed ? expandLabel : collapseLabel}
         aria-controls={sidebarId}
         aria-expanded={!collapsed}
         size="sm"
         onClick={() => setCollapsed(!collapsed)}
-        className="hidden [&_svg]:size-5 lg:inline-flex"
+        className={cn("hidden [&_svg]:size-5", breakpoints[breakpoint].toggle)}
       >
         {collapsed ? <PanelLeftOpen aria-hidden="true" /> : <PanelLeftClose aria-hidden="true" />}
       </IconButton>
@@ -255,7 +337,33 @@ export function AppShellHeader({
 }
 
 export function AppShellBody({ className, ...props }: ComponentProps<"div">) {
-  return <div data-slot="app-shell-body" className={cn("flex min-w-0 flex-1 flex-col", className)} {...props} />;
+  const { mobileNav, breakpoint } = useAppShell();
+  return (
+    <div
+      data-slot="app-shell-body"
+      className={cn(
+        "flex min-w-0 flex-1 flex-col",
+        "lg:has-[>[data-slot=app-shell-aside]]:grid lg:has-[>[data-slot=app-shell-aside]]:grid-cols-[minmax(0,1fr)_auto] lg:has-[>[data-slot=app-shell-aside]]:grid-rows-[auto_1fr]",
+        mobileNav === "bottom" && ["pb-[calc(4rem+env(safe-area-inset-bottom))]", breakpoints[breakpoint].body],
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export type AppShellAsideProps = ComponentProps<"aside"> & {
+  "aria-label": string;
+};
+
+export function AppShellAside({ className, ...props }: AppShellAsideProps) {
+  return (
+    <aside
+      data-slot="app-shell-aside"
+      className={cn("border-t border-line px-4 py-8 md:px-8 lg:w-80 lg:border-t-0 lg:border-l lg:px-6", className)}
+      {...props}
+    />
+  );
 }
 
 export type AppShellMainProps = ComponentProps<"main"> & {

@@ -4,6 +4,7 @@ import { pathToFileURL } from "node:url";
 import postcss, { type ChildNode, type Container } from "postcss";
 import { blocks } from "../app/_docs/blocks";
 import { docs } from "../app/_docs/catalog";
+import { componentName, loadPacks } from "./icons/packs";
 
 type CssTree = { [key: string]: string | CssTree };
 
@@ -152,6 +153,22 @@ export function buildRegistry() {
     files: [{ path: "registry/marcio/tema.css", type: "registry:file", target: "app/tema.css" }],
   };
 
+  // Os resets ficam num arquivo próprio: o shadcn acrescenta cssVars.theme no fim do @theme inline, e ali eles apagariam os tokens.
+  const lintFiles = ["eslint.mw.mjs", ...readdirSync(join(root, "eslint-rules")).filter((file) => file.endsWith(".js")).sort().map((file) => `eslint-rules/${file}`)];
+  const strict: RegistryItem = {
+    name: "marcio-strict",
+    type: "registry:item",
+    title: "Modo estrito",
+    description: "Tira as cores, raios, sombras e curvas padrão do Tailwind e liga as regras de lint mw/* para seguir o @mw/ui à risca.",
+    registryDependencies: [itemUrl("marcio-tokens")],
+    files: [
+      { path: "registry/marcio/mw-strict.css", type: "registry:file", target: "app/mw-strict.css" },
+      ...lintFiles.map((path) => ({ path, type: "registry:file", target: path })),
+    ],
+    css: { '@import "./mw-strict.css"': {} },
+    docs: 'Acrescente as regras ao eslint.config.mjs: import mw from "./eslint.mw.mjs" e espalhe ...mw no fim da lista.',
+  };
+
   const utils: RegistryItem = {
     name: "utils",
     type: "registry:lib",
@@ -219,6 +236,40 @@ export function buildRegistry() {
     };
   });
 
+  const packs = loadPacks();
+  const iconItems: RegistryItem[] = packs.flatMap((pack) => {
+    const item = (name: string, description: string, extra: string[] = []): RegistryItem => {
+      const path = `registry/marcio/icons/${pack.name}/${name}.tsx`;
+      const { dependencies } = dependenciesOf(path, { withTokens: false });
+      return {
+        name: `icon-${pack.name}-${name}`,
+        type: "registry:component",
+        title: componentName(name),
+        description,
+        dependencies,
+        ...(extra.length ? { registryDependencies: extra } : {}),
+        files: [{ path, type: "registry:component", target: `components/icons/${pack.name}/${name}.tsx` }],
+        categories: ["icones"],
+      };
+    };
+    return [
+      ...pack.icons.map((icon) => item(icon.name, `Ícone ${icon.name} do pacote ${pack.name}: ${icon.tags.join(", ")}.`)),
+      ...Object.entries(pack.aliases).map(([alias, target]) =>
+        item(alias, `Nome antigo de ${target}, descontinuado. Use icon-${pack.name}-${target}.`, [itemUrl(`icon-${pack.name}-${target}`)]),
+      ),
+    ];
+  });
+  const packItems: RegistryItem[] = packs.map((pack) => ({
+    name: `icons-${pack.name}`,
+    type: "registry:item",
+    title: `Ícones ${pack.name}`,
+    description: pack.description,
+    registryDependencies: [
+      ...pack.icons.map((icon) => itemUrl(`icon-${pack.name}-${icon.name}`)),
+      ...pack.dependsOn.map((dependency) => itemUrl(`icons-${dependency}`)),
+    ],
+  }));
+
   const all: RegistryItem = {
     name: "marcio-ui",
     type: "registry:item",
@@ -231,7 +282,7 @@ export function buildRegistry() {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "marcio",
     homepage: baseUrl,
-    items: [tokens, theme, ...fontItems, utils, br, ...uiItems, ...blockItems, all],
+    items: [tokens, theme, strict, ...fontItems, utils, br, ...uiItems, ...blockItems, ...iconItems, ...packItems, all],
   };
 }
 

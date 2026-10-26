@@ -246,6 +246,19 @@ describe("Progress", () => {
     expect(indicator.className).not.toMatch(/(^|\s)animate-/);
   });
 
+  it("shows and announces a custom value text instead of the percentage", () => {
+    render(<Progress value={45} max={120} label="Treino de lanceiros" showValue valueText="1 min 15 s" />);
+    const bar = screen.getByRole("progressbar", { name: "Treino de lanceiros" });
+    expect(bar).toHaveAttribute("aria-valuetext", "1 min 15 s");
+    expect(screen.getByText("1 min 15 s")).toBeInTheDocument();
+    expect(screen.queryByText("38%")).not.toBeInTheDocument();
+  });
+
+  it("announces the percentage when no value text is given", () => {
+    render(<Progress value={30} aria-label="Enviando" />);
+    expect(screen.getByRole("progressbar", { name: "Enviando" })).toHaveAttribute("aria-valuetext", "30%");
+  });
+
   it("clamps values", () => {
     render(<Progress aria-label="x" value={150} />);
     expect(screen.getByRole("progressbar").querySelector("[data-slot=progress-indicator]")).toHaveStyle({ width: "100%" });

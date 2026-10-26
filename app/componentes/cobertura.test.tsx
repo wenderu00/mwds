@@ -4,6 +4,7 @@ import registry from "@/registry.json";
 import ComponentPage from "@/app/componentes/[slug]/page";
 import { blocks } from "@/app/_docs/blocks";
 import { docs } from "@/app/_docs/catalog";
+import { authoredIcons, iconPacks } from "@/app/_docs/icons.generated";
 import { TooltipProvider } from "@/registry/marcio/ui/tooltip";
 
 vi.mock("next/navigation", () => ({
@@ -15,14 +16,16 @@ vi.mock("next/navigation", () => ({
 }));
 
 // Itens de infraestrutura: entram por dependência e não têm página própria.
-const infra = new Set(["marcio-tokens", "marcio-tema", "font-bricolage", "font-plex-sans", "font-plex-mono", "utils", "br", "marcio-ui"]);
+const infra = new Set(["marcio-tokens", "marcio-tema", "marcio-strict", "font-bricolage", "font-plex-sans", "font-plex-mono", "utils", "br", "marcio-ui"]);
 
 const uiItems = registry.items.filter((item) => item.type === "registry:ui").map((item) => item.name);
 const blockItems = registry.items.filter((item) => item.type === "registry:block").map((item) => item.name);
+// Ícones e pacotes são documentados juntos em /icones.
+const iconItems = new Set([...authoredIcons.map((icon) => `icon-${icon.pack}-${icon.name}`), ...iconPacks.flatMap((pack) => [`icons-${pack.name}`, ...pack.aliases.map((alias) => `icon-${pack.name}-${alias}`)])]);
 
 describe("cobertura do registry", () => {
-  it("todo item do registry.json é componente, bloco ou infraestrutura", () => {
-    const unknown = registry.items.filter((item) => !["registry:ui", "registry:block"].includes(item.type) && !infra.has(item.name));
+  it("todo item do registry.json é componente, bloco, ícone ou infraestrutura", () => {
+    const unknown = registry.items.filter((item) => !["registry:ui", "registry:block"].includes(item.type) && !infra.has(item.name) && !iconItems.has(item.name));
     expect(unknown.map((item) => item.name)).toEqual([]);
   });
 

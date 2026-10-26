@@ -19,6 +19,7 @@ const steps = [
   { href: "#requisitos", label: "requisitos" },
   { href: "#criar-projeto", label: "criar o projeto" },
   { href: "#tokens", label: "tokens" },
+  { href: "#modo-estrito", label: "modo estrito" },
   { href: "#tema", label: "tema" },
   { href: "#primeiro-componente", label: "primeiro componente" },
   { href: "#primeiro-bloco", label: "primeiro bloco" },
@@ -28,9 +29,9 @@ const steps = [
 
 const requirements = [
   ["Node.js", "20.9 ou mais novo", "mínimo exigido pelo Next.js 16"],
-  ["Next.js", "16, com App Router", "testado com 16.4"],
-  ["React", "19", "vem com o Next.js 16"],
-  ["Tailwind CSS", "v4", "o create-next-app já instala"],
+  ["Next.js", "16, com App Router", "testado com 16.4. Vite não é suportado: migre para Next antes de adotar o @mw/ui"],
+  ["React", "19", "os componentes recebem ref como prop, sem forwardRef. Vem com o Next.js 16"],
+  ["Tailwind CSS", "v4", "a configuração mora no CSS. O create-next-app já instala"],
 ];
 
 const layoutCode = `import { Bricolage_Grotesque, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
@@ -89,15 +90,31 @@ const themeOverrideCode = `:root {
 }`;
 
 const themeInlineCode = `@theme inline {
-  --color-*: initial;
   --color-accent: var(--mw-accent);
   --color-ink: var(--mw-ink);
-  --radius-*: initial;
   --radius-control: 6px;
   --radius-card: 12px;
   --z-index-popover: 40;
   /* ... */
 }`;
+
+const strictCss = `@import "tailwindcss";
+@import "./mw-strict.css";
+
+@theme {
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  /* ... */
+}`;
+
+const strictEslint = `import mw from "./eslint.mw.mjs";
+
+export default defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  ...mw,
+]);`;
 
 const manualCss = `@import "tailwindcss";
 @import "./tokens.css";`;
@@ -175,21 +192,49 @@ export default function GettingStartedPage() {
             </p>
           </div>
           <CodeBlock title="app/globals.css, trecho gravado pelo init" code={themeInlineCode} />
-          <CodeComment>
-            o bloco zera --color-*, --radius-* e --shadow-*: bg-blue-500, rounded-md e shadow-lg deixam de existir, de propósito
-          </CodeComment>
+          <CodeComment>o init não apaga as cores do Tailwind: bg-blue-500, rounded-md e shadow-lg continuam existindo até o modo estrito</CodeComment>
           <p className="max-w-measure text-ink-soft">
-            Use os nomes do sistema: bg-accent, text-ink-soft, border-line-control, rounded-control, rounded-card, z-popover, duration-base. Uma classe padrão que
-            sumiu não dá erro: ela só não gera CSS, então confira no navegador se algo ficou sem cor ou sem raio.
+            Use os nomes do sistema: bg-accent, text-ink-soft, border-line-control, rounded-control, rounded-card, z-popover, duration-base. Num projeto que já existe,
+            as classes antigas continuam funcionando enquanto você migra.
           </p>
         </FoundationSection>
 
         <FoundationSection
-          id="tema"
+          id="modo-estrito"
           index="04"
+          kicker="modo estrito"
+          title="Siga o sistema à risca"
+          band
+          intro={
+            <>
+              <p>
+                O modo estrito tira do Tailwind tudo que não é do @mw/ui e liga o lint que barra valores soltos. Ele cria app/mw-strict.css, que zera as cores, raios,
+                sombras e curvas padrão, e o importa logo depois do tailwindcss. Também copia as regras mw/* para eslint-rules/ e cria eslint.mw.mjs com a config pronta.
+              </p>
+              <p>
+                Num projeto novo, rode logo depois do init. Num projeto que já existe, rode no fim da migração: passar no lint com o modo estrito é o que marca a migração
+                como concluída.
+              </p>
+            </>
+          }
+        >
+          <CodeBlock title="terminal · modo estrito" code={add("@marcio/marcio-strict")} />
+          <CodeBlock title="app/globals.css e app/mw-strict.css" code={strictCss} />
+          <CodeComment>bg-blue-500, rounded-md e shadow-lg deixam de gerar CSS, de propósito, sem dar erro: o lint é que avisa</CodeComment>
+          <p className="max-w-measure text-ink-soft">O shadcn não edita o eslint.config.mjs. Acrescente a config no fim da lista:</p>
+          <CodeBlock title="eslint.config.mjs" code={strictEslint} />
+          <p className="max-w-measure text-ink-soft">
+            A partir daí, npm run lint reprova cor fora dos tokens (bg-red-500), raio, sombra, duração e medidas soltas (rounded-md, text-[11px]) e ícone fora da escala,
+            tanto do lucide quanto dos pacotes de components/icons/.
+          </p>
+          <CodeComment>se o seu CSS principal não está em app/globals.css, mova o mw-strict.css para a mesma pasta</CodeComment>
+        </FoundationSection>
+
+        <FoundationSection
+          id="tema"
+          index="05"
           kicker="tema"
           title="Tema sem piscar"
-          band
           intro={
             <>
               <p>
@@ -198,7 +243,7 @@ export default function GettingStartedPage() {
               </p>
               <p>
                 Substitua o app/layout.tsx inteiro pelo abaixo. Ele troca as fontes Geist do template pelas do @mw/ui e deixa prontos o Toaster e o TooltipProvider, que
-                vários componentes e blocos usam. O ThemeToggle entra na página, no passo 05.
+                vários componentes e blocos usam. O ThemeToggle entra na página, no passo 06.
               </p>
             </>
           }
@@ -209,9 +254,10 @@ export default function GettingStartedPage() {
 
         <FoundationSection
           id="primeiro-componente"
-          index="05"
+          index="06"
           kicker="componente"
           title="Primeiro componente"
+          band
           intro={
             <p>
               Cada componente traz o que usa: Radix, class-variance-authority e outros componentes do @mw/ui. O Button, por exemplo, cria components/ui/button.tsx e
@@ -236,15 +282,14 @@ export default function GettingStartedPage() {
 
         <FoundationSection
           id="primeiro-bloco"
-          index="06"
+          index="07"
           kicker="bloco"
           title="Primeiro bloco"
-          band
           intro={
             <>
               <p>
                 Blocos são telas inteiras. O de login cria app/login/page.tsx e o formulário em components/blocks/login/, e instala os componentes do @mw/ui que usa. Ele
-                avisa erros com toast, então depende do Toaster do passo 04.
+                avisa erros com toast, então depende do Toaster do passo 05.
               </p>
             </>
           }
@@ -267,7 +312,8 @@ export default function GettingStartedPage() {
 
         <FoundationSection
           id="atualizar"
-          index="07"
+          index="08"
+          band
           kicker="atualizar"
           title="Atualize componentes instalados"
           intro={
@@ -296,19 +342,18 @@ export default function GettingStartedPage() {
 
         <FoundationSection
           id="sem-cli"
-          index="08"
+          index="09"
           kicker="manual"
           title="Sem o CLI"
-          band
           intro={<p>Para projetos que não usam o shadcn:</p>}
         >
           <ol className="flex max-w-measure list-decimal flex-col gap-3 pl-5 text-ink-soft">
             <li>Copie registry/marcio/tokens.css do repositório para o projeto.</li>
-            <li>Importe depois do Tailwind no CSS principal:</li>
+            <li>Importe depois do Tailwind no CSS principal. Esse arquivo já traz os resets do modo estrito: as cores e raios padrão do Tailwind somem.</li>
           </ol>
           <CodeBlock title="app/globals.css" code={manualCss} />
           <ol start={3} className="flex max-w-measure list-decimal flex-col gap-3 pl-5 text-ink-soft">
-            <li>Carregue as fontes e exponha as variáveis --font-bricolage, --font-plex-sans e --font-plex-mono no html, como no layout do passo 04. Sem elas, o texto cai nas fontes do sistema.</li>
+            <li>Carregue as fontes e exponha as variáveis --font-bricolage, --font-plex-sans e --font-plex-mono no html, como no layout do passo 05. Sem elas, o texto cai nas fontes do sistema.</li>
             <li>Copie registry/marcio/lib/utils.ts e os componentes que quiser, trocando os imports @/registry/marcio/... pelos caminhos do seu projeto.</li>
           </ol>
         </FoundationSection>

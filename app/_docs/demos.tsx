@@ -1,10 +1,11 @@
 "use client";
 
-import { Folder, LayoutDashboard, Settings, Users } from "lucide-react";
+import { Castle, Coins, Folder, LayoutDashboard, Map as MapIcon, Settings, Store, Swords, Users } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
 import {
   AppShell,
+  AppShellAside,
   AppShellBody,
   AppShellHeader,
   AppShellMain,
@@ -38,6 +39,7 @@ import { FileUpload, type FileUploadStatus } from "@/registry/marcio/ui/file-upl
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { LogoBlock } from "@/registry/marcio/ui/logo-block";
 import { Pagination } from "@/registry/marcio/ui/pagination";
+import { Meter } from "@/registry/marcio/ui/meter";
 import { Progress } from "@/registry/marcio/ui/progress";
 import { Stepper } from "@/registry/marcio/ui/stepper";
 import { toast, type ToastTone } from "@/registry/marcio/ui/toast";
@@ -214,7 +216,7 @@ export function AppShellDemo({ theme }: { theme: string }) {
   const [active, setActive] = useState("painel");
   const current = shellNav.find((item) => item.id === active)!;
   return (
-    <div className="h-[440px] w-full overflow-hidden rounded-control border border-line">
+    <div className="h-110 w-full overflow-hidden rounded-control border border-line">
       <AppShell className="h-full min-h-0" mainId={`shell-main-${theme}`}>
         <AppShellSidebar className="h-full" brand={<LogoBlock size="sm">MW</LogoBlock>} footer={<span className="font-mono text-mono-xs text-ink-muted">v0.1</span>}>
           <AppShellNav aria-label={`Principal (${theme})`}>
@@ -380,5 +382,75 @@ export function FileUploadProgressDemo({ id }: { id: string }) {
         onRetry={(file) => setStatus((current) => new Map(current).set(file, { progress: 0 }))}
       />
     </FormField>
+  );
+}
+
+export function MeterDemo() {
+  const [gold, setGold] = useState(1234);
+  const [loots, setLoots] = useState(0);
+  return (
+    <div className="flex w-full flex-col gap-4">
+      <Meter label="Ouro" value={gold} max={5000} rate="+40/min" icon={<Coins />} highlightKey={loots} />
+      <Button
+        size="sm"
+        variant="secondary"
+        className="self-start"
+        onClick={() => {
+          setGold((value) => Math.min(5000, value + 250));
+          setLoots((count) => count + 1);
+        }}
+      >
+        Saquear
+      </Button>
+    </div>
+  );
+}
+
+const kingdomNav = [
+  { id: "castelo", label: "Castelo", icon: <Castle /> },
+  { id: "mercado", label: "Mercado", icon: <Store /> },
+  { id: "exercito", label: "Exército", icon: <Swords /> },
+  { id: "mapa", label: "Mapa", icon: <MapIcon /> },
+];
+
+export function AppShellBottomDemo({ theme }: { theme: string }) {
+  const [active, setActive] = useState("castelo");
+  const current = kingdomNav.find((item) => item.id === active)!;
+  return (
+    <div data-testid={`app-shell-bottom-${theme}`} className="h-140 w-full overflow-hidden rounded-control border border-line contain-layout">
+      <AppShell className="h-full min-h-0" mainId={`shell-bottom-main-${theme}`} mobileNav="bottom">
+        <AppShellSidebar className="h-full" brand={<LogoBlock size="sm">GD</LogoBlock>}>
+          <AppShellNav aria-label={`Reino (${theme})`}>
+            <AppShellNavGroup label="Reino">
+              {kingdomNav.map((item) => (
+                <AppShellNavItem
+                  key={item.id}
+                  href={`#${item.id}`}
+                  label={item.label}
+                  icon={item.icon}
+                  active={item.id === active}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setActive(item.id);
+                  }}
+                />
+              ))}
+            </AppShellNavGroup>
+          </AppShellNav>
+        </AppShellSidebar>
+        <AppShellBody className="min-h-0 overflow-y-auto">
+          <AppShellHeader className="static">
+            <span className="font-display text-display-sm font-extrabold">{current.label}</span>
+          </AppShellHeader>
+          <AppShellMain as="div" id={`shell-bottom-main-${theme}`}>
+            <p className="text-ink-soft">No celular, os mesmos itens da sidebar viram abas no rodapé. A fila ao lado vai para baixo do conteúdo.</p>
+          </AppShellMain>
+          <AppShellAside aria-label={`Fila de construção (${theme})`}>
+            <p className="font-mono text-mono-xs tracking-kicker text-ink-muted uppercase">Fila</p>
+            <p className="mt-2 text-ink-soft">Quartel em 2 min</p>
+          </AppShellAside>
+        </AppShellBody>
+      </AppShell>
+    </div>
   );
 }

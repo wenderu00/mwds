@@ -1,6 +1,6 @@
 # 0015. Tokens de fundação além da cor
 
-Status: aceito
+Status: aceito. A parte de resets foi substituída pelo [ADR 0021](0021-modo-estrito.md).
 
 ## Contexto
 

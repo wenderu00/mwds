@@ -14,6 +14,7 @@ const pages: SitePage[] = [
   { name: "fundacao", path: "/", mask: (page) => [page.getByText(/· v\d+\.\d+\.\d+$/)] },
   { name: "primeiros-passos", path: "/primeiros-passos/" },
   { name: "escrita", path: "/escrita/" },
+  { name: "icones", path: "/icones/" },
   // O topo e a lista crescem a cada versão; a 0.2.0 é histórica e tem quebra com como migrar.
   { name: "novidades", path: "/novidades/", capture: (page) => page.locator("section#v0-2-0") },
   { name: "componentes", path: "/componentes/" },

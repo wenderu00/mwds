@@ -1,0 +1,10 @@
+{
+  "description": "Ícones genéricos de jogo e economia, base dos pacotes de domínio.",
+  "dependsOn": [],
+  "aliases": {},
+  "icons": {
+    "shield": { "tags": ["escudo", "defesa", "proteção"], "similar": ["Shield", "ShieldHalf"] },
+    "coin": { "tags": ["moeda", "ouro", "dinheiro"], "similar": ["Coins", "CircleDollarSign"] },
+    "crossed-swords": { "tags": ["espadas", "batalha", "combate"], "similar": ["Swords", "Sword"] }
+  }
+}

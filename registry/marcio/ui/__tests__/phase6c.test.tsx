@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   AppShell,
+  AppShellAside,
   AppShellBody,
   AppShellHeader,
   AppShellMain,
@@ -179,6 +180,84 @@ describe("AppShell", () => {
     expect(link).toHaveAttribute("href", "/equipe");
     expect(link).toHaveAttribute("aria-current", "page");
     expect(within(link).getByTestId("icone")).toBeInTheDocument();
+  });
+
+  const bottomShell = (count: number, extra?: { aside?: boolean; breakpoint?: "md" | "lg" }) => (
+    <AppShell mobileNav="bottom" sidebarBreakpoint={extra?.breakpoint}>
+      <AppShellSidebar brand={<span>MW</span>} footer={<span>Rodapé</span>}>
+        <AppShellNav>
+          <AppShellNavGroup label="Reino">
+            {["Castelo", "Mercado", "Exército", "Batalha", "Mapa", "Conselho"].slice(0, count).map((label, i) => (
+              <AppShellNavItem key={label} href={`#${label}`} label={label} active={i === 0} icon={<svg viewBox="0 0 16 16" />} />
+            ))}
+          </AppShellNavGroup>
+        </AppShellNav>
+      </AppShellSidebar>
+      <AppShellBody>
+        <AppShellHeader>
+          <span>Galadur</span>
+        </AppShellHeader>
+        <AppShellMain>
+          <h1>Castelo</h1>
+        </AppShellMain>
+        {extra?.aside && (
+          <AppShellAside aria-label="Fila de construção">
+            <p>Quartel em 2 min</p>
+          </AppShellAside>
+        )}
+      </AppShellBody>
+    </AppShell>
+  );
+
+  it("turns the same items into bottom tabs and drops the menu button", () => {
+    render(bottomShell(4));
+    const bar = document.querySelector<HTMLElement>("[data-slot=app-shell-bottom-nav]")!;
+    const nav = within(bar).getByRole("navigation", { name: "Principal" });
+    const tabs = within(nav).getAllByRole("link");
+    expect(tabs.map((tab) => tab.textContent)).toEqual(["Castelo", "Mercado", "Exército", "Batalha"]);
+    expect(within(nav).getByRole("link", { name: "Castelo" })).toHaveAttribute("aria-current", "page");
+    expect(within(bar).queryByText("MW")).not.toBeInTheDocument();
+    expect(within(bar).queryByText("Rodapé")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Abrir menu" })).not.toBeInTheDocument();
+  });
+
+  it("falls back to the sheet above five items and warns in development", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    render(bottomShell(6));
+    expect(document.querySelector("[data-slot=app-shell-bottom-nav]")).not.toBeInTheDocument();
+    await userEvent.setup().click(screen.getByRole("button", { name: "Abrir menu" }));
+    expect(await screen.findByRole("dialog", { name: "Menu" })).toBeInTheDocument();
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining("de 3 a 5 itens"));
+    warn.mockRestore();
+  });
+
+  it("renders the aside once, as a named complementary landmark after the main content", () => {
+    render(bottomShell(4, { aside: true }));
+    const aside = screen.getByRole("complementary", { name: "Fila de construção" });
+    expect(screen.getAllByText("Quartel em 2 min")).toHaveLength(1);
+    expect(screen.getByRole("main").compareDocumentPosition(aside) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it("moves the sidebar breakpoint to md when asked", () => {
+    render(bottomShell(4, { breakpoint: "md" }));
+    expect(document.querySelector("[data-slot=app-shell-sidebar]")).toHaveClass("md:flex");
+    expect(document.querySelector("[data-slot=app-shell-bottom-nav]")).toHaveClass("md:hidden");
+    expect(screen.getByRole("button", { name: "Recolher menu" })).toHaveClass("md:inline-flex");
+  });
+
+  it("grows the header with its content instead of clipping it", () => {
+    render(shell);
+    expect(document.querySelector("[data-slot=app-shell-header]")).toHaveClass("min-h-16");
+  });
+
+  it("has no axe violations with bottom tabs and aside", async () => {
+    for (const theme of themes) {
+      const { unmount } = renderInTheme(theme, bottomShell(4, { aside: true }));
+      // O jsdom não aplica as media queries. No celular a sidebar fica com display none e só a barra inferior aparece.
+      document.querySelector<HTMLElement>("[data-slot=app-shell-sidebar]")!.style.display = "none";
+      expect(await axe(document.body)).toHaveNoViolations();
+      unmount();
+    }
   });
 
   it("has no axe violations", async () => {

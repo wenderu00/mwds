@@ -37,7 +37,12 @@ export const pairs: Pair[] = [
   ...onSurfaces("accent-line", "ui", "Borda acesa no hover e aba ativa"),
   ...onSurfaces("accent-edge", "ui", "Contorno do preenchimento amarelo: botão primário, checkbox, radio, switch, página atual e dia selecionado"),
   ...onSurfaces("focus", "ui", "Outline de foco"),
-  ...[1, 2, 3, 4, 5, 6, 7, 8].flatMap((n) => onSurfaces(`chart-${n}`, "ui", `Série ${n} da paleta categórica de gráficos`)),
+  ...[1, 2, 3, 4, 5, 6, 7, 8].flatMap((n): Pair[] => [
+    ...onSurfaces(`category-${n}-line`, "ui", `Barra, borda e série ${n} de gráfico na categoria ${n}`),
+    ...(["ground", "surface", `category-${n}-soft`] as const).map(
+      (bg): Pair => ({ fg: `category-${n}-text`, bg, kind: "text", usage: `Texto da categoria ${n}` }),
+    ),
+  ]),
   ...[1, 2, 3, 4, 5].flatMap((n) =>
     onSurfaces(`seq-${n}`, "ramp", `Passo ${n} da paleta sequencial; abaixo de 3:1 o gráfico precisa de rótulos ou tabela`),
   ),

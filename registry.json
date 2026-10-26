@@ -84,6 +84,30 @@
           "color-info-text": "var(--mw-info-text)",
           "color-on-info": "var(--mw-on-info)",
           "color-mutant": "var(--mw-mutant)",
+          "color-category-1-line": "var(--mw-category-1-line)",
+          "color-category-1-soft": "var(--mw-category-1-soft)",
+          "color-category-1-text": "var(--mw-category-1-text)",
+          "color-category-2-line": "var(--mw-category-2-line)",
+          "color-category-2-soft": "var(--mw-category-2-soft)",
+          "color-category-2-text": "var(--mw-category-2-text)",
+          "color-category-3-line": "var(--mw-category-3-line)",
+          "color-category-3-soft": "var(--mw-category-3-soft)",
+          "color-category-3-text": "var(--mw-category-3-text)",
+          "color-category-4-line": "var(--mw-category-4-line)",
+          "color-category-4-soft": "var(--mw-category-4-soft)",
+          "color-category-4-text": "var(--mw-category-4-text)",
+          "color-category-5-line": "var(--mw-category-5-line)",
+          "color-category-5-soft": "var(--mw-category-5-soft)",
+          "color-category-5-text": "var(--mw-category-5-text)",
+          "color-category-6-line": "var(--mw-category-6-line)",
+          "color-category-6-soft": "var(--mw-category-6-soft)",
+          "color-category-6-text": "var(--mw-category-6-text)",
+          "color-category-7-line": "var(--mw-category-7-line)",
+          "color-category-7-soft": "var(--mw-category-7-soft)",
+          "color-category-7-text": "var(--mw-category-7-text)",
+          "color-category-8-line": "var(--mw-category-8-line)",
+          "color-category-8-soft": "var(--mw-category-8-soft)",
+          "color-category-8-text": "var(--mw-category-8-text)",
           "color-chart-1": "var(--mw-chart-1)",
           "color-chart-2": "var(--mw-chart-2)",
           "color-chart-3": "var(--mw-chart-3)",
@@ -105,6 +129,9 @@
           "text-base--line-height": "1.6",
           "text-lead": "21px",
           "text-lead--line-height": "1.5",
+          "text-display-2xl": "clamp(96px, 20vw, 200px)",
+          "text-display-2xl--line-height": "1",
+          "text-display-2xl--letter-spacing": "-0.04em",
           "text-display-xl": "clamp(48px, 7vw, 92px)",
           "text-display-xl--line-height": "0.98",
           "text-display-xl--letter-spacing": "-0.03em",
@@ -158,7 +185,9 @@
           "animate-mw-sheet-bottom": "mw-sheet-bottom var(--mw-duration-slow) var(--mw-ease-enter) both",
           "animate-mw-indeterminate": "mw-indeterminate 1.4s var(--mw-ease-standard) infinite",
           "animate-mw-collapse-down": "mw-collapse-down var(--mw-duration-base) var(--mw-ease-standard)",
-          "animate-mw-collapse-up": "mw-collapse-up var(--mw-duration-base) var(--mw-ease-standard)"
+          "animate-mw-collapse-up": "mw-collapse-up var(--mw-duration-base) var(--mw-ease-standard)",
+          "animate-mw-flash": "mw-flash var(--mw-duration-base) var(--mw-ease-standard)",
+          "animate-mw-shift": "mw-shift var(--mw-duration-base) var(--mw-ease-enter) both"
         }
       },
       "css": {
@@ -181,6 +210,10 @@
           "--mw-duration-type": "1800ms",
           "--mw-duration-glitch": "320ms",
           "--mw-duration-drift": "18s",
+          "--mw-distance-sm": "4px",
+          "--mw-distance-md": "12px",
+          "--mw-distance-lg": "24px",
+          "--mw-stagger": "40ms",
           "--mw-ease-standard": "cubic-bezier(0.2, 0.7, 0.2, 1)",
           "--mw-ease-enter": "cubic-bezier(0, 0, 0.2, 1)",
           "--mw-ease-exit": "cubic-bezier(0.4, 0, 1, 1)",
@@ -224,14 +257,38 @@
           "--mw-info-text": "#87bbfb",
           "--mw-on-info": "#000000",
           "--mw-mutant": "#c084fc",
-          "--mw-chart-1": "#908b0e",
-          "--mw-chart-2": "#a83876",
-          "--mw-chart-3": "#378a21",
-          "--mw-chart-4": "#0961bb",
-          "--mw-chart-5": "#b55508",
-          "--mw-chart-6": "#018e7d",
-          "--mw-chart-7": "#7250ba",
-          "--mw-chart-8": "#c74a4d",
+          "--mw-category-1-line": "#0961bb",
+          "--mw-category-1-soft": "#12253d",
+          "--mw-category-1-text": "#4890e9",
+          "--mw-category-2-line": "#378a21",
+          "--mw-category-2-soft": "#162a12",
+          "--mw-category-2-text": "#4da139",
+          "--mw-category-3-line": "#a83876",
+          "--mw-category-3-soft": "#3a1528",
+          "--mw-category-3-text": "#ed4fa7",
+          "--mw-category-4-line": "#b55508",
+          "--mw-category-4-soft": "#341e11",
+          "--mw-category-4-text": "#d37439",
+          "--mw-category-5-line": "#018e7d",
+          "--mw-category-5-soft": "#132925",
+          "--mw-category-5-text": "#3f9f8f",
+          "--mw-category-6-line": "#7250ba",
+          "--mw-category-6-soft": "#281848",
+          "--mw-category-6-text": "#9978ea",
+          "--mw-category-7-line": "#908b0e",
+          "--mw-category-7-soft": "#262511",
+          "--mw-category-7-text": "#959239",
+          "--mw-category-8-line": "#c74a4d",
+          "--mw-category-8-soft": "#3d1516",
+          "--mw-category-8-text": "#ed5d60",
+          "--mw-chart-1": "var(--mw-category-1-line)",
+          "--mw-chart-2": "var(--mw-category-2-line)",
+          "--mw-chart-3": "var(--mw-category-3-line)",
+          "--mw-chart-4": "var(--mw-category-4-line)",
+          "--mw-chart-5": "var(--mw-category-5-line)",
+          "--mw-chart-6": "var(--mw-category-6-line)",
+          "--mw-chart-7": "var(--mw-category-7-line)",
+          "--mw-chart-8": "var(--mw-category-8-line)",
           "--mw-seq-1": "var(--mw-accent-700)",
           "--mw-seq-2": "var(--mw-accent-600)",
           "--mw-seq-3": "var(--mw-accent-500)",
@@ -277,14 +334,38 @@
             "--mw-info-text": "#0f5cae",
             "--mw-on-info": "#000000",
             "--mw-mutant": "#7e22ce",
-            "--mw-chart-1": "#6e6600",
-            "--mw-chart-2": "#c04e8a",
-            "--mw-chart-3": "#1b6700",
-            "--mw-chart-4": "#0554a3",
-            "--mw-chart-5": "#863e07",
-            "--mw-chart-6": "#0c9180",
-            "--mw-chart-7": "#5e3ba3",
-            "--mw-chart-8": "#bd4045",
+            "--mw-category-1-line": "#0554a3",
+            "--mw-category-1-soft": "#e7effa",
+            "--mw-category-1-text": "#1b69c1",
+            "--mw-category-2-line": "#1b6700",
+            "--mw-category-2-soft": "#d7fad0",
+            "--mw-category-2-text": "#2d791a",
+            "--mw-category-3-line": "#c04e8a",
+            "--mw-category-3-soft": "#fae9f0",
+            "--mw-category-3-text": "#bf2480",
+            "--mw-category-4-line": "#863e07",
+            "--mw-category-4-soft": "#faebe3",
+            "--mw-category-4-text": "#a4521a",
+            "--mw-category-5-line": "#0c9180",
+            "--mw-category-5-soft": "#cbfaf0",
+            "--mw-category-5-text": "#1e776a",
+            "--mw-category-6-line": "#5e3ba3",
+            "--mw-category-6-soft": "#efecfa",
+            "--mw-category-6-text": "#8239f1",
+            "--mw-category-7-line": "#6e6600",
+            "--mw-category-7-soft": "#faf39e",
+            "--mw-category-7-text": "#726b1a",
+            "--mw-category-8-line": "#bd4045",
+            "--mw-category-8-soft": "#faeae9",
+            "--mw-category-8-text": "#ca2537",
+            "--mw-chart-1": "var(--mw-category-1-line)",
+            "--mw-chart-2": "var(--mw-category-2-line)",
+            "--mw-chart-3": "var(--mw-category-3-line)",
+            "--mw-chart-4": "var(--mw-category-4-line)",
+            "--mw-chart-5": "var(--mw-category-5-line)",
+            "--mw-chart-6": "var(--mw-category-6-line)",
+            "--mw-chart-7": "var(--mw-category-7-line)",
+            "--mw-chart-8": "var(--mw-category-8-line)",
             "--mw-seq-1": "var(--mw-accent-500)",
             "--mw-seq-2": "var(--mw-accent-600)",
             "--mw-seq-3": "var(--mw-accent-700)",
@@ -330,14 +411,38 @@
           "--mw-info-text": "#0f5cae",
           "--mw-on-info": "#000000",
           "--mw-mutant": "#7e22ce",
-          "--mw-chart-1": "#6e6600",
-          "--mw-chart-2": "#c04e8a",
-          "--mw-chart-3": "#1b6700",
-          "--mw-chart-4": "#0554a3",
-          "--mw-chart-5": "#863e07",
-          "--mw-chart-6": "#0c9180",
-          "--mw-chart-7": "#5e3ba3",
-          "--mw-chart-8": "#bd4045",
+          "--mw-category-1-line": "#0554a3",
+          "--mw-category-1-soft": "#e7effa",
+          "--mw-category-1-text": "#1b69c1",
+          "--mw-category-2-line": "#1b6700",
+          "--mw-category-2-soft": "#d7fad0",
+          "--mw-category-2-text": "#2d791a",
+          "--mw-category-3-line": "#c04e8a",
+          "--mw-category-3-soft": "#fae9f0",
+          "--mw-category-3-text": "#bf2480",
+          "--mw-category-4-line": "#863e07",
+          "--mw-category-4-soft": "#faebe3",
+          "--mw-category-4-text": "#a4521a",
+          "--mw-category-5-line": "#0c9180",
+          "--mw-category-5-soft": "#cbfaf0",
+          "--mw-category-5-text": "#1e776a",
+          "--mw-category-6-line": "#5e3ba3",
+          "--mw-category-6-soft": "#efecfa",
+          "--mw-category-6-text": "#8239f1",
+          "--mw-category-7-line": "#6e6600",
+          "--mw-category-7-soft": "#faf39e",
+          "--mw-category-7-text": "#726b1a",
+          "--mw-category-8-line": "#bd4045",
+          "--mw-category-8-soft": "#faeae9",
+          "--mw-category-8-text": "#ca2537",
+          "--mw-chart-1": "var(--mw-category-1-line)",
+          "--mw-chart-2": "var(--mw-category-2-line)",
+          "--mw-chart-3": "var(--mw-category-3-line)",
+          "--mw-chart-4": "var(--mw-category-4-line)",
+          "--mw-chart-5": "var(--mw-category-5-line)",
+          "--mw-chart-6": "var(--mw-category-6-line)",
+          "--mw-chart-7": "var(--mw-category-7-line)",
+          "--mw-chart-8": "var(--mw-category-8-line)",
           "--mw-seq-1": "var(--mw-accent-500)",
           "--mw-seq-2": "var(--mw-accent-600)",
           "--mw-seq-3": "var(--mw-accent-700)",
@@ -378,6 +483,9 @@
           "mask-repeat": "no-repeat",
           "mask-position": "70% 30%"
         },
+        "@utility mw-stagger": {
+          "animation-delay": "calc(var(--mw-i, 0) * var(--mw-stagger))"
+        },
         "@utility mw-typing": {
           "display": "inline-block",
           "max-width": "100%",
@@ -409,7 +517,17 @@
         "@keyframes mw-slide-in": {
           "from": {
             "opacity": "0",
-            "translate": "0 12px"
+            "translate": "0 var(--mw-distance-md)"
+          }
+        },
+        "@keyframes mw-flash": {
+          "from": {
+            "background-color": "var(--color-accent-soft)"
+          }
+        },
+        "@keyframes mw-shift": {
+          "from": {
+            "translate": "calc(var(--mw-distance-sm) * -1) 0"
           }
         },
         "@keyframes mw-pulse": {
@@ -537,6 +655,51 @@
           "target": "app/tema.css"
         }
       ]
+    },
+    {
+      "name": "marcio-strict",
+      "type": "registry:item",
+      "title": "Modo estrito",
+      "description": "Tira as cores, raios, sombras e curvas padrão do Tailwind e liga as regras de lint mw/* para seguir o @mw/ui à risca.",
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/mw-strict.css",
+          "type": "registry:file",
+          "target": "app/mw-strict.css"
+        },
+        {
+          "path": "eslint.mw.mjs",
+          "type": "registry:file",
+          "target": "eslint.mw.mjs"
+        },
+        {
+          "path": "eslint-rules/class-context.js",
+          "type": "registry:file",
+          "target": "eslint-rules/class-context.js"
+        },
+        {
+          "path": "eslint-rules/icon-size.js",
+          "type": "registry:file",
+          "target": "eslint-rules/icon-size.js"
+        },
+        {
+          "path": "eslint-rules/no-raw-color.js",
+          "type": "registry:file",
+          "target": "eslint-rules/no-raw-color.js"
+        },
+        {
+          "path": "eslint-rules/no-raw-token.js",
+          "type": "registry:file",
+          "target": "eslint-rules/no-raw-token.js"
+        }
+      ],
+      "css": {
+        "@import \"./mw-strict.css\"": {}
+      },
+      "docs": "Acrescente as regras ao eslint.config.mjs: import mw from \"./eslint.mw.mjs\" e espalhe ...mw no fim da lista."
     },
     {
       "name": "font-bricolage",
@@ -702,7 +865,7 @@
       "name": "app-shell",
       "type": "registry:ui",
       "title": "AppShell",
-      "description": "Layout de painel: sidebar recolhível só com ícones, cabeçalho e conteúdo. No mobile, a navegação abre num Sheet.",
+      "description": "Layout de painel: sidebar recolhível só com ícones, cabeçalho, conteúdo e painel lateral opcional. No mobile, a navegação abre num Sheet ou vira abas no rodapé.",
       "dependencies": [
         "lucide-react",
         "radix-ui"
@@ -844,7 +1007,9 @@
       "type": "registry:ui",
       "title": "Card",
       "description": "Superfície com borda e rounded-card, sem sombra. A versão interactive acende a borda no hover.",
-      "dependencies": [],
+      "dependencies": [
+        "radix-ui"
+      ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/utils.json"
@@ -1360,6 +1525,26 @@
       ]
     },
     {
+      "name": "icon-tile",
+      "type": "registry:ui",
+      "title": "IconTile",
+      "description": "Ícone de destaque num quadrado de size-10 ou size-12, sobre category-N-soft ou surface. O ícone continua em size-6.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/icon-tile.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
@@ -1508,6 +1693,26 @@
       ],
       "categories": [
         "primitivos"
+      ]
+    },
+    {
+      "name": "meter",
+      "type": "registry:ui",
+      "title": "Meter",
+      "description": "Medidor compacto de recurso: ícone, valor e máximo em pt-BR, taxa em mono e barra fina. Pisca em accent-soft quando um evento muda o valor.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/meter.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
       ]
     },
     {
@@ -2505,6 +2710,263 @@
       ]
     },
     {
+      "name": "icon-base-coin",
+      "type": "registry:component",
+      "title": "Coin",
+      "description": "Ícone coin do pacote base: moeda, ouro, dinheiro.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/base/coin.tsx",
+          "type": "registry:component",
+          "target": "components/icons/base/coin.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-base-crossed-swords",
+      "type": "registry:component",
+      "title": "CrossedSwords",
+      "description": "Ícone crossed-swords do pacote base: espadas, batalha, combate.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/base/crossed-swords.tsx",
+          "type": "registry:component",
+          "target": "components/icons/base/crossed-swords.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-base-shield",
+      "type": "registry:component",
+      "title": "Shield",
+      "description": "Ícone shield do pacote base: escudo, defesa, proteção.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/base/shield.tsx",
+          "type": "registry:component",
+          "target": "components/icons/base/shield.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-archer",
+      "type": "registry:component",
+      "title": "Archer",
+      "description": "Ícone archer do pacote medieval: arqueiro, arco, flecha, unidade.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/archer.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/archer.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-barracks",
+      "type": "registry:component",
+      "title": "Barracks",
+      "description": "Ícone barracks do pacote medieval: quartel, tenda, edifício, treino.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/barracks.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/barracks.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-castle",
+      "type": "registry:component",
+      "title": "Castle",
+      "description": "Ícone castle do pacote medieval: castelo, edifício, fortaleza.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/castle.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/castle.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-farm",
+      "type": "registry:component",
+      "title": "Farm",
+      "description": "Ícone farm do pacote medieval: fazenda, celeiro, edifício.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/farm.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/farm.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-food",
+      "type": "registry:component",
+      "title": "Food",
+      "description": "Ícone food do pacote medieval: comida, pão, alimento, recurso.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/food.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/food.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-iron",
+      "type": "registry:component",
+      "title": "Iron",
+      "description": "Ícone iron do pacote medieval: ferro, lingote, metal, recurso.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/iron.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/iron.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-spearman",
+      "type": "registry:component",
+      "title": "Spearman",
+      "description": "Ícone spearman do pacote medieval: lanceiro, lança, unidade.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/spearman.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/spearman.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-stone",
+      "type": "registry:component",
+      "title": "Stone",
+      "description": "Ícone stone do pacote medieval: pedra, rocha, recurso.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/stone.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/stone.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-wood",
+      "type": "registry:component",
+      "title": "Wood",
+      "description": "Ícone wood do pacote medieval: madeira, tora, recurso.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/wood.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/wood.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icons-base",
+      "type": "registry:item",
+      "title": "Ícones base",
+      "description": "Ícones genéricos de jogo e economia, base dos pacotes de domínio.",
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-base-coin.json",
+        "http://localhost:3000/r/icon-base-crossed-swords.json",
+        "http://localhost:3000/r/icon-base-shield.json"
+      ]
+    },
+    {
+      "name": "icons-medieval",
+      "type": "registry:item",
+      "title": "Ícones medieval",
+      "description": "Recursos, edifícios e unidades de um reino medieval.",
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-medieval-archer.json",
+        "http://localhost:3000/r/icon-medieval-barracks.json",
+        "http://localhost:3000/r/icon-medieval-castle.json",
+        "http://localhost:3000/r/icon-medieval-farm.json",
+        "http://localhost:3000/r/icon-medieval-food.json",
+        "http://localhost:3000/r/icon-medieval-iron.json",
+        "http://localhost:3000/r/icon-medieval-spearman.json",
+        "http://localhost:3000/r/icon-medieval-stone.json",
+        "http://localhost:3000/r/icon-medieval-wood.json",
+        "http://localhost:3000/r/icons-base.json"
+      ]
+    },
+    {
       "name": "marcio-ui",
       "type": "registry:item",
       "title": "@mw/ui completo",
@@ -2542,6 +3004,7 @@
         "http://localhost:3000/r/glitch-text.json",
         "http://localhost:3000/r/hero.json",
         "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/icon-tile.json",
         "http://localhost:3000/r/input.json",
         "http://localhost:3000/r/kbd.json",
         "http://localhost:3000/r/kicker.json",
@@ -2549,6 +3012,7 @@
         "http://localhost:3000/r/link.json",
         "http://localhost:3000/r/logo-block.json",
         "http://localhost:3000/r/masked-input.json",
+        "http://localhost:3000/r/meter.json",
         "http://localhost:3000/r/multi-select.json",
         "http://localhost:3000/r/navbar.json",
         "http://localhost:3000/r/number-input.json",

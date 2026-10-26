@@ -22,11 +22,14 @@ function iconAttributeOf(node) {
 const iconSize = {
   meta: {
     type: "problem",
-    docs: { description: "Exige que ícones do lucide-react usem a escala size-4, size-5 ou size-6" },
+    docs: { description: "Exige que ícones do lucide-react e das origens configuradas usem a escala size-4, size-5 ou size-6" },
     schema: [
       {
         type: "object",
-        properties: { allow: { type: "array", items: { type: "string" } } },
+        properties: {
+          allow: { type: "array", items: { type: "string" } },
+          sources: { type: "array", items: { type: "string" } },
+        },
         additionalProperties: false,
       },
     ],
@@ -37,6 +40,9 @@ const iconSize = {
   },
   create(context) {
     const allowed = new Set([...scale, ...(context.options[0]?.allow ?? [])]);
+    // Uma origem terminada em / vale para todo módulo dentro dela, como @/components/icons/.
+    const sources = context.options[0]?.sources ?? ["lucide-react"];
+    const isIconSource = (source) => sources.some((entry) => (entry.endsWith("/") ? source.startsWith(entry) : source === entry));
     const icons = new Set();
     const namespaces = new Set();
 
@@ -60,7 +66,7 @@ const iconSize = {
 
     return {
       ImportDeclaration(node) {
-        if (node.source.value !== "lucide-react") return;
+        if (!isIconSource(node.source.value)) return;
         for (const specifier of node.specifiers) {
           if (specifier.type === "ImportNamespaceSpecifier") namespaces.add(specifier.local.name);
           else icons.add(specifier.local.name);

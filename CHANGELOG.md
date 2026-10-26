@@ -4,6 +4,58 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.16.0] - 2026-10-26
+
+### Novo
+
+- Modo estrito, item `marcio-strict`: cria `app/mw-strict.css`, que zera as cores, raios, sombras e curvas padrão do Tailwind e é importado logo depois do tailwindcss, e copia as regras `mw/*` com a config pronta em `eslint.mw.mjs`. Projeto novo roda logo depois do init; projeto existente, no fim da migração ([ADR 0021](docs/adr/0021-modo-estrito.md)).
+- Tokens de categoria `category-1` a `category-8`, cada um com `-line` (barra, borda e ícone, 3:1), `-soft` (fundo) e `-text` (texto, 4.5:1 sobre as superfícies e o próprio fundo), validados nos dois temas ([ADR 0022](docs/adr/0022-tokens-de-categoria.md)).
+- Meter: medidor compacto de recurso com ícone, valor e máximo em pt-BR, taxa em linha e barra fina. `highlightKey` faz o valor piscar uma vez em accent-soft quando um evento muda o valor.
+- IconTile: ícone de destaque em size-10 ou size-12, sobre `category-N-soft` ou surface, com o ícone em size-6.
+- CardAction: o link ou botão no título do card que estica a área clicável sobre o card inteiro.
+- AppShell: `mobileNav="bottom"` mostra os mesmos itens da sidebar como abas no rodapé do celular (de 3 a 5 itens; fora disso volta para o Sheet e avisa no console), `sidebarBreakpoint` escolhe entre md e lg, e `AppShellAside` é um painel à direita a partir de lg que vai para baixo do conteúdo no celular.
+- Progress: `valueText` mostra e anuncia um texto, como um tempo restante, no lugar da porcentagem.
+- Camada 1 do sistema de movimento: `animate-mw-flash` (destaque de evento), `animate-mw-shift` (deslocamento), `--mw-distance-sm/md/lg`, `--mw-stagger` e a utility `mw-stagger` ([ADR 0024](docs/adr/0024-sistema-de-movimento.md)).
+- Pacotes de ícones autorais `icons-base` e `icons-medieval`, na especificação do lucide, com validador, gerador, um item por ícone e a página Ícones para comparar com o lucide ([ADR 0023](docs/adr/0023-pacotes-de-icones.md)).
+- Token `text-display-2xl` para o número da página 404.
+- `mw/icon-size` aceita a opção `sources` com outras origens de ícone além do `lucide-react`.
+
+### Mudou
+
+- O cabeçalho do AppShell passa de `h-16` para `min-h-16` e cresce com o conteúdo em vez de cortar.
+- Avatar `sm`: as iniciais passam de 11px para `text-mono-xs` (13px).
+- Card passa a ter `position: relative`, para o CardAction.
+- Primeiros passos: o init não apaga mais a paleta do Tailwind, como a página dizia. A nova seção Modo estrito explica quando apagar. Os requisitos dizem que Next com App Router e React 19 são obrigatórios ([ADR 0025](docs/adr/0025-requisitos-do-consumidor.md)).
+
+### Quebra compatibilidade
+
+- A paleta de gráficos muda de ordem: `chart-N` passa a ser `category-N-line`, na ordem azul, verde, magenta, laranja, turquesa, violeta, amarelo e vermelho. A série 1 deixa de ser amarela e passa a ser azul.
+- `mw/no-raw-token` passa a reprovar `text-[...]` e `w-[...]` ou `h-[...]` com medida em px ou rem.
+
+**Como migrar**
+
+```bash
+npx shadcn@latest add @marcio/chart --overwrite
+```
+
+O `add` também reescreve os tokens no `globals.css`. Se um gráfico dependia da cor de uma série, troque pela categoria nova da mesma cor:
+
+```tsx
+// antes: a série 1 era amarela
+<div className="bg-chart-1" />
+// depois: amarelo é a categoria 7
+<div className="bg-category-7-line" />
+```
+
+Para o lint, troque o valor solto por um token da escala:
+
+```tsx
+// antes
+<span className="h-[560px] text-[11px]" />
+// depois
+<span className="h-140 text-mono-xs" />
+```
+
 ## [0.15.0] - 2026-10-25
 
 ### Novo

@@ -19,7 +19,7 @@ export default function NotFound() {
       <h1 className="flex flex-col gap-2">
         <GlitchText
           trigger="mount"
-          className="font-display text-[clamp(96px,20vw,200px)] leading-none font-extrabold tracking-[-0.04em] text-accent-text"
+          className="font-display text-display-2xl font-extrabold text-accent-text"
         >
           404
         </GlitchText>

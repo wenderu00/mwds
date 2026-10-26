@@ -1,6 +1,6 @@
 # 0013. Formato do registry e fluxo de instalação
 
-Status: aceito. Detalha e substitui a parte de itens do ADR 0010.
+Status: aceito. Detalha e substitui a parte de itens do ADR 0010. A parte de resets foi substituída pelo [ADR 0021](0021-modo-estrito.md).
 
 ## Contexto
 

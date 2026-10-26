@@ -8,10 +8,11 @@ export type ProgressProps = Omit<ComponentProps<typeof ProgressPrimitive.Root>, 
   value?: number | null;
   label?: ReactNode;
   showValue?: boolean;
+  valueText?: string;
   size?: "sm" | "md";
 };
 
-export function Progress({ value = null, max = 100, label, showValue = false, size = "md", className, ...props }: ProgressProps) {
+export function Progress({ value = null, max = 100, label, showValue = false, valueText, size = "md", className, ...props }: ProgressProps) {
   const labelId = useId();
   const indeterminate = value === null;
   const percent = indeterminate ? 0 : Math.min(100, Math.max(0, (value / max) * 100));
@@ -27,7 +28,7 @@ export function Progress({ value = null, max = 100, label, showValue = false, si
           )}
           {showValue && !indeterminate && (
             <span aria-hidden="true" className="ml-auto font-mono text-mono-xs text-ink-muted">
-              {Math.round(percent)}%
+              {valueText ?? `${Math.round(percent)}%`}
             </span>
           )}
         </div>
@@ -37,6 +38,7 @@ export function Progress({ value = null, max = 100, label, showValue = false, si
         value={value}
         max={max}
         aria-labelledby={label ? labelId : undefined}
+        getValueLabel={valueText === undefined ? undefined : () => valueText}
         className={cn("relative w-full overflow-hidden rounded-full border border-line-strong bg-surface", size === "sm" ? "h-1.5" : "h-2.5")}
         {...props}
       >
