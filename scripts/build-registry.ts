@@ -4,6 +4,7 @@ import { pathToFileURL } from "node:url";
 import postcss, { type ChildNode, type Container } from "postcss";
 import { blocks } from "../app/_docs/blocks";
 import { docs } from "../app/_docs/catalog";
+import { componentName, loadPacks } from "./icons/packs";
 
 type CssTree = { [key: string]: string | CssTree };
 
@@ -219,6 +220,40 @@ export function buildRegistry() {
     };
   });
 
+  const packs = loadPacks();
+  const iconItems: RegistryItem[] = packs.flatMap((pack) => {
+    const item = (name: string, description: string, extra: string[] = []): RegistryItem => {
+      const path = `registry/marcio/icons/${pack.name}/${name}.tsx`;
+      const { dependencies } = dependenciesOf(path, { withTokens: false });
+      return {
+        name: `icon-${pack.name}-${name}`,
+        type: "registry:component",
+        title: componentName(name),
+        description,
+        dependencies,
+        ...(extra.length ? { registryDependencies: extra } : {}),
+        files: [{ path, type: "registry:component", target: `components/icons/${pack.name}/${name}.tsx` }],
+        categories: ["icones"],
+      };
+    };
+    return [
+      ...pack.icons.map((icon) => item(icon.name, `Ícone ${icon.name} do pacote ${pack.name}: ${icon.tags.join(", ")}.`)),
+      ...Object.entries(pack.aliases).map(([alias, target]) =>
+        item(alias, `Nome antigo de ${target}, descontinuado. Use icon-${pack.name}-${target}.`, [itemUrl(`icon-${pack.name}-${target}`)]),
+      ),
+    ];
+  });
+  const packItems: RegistryItem[] = packs.map((pack) => ({
+    name: `icons-${pack.name}`,
+    type: "registry:item",
+    title: `Ícones ${pack.name}`,
+    description: pack.description,
+    registryDependencies: [
+      ...pack.icons.map((icon) => itemUrl(`icon-${pack.name}-${icon.name}`)),
+      ...pack.dependsOn.map((dependency) => itemUrl(`icons-${dependency}`)),
+    ],
+  }));
+
   const all: RegistryItem = {
     name: "marcio-ui",
     type: "registry:item",
@@ -231,7 +266,7 @@ export function buildRegistry() {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "marcio",
     homepage: baseUrl,
-    items: [tokens, theme, ...fontItems, utils, br, ...uiItems, ...blockItems, all],
+    items: [tokens, theme, ...fontItems, utils, br, ...uiItems, ...blockItems, ...iconItems, ...packItems, all],
   };
 }
 

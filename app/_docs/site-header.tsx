@@ -70,6 +70,7 @@ const portugueseNames: Record<string, string[]> = {
 const commandEntries: SiteCommandEntry[] = [
   { href: "/primeiros-passos", label: "Primeiros passos: instalar o @mw/ui num projeto", group: "Páginas", keywords: ["instalar", "instalação", "setup", "começar", "registry", "shadcn"] },
   { href: "/", label: "Fundação: cor, tipografia, espaçamento, movimento e mais", group: "Páginas", keywords: ["tokens", "cores", "raio", "camadas", "z-index", "densidade", "ícones"] },
+  { href: "/icones", label: "Ícones: pacotes autorais ao lado do lucide", group: "Páginas", keywords: ["ícones", "svg", "pacotes", "medieval", "lucide"] },
   { href: "/escrita", label: "Escrita: voz, tom e formatos pt-BR", group: "Páginas", keywords: ["tom", "voz", "texto", "mensagem de erro", "microcopy", "formatos", "datas", "moeda"] },
   { href: "/componentes", label: "Catálogo de componentes", group: "Páginas" },
   { href: "/exemplos", label: "Telas de exemplo", group: "Páginas" },

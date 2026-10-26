@@ -1,0 +1,16 @@
+{
+  "description": "Recursos, edifícios e unidades de um reino medieval.",
+  "dependsOn": ["base"],
+  "aliases": {},
+  "icons": {
+    "wood": { "tags": ["madeira", "tora", "recurso"], "similar": ["TreePine", "Trees"] },
+    "stone": { "tags": ["pedra", "rocha", "recurso"], "similar": ["Mountain", "Gem"] },
+    "iron": { "tags": ["ferro", "lingote", "metal", "recurso"], "similar": ["Anvil", "Pickaxe"] },
+    "food": { "tags": ["comida", "pão", "alimento", "recurso"], "similar": ["Croissant", "Wheat"] },
+    "castle": { "tags": ["castelo", "edifício", "fortaleza"], "similar": ["Castle", "Landmark"] },
+    "barracks": { "tags": ["quartel", "tenda", "edifício", "treino"], "similar": ["Tent", "Flag"] },
+    "farm": { "tags": ["fazenda", "celeiro", "edifício"], "similar": ["Warehouse", "House"] },
+    "spearman": { "tags": ["lanceiro", "lança", "unidade"], "similar": ["Shield", "Swords"] },
+    "archer": { "tags": ["arqueiro", "arco", "flecha", "unidade"], "similar": ["Target", "MoveRight"] }
+  }
+}

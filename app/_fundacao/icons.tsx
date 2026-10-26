@@ -1,4 +1,5 @@
 import { Check, ChevronDown, CircleAlert, Folder, Info, LayoutDashboard, Menu, Pencil, Settings, X } from "lucide-react";
+import NextLink from "next/link";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { FoundationSection, SpecTable, ThemePair } from "../_docs/section";
@@ -24,6 +25,13 @@ export function IconsSection() {
           <p>
             Ícone decorativo leva aria-hidden. Botão só de ícone precisa de aria-label e, de preferência, de um Tooltip com o mesmo texto. A única exceção de tamanho é a marca
             do Checkbox, com 14px dentro da caixa de 20px. Outro tamanho é barrado pelo lint (mw/icon-size).
+          </p>
+          <p>
+            O que o lucide não tem vem dos pacotes autorais, na mesma especificação e presos à mesma escala. Veja os pacotes em{" "}
+            <NextLink href="/icones" className="text-accent-text underline underline-offset-4">
+              ícones
+            </NextLink>
+            . Para dar destaque a um ícone, use o IconTile em vez de um tamanho maior.
           </p>
         </>
       }

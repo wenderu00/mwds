@@ -2665,6 +2665,263 @@
       ]
     },
     {
+      "name": "icon-base-coin",
+      "type": "registry:component",
+      "title": "Coin",
+      "description": "Ícone coin do pacote base: moeda, ouro, dinheiro.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/base/coin.tsx",
+          "type": "registry:component",
+          "target": "components/icons/base/coin.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-base-crossed-swords",
+      "type": "registry:component",
+      "title": "CrossedSwords",
+      "description": "Ícone crossed-swords do pacote base: espadas, batalha, combate.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/base/crossed-swords.tsx",
+          "type": "registry:component",
+          "target": "components/icons/base/crossed-swords.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-base-shield",
+      "type": "registry:component",
+      "title": "Shield",
+      "description": "Ícone shield do pacote base: escudo, defesa, proteção.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/base/shield.tsx",
+          "type": "registry:component",
+          "target": "components/icons/base/shield.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-archer",
+      "type": "registry:component",
+      "title": "Archer",
+      "description": "Ícone archer do pacote medieval: arqueiro, arco, flecha, unidade.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/archer.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/archer.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-barracks",
+      "type": "registry:component",
+      "title": "Barracks",
+      "description": "Ícone barracks do pacote medieval: quartel, tenda, edifício, treino.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/barracks.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/barracks.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-castle",
+      "type": "registry:component",
+      "title": "Castle",
+      "description": "Ícone castle do pacote medieval: castelo, edifício, fortaleza.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/castle.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/castle.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-farm",
+      "type": "registry:component",
+      "title": "Farm",
+      "description": "Ícone farm do pacote medieval: fazenda, celeiro, edifício.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/farm.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/farm.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-food",
+      "type": "registry:component",
+      "title": "Food",
+      "description": "Ícone food do pacote medieval: comida, pão, alimento, recurso.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/food.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/food.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-iron",
+      "type": "registry:component",
+      "title": "Iron",
+      "description": "Ícone iron do pacote medieval: ferro, lingote, metal, recurso.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/iron.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/iron.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-spearman",
+      "type": "registry:component",
+      "title": "Spearman",
+      "description": "Ícone spearman do pacote medieval: lanceiro, lança, unidade.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/spearman.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/spearman.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-stone",
+      "type": "registry:component",
+      "title": "Stone",
+      "description": "Ícone stone do pacote medieval: pedra, rocha, recurso.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/stone.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/stone.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icon-medieval-wood",
+      "type": "registry:component",
+      "title": "Wood",
+      "description": "Ícone wood do pacote medieval: madeira, tora, recurso.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/icons/medieval/wood.tsx",
+          "type": "registry:component",
+          "target": "components/icons/medieval/wood.tsx"
+        }
+      ],
+      "categories": [
+        "icones"
+      ]
+    },
+    {
+      "name": "icons-base",
+      "type": "registry:item",
+      "title": "Ícones base",
+      "description": "Ícones genéricos de jogo e economia, base dos pacotes de domínio.",
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-base-coin.json",
+        "http://localhost:3000/r/icon-base-crossed-swords.json",
+        "http://localhost:3000/r/icon-base-shield.json"
+      ]
+    },
+    {
+      "name": "icons-medieval",
+      "type": "registry:item",
+      "title": "Ícones medieval",
+      "description": "Recursos, edifícios e unidades de um reino medieval.",
+      "registryDependencies": [
+        "http://localhost:3000/r/icon-medieval-archer.json",
+        "http://localhost:3000/r/icon-medieval-barracks.json",
+        "http://localhost:3000/r/icon-medieval-castle.json",
+        "http://localhost:3000/r/icon-medieval-farm.json",
+        "http://localhost:3000/r/icon-medieval-food.json",
+        "http://localhost:3000/r/icon-medieval-iron.json",
+        "http://localhost:3000/r/icon-medieval-spearman.json",
+        "http://localhost:3000/r/icon-medieval-stone.json",
+        "http://localhost:3000/r/icon-medieval-wood.json",
+        "http://localhost:3000/r/icons-base.json"
+      ]
+    },
+    {
       "name": "marcio-ui",
       "type": "registry:item",
       "title": "@mw/ui completo",
