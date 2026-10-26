@@ -9,7 +9,7 @@ O DS tinha animações soltas (`fade-in`, `glitch`, `typing`), cada uma criada p
 ## Decisão
 
 - **Modelo combinatório.** Um efeito é uma primitiva aplicada por um gatilho, com tokens:
-  - **Primitivas:** revelar (`mw-reveal`), destacar (`mw-flash`), glitch (`mw-glitch`), digitar (`mw-typing`) e deslocar (`mw-shift`).
+  - **Primitivas:** revelar (`mw-fade-in` e `mw-slide-in`, que já existiam), destacar (`mw-flash`), glitch (`mw-glitch`), digitar (`mw-typing`) e deslocar (`mw-shift`).
   - **Gatilhos:** montar, entrar na tela, mudar valor, hover e evento.
   - **Tokens:** tempo (`--mw-duration-*`), curva (`ease-*`), distância (`--mw-distance-sm/md/lg`) e stagger (`--mw-stagger`).
 - **Camadas:**

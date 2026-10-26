@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { cn } from "@/registry/marcio/lib/utils";
 import { Button } from "@/registry/marcio/ui/button";
 
@@ -31,6 +31,38 @@ export function MotionDemo() {
       <Button variant="secondary" size="sm" className="self-start" aria-pressed={moved} onClick={() => setMoved((value) => !value)}>
         Animar
       </Button>
+    </div>
+  );
+}
+
+export function MotionPrimitivesDemo() {
+  const [flashes, setFlashes] = useState(0);
+  const [denials, setDenials] = useState(0);
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-center gap-3">
+        <span key={`flash-${flashes}`} className={cn("rounded-control border border-line px-3 py-2 font-mono text-mono-xs text-ink", flashes > 0 && "motion-safe:animate-mw-flash")}>
+          ouro: {(1200 + flashes * 50).toLocaleString("pt-BR")}
+        </span>
+        <span key={`glitch-${denials}`} className={cn("inline-block font-mono text-mono-xs text-danger-text", denials > 0 && "motion-safe:animate-mw-glitch")}>
+          {denials > 0 ? "custo insuficiente" : "pronto"}
+        </span>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <Button variant="secondary" size="sm" onClick={() => setFlashes((value) => value + 1)}>
+          Saquear
+        </Button>
+        <Button variant="secondary" size="sm" onClick={() => setDenials((value) => value + 1)}>
+          Comprar sem ouro
+        </Button>
+      </div>
+      <ol className="flex flex-col gap-1 font-mono text-mono-xs text-ink-muted">
+        {[0, 1, 2, 3].map((i) => (
+          <li key={`${flashes}-${i}`} className="mw-stagger motion-safe:animate-mw-shift" style={{ "--mw-i": i } as CSSProperties}>
+            item {i + 1}
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }

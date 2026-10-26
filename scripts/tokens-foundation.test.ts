@@ -92,6 +92,34 @@ describe("tokens de fundação", () => {
     }
   });
 
+  it("tem keyframes para toda animação mw exposta ao Tailwind", () => {
+    for (const [key, value] of Object.entries(theme).filter(([key]) => key.startsWith("animate-mw-"))) {
+      const name = value.split(/\s+/)[0]!;
+      expect(css[`@keyframes ${name}`], key).toBeTruthy();
+    }
+  });
+
+  it("faz o destaque voltar do accent-soft uma vez só, sem piscar repetido", () => {
+    const flash = theme["animate-mw-flash"];
+    expect(flash).toMatch(/var\(--mw-duration-base\)/);
+    expect(flash).toBe("mw-flash var(--mw-duration-base) var(--mw-ease-standard)");
+    expect(JSON.stringify(css["@keyframes mw-flash"])).toMatch(/var\(--color-accent-soft\)/);
+  });
+
+  it("aumenta as distâncias de movimento de sm para lg e usa o token no deslocamento", () => {
+    const values = (["sm", "md", "lg"] as const).map((name) => px(root[`--mw-distance-${name}`] as string));
+    expect(values[0]).toBeLessThan(values[1]!);
+    expect(values[1]).toBeLessThan(values[2]!);
+    expect(JSON.stringify(css["@keyframes mw-slide-in"])).toMatch(/var\(--mw-distance-md\)/);
+    expect(theme["animate-mw-shift"]).toMatch(/var\(--mw-duration-(fast|base|slow)\)/);
+    expect(JSON.stringify(css["@keyframes mw-shift"])).toMatch(/var\(--mw-distance-sm\)/);
+  });
+
+  it("atrasa cada item do stagger pelo índice vezes o passo", () => {
+    expect(ms(root["--mw-stagger"] as string)).toBeGreaterThan(0);
+    expect(JSON.stringify(css["@utility mw-stagger"])).toMatch(/var\(--mw-i, 0\) \* var\(--mw-stagger\)/);
+  });
+
   it("aumenta controles e células da densidade compacta para a ampla", () => {
     expect(theme["spacing-control"]).toBe("var(--mw-control-h)");
     expect(theme["spacing-cell-y"]).toBe("var(--mw-cell-y)");
