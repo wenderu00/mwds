@@ -17,13 +17,14 @@ const forbidden = [
   /^-?z-/,
   /^(drop-|inset-)?shadow(-|$)/,
   new RegExp(`^-?(p[xytrblse]?|m[xytrblse]?|gap(-[xy])?|space-[xy])-${length}$`),
-  new RegExp(`^(max-w|size)-${length}$`),
+  new RegExp(`^(max-w|size|w|h)-${length}$`),
+  /^text-\[.+\]$/,
 ];
 
 const noRawToken = classRule({
   description: "Proíbe raio, duração, easing, camada, sombra e medidas soltas fora dos tokens de fundação",
   message:
-    "Valor fora dos tokens de fundação ({{ value }}). Use rounded-control, duration-base, ease-standard, z-dialog, h-control ou max-w-content.",
+    "Valor fora dos tokens de fundação ({{ value }}). Use rounded-control, duration-base, ease-standard, z-dialog, h-control, max-w-content ou text-mono-xs.",
   attributes: new Set(["className"]),
   inspect(text) {
     for (const className of text.split(/\s+/)) {

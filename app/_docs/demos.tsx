@@ -214,7 +214,7 @@ export function AppShellDemo({ theme }: { theme: string }) {
   const [active, setActive] = useState("painel");
   const current = shellNav.find((item) => item.id === active)!;
   return (
-    <div className="h-[440px] w-full overflow-hidden rounded-control border border-line">
+    <div className="h-110 w-full overflow-hidden rounded-control border border-line">
       <AppShell className="h-full min-h-0" mainId={`shell-main-${theme}`}>
         <AppShellSidebar className="h-full" brand={<LogoBlock size="sm">MW</LogoBlock>} footer={<span className="font-mono text-mono-xs text-ink-muted">v0.1</span>}>
           <AppShellNav aria-label={`Principal (${theme})`}>

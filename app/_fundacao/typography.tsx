@@ -2,6 +2,7 @@ import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { FoundationSection } from "../_docs/section";
 
 const typeSamples = [
+  { label: "display-2xl · 800 · -0.04em", className: "font-display text-display-2xl font-extrabold", text: "404" },
   { label: "display-xl · 800 · -0.03em", className: "font-display text-display-xl font-extrabold", text: "Márcio Wendell" },
   { label: "display-lg · 800 · -0.02em", className: "font-display text-display-lg font-extrabold", text: "Título de seção" },
   { label: "display-md · 800 · -0.02em", className: "font-display text-display-md font-extrabold", text: "Card em destaque" },

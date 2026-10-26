@@ -43,7 +43,7 @@ export default function BlocksIndex() {
               {preview && (
                 <>
                   <div className="overflow-hidden rounded-card border border-line">
-                    <iframe src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${preview}/`} title={`Prévia do bloco ${block.name}`} loading="lazy" className="block h-[560px] w-full bg-ground" />
+                    <iframe src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${preview}/`} title={`Prévia do bloco ${block.name}`} loading="lazy" className="block h-140 w-full bg-ground" />
                   </div>
                   <Button asChild variant="secondary" className="self-start">
                     <NextLink href={preview}>Abrir em tela cheia</NextLink>

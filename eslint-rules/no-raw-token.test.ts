@@ -26,6 +26,7 @@ tester.run("no-raw-token", rule as unknown as Rule.RuleModule, {
     `const label = "z-50 é só texto";`,
     `<p>rounded-xl</p>`,
     `<div className="max-w-[min(100%,420px)] hover:ease-standard md:rounded-card" />`,
+    `<div className="text-mono-xs text-display-2xl w-full h-control h-140 w-[calc(100vw-2rem)]" />`,
   ],
   invalid: [
     invalid(`<div className="rounded-xl" />`),
@@ -60,5 +61,11 @@ tester.run("no-raw-token", rule as unknown as Rule.RuleModule, {
     invalid(`<div className="z-50!" />`),
     invalid("<div className={`flex ${open ? \"rounded-md\" : \"\"}`} />"),
     invalid("<div className={`rounded-md ${size}`} />"),
+    invalid(`<div className="text-[11px]" />`),
+    invalid(`<div className="text-[clamp(96px,20vw,200px)]" />`),
+    invalid(`<div className="sm:text-[1.1rem]" />`),
+    invalid(`<div className="w-[37px]" />`),
+    invalid(`<div className="h-[2rem]" />`),
+    invalid(`<iframe className="block h-[560px] w-full" />`),
   ],
 });
