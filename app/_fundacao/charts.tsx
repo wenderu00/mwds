@@ -4,14 +4,14 @@ import { Chart } from "@/registry/marcio/ui/chart";
 import { FoundationSection, ThemePair, themes } from "../_docs/section";
 
 const categorical = [
-  { slot: 1, swatch: "bg-chart-1", hue: "accent" },
-  { slot: 2, swatch: "bg-chart-2", hue: "magenta" },
-  { slot: 3, swatch: "bg-chart-3", hue: "verde" },
-  { slot: 4, swatch: "bg-chart-4", hue: "azul" },
-  { slot: 5, swatch: "bg-chart-5", hue: "laranja" },
-  { slot: 6, swatch: "bg-chart-6", hue: "água" },
-  { slot: 7, swatch: "bg-chart-7", hue: "violeta" },
-  { slot: 8, swatch: "bg-chart-8", hue: "vermelho" },
+  { slot: 1, swatch: "bg-chart-1", tile: "bg-category-1-soft text-category-1-text", hue: "azul" },
+  { slot: 2, swatch: "bg-chart-2", tile: "bg-category-2-soft text-category-2-text", hue: "verde" },
+  { slot: 3, swatch: "bg-chart-3", tile: "bg-category-3-soft text-category-3-text", hue: "magenta" },
+  { slot: 4, swatch: "bg-chart-4", tile: "bg-category-4-soft text-category-4-text", hue: "laranja" },
+  { slot: 5, swatch: "bg-chart-5", tile: "bg-category-5-soft text-category-5-text", hue: "turquesa" },
+  { slot: 6, swatch: "bg-chart-6", tile: "bg-category-6-soft text-category-6-text", hue: "violeta" },
+  { slot: 7, swatch: "bg-chart-7", tile: "bg-category-7-soft text-category-7-text", hue: "amarelo" },
+  { slot: 8, swatch: "bg-chart-8", tile: "bg-category-8-soft text-category-8-text", hue: "vermelho" },
 ];
 
 const sequential = ["bg-seq-1", "bg-seq-2", "bg-seq-3", "bg-seq-4", "bg-seq-5"];
@@ -39,6 +39,13 @@ const projects = [
   { key: "site", label: "Site" },
 ];
 
+const categoryRules = [
+  "Categoria nunca é a única pista: sempre vem com rótulo, ícone ou posição.",
+  "Categoria nunca indica status. Bom e ruim usam danger, success, warning e info.",
+  "No máximo 8 categorias numa tela. Acima disso, agrupe ou use outra codificação.",
+  "Fora de gráfico, use category-N-soft no fundo, category-N-text no texto e category-N-line em borda e ícone.",
+];
+
 const rules = [
   "As séries recebem as cores na ordem: a primeira é sempre chart-1, a segunda chart-2. Nunca pule nem recicle cores.",
   "A partir da nona série, junte o resto em Outros ou divida em gráficos menores.",
@@ -56,16 +63,17 @@ export function ChartsSection() {
       id="graficos"
       index="12"
       kicker="gráficos"
-      title="Oito séries e uma rampa"
+      title="Oito categorias e uma rampa"
       intro={
         <>
           <p>
-            A paleta categórica começa no accent e segue por magenta, verde, azul, laranja, água, violeta e vermelho. Cada tema tem os próprios passos: no escuro, todos ficam entre
-            L 0,48 e 0,67 em OKLCH; no claro, o accent vira oliva, porque amarelo sobre branco não passa 3:1.
+            A paleta categórica vem dos tokens de categoria: azul, verde, magenta, laranja, turquesa, violeta, amarelo e vermelho. chart-N é a linha da categoria N. Amarelo e
+            vermelho ficam no fim porque colidem com o accent e com perigo.
           </p>
           <p>
-            A ordem foi escolhida para maximizar a diferença entre séries vizinhas para quem tem protanopia ou deuteranopia: no pior par vizinho, ΔE 11,6 no escuro e 14,5 no claro
-            (meta 8). Todas as séries passam 3:1 sobre ground, band e surface nos dois temas.
+            Nas sete primeiras séries, o pior par vizinho para quem tem protanopia ou deuteranopia tem ΔE 11,6 no escuro e 16,2 no claro (meta 8). Amarelo e vermelho juntos
+            ficam em 6,1, aceito porque legenda e tabela são obrigatórias. Todas as linhas passam 3:1 sobre ground, band e surface, e todo texto de categoria passa 4.5:1 sobre
+            ground, surface e o próprio fundo suave.
           </p>
           <p>A sequencial usa só a escala do accent, do mais fraco ao mais forte. No escuro ela inverte: o valor alto é o mais claro.</p>
         </>
@@ -87,6 +95,16 @@ export function ChartsSection() {
                   </li>
                 ))}
               </ol>
+            </div>
+            <div className="flex flex-col gap-3">
+              <CodeComment>fora de gráfico, category-N-soft e category-N-text</CodeComment>
+              <ul className="grid grid-cols-4 gap-3">
+                {categorical.map(({ slot, tile, hue }) => (
+                  <li key={slot} className={`rounded-control px-3 py-2 font-mono text-mono-xs ${tile}`}>
+                    {slot} {hue}
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="flex flex-col gap-3">
               <CodeComment>sequencial, seq-1 a seq-5</CodeComment>
@@ -112,7 +130,15 @@ export function ChartsSection() {
         ))}
       </div>
       <div className="flex flex-col gap-3">
-        <CodeComment>regras</CodeComment>
+        <CodeComment>regras de categoria</CodeComment>
+        <ul className="flex max-w-measure list-disc flex-col gap-2 pl-5 text-ink-soft marker:text-accent-text">
+          {categoryRules.map((rule) => (
+            <li key={rule}>{rule}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="flex flex-col gap-3">
+        <CodeComment>regras de gráfico</CodeComment>
         <ul className="flex max-w-measure list-disc flex-col gap-2 pl-5 text-ink-soft marker:text-accent-text">
           {rules.map((rule) => (
             <li key={rule}>{rule}</li>

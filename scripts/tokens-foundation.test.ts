@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { tokensCss } from "./build-registry";
+import { hexToOklch } from "./lib/color";
+import { loadTokens } from "./lib/tokens";
 
 type Tree = { [key: string]: string | Tree };
 
@@ -37,6 +39,28 @@ describe("tokens de fundação", () => {
       expect(light[`--mw-${name}`], `${name} claro`).toBeTruthy();
     }
     expect(new Set(names.slice(0, 8).map((name) => dark[`--mw-${name}`])).size).toBe(8);
+  });
+
+  it("faz cada série de gráfico usar a linha da categoria de mesmo número nos dois temas", () => {
+    const tokens = loadTokens();
+    for (const mode of ["dark", "light"] as const) {
+      for (let n = 1; n <= 8; n++) {
+        expect(tokens[mode][`category-${n}-line`], `category-${n}-line ${mode}`).toMatch(/^#[0-9a-f]{6}$/);
+        expect(tokens[mode][`chart-${n}`], `chart-${n} ${mode}`).toBe(tokens[mode][`category-${n}-line`]);
+      }
+    }
+  });
+
+  it("deixa por último as categorias que colidem com accent e perigo", () => {
+    const tokens = loadTokens();
+    const hue = (hex: string) => hexToOklch(hex)[2];
+    const distance = (a: number, b: number) => Math.min(Math.abs(a - b), 360 - Math.abs(a - b));
+    const nearest = (target: string) =>
+      Array.from({ length: 8 }, (_, i) => i + 1).reduce((best, n) =>
+        distance(hue(tokens.dark[`category-${n}-line`]!), hue(target)) < distance(hue(tokens.dark[`category-${best}-line`]!), hue(target)) ? n : best,
+      );
+    expect(nearest(tokens.dark["accent"]!)).toBe(7);
+    expect(nearest(tokens.dark["danger"]!)).toBe(8);
   });
 
   it("empilha as camadas com flutuantes acima de modais", () => {

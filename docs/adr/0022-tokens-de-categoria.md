@@ -15,7 +15,9 @@ A ordem antiga começava pelo amarelo, que colide com o accent ([ADR 0003](0003-
   - `category-N-soft`: fundo de tile e de etiqueta.
   - `category-N-text`: texto. Tem pelo menos 4.5:1 sobre `ground`, `surface` e o próprio `category-N-soft`.
 - **`chart-N` vira alias de `category-N-line`.** Gráficos continuam usando `chart-N`, e os dois nomes nunca divergem.
-- **A ordem é:** azul, magenta, verde, laranja, turquesa, violeta, amarelo, vermelho. Amarelo e vermelho ficam no fim porque colidem com accent e perigo; só aparecem com sete séries ou mais.
+- **A ordem é:** azul, verde, magenta, laranja, turquesa, violeta, amarelo, vermelho. Amarelo e vermelho ficam no fim porque colidem com accent e perigo; só aparecem com sete séries ou mais.
+- **A ordem passa no validador de visualização.** A primeira proposta (azul, magenta, verde, laranja...) deixava verde ao lado de laranja com ΔE 2,4 para deuteranopia, abaixo da meta 8. Trocar verde e magenta resolve: nas sete primeiras séries o pior par vizinho tem ΔE 11,6 no escuro e 16,2 no claro. Com visão normal, o pior par fica em 15,8 e 18,6 (piso 15).
+- **O par 7 e 8 fica em ΔE 6,1.** Amarelo e vermelho viram tons de marrom para deuteranopia em qualquer ordem que os deixe juntos no fim. A faixa 6 a 8 só é aceita com codificação secundária, que as regras de gráfico já exigem: legenda e tabela sempre.
 - **`scripts/contrast.ts` valida os três papéis nos dois temas.** Os pares de `chart-N` saem, porque o alias já está coberto.
 - **Regras de uso:**
   - Categoria nunca é a única pista: sempre vem com rótulo, ícone ou posição.
