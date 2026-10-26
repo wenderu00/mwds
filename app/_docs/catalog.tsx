@@ -1,4 +1,6 @@
-import { AtSign, Code, Columns3, LayoutGrid, List, Pencil, ShieldCheck, Sparkles, Trash2, Workflow } from "lucide-react";
+import { AtSign, Castle, Code, Coins, Columns3, LayoutGrid, List, Pencil, ShieldCheck, Sparkles, Trash2, Trees, Workflow } from "lucide-react";
+import { IconTile } from "@/registry/marcio/ui/icon-tile";
+import { Meter } from "@/registry/marcio/ui/meter";
 import type { ReactNode } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
 import {
@@ -110,6 +112,7 @@ import {
   DropdownMenuDemo,
   FileUploadProgressDemo,
   PaginationDemo,
+  MeterDemo,
   ProgressDemo,
   StepperDemo,
   ToastActionDemo,
@@ -2942,6 +2945,94 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: ["A seta da variação é escondida e o sentido vai em texto para o leitor de tela.", "A cor nunca é a única pista: o sinal e o texto da variação dizem o mesmo."],
+  },
+  {
+    slug: "meter",
+    name: "Meter",
+    group: "compostos",
+    status: "beta",
+    summary: "Medidor compacto de recurso: ícone, valor e máximo em pt-BR, taxa em mono e barra fina. Pisca em accent-soft quando um evento muda o valor.",
+    file: "meter.tsx",
+    usage: {
+      use: ["Quantidade de algo que tem teto: ouro no cofre, espaço usado, vagas ocupadas.", "Barra de recursos no topo de um jogo ou painel, com size=\"compact\"."],
+      avoid: [
+        "Tarefa em andamento, que termina: use Progress.",
+        "Número-chave de painel com variação: use StatCard.",
+        "highlightKey a cada tique de produção contínua: o destaque é para evento discreto, como saque ou compra.",
+      ],
+    },
+    props: [
+      { name: "label", type: "string", description: "Nome do recurso. No compacto fica só para o leitor de tela." },
+      { name: "value / max", type: "number", description: "Valor e teto. Sem max, mostra só o valor, sem barra e sem papel de medidor." },
+      { name: "icon", type: "ReactNode", description: "Ícone do recurso, em size-4. Decorativo." },
+      { name: "rate", type: "ReactNode", description: "Taxa em linha, em mono, como +40/min." },
+      { name: "size", type: '"md" | "compact"', default: '"md"', description: "No compacto, o ícone toma o lugar do rótulo." },
+      { name: "highlightKey", type: "string | number", description: "Quando muda, o valor pisca uma vez em accent-soft. Não pisca na montagem." },
+      { name: "formatOptions", type: "Intl.NumberFormatOptions", description: "Formato dos números, sempre em pt-BR." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Com destaque por evento",
+        className: "w-full",
+        code: `<Meter label="Ouro" value={gold} max={5000} rate="+40/min" icon={<Coins />} highlightKey={loots} />`,
+        render: () => <MeterDemo />,
+      },
+      {
+        title: "Compacto",
+        className: "w-full",
+        stacked: true,
+        code: `<Meter size="compact" label="Ouro" value={1234} max={5000} icon={<Coins />} />\n<Meter size="compact" label="Madeira" value={320} max={1000} icon={<Trees />} />`,
+        render: () => (
+          <div className="grid w-full gap-4 sm:grid-cols-2">
+            <Meter size="compact" label="Ouro" value={1234} max={5000} icon={<Coins />} />
+            <Meter size="compact" label="Madeira" value={320} max={1000} icon={<Trees />} />
+          </div>
+        ),
+      },
+    ],
+    a11y: [
+      "Com max, é um meter com nome, valor, mínimo, máximo e o texto 1.234 de 5.000 para o leitor de tela.",
+      "A taxa fica fora do medidor, porque o conteúdo de um meter não é lido.",
+      "O destaque só roda com movimento permitido e acontece uma vez por evento.",
+    ],
+  },
+  {
+    slug: "icon-tile",
+    name: "IconTile",
+    group: "compostos",
+    status: "beta",
+    summary: "Ícone de destaque num quadrado de size-10 ou size-12, sobre category-N-soft ou surface. O ícone continua em size-6.",
+    file: "icon-tile.tsx",
+    usage: {
+      use: ["Ícone que identifica um item numa lista ou card: edifício, recurso, tipo de arquivo.", "Distinguir categorias junto do nome, com category de 1 a 8."],
+      avoid: ["Ícone dentro de botão ou de texto: use o ícone direto, em size-4 ou size-5.", "Indicar status com a cor da categoria: use Badge com tone.", "Categoria como única pista: sempre ao lado de um nome."],
+    },
+    props: [
+      { name: "size", type: '"md" | "lg"', default: '"md"', description: "size-10 ou size-12. O ícone fica em size-6 nos dois." },
+      { name: "category", type: "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8", description: "Fundo category-N-soft e ícone category-N-text. Sem ela, surface." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Categorias",
+        code: `<IconTile category={1}><Castle /></IconTile>\n<IconTile category={2} size="lg"><Trees /></IconTile>\n<IconTile><Coins /></IconTile>`,
+        render: () => (
+          <div className="flex items-center gap-3">
+            <IconTile category={1}>
+              <Castle />
+            </IconTile>
+            <IconTile category={2} size="lg">
+              <Trees />
+            </IconTile>
+            <IconTile>
+              <Coins />
+            </IconTile>
+          </div>
+        ),
+      },
+    ],
+    a11y: ["O tile é decorativo e fica escondido do leitor de tela; o nome do item vem do texto ao lado.", "O ícone usa category-N-text, que passa 4.5:1 sobre o fundo suave da categoria."],
   },
   {
     slug: "stepper",

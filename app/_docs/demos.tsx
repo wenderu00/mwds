@@ -1,6 +1,6 @@
 "use client";
 
-import { Folder, LayoutDashboard, Settings, Users } from "lucide-react";
+import { Coins, Folder, LayoutDashboard, Settings, Users } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Alert } from "@/registry/marcio/ui/alert";
 import {
@@ -38,6 +38,7 @@ import { FileUpload, type FileUploadStatus } from "@/registry/marcio/ui/file-upl
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { LogoBlock } from "@/registry/marcio/ui/logo-block";
 import { Pagination } from "@/registry/marcio/ui/pagination";
+import { Meter } from "@/registry/marcio/ui/meter";
 import { Progress } from "@/registry/marcio/ui/progress";
 import { Stepper } from "@/registry/marcio/ui/stepper";
 import { toast, type ToastTone } from "@/registry/marcio/ui/toast";
@@ -380,5 +381,26 @@ export function FileUploadProgressDemo({ id }: { id: string }) {
         onRetry={(file) => setStatus((current) => new Map(current).set(file, { progress: 0 }))}
       />
     </FormField>
+  );
+}
+
+export function MeterDemo() {
+  const [gold, setGold] = useState(1234);
+  const [loots, setLoots] = useState(0);
+  return (
+    <div className="flex w-full flex-col gap-4">
+      <Meter label="Ouro" value={gold} max={5000} rate="+40/min" icon={<Coins />} highlightKey={loots} />
+      <Button
+        size="sm"
+        variant="secondary"
+        className="self-start"
+        onClick={() => {
+          setGold((value) => Math.min(5000, value + 250));
+          setLoots((count) => count + 1);
+        }}
+      >
+        Saquear
+      </Button>
+    </div>
   );
 }

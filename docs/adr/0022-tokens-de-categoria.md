@@ -28,4 +28,4 @@ A ordem antiga começava pelo amarelo, que colide com o accent ([ADR 0003](0003-
 
 - Os gráficos mudam de cor: a série 1 deixa de ser amarela e passa a ser azul. Isso entra no CHANGELOG em Quebra compatibilidade.
 - Quem precisa de uma cor fixa para uma série específica deve referenciar o token pelo número da nova ordem.
-- `IconTile` e `Meter` usam `category-N-soft` e `category-N-line`.
+- O `IconTile` usa `category-N-soft` no fundo e `category-N-text` no ícone, o par que tem contraste validado.

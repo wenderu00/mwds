@@ -85,7 +85,7 @@ Todos os pares usados passam WCAG AA nos dois temas. A tabela completa está em 
 | `br` | lib | Máscaras de CPF, CNPJ, telefone, CEP e moeda; validação de CPF e CNPJ |
 | `typography`, `kicker`, `section-title`, `code-comment`, `logo-block`, `dot-grid`, `typing-text`, `glitch-text` | ui | Identidade |
 | `button`, `icon-button`, `input`, `masked-input`, `textarea`, `number-input`, `separator`, `toggle-group`, `slider`, `kbd`, `label`, `checkbox`, `switch`, `radio-group`, `badge`, `avatar`, `skeleton`, `spinner`, `link` | ui | Primitivos |
-| `form-field`, `card`, `select`, `combobox`, `calendar`, `date-picker`, `file-upload`, `accordion`, `collapsible`, `data-table`, `stat-card`, `stepper`, `feature-grid`, `command`, `popover`, `dropdown-menu`, `dialog`, `alert-dialog`, `sheet`, `toast`, `alert`, `tabs`, `table`, `pagination`, `breadcrumb`, `progress`, `tooltip`, `tour` | ui | Compostos |
+| `form-field`, `card`, `select`, `combobox`, `calendar`, `date-picker`, `file-upload`, `accordion`, `collapsible`, `data-table`, `stat-card`, `meter`, `icon-tile`, `stepper`, `feature-grid`, `command`, `popover`, `dropdown-menu`, `dialog`, `alert-dialog`, `sheet`, `toast`, `alert`, `tabs`, `table`, `pagination`, `breadcrumb`, `progress`, `tooltip`, `tour` | ui | Compostos |
 | `page-header`, `empty-state`, `theme-toggle`, `navbar`, `hero`, `footer`, `command-palette`, `app-shell` | ui | Padrões |
 | `login`, `not-found`, `dashboard`, `settings`, `landing` | block | Telas prontas (ver abaixo) |
 | `admin-shell` | block | Casca de painel usada por `dashboard` e `settings` |

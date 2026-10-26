@@ -49,6 +49,8 @@ const portugueseNames: Record<string, string[]> = {
   alert: ["aviso", "alerta"],
   sheet: ["painel lateral", "gaveta"],
   progress: ["progresso", "barra"],
+  meter: ["medidor", "recurso", "quantidade"],
+  "icon-tile": ["ícone", "destaque", "categoria"],
   "form-field": ["campo de formulário", "validação"],
   card: ["cartão"],
   select: ["seleção", "lista de opções"],

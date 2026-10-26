@@ -1480,6 +1480,26 @@
       ]
     },
     {
+      "name": "icon-tile",
+      "type": "registry:ui",
+      "title": "IconTile",
+      "description": "Ícone de destaque num quadrado de size-10 ou size-12, sobre category-N-soft ou surface. O ícone continua em size-6.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/icon-tile.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
@@ -1628,6 +1648,26 @@
       ],
       "categories": [
         "primitivos"
+      ]
+    },
+    {
+      "name": "meter",
+      "type": "registry:ui",
+      "title": "Meter",
+      "description": "Medidor compacto de recurso: ícone, valor e máximo em pt-BR, taxa em mono e barra fina. Pisca em accent-soft quando um evento muda o valor.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/meter.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "compostos"
       ]
     },
     {
@@ -2662,6 +2702,7 @@
         "http://localhost:3000/r/glitch-text.json",
         "http://localhost:3000/r/hero.json",
         "http://localhost:3000/r/icon-button.json",
+        "http://localhost:3000/r/icon-tile.json",
         "http://localhost:3000/r/input.json",
         "http://localhost:3000/r/kbd.json",
         "http://localhost:3000/r/kicker.json",
@@ -2669,6 +2710,7 @@
         "http://localhost:3000/r/link.json",
         "http://localhost:3000/r/logo-block.json",
         "http://localhost:3000/r/masked-input.json",
+        "http://localhost:3000/r/meter.json",
         "http://localhost:3000/r/multi-select.json",
         "http://localhost:3000/r/navbar.json",
         "http://localhost:3000/r/number-input.json",
