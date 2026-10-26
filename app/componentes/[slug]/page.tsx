@@ -144,7 +144,8 @@ export default async function ComponentPage({ params }: { params: Promise<Params
               Props
             </SectionTitle>
             <CodeComment>além destas, todas as props nativas do elemento e ref são repassadas</CodeComment>
-            <div className="overflow-x-auto rounded-card border border-line">
+            {/* tabIndex: no celular a tabela rola na horizontal, e quem usa teclado precisa focar o contêiner para rolar, como no Table. */}
+            <div tabIndex={0} className="overflow-x-auto rounded-card border border-line">
               <table className="w-full min-w-[640px] border-collapse text-left">
                 <thead className="bg-surface font-mono text-mono-xs text-ink-muted">
                   <tr>
@@ -173,7 +174,8 @@ export default async function ComponentPage({ params }: { params: Promise<Params
               <SectionTitle index={index("teclado")} as="h2" size="md" id="teclado">
                 Teclado
               </SectionTitle>
-              <div className="overflow-x-auto rounded-card border border-line">
+              {/* tabIndex: no celular a tabela rola na horizontal, e quem usa teclado precisa focar o contêiner para rolar, como no Table. */}
+            <div tabIndex={0} className="overflow-x-auto rounded-card border border-line">
                 <table aria-labelledby="teclado" className="w-full min-w-[480px] border-collapse text-left">
                   <thead className="bg-surface font-mono text-mono-xs text-ink-muted">
                     <tr>

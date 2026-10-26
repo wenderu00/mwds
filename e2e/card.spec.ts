@@ -5,6 +5,7 @@ test("Card: clicar fora do título segue o link do CardAction", async ({ page })
 
   const card = page.locator('[data-slot="card"]:has([data-slot="card-action"])').first();
   await expect(card.getByRole("link", { name: "Castelo" })).toBeVisible();
+  await card.scrollIntoViewIfNeeded();
   const box = (await card.boundingBox())!;
   await page.mouse.click(box.x + box.width - 12, box.y + box.height - 12);
 
