@@ -1972,6 +1972,7 @@ export const docs: ComponentDoc[] = [
       { name: "max", type: "number", default: "100", description: "Valor máximo." },
       { name: "label", type: "ReactNode", description: "Rótulo visível que nomeia a barra." },
       { name: "showValue", type: "boolean", default: "false", description: "Mostra a porcentagem em mono." },
+      { name: "valueText", type: "string", description: "Texto no lugar da porcentagem, como um tempo restante. O leitor de tela anuncia o mesmo texto." },
       { name: "size", type: '"sm" | "md"', default: '"md"', description: "Altura da barra." },
       classNameProp,
     ],
@@ -1987,6 +1988,12 @@ export const docs: ComponentDoc[] = [
         className: "w-full",
         code: `<Progress label="Processando relatório" />`,
         render: () => <Progress label="Processando relatório" className="w-full" />,
+      },
+      {
+        title: "Com tempo restante",
+        className: "w-full",
+        code: `<Progress value={45} max={120} label="Treino de lanceiros" showValue valueText="1 min 15 s" />`,
+        render: () => <Progress value={45} max={120} label="Treino de lanceiros" showValue valueText="1 min 15 s" className="w-full" />,
       },
     ],
     a11y: [
