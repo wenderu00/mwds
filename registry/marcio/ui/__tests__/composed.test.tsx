@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { useForm } from "react-hook-form";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { Button } from "@/registry/marcio/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/marcio/ui/card";
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/marcio/ui/card";
 import { Checkbox } from "@/registry/marcio/ui/checkbox";
 import {
   Dialog,
@@ -46,6 +46,49 @@ describe("Card", () => {
 
   it("has no axe violations", async () => {
     await expectAccessibleInThemes(card);
+  });
+});
+
+describe("CardAction", () => {
+  const linkCard = (
+    <Card interactive>
+      <CardHeader>
+        <CardTitle>
+          <CardAction asChild>
+            <a href="/castelo">Castelo</a>
+          </CardAction>
+        </CardTitle>
+        <CardDescription>Nível 3, produz 40 de ouro por minuto</CardDescription>
+      </CardHeader>
+    </Card>
+  );
+
+  it("names the link after the card title and leaves it as the only focus stop", async () => {
+    const user = userEvent.setup();
+    render(linkCard);
+    const link = screen.getByRole("link", { name: "Castelo" });
+    expect(screen.getByRole("heading", { level: 3, name: "Castelo" })).toContainElement(link);
+    await user.tab();
+    expect(link).toHaveFocus();
+    await user.tab();
+    expect(document.body).toHaveFocus();
+  });
+
+  it("renders a button when no child element is given", async () => {
+    const onClick = vi.fn();
+    render(
+      <Card>
+        <CardTitle>
+          <CardAction onClick={onClick}>Quartel</CardAction>
+        </CardTitle>
+      </Card>,
+    );
+    await userEvent.setup().click(screen.getByRole("button", { name: "Quartel" }));
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("has no axe violations", async () => {
+    await expectAccessibleInThemes(linkCard);
   });
 });
 

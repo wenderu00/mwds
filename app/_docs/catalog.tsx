@@ -18,7 +18,8 @@ import { BreadcrumbTrail } from "@/registry/marcio/ui/breadcrumb";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/registry/marcio/ui/accordion";
 import { Button } from "@/registry/marcio/ui/button";
 import { Calendar } from "@/registry/marcio/ui/calendar";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/marcio/ui/card";
+import NextLink from "next/link";
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/marcio/ui/card";
 import { Checkbox } from "@/registry/marcio/ui/checkbox";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/registry/marcio/ui/collapsible";
 import { Combobox } from "@/registry/marcio/ui/combobox";
@@ -2156,15 +2157,25 @@ export const docs: ComponentDoc[] = [
     file: "card.tsx",
     status: "estavel",
     usage: {
-      use: ["Agrupar conteúdo relacionado numa superfície: resumo, formulário, item de lista.", "interactive quando o card inteiro leva a um lugar, com um link dentro."],
-      avoid: ["Cards dentro de cards.", "Separar seções de uma página que já têm títulos: espaço basta.", "Destacar um aviso: use Alert."],
+      use: [
+        "Agrupar conteúdo relacionado numa superfície: resumo, formulário, item de lista.",
+        "interactive com CardAction quando o card inteiro leva a um lugar: o link fica no título e a área clicável cobre o card.",
+      ],
+      avoid: [
+        "Cards dentro de cards.",
+        "Separar seções de uma página que já têm títulos: espaço basta.",
+        "Destacar um aviso: use Alert.",
+        "Mais de um CardAction por card, ou um botão em volta do card inteiro: botão não pode conter título e blocos.",
+      ],
     },
     keyboard: [
       { keys: "Tab", action: "No card interactive, foca o link ou botão de dentro e acende a borda." },
+      { keys: "Enter", action: "Com CardAction, segue o link ou aciona o botão do título." },
     ],
     props: [
       { name: "interactive", type: "boolean", default: "false", description: "Borda em accent-line no hover e quando algo dentro tem foco." },
       { name: "CardTitle as", type: '"h2" | "h3" | "h4" | "p"', default: '"h3"', description: "Nível do título do card." },
+      { name: "CardAction asChild", type: "boolean", default: "false", description: "Usa o filho (um link) no lugar do botão. A área clicável se estica até cobrir o card." },
       classNameProp,
     ],
     examples: [
@@ -2191,8 +2202,28 @@ export const docs: ComponentDoc[] = [
           </Card>
         ),
       },
+      {
+        title: "Card clicável inteiro",
+        className: "w-full",
+        code: `<Card interactive>\n  <CardHeader>\n    <CardTitle>\n      <CardAction asChild>\n        <NextLink href="/componentes/badge/">Castelo</NextLink>\n      </CardAction>\n    </CardTitle>\n    <CardDescription>Nível 3, produz 40 de ouro por minuto.</CardDescription>\n  </CardHeader>\n</Card>`,
+        render: () => (
+          <Card interactive className="w-full">
+            <CardHeader>
+              <CardTitle>
+                <CardAction asChild>
+                  <NextLink href="/componentes/badge/">Castelo</NextLink>
+                </CardAction>
+              </CardTitle>
+              <CardDescription>Nível 3, produz 40 de ouro por minuto.</CardDescription>
+            </CardHeader>
+          </Card>
+        ),
+      },
     ],
-    a11y: ["CardTitle é h3 por padrão; use as=\"h2\" ou outro nível para manter a hierarquia da página sem pular níveis."],
+    a11y: [
+      "CardTitle é h3 por padrão; use as=\"h2\" ou outro nível para manter a hierarquia da página sem pular níveis.",
+      "Com CardAction, o nome do link é o título do card e ele é a única parada de Tab. Outro controle dentro do card precisa de relative z-base para ficar acima da área esticada.",
+    ],
   },
   {
     slug: "select",

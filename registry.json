@@ -962,7 +962,9 @@
       "type": "registry:ui",
       "title": "Card",
       "description": "Superfície com borda e rounded-card, sem sombra. A versão interactive acende a borda no hover.",
-      "dependencies": [],
+      "dependencies": [
+        "radix-ui"
+      ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/utils.json"
