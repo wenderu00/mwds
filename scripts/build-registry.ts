@@ -153,6 +153,22 @@ export function buildRegistry() {
     files: [{ path: "registry/marcio/tema.css", type: "registry:file", target: "app/tema.css" }],
   };
 
+  // Os resets ficam num arquivo próprio: o shadcn acrescenta cssVars.theme no fim do @theme inline, e ali eles apagariam os tokens.
+  const lintFiles = ["eslint.mw.mjs", ...readdirSync(join(root, "eslint-rules")).filter((file) => file.endsWith(".js")).sort().map((file) => `eslint-rules/${file}`)];
+  const strict: RegistryItem = {
+    name: "marcio-strict",
+    type: "registry:item",
+    title: "Modo estrito",
+    description: "Tira as cores, raios, sombras e curvas padrão do Tailwind e liga as regras de lint mw/* para seguir o @mw/ui à risca.",
+    registryDependencies: [itemUrl("marcio-tokens")],
+    files: [
+      { path: "registry/marcio/mw-strict.css", type: "registry:file", target: "app/mw-strict.css" },
+      ...lintFiles.map((path) => ({ path, type: "registry:file", target: path })),
+    ],
+    css: { '@import "./mw-strict.css"': {} },
+    docs: 'Acrescente as regras ao eslint.config.mjs: import mw from "./eslint.mw.mjs" e espalhe ...mw no fim da lista.',
+  };
+
   const utils: RegistryItem = {
     name: "utils",
     type: "registry:lib",
@@ -266,7 +282,7 @@ export function buildRegistry() {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "marcio",
     homepage: baseUrl,
-    items: [tokens, theme, ...fontItems, utils, br, ...uiItems, ...blockItems, ...iconItems, ...packItems, all],
+    items: [tokens, theme, strict, ...fontItems, utils, br, ...uiItems, ...blockItems, ...iconItems, ...packItems, all],
   };
 }
 

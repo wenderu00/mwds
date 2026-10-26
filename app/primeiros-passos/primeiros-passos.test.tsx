@@ -12,7 +12,7 @@ vi.mock("next/navigation", () => ({
   usePathname: () => "/primeiros-passos",
 }));
 
-const steps = ["requisitos", "criar-projeto", "tokens", "tema", "primeiro-componente", "primeiro-bloco", "atualizar", "sem-cli"];
+const steps = ["requisitos", "criar-projeto", "tokens", "modo-estrito", "tema", "primeiro-componente", "primeiro-bloco", "atualizar", "sem-cli"];
 
 const registry = buildRegistry();
 const itemNames = new Set(registry.items.map((item) => item.name));
@@ -41,7 +41,26 @@ describe("página primeiros passos", () => {
     const section = getByRole("heading", { name: "E o Tailwind?" }).closest("section")!;
     expect(section.id).toBe("tokens");
     expect(section.textContent).toContain("@theme inline");
+    expect(section.textContent).not.toContain("--color-*: initial");
+  });
+
+  it("explica que o modo estrito zera o Tailwind e liga o lint, e quando rodar", () => {
+    const { container } = render(<GettingStartedPage />);
+    const section = container.querySelector<HTMLElement>("section#modo-estrito")!;
     expect(section.textContent).toContain("--color-*: initial");
+    expect(section.textContent).toContain("eslint.mw.mjs");
+    expect(section.textContent).toMatch(/projeto novo/i);
+    expect(section.textContent).toMatch(/fim da migração/i);
+    expect(commands()).toContain("npx shadcn@latest add @marcio/marcio-strict");
+  });
+
+  it("exige Next com App Router, React 19 e Tailwind 4", () => {
+    const { container } = render(<GettingStartedPage />);
+    const text = container.querySelector<HTMLElement>("section#requisitos")!.textContent!;
+    expect(text).toMatch(/Next.js.*App Router/);
+    expect(text).toMatch(/React.*19/);
+    expect(text).toMatch(/Tailwind CSS.*v4/);
+    expect(text).toMatch(/Vite/);
   });
 
   it("só manda instalar itens que existem no registry", () => {

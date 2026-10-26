@@ -657,6 +657,51 @@
       ]
     },
     {
+      "name": "marcio-strict",
+      "type": "registry:item",
+      "title": "Modo estrito",
+      "description": "Tira as cores, raios, sombras e curvas padrão do Tailwind e liga as regras de lint mw/* para seguir o @mw/ui à risca.",
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/mw-strict.css",
+          "type": "registry:file",
+          "target": "app/mw-strict.css"
+        },
+        {
+          "path": "eslint.mw.mjs",
+          "type": "registry:file",
+          "target": "eslint.mw.mjs"
+        },
+        {
+          "path": "eslint-rules/class-context.js",
+          "type": "registry:file",
+          "target": "eslint-rules/class-context.js"
+        },
+        {
+          "path": "eslint-rules/icon-size.js",
+          "type": "registry:file",
+          "target": "eslint-rules/icon-size.js"
+        },
+        {
+          "path": "eslint-rules/no-raw-color.js",
+          "type": "registry:file",
+          "target": "eslint-rules/no-raw-color.js"
+        },
+        {
+          "path": "eslint-rules/no-raw-token.js",
+          "type": "registry:file",
+          "target": "eslint-rules/no-raw-token.js"
+        }
+      ],
+      "css": {
+        "@import \"./mw-strict.css\"": {}
+      },
+      "docs": "Acrescente as regras ao eslint.config.mjs: import mw from \"./eslint.mw.mjs\" e espalhe ...mw no fim da lista."
+    },
+    {
       "name": "font-bricolage",
       "type": "registry:font",
       "title": "Bricolage Grotesque",

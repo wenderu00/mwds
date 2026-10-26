@@ -19,12 +19,15 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 │   │   └── cadastro/page.tsx      # formulário com validação e toast
 │   ├── blocos/page.tsx            # lista dos blocos do registry
 │   ├── primeiros-passos/          # instalação do zero; o teste confere cada comando contra o registry
+│   ├── icones/                    # pacotes autorais ao lado dos parecidos do lucide
 │   └── _docs/                     # componentes internos do site: preview, catálogo, cabeçalho,
 │                                  # code-block (com copiar), section (seção numerada, SpecTable,
 │                                  # ThemePair) e registry-url (URL publicada)
 ├── registry/
 │   └── marcio/
 │       ├── tokens.css
+│       ├── mw-strict.css          # resets do modo estrito (ADR 0021)
+│       ├── icons/                 # componentes gerados a partir de icons/ (não editar)
 │       ├── lib/utils.ts, lib/br.ts
 │       └── ui/
 │           ├── kicker.tsx
@@ -41,10 +44,13 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 │   ├── contrast-pairs.ts
 │   ├── accent-scale.ts            # gera a escala do ADR 0004
 │   ├── build-registry.ts          # gera o registry.json (ADR 0013)
+│   ├── icons/                     # packs, validate e generate dos ícones autorais (ADR 0023)
 │   └── check-colors.ts
+├── icons/<pacote>/                # SVGs autorais e pack.json
+├── eslint.mw.mjs                  # config das regras mw/*, usada pelo repo e publicada no marcio-strict
 ├── eslint-rules/
 │   ├── class-context.js           # detecta strings de classe (className, cn, cva, variáveis *class*)
-│   ├── icon-size.js               # ícones do lucide-react fora de size-4, size-5 e size-6 (ADR 0015)
+│   ├── icon-size.js               # ícones do lucide-react e das origens em sources fora de size-4, size-5 e size-6 (ADR 0015)
 │   ├── no-raw-color.js
 │   └── no-raw-token.js            # raio, duração, easing, camada, sombra e medidas soltas (ADR 0015)
 ├── docs/

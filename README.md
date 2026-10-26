@@ -32,19 +32,17 @@ npx shadcn@latest add @marcio/button
 
 Não rode `npx shadcn init` sem a URL: o init padrão instala o tema do shadcn, que conflita com os tokens. Todo `add` reescreve os tokens no `globals.css`; personalize num arquivo próprio importado depois dele.
 
-### Opcional: só cores do DS
+Requisitos: Next.js com App Router, React 19 e Tailwind CSS v4. Projetos em Vite migram para Next antes ([ADR 0025](docs/adr/0025-requisitos-do-consumidor.md)).
 
-O registry não apaga a paleta padrão do Tailwind, para não quebrar projetos existentes. Para garantir que só os tokens do DS existam como classe de cor (como neste repositório), adicione no início do `@theme inline` do `globals.css`:
+### Modo estrito
 
-```css
-@theme inline {
-  --color-*: initial;
-  --color-transparent: transparent;
-  --color-current: currentColor;
-}
+O `init` não apaga a paleta padrão do Tailwind, para não quebrar projetos existentes. Para seguir o DS à risca, instale o modo estrito:
+
+```bash
+npx shadcn@latest add @marcio/marcio-strict
 ```
 
-Depois disso, `bg-red-500` deixa de existir e só classes como `bg-surface` e `text-accent-text` funcionam.
+Ele cria `app/mw-strict.css`, que zera as cores, raios, sombras e curvas padrão (`bg-red-500` e `rounded-md` deixam de existir), e copia as regras de lint `mw/*` com a config pronta em `eslint.mw.mjs`. Acrescente `...mw` ao `eslint.config.mjs`. Projeto novo roda logo depois do `init`; projeto existente roda no fim da migração, e passar no lint marca a migração como concluída ([ADR 0021](docs/adr/0021-modo-estrito.md)).
 
 ## Como os tokens funcionam
 
@@ -68,7 +66,8 @@ Principais classes:
 | Accent | `bg-accent` + `text-on-accent` (preenchimento), `text-accent-text` (texto e links), `border-accent-line` (borda acesa), `bg-accent-soft` (seleção) |
 | Estados | `bg-{estado}` + `text-on-{estado}`, `bg-{estado}-soft`, `text-{estado}-text` para `danger`, `success`, `warning` e `info` |
 | Escala | `bg-accent-50` até `bg-accent-950` |
-| Gráficos | `chart-1` a `chart-8` (categórica, em ordem fixa) e `seq-1` a `seq-5` (sequencial), como `fill-chart-1` e `bg-seq-3` |
+| Categorias | `category-1` a `category-8`, cada uma com `-line`, `-soft` e `-text`, como `bg-category-2-soft` e `text-category-2-text` |
+| Gráficos | `chart-1` a `chart-8` (alias de `category-N-line`, em ordem fixa) e `seq-1` a `seq-5` (sequencial), como `fill-chart-1` e `bg-seq-3` |
 | Tipografia | `font-display`, `font-sans`, `font-mono`, `text-display-xl` a `text-display-sm`, `text-lead`, `text-mono-sm`, `text-mono-xs`, `tracking-kicker` |
 
 A regra do amarelo: `#ece41f` é sempre preenchimento com texto preto. Quando precisa ser texto ou linha, use `accent-text` e `accent-line`, que no tema claro viram oliva (`#6e6600`), porque amarelo sobre branco dá 1,3:1.
@@ -80,6 +79,7 @@ Todos os pares usados passam WCAG AA nos dois temas. A tabela completa está em 
 | Item | Tipo | Conteúdo |
 |---|---|---|
 | `marcio-tokens` | base | Tokens, fontes e `cn`. Use com `init` |
+| `marcio-strict` | item | Modo estrito: zera a paleta padrão do Tailwind e traz as regras de lint `mw/*` |
 | `font-bricolage`, `font-plex-sans`, `font-plex-mono` | font | Fontes via `next/font` |
 | `utils` | lib | Helper `cn` |
 | `br` | lib | Máscaras de CPF, CNPJ, telefone, CEP e moeda; validação de CPF e CNPJ |
@@ -89,6 +89,7 @@ Todos os pares usados passam WCAG AA nos dois temas. A tabela completa está em 
 | `page-header`, `empty-state`, `theme-toggle`, `navbar`, `hero`, `footer`, `command-palette`, `app-shell` | ui | Padrões |
 | `login`, `not-found`, `dashboard`, `settings`, `landing` | block | Telas prontas (ver abaixo) |
 | `admin-shell` | block | Casca de painel usada por `dashboard` e `settings` |
+| `icons-base`, `icons-medieval`, `icon-<pacote>-<nome>` | item, component | Ícones autorais, um arquivo por ícone em `components/icons/` (ver [/icones](https://wenderu00.github.io/mwds/icones/)) |
 | `marcio-ui` | item | Todos os componentes |
 
 Cada página de componente traz quando usar e quando não usar, exemplos, props, teclado e notas de acessibilidade, além de um selo de status: **estável** (API firme), **beta** (pode mudar sem aviso de migração) ou **experimental** (pode sair). As páginas ficam em [https://wenderu00.github.io/mwds/componentes](https://wenderu00.github.io/mwds/componentes/). Telas completas de sistema estão em [/exemplos](https://wenderu00.github.io/mwds/exemplos/), e os blocos em [/blocos](https://wenderu00.github.io/mwds/blocos/).
