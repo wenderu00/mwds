@@ -820,7 +820,7 @@
       "name": "app-shell",
       "type": "registry:ui",
       "title": "AppShell",
-      "description": "Layout de painel: sidebar recolhível só com ícones, cabeçalho e conteúdo. No mobile, a navegação abre num Sheet.",
+      "description": "Layout de painel: sidebar recolhível só com ícones, cabeçalho, conteúdo e painel lateral opcional. No mobile, a navegação abre num Sheet ou vira abas no rodapé.",
       "dependencies": [
         "lucide-react",
         "radix-ui"
