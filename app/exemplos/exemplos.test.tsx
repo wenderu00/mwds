@@ -36,7 +36,7 @@ describe("listing example", () => {
     expect(screen.getByRole("heading", { name: "Nenhum projeto encontrado" })).toBeInTheDocument();
     await user.click(within(screen.getByText("Nenhum projeto encontrado").closest("[data-slot=empty-state]") as HTMLElement).getByRole("button", { name: "Limpar filtros" }));
     expect(screen.getByRole("table")).toBeInTheDocument();
-  });
+  }, 15_000); // digita duas buscas inteiras: com a suíte toda em paralelo, passa dos 5s padrão
 
   it("deletes a project only after confirming in an alert dialog", async () => {
     const user = userEvent.setup();

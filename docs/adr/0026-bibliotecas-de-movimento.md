@@ -36,9 +36,9 @@ O ADR 0024 deixou a camada 3 em aberto entre `ogl` e `three`. Na prática, os ef
 - **Carregamento.**
   - Pixi e GSAP entram sempre por `import()` dinâmico, em módulo client-only, depois que a página fica ociosa.
   - Plugins do GSAP são registrados dentro desse módulo, nunca no servidor.
-  - Motion usa `LazyMotion` com `m` para manter a camada 2 leve.
+  - Os componentes da camada 2 usam `motion.*` completo, não `LazyMotion` com `m`. Com `m` e sem o provider, o conteúdo ficaria preso no estado inicial, invisível. Cada componente também checa o movimento reduzido sozinho, então funciona mesmo sem o `MotionProvider`.
 - **Movimento reduzido:**
-  - **Motion:** `MotionProvider` com `reducedMotion="user"` é obrigatório na raiz.
+  - **Motion:** o `MotionProvider` com `reducedMotion="user"` fica na raiz e cobre os `motion.*` do próprio projeto. Os componentes do DS não dependem dele para respeitar o reduce.
   - **Pixi:** a cena não inicia com `reduce`, a menos que seja interativa e mostre um quadro estático. Nesse caso nada se move sozinho.
   - **GSAP:** toda timeline fica dentro de `gsap.matchMedia`, com uma versão reduzida que só faz troca de opacidade e cor.
 - **Contrato de cena (Pixi).** O `SceneCanvas` vem do `pixi-canvas.tsx` do portfólio e:

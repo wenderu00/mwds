@@ -53,6 +53,11 @@ import { Footer } from "@/registry/marcio/ui/footer";
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { DotGrid } from "@/registry/marcio/ui/dot-grid";
+import { Magnetic } from "@/registry/marcio/ui/magnetic";
+import { Reveal } from "@/registry/marcio/ui/reveal";
+import { ScrambleText } from "@/registry/marcio/ui/scramble-text";
+import { ScrollProgress } from "@/registry/marcio/ui/scroll-progress";
+import { Tilt } from "@/registry/marcio/ui/tilt";
 import { GlitchText } from "@/registry/marcio/ui/glitch-text";
 import { Hero } from "@/registry/marcio/ui/hero";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
@@ -148,7 +153,7 @@ export type DocDoDont = { do: DocSample; dont: DocSample };
 export type ComponentDoc = {
   slug: string;
   name: string;
-  group: "identidade" | "primitivos" | "compostos" | "padroes";
+  group: "identidade" | "primitivos" | "compostos" | "padroes" | "movimento";
   summary: string;
   file: string;
   status: DocStatus;
@@ -4019,6 +4024,173 @@ export const docs: ComponentDoc[] = [
       { keys: "Esc", action: "Pula o tour e devolve o foco." },
     ],
   },
+  {
+    slug: "motion-provider",
+    name: "MotionProvider",
+    group: "movimento",
+    summary: "Configuração do Motion para o projeto: respeita o movimento reduzido e usa a duração e a curva dos tokens como transição padrão.",
+    file: "motion-provider.tsx",
+    status: "beta",
+    usage: {
+      use: ["Uma vez no layout raiz, em projetos que usam motion.* fora dos componentes do DS."],
+      avoid: ["Aninhar vários: um só na raiz basta.", "Contar com ele para os componentes do DS: cada um já checa o movimento reduzido sozinho."],
+    },
+    props: [{ name: "children", type: "ReactNode", description: "A aplicação." }],
+    examples: [
+      {
+        title: "No layout raiz",
+        code: `// app/layout.tsx\n<body>\n  <MotionProvider>{children}</MotionProvider>\n</body>`,
+        render: () => <CodeComment>configuração, sem saída visual</CodeComment>,
+      },
+    ],
+    a11y: ["Liga reducedMotion=\"user\": com prefers-reduced-motion: reduce, o Motion desliga transformações e mantém só opacidade."],
+  },
+  {
+    slug: "reveal",
+    name: "Reveal",
+    group: "movimento",
+    summary: "Conteúdo que sobe e aparece ao entrar na tela, uma vez, com stagger por índice. Duração, curva e distância vêm dos tokens.",
+    file: "reveal.tsx",
+    status: "beta",
+    usage: {
+      use: ["Seções e cards de páginas de conteúdo, como o portfólio e landing pages.", "Listas curtas, com index para entrarem em sequência."],
+      avoid: ["Telas de sistema e formulários: o conteúdo precisa estar lá quando a pessoa chega.", "Texto que a pessoa está lendo ou campo com foco (ADR 0024)."],
+    },
+    props: [
+      { name: "as", type: '"div" | "section" | "article" | "li"', default: '"div"', description: "Elemento renderizado." },
+      { name: "index", type: "number", default: "0", description: "Posição na lista. Atrasa a entrada em index × --mw-stagger." },
+      { name: "distance", type: '"sm" | "md" | "lg"', default: '"lg"', description: "Quanto sobe, de --mw-distance-*." },
+      { name: "once", type: "boolean", default: "true", description: "Anima só na primeira entrada na tela." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Cards em sequência",
+        code: `{items.map((item, i) => (\n  <Reveal key={item} as="li" index={i}>...</Reveal>\n))}`,
+        className: "w-full",
+        render: () => (
+          <ul className="grid w-full grid-cols-3 gap-3">
+            {["Requisito", "Teste", "Deploy"].map((item, i) => (
+              <Reveal key={item} as="li" index={i} className="rounded-control border border-line bg-surface p-4 font-mono text-mono-xs text-ink-muted">
+                {item}
+              </Reveal>
+            ))}
+          </ul>
+        ),
+      },
+    ],
+    a11y: ["Com movimento reduzido, o conteúdo já nasce visível, sem deslocamento.", "Só mexe em opacidade e posição: a ordem de leitura e o foco não mudam."],
+  },
+  {
+    slug: "tilt",
+    name: "Tilt",
+    group: "movimento",
+    summary: "Inclina o conteúdo em 3D seguindo o mouse, com spring. Para cards de destaque.",
+    file: "tilt.tsx",
+    status: "beta",
+    usage: {
+      use: ["Cards de projeto e vitrines em páginas de conteúdo."],
+      avoid: ["Cards com formulário ou muitos controles: a inclinação atrapalha a mira.", "Listas longas: vira ruído."],
+    },
+    props: [{ name: "max", type: "number", default: "6", description: "Inclinação máxima em graus." }, classNameProp],
+    examples: [
+      {
+        title: "Card",
+        code: `<Tilt>\n  <Card>...</Card>\n</Tilt>`,
+        render: () => (
+          <Tilt>
+            <Card className="w-64">
+              <CardHeader>
+                <CardTitle>BioQuest</CardTitle>
+                <CardDescription>Passe o mouse por cima.</CardDescription>
+              </CardHeader>
+            </Card>
+          </Tilt>
+        ),
+      },
+    ],
+    a11y: ["Só responde a mouse: toque e caneta não inclinam.", "Com movimento reduzido, fica parado."],
+  },
+  {
+    slug: "magnetic",
+    name: "Magnetic",
+    group: "movimento",
+    summary: "Puxa o filho na direção do mouse e volta com spring ao sair. Para uma ou duas chamadas principais.",
+    file: "magnetic.tsx",
+    status: "beta",
+    usage: {
+      use: ["A ação principal de um hero, como o botão de contato."],
+      avoid: ["Vários na mesma tela: o efeito perde a graça e cansa.", "Botões de formulário e de diálogo."],
+    },
+    props: [{ name: "strength", type: "number", default: "0.3", description: "Fração da distância ao centro que o filho acompanha." }, classNameProp],
+    examples: [
+      {
+        title: "Botão",
+        code: `<Magnetic>\n  <Button>Vamos conversar</Button>\n</Magnetic>`,
+        render: () => (
+          <Magnetic>
+            <Button>Vamos conversar</Button>
+          </Magnetic>
+        ),
+      },
+    ],
+    a11y: ["O alvo de clique continua sendo o filho: o deslocamento é visual.", "Só responde a mouse e fica parado com movimento reduzido."],
+  },
+  {
+    slug: "scroll-progress",
+    name: "ScrollProgress",
+    group: "movimento",
+    summary: "Barra fina em accent que cresce com a rolagem da página, com spring.",
+    file: "scroll-progress.tsx",
+    status: "beta",
+    usage: {
+      use: ["Na base do cabeçalho de páginas longas de conteúdo."],
+      avoid: ["Telas de sistema: a rolagem ali não é progresso de leitura.", "Mais de uma por página."],
+    },
+    props: [{ name: "className", type: "string", description: "Posicione com absolute ou fixed. Padrão: h-0.5, largura total, bg-accent." }],
+    examples: [
+      {
+        title: "Na base do cabeçalho",
+        code: `<header className="sticky top-0">\n  ...\n  <ScrollProgress className="absolute inset-x-0 bottom-0" />\n</header>`,
+        className: "w-full",
+        render: () => (
+          <div className="relative w-full rounded-control border border-line px-4 py-3 font-mono text-mono-xs text-ink-muted">
+            cabeçalho, role a página
+            <ScrollProgress className="absolute inset-x-0 bottom-0" />
+          </div>
+        ),
+      },
+    ],
+    a11y: ["É decorativa: tem aria-hidden.", "Com movimento reduzido, acompanha a rolagem sem spring."],
+  },
+  {
+    slug: "scramble-text",
+    name: "ScrambleText",
+    group: "movimento",
+    summary: "Texto em mono que embaralha em glifos e assenta letra a letra, ao montar e no hover.",
+    file: "scramble-text.tsx",
+    status: "beta",
+    usage: {
+      use: ["O nome ou título de um hero, uma vez por tela."],
+      avoid: ["Texto longo ou que a pessoa precisa ler para agir.", "Mais de um por tela."],
+    },
+    props: [
+      { name: "text", type: "string", description: "Texto final. É o que o leitor de tela lê." },
+      { name: "as", type: '"h1" | "h2" | "h3" | "p" | "span"', default: '"span"', description: "Elemento renderizado." },
+      { name: "trigger", type: '"mount" | "hover"', default: '"mount"', description: "mount embaralha ao montar e no hover; hover só no hover." },
+      { name: "duration", type: "number", default: "900", description: "Tempo em ms até o texto assentar." },
+      { name: "glyphs", type: "string", default: '"01<>/{}[]#$*+=_"', description: "Caracteres usados no embaralhamento." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Título de hero",
+        code: `<ScrambleText as="h3" text="Márcio Wendell" className="text-display-sm" />`,
+        render: () => <ScrambleText as="h3" text="Márcio Wendell" trigger="hover" className="text-display-sm" />,
+      },
+    ],
+    a11y: ["O leitor de tela lê sempre o texto final, numa cópia sr-only; os glifos ficam com aria-hidden.", "Com movimento reduzido, não embaralha."],
+  },
 ];
 
 export const groups = [
@@ -4026,6 +4198,7 @@ export const groups = [
   { id: "primitivos", title: "Primitivos", description: "Peças básicas de qualquer interface." },
   { id: "compostos", title: "Compostos", description: "Combinações prontas para formulários, sobreposições e dados." },
   { id: "padroes", title: "Padrões", description: "Blocos de tela que se repetem em todo sistema." },
+  { id: "movimento", title: "Movimento", description: "Animação de interface, cenas em canvas e personagens. Opcionais, fora do marcio-ui." },
 ] as const;
 
 export function getDoc(slug: string) {

@@ -11,6 +11,21 @@ Element.prototype.hasPointerCapture ??= function hasPointerCapture() {
 };
 Element.prototype.releasePointerCapture ??= function releasePointerCapture() {};
 
+// O whileInView do Motion e o SceneCanvas observam a entrada na tela. No jsdom nada entra.
+if (!("IntersectionObserver" in globalThis)) {
+  globalThis.IntersectionObserver = class {
+    readonly root = null;
+    readonly rootMargin = "";
+    readonly thresholds = [];
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+    takeRecords() {
+      return [];
+    }
+  } as unknown as typeof IntersectionObserver;
+}
+
 if (!("ResizeObserver" in globalThis)) {
   globalThis.ResizeObserver = class {
     observe() {}
