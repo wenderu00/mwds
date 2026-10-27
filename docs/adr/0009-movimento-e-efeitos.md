@@ -1,6 +1,6 @@
 # 0009. Efeitos são opcionais e desligam com movimento reduzido
 
-Status: aceito
+Status: aceito. A regra de bibliotecas foi revista pelo [ADR 0026](0026-bibliotecas-de-movimento.md).
 
 ## Decisão
 
