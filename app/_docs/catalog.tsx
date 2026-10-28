@@ -123,7 +123,9 @@ import {
   ProgressDemo,
   StepperDemo,
   ToastActionDemo,
+  CharacterStageDemo,
   SceneCanvasDemo,
+  SentinelDemo,
   ToastDemo,
   TourDemo,
 } from "./demos";
@@ -4264,6 +4266,71 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: ["É decorativo: aria-hidden e sem ponteiro. O conteúdo por cima continua clicável.", "Só o mouse empurra os pontos; toque só ondula.", "Com movimento reduzido, mostra o DotGrid parado."],
+  },
+  {
+    slug: "character-stage",
+    name: "CharacterStage",
+    group: "movimento",
+    summary: "Palco SVG para personagens e cenas animados com GSAP. Carrega o gsap sob demanda e separa a versão completa da reduzida.",
+    file: "character-stage.tsx",
+    status: "experimental",
+    usage: {
+      use: ["Personagens e cenas curtas em SVG que reagem a eventos, como uma rodada de jogo ou uma conquista.", "Sequências com várias partes coordenadas, que o CSS e o Motion deixam difíceis."],
+      avoid: [
+        "Animar componentes de interface: para isso existem as primitivas CSS e o Motion (ADR 0026).",
+        "Cor literal na timeline: use tokens.color.",
+        "Repetir um destaque mais de 3 vezes por segundo (WCAG 2.3.1).",
+      ],
+    },
+    props: [
+      { name: "width / height", type: "number", description: "Tamanho do viewBox. O SVG ocupa a largura do pai." },
+      { name: "animate", type: "(context) => void | (() => void)", description: "Recebe { gsap, root, part, tokens, reduced }. Tudo o que criar é revertido ao desmontar e ao trocar replay." },
+      { name: "replay", type: "string | number", description: "Mude para rodar animate de novo, como o id de uma rodada." },
+      { name: "plugins", type: '("drawSVG" | "morphSVG")[]', default: "[]", description: "Plugins do GSAP carregados e registrados só no cliente." },
+      { name: "label", type: "string", description: "Nome da cena. Sem label, o palco é decorativo (aria-hidden)." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Animação própria",
+        description: "As partes são marcadas com data-parte, e o helper part monta o seletor.",
+        code: `const quicar: CharacterAnimate = ({ gsap, part, tokens, reduced }) => {\n  if (reduced) {\n    gsap.to(part("bola"), { fill: tokens.color.success, duration: 0.3, repeat: 1, yoyo: true });\n    return;\n  }\n  gsap.to(part("bola"), { y: -40, duration: 0.4, ease: "power2.out", repeat: 3, yoyo: true });\n};\n\n<CharacterStage width={120} height={80} animate={quicar} replay={round}>\n  <circle data-parte="bola" cx={60} cy={66} r={10} className="fill-accent" />\n</CharacterStage>`,
+        render: () => <CharacterStageDemo />,
+      },
+    ],
+    a11y: [
+      "Sem label, o SVG tem aria-hidden; com label, é role img com o nome da cena.",
+      "A animação roda dentro de gsap.matchMedia: com prefers-reduced-motion: reduce, animate recebe reduced e deve trocar só opacidade e cor.",
+      "Se a pessoa mudar a preferência com a página aberta, a timeline é revertida e roda de novo na versão certa.",
+    ],
+  },
+  {
+    slug: "character-sentinel",
+    name: "Sentinel",
+    group: "movimento",
+    summary: "Personagem de exemplo, uma sentinela de escudo, com as partes padronizadas e as poses parada, celebrar e dúvida.",
+    file: "character-sentinel.tsx",
+    status: "experimental",
+    usage: {
+      use: ["Mascote de estados vazios, conquistas e jogos simples.", "Ponto de partida para desenhar personagens próprios com as mesmas partes."],
+      avoid: ["Mais de um personagem animado chamando atenção na mesma tela.", "Comunicar um estado só pela pose: diga em texto também."],
+    },
+    props: [
+      { name: "pose", type: '"idle" | "celebrar" | "duvida"', default: '"idle"', description: "Trocar a pose reverte a anterior e toca a nova." },
+      { name: "label", type: "string", description: "Nome para o leitor de tela. Sem label, é decorativo." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Poses",
+        code: `<Sentinel pose="celebrar" label="Sentinela comemorando" />`,
+        render: () => <SentinelDemo />,
+      },
+    ],
+    a11y: [
+      "Com movimento reduzido: parada não se mexe, celebrar só pisca a cor dos traços para success e dúvida só mostra o ponto de interrogação.",
+      "A pose não substitui texto: anuncie o resultado em HTML ao lado.",
+    ],
   },
 ];
 

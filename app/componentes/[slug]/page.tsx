@@ -143,7 +143,8 @@ export default async function ComponentPage({ params }: { params: Promise<Params
             <SectionTitle index={index("props")} as="h2" size="md" id="props">
               Props
             </SectionTitle>
-            <CodeComment>além destas, todas as props nativas do elemento e ref são repassadas</CodeComment>
+            {/* Os componentes de movimento têm API fechada: só as props da tabela. */}
+            {doc.group !== "movimento" && <CodeComment>além destas, todas as props nativas do elemento e ref são repassadas</CodeComment>}
             {/* tabIndex: no celular a tabela rola na horizontal, e quem usa teclado precisa focar o contêiner para rolar, como no Table. */}
             <div tabIndex={0} className="overflow-x-auto rounded-card border border-line">
               <table className="w-full min-w-[640px] border-collapse text-left">

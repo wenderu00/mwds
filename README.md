@@ -44,6 +44,18 @@ npx shadcn@latest add @marcio/marcio-strict
 
 Ele cria `app/mw-strict.css`, que zera as cores, raios, sombras e curvas padrão (`bg-red-500` e `rounded-md` deixam de existir), e copia as regras de lint `mw/*` com a config pronta em `eslint.mw.mjs`. Acrescente `...mw` ao `eslint.config.mjs`. Projeto novo roda logo depois do `init`; projeto existente roda no fim da migração, e passar no lint marca a migração como concluída ([ADR 0021](docs/adr/0021-modo-estrito.md)).
 
+### Movimento
+
+Os componentes do grupo Movimento ficam fora do `marcio-ui` e só entram por `add`, porque trazem dependências pesadas ([ADR 0026](docs/adr/0026-bibliotecas-de-movimento.md)):
+
+| Camada | Itens | Dependência |
+|---|---|---|
+| Interface | `motion-provider`, `reveal`, `tilt`, `magnetic`, `scroll-progress`, `scramble-text` | `motion` |
+| Cenas em canvas | `scene-canvas`, `dot-field` | `pixi.js`, carregado sob demanda |
+| Personagens | `character-stage`, `character-sentinel` | `gsap`, carregado sob demanda |
+
+As três camadas leem cores e durações do tema pela `mw-tokens` e respeitam o movimento reduzido. Com o modo estrito, `mw/no-scene-lib` barra import de `pixi.js` e `gsap` fora dos palcos: cenas recebem `PIXI` do `SceneCanvas` e personagens recebem `gsap` do `CharacterStage`.
+
 ## Como os tokens funcionam
 
 Os componentes só usam tokens semânticos. O valor de cada um muda com o tema:

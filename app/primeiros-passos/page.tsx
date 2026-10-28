@@ -224,8 +224,8 @@ export default function GettingStartedPage() {
           <p className="max-w-measure text-ink-soft">O shadcn não edita o eslint.config.mjs. Acrescente a config no fim da lista:</p>
           <CodeBlock title="eslint.config.mjs" code={strictEslint} />
           <p className="max-w-measure text-ink-soft">
-            A partir daí, npm run lint reprova cor fora dos tokens (bg-red-500), raio, sombra, duração e medidas soltas (rounded-md, text-[11px]) e ícone fora da escala,
-            tanto do lucide quanto dos pacotes de components/icons/.
+            A partir daí, npm run lint reprova cor fora dos tokens (bg-red-500), raio, sombra, duração e medidas soltas (rounded-md, text-[11px]), ícone fora da escala,
+            tanto do lucide quanto dos pacotes de components/icons/, e import de pixi.js ou gsap fora do SceneCanvas e do CharacterStage.
           </p>
           <CodeComment>se o seu CSS principal não está em app/globals.css, mova o mw-strict.css para a mesma pasta</CodeComment>
         </FoundationSection>
@@ -278,6 +278,11 @@ export default function GettingStartedPage() {
               )}
             />
           </div>
+          <p className="max-w-measure text-ink-soft">
+            Os componentes do grupo Movimento são opcionais e ficam fora do marcio-ui: o add de cada um instala o motion, o pixi.js ou o gsap só quando você pede. Se for
+            usar motion.* no seu código, envolva o layout com o MotionProvider.
+          </p>
+          <CodeBlock title="terminal · movimento" code={add("@marcio/motion-provider @marcio/reveal @marcio/dot-field")} />
         </FoundationSection>
 
         <FoundationSection

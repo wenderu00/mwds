@@ -42,6 +42,8 @@ import { Pagination } from "@/registry/marcio/ui/pagination";
 import { Meter } from "@/registry/marcio/ui/meter";
 import { Progress } from "@/registry/marcio/ui/progress";
 import { SceneCanvas, type Scene } from "@/registry/marcio/ui/scene-canvas";
+import { Sentinel, type SentinelPose } from "@/registry/marcio/ui/character-sentinel";
+import { CharacterStage, type CharacterAnimate } from "@/registry/marcio/ui/character-stage";
 import { Stepper } from "@/registry/marcio/ui/stepper";
 import { toast, type ToastTone } from "@/registry/marcio/ui/toast";
 import { Tour } from "@/registry/marcio/ui/tour";
@@ -489,5 +491,47 @@ export function SceneCanvasDemo() {
       fallback={<p className="flex h-full items-center justify-center font-mono text-mono-xs text-ink-muted">quadro estático</p>}
       className="h-40 w-full rounded-control border border-line"
     />
+  );
+}
+
+const poseLabels: Record<SentinelPose, string> = { idle: "Parada", celebrar: "Celebrar", duvida: "Dúvida" };
+
+export function SentinelDemo() {
+  const [pose, setPose] = useState<SentinelPose>("idle");
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <Sentinel pose={pose} label={`Sentinela, pose ${poseLabels[pose].toLowerCase()}`} />
+      <div className="flex gap-2">
+        {(Object.keys(poseLabels) as SentinelPose[]).map((name) => (
+          <Button key={name} size="sm" variant={pose === name ? "primary" : "secondary"} aria-pressed={pose === name} onClick={() => setPose(name)}>
+            {poseLabels[name]}
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Animação própria: a bola quica; com movimento reduzido, só acende.
+const quicar: CharacterAnimate = ({ gsap, part, tokens, reduced }) => {
+  if (reduced) {
+    gsap.to(part("bola"), { fill: tokens.color.success, duration: 0.3, repeat: 1, yoyo: true });
+    return;
+  }
+  gsap.to(part("bola"), { y: -40, duration: 0.4, ease: "power2.out", repeat: 3, yoyo: true });
+};
+
+export function CharacterStageDemo() {
+  const [round, setRound] = useState(0);
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <CharacterStage width={120} height={80} animate={quicar} replay={round} className="max-w-40">
+        <circle data-parte="bola" cx={60} cy={66} r={10} className="fill-accent" />
+        <line x1={20} y1={77} x2={100} y2={77} className="stroke-line" strokeDasharray="2 6" />
+      </CharacterStage>
+      <Button size="sm" variant="secondary" onClick={() => setRound((n) => n + 1)}>
+        Quicar de novo
+      </Button>
+    </div>
   );
 }

@@ -4,6 +4,23 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.19.0] - 2026-10-27
+
+### Novo
+
+- Camada 3b do sistema de movimento, com GSAP ([ADR 0026](docs/adr/0026-bibliotecas-de-movimento.md)).
+- CharacterStage: palco SVG para personagens.
+  - Carrega o `gsap` e os plugins pedidos (`drawSVG`, `morphSVG`) por `import()`.
+  - Roda a animação dentro de `gsap.matchMedia`, passando `gsap`, `part`, `tokens` e `reduced`.
+  - Reverte tudo ao desmontar e ao trocar `replay`.
+- Sentinel: personagem de exemplo com as partes padronizadas (`corpo`, `olhos`, `braco-esq`, `braco-dir`, `perna-esq`, `perna-dir`) e as poses `idle`, `celebrar` e `duvida`. Com movimento reduzido, só troca cor e opacidade.
+- Regra `mw/no-scene-lib`, no modo estrito: reprova import em runtime de `pixi.js`, `gsap` e `@gsap/*` fora do SceneCanvas e do CharacterStage. `import type` continua liberado.
+- Primeiros passos e README explicam como instalar os itens de movimento.
+
+### Mudou
+
+- As páginas dos componentes de movimento não dizem mais que repassam as props nativas e a ref: a API deles é fechada.
+
 ## [0.18.0] - 2026-10-27
 
 ### Novo

@@ -694,6 +694,11 @@
           "path": "eslint-rules/no-raw-token.js",
           "type": "registry:file",
           "target": "eslint-rules/no-raw-token.js"
+        },
+        {
+          "path": "eslint-rules/no-scene-lib.js",
+          "type": "registry:file",
+          "target": "eslint-rules/no-scene-lib.js"
         }
       ],
       "css": {
@@ -1038,6 +1043,50 @@
       ],
       "categories": [
         "compostos"
+      ]
+    },
+    {
+      "name": "character-sentinel",
+      "type": "registry:ui",
+      "title": "Sentinel",
+      "description": "Personagem de exemplo, uma sentinela de escudo, com as partes padronizadas e as poses parada, celebrar e dúvida.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/character-stage.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/character-sentinel.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
+      ]
+    },
+    {
+      "name": "character-stage",
+      "type": "registry:ui",
+      "title": "CharacterStage",
+      "description": "Palco SVG para personagens e cenas animados com GSAP. Carrega o gsap sob demanda e separa a versão completa da reduzida.",
+      "dependencies": [
+        "gsap"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/character-stage.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
       ]
     },
     {
