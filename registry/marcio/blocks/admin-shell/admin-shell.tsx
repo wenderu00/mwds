@@ -81,7 +81,7 @@ export function AdminShell({
       <AppShellSidebar
         brand={
           <LogoBlock asChild size="sm">
-            <NextLink href="/dashboard" aria-label="Painel, início">
+            <NextLink href="/dashboard" aria-label="MW, painel, início">
               MW
             </NextLink>
           </LogoBlock>
