@@ -12,12 +12,12 @@ export type NavbarProps = Omit<ComponentProps<"header">, "children"> & {
   brand: ReactNode;
   links: NavbarLink[];
   actions?: ReactNode;
-  // Conteúdo extra no fim do painel do celular, como o ThemeToggle escondido nas telas pequenas.
+  /** Conteúdo extra no fim do painel do celular, como o ThemeToggle escondido nas telas pequenas. */
   menuFooter?: ReactNode;
   label?: string;
   menuLabel?: string;
   sticky?: boolean;
-  // Abaixo deste ponto de corte os links vão para o painel. lg dá espaço a cabeçalhos com muitas ações.
+  /** Abaixo deste ponto de corte os links vão para o painel. lg dá espaço a cabeçalhos com muitas ações. */
   collapseBelow?: "md" | "lg";
 };
 

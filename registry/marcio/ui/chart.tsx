@@ -27,8 +27,6 @@ export type ChartProps = {
 
 const number = new Intl.NumberFormat("pt-BR");
 
-// Cores só por variável, e nas --mw-* do tokens.css: as --color-* do @theme inline só existem
-// quando o Tailwind acha a classe no código, e aqui o nome é montado em tempo de execução.
 const colorOf = (palette: ChartProps["palette"], index: number) =>
   palette === "sequencial" ? `var(--mw-seq-${5 - (index % 5)})` : `var(--mw-chart-${(index % 8) + 1})`;
 

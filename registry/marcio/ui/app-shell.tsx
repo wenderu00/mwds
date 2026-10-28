@@ -71,7 +71,6 @@ export function useAppShell() {
   return context;
 }
 
-// Conta os AppShellNavItem escritos direto na árvore. Um item embrulhado em outro componente não é contado.
 function countNavItems(node: ReactNode): number {
   return Children.toArray(node).reduce<number>((count, child) => {
     if (!isValidElement<{ children?: ReactNode }>(child)) return count;
@@ -367,7 +366,7 @@ export function AppShellAside({ className, ...props }: AppShellAsideProps) {
 }
 
 export type AppShellMainProps = ComponentProps<"main"> & {
-  // div quando o AppShell está dentro de uma página que já tem o próprio main.
+  /** div quando o AppShell está dentro de uma página que já tem o próprio main. */
   as?: "main" | "div";
 };
 

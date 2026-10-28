@@ -7,7 +7,6 @@ export type SentinelPose = "idle" | "celebrar" | "duvida";
 
 const tracos = (root: SVGSVGElement) => root.querySelectorAll(".stroke-accent");
 
-// Respira e pisca. Com movimento reduzido, fica parada.
 const idle: CharacterAnimate = ({ gsap, part, reduced }) => {
   if (reduced) return;
   gsap.to(part("corpo"), { scaleY: 1.03, transformOrigin: "50% 100%", duration: 1.4, ease: "sine.inOut", repeat: -1, yoyo: true });

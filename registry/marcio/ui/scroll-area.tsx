@@ -13,7 +13,6 @@ export type ScrollAreaProps = ComponentProps<typeof ScrollAreaPrimitive.Root> & 
 export function ScrollArea({ className, viewportClassName, children, orientation = "vertical", "aria-label": ariaLabel, ...props }: ScrollAreaProps) {
   return (
     <ScrollAreaPrimitive.Root data-slot="scroll-area" className={cn("relative overflow-hidden", className)} {...props}>
-      {/* A área entra no Tab para quem usa teclado conseguir rolar. */}
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
         tabIndex={0}

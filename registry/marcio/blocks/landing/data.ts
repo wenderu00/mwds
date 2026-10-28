@@ -1,5 +1,4 @@
-// Conteúdo de exemplo, do portfólio de Márcio Wendell. Troque pelos dados do seu site.
-
+/** Conteúdo de exemplo, do portfólio de Márcio Wendell. Troque pelos dados do seu site. */
 export const profile = {
   name: "Márcio Wendell",
   kicker: "Desenvolvedor full-stack · Recife, PE",

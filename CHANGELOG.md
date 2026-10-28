@@ -4,6 +4,13 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.19.1] - 2026-10-28
+
+### Mudou
+
+- Comentários no código seguem o [ADR 0027](docs/adr/0027-comentarios-no-codigo.md): só JSDoc na API pública. `matchesAccept`, `FileUploadStatus`, `parseNumber`, `controlHeights`, `triggerClasses`, as funções de `br`, a prop `as` do AppShellMain e as props do Navbar ganharam JSDoc, que aparece no editor. Os comentários internos saíram dos componentes, sem mudar comportamento.
+- Dependências atualizadas dentro das faixas: `lucide-react` 1.63, `react-hook-form` 7.91, `shadcn` 4.23 e `@axe-core/playwright` 4.14.
+
 ## [0.19.0] - 2026-10-27
 
 ### Novo

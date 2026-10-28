@@ -17,7 +17,7 @@ export function formatDateInput(value: string) {
   return applyPattern(onlyDigits(value).slice(0, 8), "99/99/9999");
 }
 
-// dd/mm/aaaa para Date local; recusa datas que não existem, como 31/02.
+/** dd/mm/aaaa para Date local; recusa datas que não existem, como 31/02. */
 export function parseDateBR(value: string): Date | null {
   const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
   if (!match) return null;
@@ -38,7 +38,7 @@ export function formatCep(value: string) {
   return applyPattern(onlyDigits(value).slice(0, 8), "99999-999");
 }
 
-// Até 10 dígitos é fixo, (11) 3456-7890; com 11 é celular, (11) 93456-7890.
+/** Até 10 dígitos é fixo, (11) 3456-7890; com 11 é celular, (11) 93456-7890. */
 export function formatPhone(value: string) {
   const digits = onlyDigits(value).slice(0, 11);
   return applyPattern(digits, digits.length > 10 ? "(99) 99999-9999" : "(99) 9999-9999");
@@ -46,7 +46,7 @@ export function formatPhone(value: string) {
 
 const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 
-// Recebe centavos inteiros: 123456 vira "R$ 1.234,56".
+/** Recebe centavos inteiros: 123456 vira "R$ 1.234,56". */
 export function formatBRL(cents: number) {
   return brl.format(cents / 100).replace(/ /g, " ");
 }

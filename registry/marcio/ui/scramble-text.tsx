@@ -16,7 +16,6 @@ export type ScrambleTextProps = {
 };
 
 export function ScrambleText({ text, as: Tag = "span", trigger = "mount", duration = 900, glyphs = "01<>/{}[]#$*+=_", className }: ScrambleTextProps) {
-  // Guarda para qual texto o embaralhado foi gerado: se text mudar, mostra o novo direto.
   const [scrambled, setScrambled] = useState({ of: text, value: text });
   const shown = scrambled.of === text ? scrambled.value : text;
   const frame = useRef(0);
@@ -40,7 +39,6 @@ export function ScrambleText({ text, as: Tag = "span", trigger = "mount", durati
       clearTimeout(timer);
       cancelAnimationFrame(frame.current);
     };
-    // scramble lê text e duration do render atual
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text, trigger]);
 

@@ -35,7 +35,6 @@ export type SceneCanvasProps<Options, Api> = {
   className?: string;
 };
 
-// ADR 0024: no máximo um contexto de renderização por página.
 let owner: symbol | null = null;
 
 const idle = (callback: () => void) => {
@@ -83,7 +82,6 @@ export function SceneCanvas<Options, Api>({ scene, options, fallback, allowReduc
           preference: "webgl",
         });
       } catch {
-        // Sem WebGL: o fallback continua.
         return;
       }
       if (cancelled) {

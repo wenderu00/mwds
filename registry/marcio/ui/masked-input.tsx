@@ -53,7 +53,6 @@ export function MaskedInput({ mask, value: controlledValue, defaultValue = "", o
   );
 }
 
-// Moeda digitada da direita para a esquerda, como em caixa eletrônico: 1, 12, 123 viram R$ 0,01, R$ 0,12, R$ 1,23.
 const maxCentsDigits = 13;
 
 export type CurrencyInputProps = BaseProps & {
@@ -93,7 +92,6 @@ export function CurrencyInput({
         autoComplete="off"
         placeholder="0,00"
         {...props}
-        // O R$ fica no slot de início; a descrição faz o leitor de tela dizer a moeda junto do valor.
         start={<span id={prefixId}>R$</span>}
         aria-describedby={[prefixId, ariaDescribedBy].filter(Boolean).join(" ")}
         type="text"

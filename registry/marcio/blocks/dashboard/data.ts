@@ -17,7 +17,7 @@ export const metrics: Metric[] = [
   { label: "Taxa de conclusão", value: "74%", change: "estável", trend: "flat", tone: "neutral", detail: "das tarefas do trimestre", progress: 74 },
 ];
 
-// Horas registradas por semana, por frente de trabalho, nas últimas 8 semanas.
+/** Horas registradas por semana, por frente de trabalho, nas últimas 8 semanas. */
 export const hoursByWeek = [
   { semana: "01/09", produto: 32, suporte: 12, gestao: 6 },
   { semana: "08/09", produto: 36, suporte: 10, gestao: 6 },

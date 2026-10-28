@@ -12,7 +12,6 @@ import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "@/regist
 
 export type MultiSelectOption = ComboboxOption;
 
-// As escolhas quebram linha, então a altura do size vira altura mínima.
 const minHeights: Record<ControlSize, string> = { sm: "min-h-9", md: "min-h-control", lg: "min-h-12" };
 
 export type MultiSelectProps = Omit<ComponentProps<"button">, "value" | "defaultValue" | "onChange"> & {
