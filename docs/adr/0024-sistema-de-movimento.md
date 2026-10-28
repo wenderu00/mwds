@@ -1,6 +1,6 @@
 # 0024. Sistema de movimento
 
-Status: aceito. Revisa a regra de bibliotecas do [ADR 0009](0009-movimento-e-efeitos.md) só para a camada 3.
+Status: aceito. Revisa a regra de bibliotecas do [ADR 0009](0009-movimento-e-efeitos.md) só para a camada 3. A escolha de biblioteca foi substituída pelo [ADR 0026](0026-bibliotecas-de-movimento.md).
 
 ## Contexto
 

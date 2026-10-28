@@ -694,6 +694,11 @@
           "path": "eslint-rules/no-raw-token.js",
           "type": "registry:file",
           "target": "eslint-rules/no-raw-token.js"
+        },
+        {
+          "path": "eslint-rules/no-scene-lib.js",
+          "type": "registry:file",
+          "target": "eslint-rules/no-scene-lib.js"
         }
       ],
       "css": {
@@ -787,6 +792,22 @@
       "files": [
         {
           "path": "registry/marcio/lib/br.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "mw-tokens",
+      "type": "registry:lib",
+      "title": "Ponte de tokens",
+      "description": "useMwTokens e readMwTokens: cores, durações, curvas e distâncias do tema atual para Motion, GSAP e Pixi, atualizadas na troca de tema.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/lib/mw-tokens.ts",
           "type": "registry:lib"
         }
       ]
@@ -1022,6 +1043,50 @@
       ],
       "categories": [
         "compostos"
+      ]
+    },
+    {
+      "name": "character-sentinel",
+      "type": "registry:ui",
+      "title": "Sentinel",
+      "description": "Personagem de exemplo, uma sentinela de escudo, com as partes padronizadas e as poses parada, celebrar e dúvida.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/character-stage.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/character-sentinel.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
+      ]
+    },
+    {
+      "name": "character-stage",
+      "type": "registry:ui",
+      "title": "CharacterStage",
+      "description": "Palco SVG para personagens e cenas animados com GSAP. Carrega o gsap sob demanda e separa a versão completa da reduzida.",
+      "dependencies": [
+        "gsap"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/character-stage.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
       ]
     },
     {
@@ -1305,6 +1370,31 @@
       ],
       "categories": [
         "compostos"
+      ]
+    },
+    {
+      "name": "dot-field",
+      "type": "registry:ui",
+      "title": "DotField",
+      "description": "Grade de pontos em canvas que foge do mouse e ondula no clique. Versão interativa do DotGrid, que é o fallback.",
+      "dependencies": [
+        "pixi.js"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/dot-grid.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json",
+        "http://localhost:3000/r/scene-canvas.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/dot-field.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
       ]
     },
     {
@@ -1675,6 +1765,29 @@
       ]
     },
     {
+      "name": "magnetic",
+      "type": "registry:ui",
+      "title": "Magnetic",
+      "description": "Puxa o filho na direção do mouse e volta com spring ao sair. Para uma ou duas chamadas principais.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/magnetic.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
+      ]
+    },
+    {
       "name": "masked-input",
       "type": "registry:ui",
       "title": "MaskedInput",
@@ -1714,6 +1827,29 @@
       "categories": [
         "compostos"
       ]
+    },
+    {
+      "name": "motion-provider",
+      "type": "registry:ui",
+      "title": "MotionProvider",
+      "description": "Configuração do Motion para o projeto: respeita o movimento reduzido e usa a duração e a curva dos tokens como transição padrão.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/motion-provider.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
+      ],
+      "docs": "Envolva o layout raiz com <MotionProvider> para que os motion.* do projeto respeitem o movimento reduzido e usem os tokens."
     },
     {
       "name": "multi-select",
@@ -1925,6 +2061,72 @@
       ]
     },
     {
+      "name": "reveal",
+      "type": "registry:ui",
+      "title": "Reveal",
+      "description": "Conteúdo que sobe e aparece ao entrar na tela, uma vez, com stagger por índice. Duração, curva e distância vêm dos tokens.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/reveal.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
+      ]
+    },
+    {
+      "name": "scene-canvas",
+      "type": "registry:ui",
+      "title": "SceneCanvas",
+      "description": "Palco de cenas em canvas com PixiJS. Carrega o Pixi sob demanda, pausa fora da tela e entrega os tokens do tema para a cena.",
+      "dependencies": [
+        "pixi.js"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/scene-canvas.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
+      ]
+    },
+    {
+      "name": "scramble-text",
+      "type": "registry:ui",
+      "title": "ScrambleText",
+      "description": "Texto em mono que embaralha em glifos e assenta letra a letra, ao montar e no hover.",
+      "dependencies": [],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/scramble-text.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
+      ]
+    },
+    {
       "name": "scroll-area",
       "type": "registry:ui",
       "title": "ScrollArea",
@@ -1944,6 +2146,29 @@
       ],
       "categories": [
         "primitivos"
+      ]
+    },
+    {
+      "name": "scroll-progress",
+      "type": "registry:ui",
+      "title": "ScrollProgress",
+      "description": "Barra fina em accent que cresce com a rolagem da página, com spring.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/scroll-progress.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
       ]
     },
     {
@@ -2278,6 +2503,28 @@
         "padroes"
       ],
       "docs": "Coloque <ThemeScript /> dentro do <head> do layout raiz e adicione suppressHydrationWarning no <html>."
+    },
+    {
+      "name": "tilt",
+      "type": "registry:ui",
+      "title": "Tilt",
+      "description": "Inclina o conteúdo em 3D seguindo o mouse, com spring. Para cards de destaque.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/tilt.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
+      ]
     },
     {
       "name": "timeline",

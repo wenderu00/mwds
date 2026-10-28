@@ -52,7 +52,13 @@ import { FileUpload } from "@/registry/marcio/ui/file-upload";
 import { Footer } from "@/registry/marcio/ui/footer";
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
+import { DotField } from "@/registry/marcio/ui/dot-field";
 import { DotGrid } from "@/registry/marcio/ui/dot-grid";
+import { Magnetic } from "@/registry/marcio/ui/magnetic";
+import { Reveal } from "@/registry/marcio/ui/reveal";
+import { ScrambleText } from "@/registry/marcio/ui/scramble-text";
+import { ScrollProgress } from "@/registry/marcio/ui/scroll-progress";
+import { Tilt } from "@/registry/marcio/ui/tilt";
 import { GlitchText } from "@/registry/marcio/ui/glitch-text";
 import { Hero } from "@/registry/marcio/ui/hero";
 import { IconButton } from "@/registry/marcio/ui/icon-button";
@@ -117,6 +123,9 @@ import {
   ProgressDemo,
   StepperDemo,
   ToastActionDemo,
+  CharacterStageDemo,
+  SceneCanvasDemo,
+  SentinelDemo,
   ToastDemo,
   TourDemo,
 } from "./demos";
@@ -148,7 +157,7 @@ export type DocDoDont = { do: DocSample; dont: DocSample };
 export type ComponentDoc = {
   slug: string;
   name: string;
-  group: "identidade" | "primitivos" | "compostos" | "padroes";
+  group: "identidade" | "primitivos" | "compostos" | "padroes" | "movimento";
   summary: string;
   file: string;
   status: DocStatus;
@@ -4019,6 +4028,310 @@ export const docs: ComponentDoc[] = [
       { keys: "Esc", action: "Pula o tour e devolve o foco." },
     ],
   },
+  {
+    slug: "motion-provider",
+    name: "MotionProvider",
+    group: "movimento",
+    summary: "Configuração do Motion para o projeto: respeita o movimento reduzido e usa a duração e a curva dos tokens como transição padrão.",
+    file: "motion-provider.tsx",
+    status: "beta",
+    usage: {
+      use: ["Uma vez no layout raiz, em projetos que usam motion.* fora dos componentes do DS."],
+      avoid: ["Aninhar vários: um só na raiz basta.", "Contar com ele para os componentes do DS: cada um já checa o movimento reduzido sozinho."],
+    },
+    props: [{ name: "children", type: "ReactNode", description: "A aplicação." }],
+    examples: [
+      {
+        title: "No layout raiz",
+        code: `// app/layout.tsx\n<body>\n  <MotionProvider>{children}</MotionProvider>\n</body>`,
+        render: () => <CodeComment>configuração, sem saída visual</CodeComment>,
+      },
+    ],
+    a11y: ["Liga reducedMotion=\"user\": com prefers-reduced-motion: reduce, o Motion desliga transformações e mantém só opacidade."],
+  },
+  {
+    slug: "reveal",
+    name: "Reveal",
+    group: "movimento",
+    summary: "Conteúdo que sobe e aparece ao entrar na tela, uma vez, com stagger por índice. Duração, curva e distância vêm dos tokens.",
+    file: "reveal.tsx",
+    status: "beta",
+    usage: {
+      use: ["Seções e cards de páginas de conteúdo, como o portfólio e landing pages.", "Listas curtas, com index para entrarem em sequência."],
+      avoid: ["Telas de sistema e formulários: o conteúdo precisa estar lá quando a pessoa chega.", "Texto que a pessoa está lendo ou campo com foco (ADR 0024)."],
+    },
+    props: [
+      { name: "as", type: '"div" | "section" | "article" | "li"', default: '"div"', description: "Elemento renderizado." },
+      { name: "index", type: "number", default: "0", description: "Posição na lista. Atrasa a entrada em index × --mw-stagger." },
+      { name: "distance", type: '"sm" | "md" | "lg"', default: '"lg"', description: "Quanto sobe, de --mw-distance-*." },
+      { name: "once", type: "boolean", default: "true", description: "Anima só na primeira entrada na tela." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Cards em sequência",
+        code: `{items.map((item, i) => (\n  <Reveal key={item} as="li" index={i}>...</Reveal>\n))}`,
+        className: "w-full",
+        render: () => (
+          <ul className="grid w-full grid-cols-3 gap-3">
+            {["Requisito", "Teste", "Deploy"].map((item, i) => (
+              <Reveal key={item} as="li" index={i} className="rounded-control border border-line bg-surface p-4 font-mono text-mono-xs text-ink-muted">
+                {item}
+              </Reveal>
+            ))}
+          </ul>
+        ),
+      },
+    ],
+    a11y: ["Com movimento reduzido, o conteúdo já nasce visível, sem deslocamento.", "Só mexe em opacidade e posição: a ordem de leitura e o foco não mudam."],
+  },
+  {
+    slug: "tilt",
+    name: "Tilt",
+    group: "movimento",
+    summary: "Inclina o conteúdo em 3D seguindo o mouse, com spring. Para cards de destaque.",
+    file: "tilt.tsx",
+    status: "beta",
+    usage: {
+      use: ["Cards de projeto e vitrines em páginas de conteúdo."],
+      avoid: ["Cards com formulário ou muitos controles: a inclinação atrapalha a mira.", "Listas longas: vira ruído."],
+    },
+    props: [{ name: "max", type: "number", default: "6", description: "Inclinação máxima em graus." }, classNameProp],
+    examples: [
+      {
+        title: "Card",
+        code: `<Tilt>\n  <Card>...</Card>\n</Tilt>`,
+        render: () => (
+          <Tilt>
+            <Card className="w-64">
+              <CardHeader>
+                <CardTitle>BioQuest</CardTitle>
+                <CardDescription>Passe o mouse por cima.</CardDescription>
+              </CardHeader>
+            </Card>
+          </Tilt>
+        ),
+      },
+    ],
+    a11y: ["Só responde a mouse: toque e caneta não inclinam.", "Com movimento reduzido, fica parado."],
+  },
+  {
+    slug: "magnetic",
+    name: "Magnetic",
+    group: "movimento",
+    summary: "Puxa o filho na direção do mouse e volta com spring ao sair. Para uma ou duas chamadas principais.",
+    file: "magnetic.tsx",
+    status: "beta",
+    usage: {
+      use: ["A ação principal de um hero, como o botão de contato."],
+      avoid: ["Vários na mesma tela: o efeito perde a graça e cansa.", "Botões de formulário e de diálogo."],
+    },
+    props: [{ name: "strength", type: "number", default: "0.3", description: "Fração da distância ao centro que o filho acompanha." }, classNameProp],
+    examples: [
+      {
+        title: "Botão",
+        code: `<Magnetic>\n  <Button>Vamos conversar</Button>\n</Magnetic>`,
+        render: () => (
+          <Magnetic>
+            <Button>Vamos conversar</Button>
+          </Magnetic>
+        ),
+      },
+    ],
+    a11y: ["O alvo de clique continua sendo o filho: o deslocamento é visual.", "Só responde a mouse e fica parado com movimento reduzido."],
+  },
+  {
+    slug: "scroll-progress",
+    name: "ScrollProgress",
+    group: "movimento",
+    summary: "Barra fina em accent que cresce com a rolagem da página, com spring.",
+    file: "scroll-progress.tsx",
+    status: "beta",
+    usage: {
+      use: ["Na base do cabeçalho de páginas longas de conteúdo."],
+      avoid: ["Telas de sistema: a rolagem ali não é progresso de leitura.", "Mais de uma por página."],
+    },
+    props: [{ name: "className", type: "string", description: "Posicione com absolute ou fixed. Padrão: h-0.5, largura total, bg-accent." }],
+    examples: [
+      {
+        title: "Na base do cabeçalho",
+        code: `<header className="sticky top-0">\n  ...\n  <ScrollProgress className="absolute inset-x-0 bottom-0" />\n</header>`,
+        className: "w-full",
+        render: () => (
+          <div className="relative w-full rounded-control border border-line px-4 py-3 font-mono text-mono-xs text-ink-muted">
+            cabeçalho, role a página
+            <ScrollProgress className="absolute inset-x-0 bottom-0" />
+          </div>
+        ),
+      },
+    ],
+    a11y: ["É decorativa: tem aria-hidden.", "Com movimento reduzido, acompanha a rolagem sem spring."],
+  },
+  {
+    slug: "scramble-text",
+    name: "ScrambleText",
+    group: "movimento",
+    summary: "Texto em mono que embaralha em glifos e assenta letra a letra, ao montar e no hover.",
+    file: "scramble-text.tsx",
+    status: "beta",
+    usage: {
+      use: ["O nome ou título de um hero, uma vez por tela."],
+      avoid: ["Texto longo ou que a pessoa precisa ler para agir.", "Mais de um por tela."],
+    },
+    props: [
+      { name: "text", type: "string", description: "Texto final. É o que o leitor de tela lê." },
+      { name: "as", type: '"h1" | "h2" | "h3" | "p" | "span"', default: '"span"', description: "Elemento renderizado." },
+      { name: "trigger", type: '"mount" | "hover"', default: '"mount"', description: "mount embaralha ao montar e no hover; hover só no hover." },
+      { name: "duration", type: "number", default: "900", description: "Tempo em ms até o texto assentar." },
+      { name: "glyphs", type: "string", default: '"01<>/{}[]#$*+=_"', description: "Caracteres usados no embaralhamento." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Título de hero",
+        code: `<ScrambleText as="h3" text="Márcio Wendell" className="text-display-sm" />`,
+        render: () => <ScrambleText as="h3" text="Márcio Wendell" trigger="hover" className="text-display-sm" />,
+      },
+    ],
+    a11y: ["O leitor de tela lê sempre o texto final, numa cópia sr-only; os glifos ficam com aria-hidden.", "Com movimento reduzido, não embaralha."],
+  },
+  {
+    slug: "scene-canvas",
+    name: "SceneCanvas",
+    group: "movimento",
+    summary: "Palco de cenas em canvas com PixiJS. Carrega o Pixi sob demanda, pausa fora da tela e entrega os tokens do tema para a cena.",
+    file: "scene-canvas.tsx",
+    status: "experimental",
+    usage: {
+      use: ["Cenas decorativas ou interativas próprias: fundos de hero, mini cenas, partículas.", "Base para efeitos que o CSS não consegue, com centenas de elementos se mexendo."],
+      avoid: [
+        "Mais de uma cena por página: só a primeira roda, as outras ficam no fallback (ADR 0024).",
+        "Conteúdo que precisa ser lido ou clicado: o canvas tem aria-hidden. Controles ficam fora dele, em HTML.",
+        "Cor literal na cena: use tokens.pixi e atualize em theme().",
+      ],
+    },
+    props: [
+      { name: "scene", type: "Scene<Options, Api>", description: "Função que recebe { app, PIXI, host, reduced, tokens, options } e devolve { api, destroy, theme? }." },
+      { name: "options", type: "Options", description: "Lidas uma vez, quando a cena monta." },
+      { name: "fallback", type: "ReactNode", description: "Mostrado até a cena ficar pronta, sem WebGL, com movimento reduzido e quando outra cena ocupa a página." },
+      { name: "allowReducedMotion", type: "boolean", default: "false", description: "Roda a cena com movimento reduzido. Só para cena interativa que fica parada sem interação; ela recebe reduced: true." },
+      { name: "onReady", type: "(api: Api) => void", description: "Chamado com a api da cena quando ela monta." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Cena própria",
+        description: "A cena lê as cores de tokens.pixi e troca em theme(), sem recarregar.",
+        code: `const orbit: Scene = ({ app, PIXI, tokens }) => {\n  const dot = new PIXI.Graphics().circle(0, 0, 5).fill(0xffffff);\n  dot.tint = tokens.pixi["category-1-line"];\n  app.stage.addChild(dot);\n  const tick = () => { /* move o ponto */ };\n  app.ticker.add(tick);\n  return {\n    api: undefined,\n    theme: (next) => (dot.tint = next.pixi["category-1-line"]),\n    destroy: () => app.ticker.remove(tick),\n  };\n};\n\n<SceneCanvas scene={orbit} options={undefined} fallback={<p>quadro estático</p>} className="h-40" />`,
+        className: "w-full",
+        render: () => <SceneCanvasDemo />,
+      },
+    ],
+    a11y: [
+      "O palco tem aria-hidden: a cena é decorativa. Informação e controles ficam em HTML ao lado.",
+      "Com prefers-reduced-motion: reduce, a cena não carrega e o fallback fica, a não ser com allowReducedMotion.",
+      "O ticker para fora da tela e com a aba oculta.",
+    ],
+  },
+  {
+    slug: "dot-field",
+    name: "DotField",
+    group: "movimento",
+    summary: "Grade de pontos em canvas que foge do mouse e ondula no clique. Versão interativa do DotGrid, que é o fallback.",
+    file: "dot-field.tsx",
+    status: "experimental",
+    usage: {
+      use: ["Fundo do hero de páginas de conteúdo, como o portfólio."],
+      avoid: ["Atrás de texto longo, tabelas ou formulários.", "Junto de outra cena na mesma página."],
+    },
+    props: [
+      { name: "spacing", type: "number", default: "28", description: "Distância entre os pontos, em px." },
+      { name: "radius", type: "number", default: "150", description: "Raio de repulsão do mouse, em px." },
+      { name: "color", type: '"accent" | "category-1" ... "category-8"', default: '"accent"', description: "Cor dos pontos, lida dos tokens." },
+      { name: "fallback", type: "ReactNode", default: "<DotGrid />", description: "Mostrado antes de carregar, sem WebGL e com movimento reduzido." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Atrás de um hero",
+        description: "Como o DotGrid, o pai precisa de relative e isolate. Mexa o mouse e clique.",
+        code: `<section className="relative isolate">\n  <DotField />\n  ...\n</section>`,
+        className: "w-full",
+        render: () => (
+          <div className="relative isolate flex h-56 w-full items-center justify-center overflow-hidden rounded-control border border-line">
+            <DotField />
+            <span className="font-mono text-mono-xs text-ink-muted">conteúdo</span>
+          </div>
+        ),
+      },
+    ],
+    a11y: ["É decorativo: aria-hidden e sem ponteiro. O conteúdo por cima continua clicável.", "Só o mouse empurra os pontos; toque só ondula.", "Com movimento reduzido, mostra o DotGrid parado."],
+  },
+  {
+    slug: "character-stage",
+    name: "CharacterStage",
+    group: "movimento",
+    summary: "Palco SVG para personagens e cenas animados com GSAP. Carrega o gsap sob demanda e separa a versão completa da reduzida.",
+    file: "character-stage.tsx",
+    status: "experimental",
+    usage: {
+      use: ["Personagens e cenas curtas em SVG que reagem a eventos, como uma rodada de jogo ou uma conquista.", "Sequências com várias partes coordenadas, que o CSS e o Motion deixam difíceis."],
+      avoid: [
+        "Animar componentes de interface: para isso existem as primitivas CSS e o Motion (ADR 0026).",
+        "Cor literal na timeline: use tokens.color.",
+        "Repetir um destaque mais de 3 vezes por segundo (WCAG 2.3.1).",
+      ],
+    },
+    props: [
+      { name: "width / height", type: "number", description: "Tamanho do viewBox. O SVG ocupa a largura do pai." },
+      { name: "animate", type: "(context) => void | (() => void)", description: "Recebe { gsap, root, part, tokens, reduced }. Tudo o que criar é revertido ao desmontar e ao trocar replay." },
+      { name: "replay", type: "string | number", description: "Mude para rodar animate de novo, como o id de uma rodada." },
+      { name: "plugins", type: '("drawSVG" | "morphSVG")[]', default: "[]", description: "Plugins do GSAP carregados e registrados só no cliente." },
+      { name: "label", type: "string", description: "Nome da cena. Sem label, o palco é decorativo (aria-hidden)." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Animação própria",
+        description: "As partes são marcadas com data-parte, e o helper part monta o seletor.",
+        code: `const quicar: CharacterAnimate = ({ gsap, part, tokens, reduced }) => {\n  if (reduced) {\n    gsap.to(part("bola"), { fill: tokens.color.success, duration: 0.3, repeat: 1, yoyo: true });\n    return;\n  }\n  gsap.to(part("bola"), { y: -40, duration: 0.4, ease: "power2.out", repeat: 3, yoyo: true });\n};\n\n<CharacterStage width={120} height={80} animate={quicar} replay={round}>\n  <circle data-parte="bola" cx={60} cy={66} r={10} className="fill-accent" />\n</CharacterStage>`,
+        render: () => <CharacterStageDemo />,
+      },
+    ],
+    a11y: [
+      "Sem label, o SVG tem aria-hidden; com label, é role img com o nome da cena.",
+      "A animação roda dentro de gsap.matchMedia: com prefers-reduced-motion: reduce, animate recebe reduced e deve trocar só opacidade e cor.",
+      "Se a pessoa mudar a preferência com a página aberta, a timeline é revertida e roda de novo na versão certa.",
+    ],
+  },
+  {
+    slug: "character-sentinel",
+    name: "Sentinel",
+    group: "movimento",
+    summary: "Personagem de exemplo, uma sentinela de escudo, com as partes padronizadas e as poses parada, celebrar e dúvida.",
+    file: "character-sentinel.tsx",
+    status: "experimental",
+    usage: {
+      use: ["Mascote de estados vazios, conquistas e jogos simples.", "Ponto de partida para desenhar personagens próprios com as mesmas partes."],
+      avoid: ["Mais de um personagem animado chamando atenção na mesma tela.", "Comunicar um estado só pela pose: diga em texto também."],
+    },
+    props: [
+      { name: "pose", type: '"idle" | "celebrar" | "duvida"', default: '"idle"', description: "Trocar a pose reverte a anterior e toca a nova." },
+      { name: "label", type: "string", description: "Nome para o leitor de tela. Sem label, é decorativo." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Poses",
+        code: `<Sentinel pose="celebrar" label="Sentinela comemorando" />`,
+        render: () => <SentinelDemo />,
+      },
+    ],
+    a11y: [
+      "Com movimento reduzido: parada não se mexe, celebrar só pisca a cor dos traços para success e dúvida só mostra o ponto de interrogação.",
+      "A pose não substitui texto: anuncie o resultado em HTML ao lado.",
+    ],
+  },
 ];
 
 export const groups = [
@@ -4026,6 +4339,7 @@ export const groups = [
   { id: "primitivos", title: "Primitivos", description: "Peças básicas de qualquer interface." },
   { id: "compostos", title: "Compostos", description: "Combinações prontas para formulários, sobreposições e dados." },
   { id: "padroes", title: "Padrões", description: "Blocos de tela que se repetem em todo sistema." },
+  { id: "movimento", title: "Movimento", description: "Animação de interface, cenas em canvas e personagens. Opcionais, fora do marcio-ui." },
 ] as const;
 
 export function getDoc(slug: string) {

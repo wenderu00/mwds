@@ -23,6 +23,8 @@ export default defineConfig({
         test: {
           name: "dom",
           environment: "jsdom",
+          // Testes com userEvent e axe passam dos 5s padrão quando a suíte toda roda em paralelo.
+          testTimeout: 15_000,
           setupFiles: ["./vitest.setup.ts"],
           include: ["registry/**/*.test.{ts,tsx}", "app/**/*.test.{ts,tsx}"],
         },

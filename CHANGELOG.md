@@ -4,6 +4,50 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.19.0] - 2026-10-27
+
+### Novo
+
+- Camada 3b do sistema de movimento, com GSAP ([ADR 0026](docs/adr/0026-bibliotecas-de-movimento.md)).
+- CharacterStage: palco SVG para personagens.
+  - Carrega o `gsap` e os plugins pedidos (`drawSVG`, `morphSVG`) por `import()`.
+  - Roda a animação dentro de `gsap.matchMedia`, passando `gsap`, `part`, `tokens` e `reduced`.
+  - Reverte tudo ao desmontar e ao trocar `replay`.
+- Sentinel: personagem de exemplo com as partes padronizadas (`corpo`, `olhos`, `braco-esq`, `braco-dir`, `perna-esq`, `perna-dir`) e as poses `idle`, `celebrar` e `duvida`. Com movimento reduzido, só troca cor e opacidade.
+- Regra `mw/no-scene-lib`, no modo estrito: reprova import em runtime de `pixi.js`, `gsap` e `@gsap/*` fora do SceneCanvas e do CharacterStage. `import type` continua liberado.
+- Primeiros passos e README explicam como instalar os itens de movimento.
+
+### Mudou
+
+- As páginas dos componentes de movimento não dizem mais que repassam as props nativas e a ref: a API deles é fechada.
+
+## [0.18.0] - 2026-10-27
+
+### Novo
+
+- Camada 3a do sistema de movimento, com PixiJS ([ADR 0026](docs/adr/0026-bibliotecas-de-movimento.md)).
+- SceneCanvas: palco de cenas em canvas.
+  - Carrega o `pixi.js` por `import()` quando a página fica ociosa.
+  - Limita o DPR a 2 e pausa fora da tela e com a aba oculta.
+  - Entrega `tokens` à cena e chama `theme()` quando o tema muda.
+  - Mostra o `fallback` até ficar pronto, sem WebGL, com movimento reduzido e quando outra cena já ocupa a página. Só uma cena por página roda.
+- DotField: grade de pontos que foge do mouse e ondula no clique, na cor `accent` ou de uma categoria. Mostra o DotGrid como fallback.
+
+## [0.17.0] - 2026-10-27
+
+### Novo
+
+- Grupo Movimento no catálogo, com a camada 2 do sistema de movimento sobre o Motion ([ADR 0026](docs/adr/0026-bibliotecas-de-movimento.md)). Os itens ficam fora do `marcio-ui` e entram só por `add`, para quem não usa não baixar o `motion`.
+- `mw-tokens`: `useMwTokens` e `readMwTokens` entregam as cores (como string e como número para o Pixi), durações, curvas, distâncias e stagger do tema atual, e atualizam na troca de tema. `useReducedMotionPreference` acompanha a preferência de movimento.
+- MotionProvider: `MotionConfig` com `reducedMotion="user"` e a transição padrão dos tokens, para os `motion.*` do projeto.
+- Reveal: sobe e aparece ao entrar na tela, uma vez, com stagger por `index`.
+- Tilt: inclinação 3D que segue o mouse, até 6 graus.
+- Magnetic: puxa o filho na direção do mouse.
+- ScrollProgress: barra em accent que cresce com a rolagem.
+- ScrambleText: texto que embaralha em glifos e assenta letra a letra, com o texto final sempre disponível para o leitor de tela.
+
+Todos respeitam o movimento reduzido sozinhos, mesmo sem o MotionProvider.
+
 ## [0.16.0] - 2026-10-26
 
 ### Novo

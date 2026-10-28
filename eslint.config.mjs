@@ -14,7 +14,12 @@ export default defineConfig([
       "mw/no-raw-color": "error",
       "mw/no-raw-token": "error",
       "mw/icon-size": ["error", { sources: ["lucide-react", "@/registry/marcio/icons/"] }],
+      "mw/no-scene-lib": "error",
     },
+  },
+  {
+    files: ["registry/marcio/ui/scene-canvas.tsx", "registry/marcio/ui/character-stage.tsx"],
+    rules: { "mw/no-scene-lib": "off" },
   },
   {
     files: ["registry/marcio/ui/checkbox.tsx"],

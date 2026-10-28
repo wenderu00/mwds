@@ -97,7 +97,11 @@ const setupNotes: Record<string, string> = {
   toast: "Coloque <Toaster /> uma vez no layout raiz.",
   tooltip: "Envolva a aplicação com <TooltipProvider> no layout raiz.",
   "theme-toggle": "Coloque <ThemeScript /> dentro do <head> do layout raiz e adicione suppressHydrationWarning no <html>.",
+  "motion-provider": "Envolva o layout raiz com <MotionProvider> para que os motion.* do projeto respeitem o movimento reduzido e usem os tokens.",
 };
+
+// Movimento traz motion, pixi.js ou gsap: fica fora do marcio-ui e entra só por add.
+const optionalGroups = new Set(["movimento"]);
 
 export function buildRegistry() {
   const uiFiles = readdirSync(join(root, "registry/marcio/ui"))
@@ -185,6 +189,15 @@ export function buildRegistry() {
     description: "Máscaras de CPF, CNPJ, telefone, CEP e moeda, e validação do dígito verificador de CPF e CNPJ.",
     ...dependenciesOf("registry/marcio/lib/br.ts", { withTokens: false }),
     files: [{ path: "registry/marcio/lib/br.ts", type: "registry:lib" }],
+  };
+
+  const mwTokens: RegistryItem = {
+    name: "mw-tokens",
+    type: "registry:lib",
+    title: "Ponte de tokens",
+    description: "useMwTokens e readMwTokens: cores, durações, curvas e distâncias do tema atual para Motion, GSAP e Pixi, atualizadas na troca de tema.",
+    ...dependenciesOf("registry/marcio/lib/mw-tokens.ts"),
+    files: [{ path: "registry/marcio/lib/mw-tokens.ts", type: "registry:lib" }],
   };
 
   const uiItems: RegistryItem[] = uiFiles.map((file) => {
@@ -275,14 +288,14 @@ export function buildRegistry() {
     type: "registry:item",
     title: "@mw/ui completo",
     description: "Instala tokens, fontes e todos os componentes.",
-    registryDependencies: uiItems.map((item) => itemUrl(item.name)),
+    registryDependencies: uiItems.filter((item) => !item.categories?.some((group) => optionalGroups.has(group))).map((item) => itemUrl(item.name)),
   };
 
   return {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "marcio",
     homepage: baseUrl,
-    items: [tokens, theme, strict, ...fontItems, utils, br, ...uiItems, ...blockItems, ...iconItems, ...packItems, all],
+    items: [tokens, theme, strict, ...fontItems, utils, br, mwTokens, ...uiItems, ...blockItems, ...iconItems, ...packItems, all],
   };
 }
 
