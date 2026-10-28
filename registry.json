@@ -1324,6 +1324,31 @@
       ]
     },
     {
+      "name": "dot-field",
+      "type": "registry:ui",
+      "title": "DotField",
+      "description": "Grade de pontos em canvas que foge do mouse e ondula no clique. Versão interativa do DotGrid, que é o fallback.",
+      "dependencies": [
+        "pixi.js"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/dot-grid.json",
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json",
+        "http://localhost:3000/r/scene-canvas.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/dot-field.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
+      ]
+    },
+    {
       "name": "dot-grid",
       "type": "registry:ui",
       "title": "DotGrid",
@@ -2001,6 +2026,29 @@
       "files": [
         {
           "path": "registry/marcio/ui/reveal.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "movimento"
+      ]
+    },
+    {
+      "name": "scene-canvas",
+      "type": "registry:ui",
+      "title": "SceneCanvas",
+      "description": "Palco de cenas em canvas com PixiJS. Carrega o Pixi sob demanda, pausa fora da tela e entrega os tokens do tema para a cena.",
+      "dependencies": [
+        "pixi.js"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json",
+        "http://localhost:3000/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/marcio/ui/scene-canvas.tsx",
           "type": "registry:ui"
         }
       ],

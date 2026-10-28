@@ -52,6 +52,7 @@ import { FileUpload } from "@/registry/marcio/ui/file-upload";
 import { Footer } from "@/registry/marcio/ui/footer";
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
+import { DotField } from "@/registry/marcio/ui/dot-field";
 import { DotGrid } from "@/registry/marcio/ui/dot-grid";
 import { Magnetic } from "@/registry/marcio/ui/magnetic";
 import { Reveal } from "@/registry/marcio/ui/reveal";
@@ -122,6 +123,7 @@ import {
   ProgressDemo,
   StepperDemo,
   ToastActionDemo,
+  SceneCanvasDemo,
   ToastDemo,
   TourDemo,
 } from "./demos";
@@ -4190,6 +4192,78 @@ export const docs: ComponentDoc[] = [
       },
     ],
     a11y: ["O leitor de tela lê sempre o texto final, numa cópia sr-only; os glifos ficam com aria-hidden.", "Com movimento reduzido, não embaralha."],
+  },
+  {
+    slug: "scene-canvas",
+    name: "SceneCanvas",
+    group: "movimento",
+    summary: "Palco de cenas em canvas com PixiJS. Carrega o Pixi sob demanda, pausa fora da tela e entrega os tokens do tema para a cena.",
+    file: "scene-canvas.tsx",
+    status: "experimental",
+    usage: {
+      use: ["Cenas decorativas ou interativas próprias: fundos de hero, mini cenas, partículas.", "Base para efeitos que o CSS não consegue, com centenas de elementos se mexendo."],
+      avoid: [
+        "Mais de uma cena por página: só a primeira roda, as outras ficam no fallback (ADR 0024).",
+        "Conteúdo que precisa ser lido ou clicado: o canvas tem aria-hidden. Controles ficam fora dele, em HTML.",
+        "Cor literal na cena: use tokens.pixi e atualize em theme().",
+      ],
+    },
+    props: [
+      { name: "scene", type: "Scene<Options, Api>", description: "Função que recebe { app, PIXI, host, reduced, tokens, options } e devolve { api, destroy, theme? }." },
+      { name: "options", type: "Options", description: "Lidas uma vez, quando a cena monta." },
+      { name: "fallback", type: "ReactNode", description: "Mostrado até a cena ficar pronta, sem WebGL, com movimento reduzido e quando outra cena ocupa a página." },
+      { name: "allowReducedMotion", type: "boolean", default: "false", description: "Roda a cena com movimento reduzido. Só para cena interativa que fica parada sem interação; ela recebe reduced: true." },
+      { name: "onReady", type: "(api: Api) => void", description: "Chamado com a api da cena quando ela monta." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Cena própria",
+        description: "A cena lê as cores de tokens.pixi e troca em theme(), sem recarregar.",
+        code: `const orbit: Scene = ({ app, PIXI, tokens }) => {\n  const dot = new PIXI.Graphics().circle(0, 0, 5).fill(0xffffff);\n  dot.tint = tokens.pixi["category-1-line"];\n  app.stage.addChild(dot);\n  const tick = () => { /* move o ponto */ };\n  app.ticker.add(tick);\n  return {\n    api: undefined,\n    theme: (next) => (dot.tint = next.pixi["category-1-line"]),\n    destroy: () => app.ticker.remove(tick),\n  };\n};\n\n<SceneCanvas scene={orbit} options={undefined} fallback={<p>quadro estático</p>} className="h-40" />`,
+        className: "w-full",
+        render: () => <SceneCanvasDemo />,
+      },
+    ],
+    a11y: [
+      "O palco tem aria-hidden: a cena é decorativa. Informação e controles ficam em HTML ao lado.",
+      "Com prefers-reduced-motion: reduce, a cena não carrega e o fallback fica, a não ser com allowReducedMotion.",
+      "O ticker para fora da tela e com a aba oculta.",
+    ],
+  },
+  {
+    slug: "dot-field",
+    name: "DotField",
+    group: "movimento",
+    summary: "Grade de pontos em canvas que foge do mouse e ondula no clique. Versão interativa do DotGrid, que é o fallback.",
+    file: "dot-field.tsx",
+    status: "experimental",
+    usage: {
+      use: ["Fundo do hero de páginas de conteúdo, como o portfólio."],
+      avoid: ["Atrás de texto longo, tabelas ou formulários.", "Junto de outra cena na mesma página."],
+    },
+    props: [
+      { name: "spacing", type: "number", default: "28", description: "Distância entre os pontos, em px." },
+      { name: "radius", type: "number", default: "150", description: "Raio de repulsão do mouse, em px." },
+      { name: "color", type: '"accent" | "category-1" ... "category-8"', default: '"accent"', description: "Cor dos pontos, lida dos tokens." },
+      { name: "fallback", type: "ReactNode", default: "<DotGrid />", description: "Mostrado antes de carregar, sem WebGL e com movimento reduzido." },
+      classNameProp,
+    ],
+    examples: [
+      {
+        title: "Atrás de um hero",
+        description: "Como o DotGrid, o pai precisa de relative e isolate. Mexa o mouse e clique.",
+        code: `<section className="relative isolate">\n  <DotField />\n  ...\n</section>`,
+        className: "w-full",
+        render: () => (
+          <div className="relative isolate flex h-56 w-full items-center justify-center overflow-hidden rounded-control border border-line">
+            <DotField />
+            <span className="font-mono text-mono-xs text-ink-muted">conteúdo</span>
+          </div>
+        ),
+      },
+    ],
+    a11y: ["É decorativo: aria-hidden e sem ponteiro. O conteúdo por cima continua clicável.", "Só o mouse empurra os pontos; toque só ondula.", "Com movimento reduzido, mostra o DotGrid parado."],
   },
 ];
 

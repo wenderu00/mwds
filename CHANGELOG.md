@@ -4,6 +4,18 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.18.0] - 2026-10-27
+
+### Novo
+
+- Camada 3a do sistema de movimento, com PixiJS ([ADR 0026](docs/adr/0026-bibliotecas-de-movimento.md)).
+- SceneCanvas: palco de cenas em canvas.
+  - Carrega o `pixi.js` por `import()` quando a página fica ociosa.
+  - Limita o DPR a 2 e pausa fora da tela e com a aba oculta.
+  - Entrega `tokens` à cena e chama `theme()` quando o tema muda.
+  - Mostra o `fallback` até ficar pronto, sem WebGL, com movimento reduzido e quando outra cena já ocupa a página. Só uma cena por página roda.
+- DotField: grade de pontos que foge do mouse e ondula no clique, na cor `accent` ou de uma categoria. Mostra o DotGrid como fallback.
+
 ## [0.17.0] - 2026-10-27
 
 ### Novo
