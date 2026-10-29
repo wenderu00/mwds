@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { minimum, pairs } from "./contrast-pairs";
 import { contrast } from "./lib/color";
@@ -28,13 +28,25 @@ for (const theme of themes) {
 }
 
 const outDir = resolve(process.cwd(), "app/_data");
-mkdirSync(outDir, { recursive: true });
-writeFileSync(resolve(outDir, "contrast.json"), JSON.stringify(results, null, 2) + "\n");
-writeFileSync(resolve(outDir, "tokens.json"), JSON.stringify(tokens, null, 2) + "\n");
+const outputs = {
+  "contrast.json": JSON.stringify(results, null, 2) + "\n",
+  "tokens.json": JSON.stringify(tokens, null, 2) + "\n",
+};
+
+if (process.argv.includes("--write")) {
+  mkdirSync(outDir, { recursive: true });
+  for (const [file, content] of Object.entries(outputs)) writeFileSync(resolve(outDir, file), content);
+}
+
+const stale = Object.entries(outputs)
+  .filter(([file, content]) => {
+    const path = resolve(outDir, file);
+    return !existsSync(path) || readFileSync(path, "utf8").replace(/\r\n/g, "\n") !== content;
+  })
+  .map(([file]) => file);
 
 const failures = results.filter((r) => !r.pass);
 console.log(`\n${results.length} pares verificados, ${failures.length} falhas.`);
-if (failures.length) {
-  for (const f of failures) console.error(`FALHOU [${f.theme}] ${f.fg} sobre ${f.bg}: ${f.ratio} < ${f.required}`);
-  process.exit(1);
-}
+for (const f of failures) console.error(`FALHOU [${f.theme}] ${f.fg} sobre ${f.bg}: ${f.ratio} < ${f.required}`);
+for (const file of stale) console.error(`app/_data/${file} desatualizado: rode npm run contrast`);
+if (failures.length || stale.length) process.exit(1);

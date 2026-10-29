@@ -2,11 +2,13 @@ import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { AdminShell } from "@/registry/marcio/blocks/admin-shell/admin-shell";
 import DashboardPage from "@/registry/marcio/blocks/dashboard/page";
 import LandingPage from "@/registry/marcio/blocks/landing/page";
 import { LoginForm } from "@/registry/marcio/blocks/login/login-form";
 import LoginPage from "@/registry/marcio/blocks/login/page";
 import NotFound from "@/registry/marcio/blocks/not-found/not-found";
+import RecordDetailPage from "@/registry/marcio/blocks/record-detail/page";
 import SettingsPage from "@/registry/marcio/blocks/settings/page";
 import { clearToasts, Toaster } from "@/registry/marcio/ui/toast";
 import { axe, renderInTheme, themes } from "@/test/a11y";
@@ -91,6 +93,68 @@ describe("not-found block", () => {
     for (const theme of themes) {
       const { container, unmount } = renderInTheme(theme, <NotFound />);
       expect(await axe(container)).toHaveNoViolations();
+      unmount();
+    }
+  });
+});
+
+describe("admin-shell block", () => {
+  it("marks the active section, shows the breadcrumb and uses the given user", async () => {
+    const user = userEvent.setup();
+    render(
+      <AdminShell active="configuracoes" breadcrumb={[{ label: "Início", href: "/dashboard" }, { label: "Conta" }]} user={{ name: "Ana Lima", email: "ana@exemplo.com" }}>
+        <p>conteúdo</p>
+      </AdminShell>,
+    );
+    expect(screen.getByRole("link", { name: "Configurações" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "Painel" })).not.toHaveAttribute("aria-current");
+    expect(screen.getByRole("navigation", { name: /breadcrumb|trilha/i })).toHaveTextContent("Conta");
+    expect(screen.getByRole("main")).toHaveTextContent("conteúdo");
+    await user.click(screen.getByRole("button", { name: "Menu de Ana Lima" }));
+    expect(await screen.findByText("ana@exemplo.com")).toBeInTheDocument();
+    await user.click(screen.getByRole("menuitem", { name: "Configurações" }));
+    expect(navigation.push).toHaveBeenCalledWith("/configuracoes");
+  });
+
+  it("has no axe violations", async () => {
+    for (const theme of themes) {
+      const { unmount } = renderInTheme(
+        theme,
+        <AdminShell active="dashboard" breadcrumb={[{ label: "Início" }]}>
+          <h1>Painel</h1>
+        </AdminShell>,
+      );
+      expect(await axe(document.body)).toHaveNoViolations();
+      unmount();
+    }
+  });
+});
+
+describe("record-detail block", () => {
+  it("shows the record data and history", () => {
+    render(<RecordDetailPage />);
+    expect(screen.getByRole("heading", { level: 1, name: "Ouvidoria Digital" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { current: "page" })).toHaveAccessibleName(/^Projetos/);
+    expect(screen.getByText("Secretaria de Planejamento")).toBeInTheDocument();
+    expect(screen.getByText("em homologação", { selector: "[data-slot=badge]" })).toBeInTheDocument();
+    const timeline = screen.getByRole("list", { name: "Trâmite do projeto" });
+    expect(within(timeline).getAllByRole("listitem")).toHaveLength(5);
+  });
+
+  it("confirms archiving in a dialog", async () => {
+    const user = userEvent.setup();
+    withToaster(<RecordDetailPage />);
+    await user.click(screen.getByRole("button", { name: "Arquivar" }));
+    const dialog = await screen.findByRole("alertdialog", { name: "Arquivar projeto?" });
+    expect(dialog).toHaveTextContent("Ouvidoria Digital sai da lista de ativos.");
+    await user.click(within(dialog).getByRole("button", { name: "Arquivar" }));
+    expect(await screen.findByText("Nada foi arquivado")).toBeInTheDocument();
+  });
+
+  it("has no axe violations", async () => {
+    for (const theme of themes) {
+      const { unmount } = renderInTheme(theme, <RecordDetailPage />);
+      expect(await axe(document.body)).toHaveNoViolations();
       unmount();
     }
   });

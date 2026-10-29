@@ -4,6 +4,25 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.19.2] - 2026-10-29
+
+### Corrigido
+
+- Bloco `login`: o leitor de tela não lê mais o `// ` do texto digitado. A animação continua igual e o texto acessível fica num trecho só para leitor de tela.
+- O `registry.json` passa a declarar as dependências de imports com aspas simples, `export ... from` e `import()`. Antes, `gsap` e `pixi.js` só entravam por causa das linhas `import type`.
+
+### Mudou
+
+- EmptyState e o bloco `not-found` usam o CodeComment para o prefixo `// `. O `empty-state` e o `not-found` passam a instalar o `code-comment`.
+- Tour usa `prefersReducedMotion` da `mw-tokens` para decidir a rolagem suave e passa a instalar a `mw-tokens`.
+- O build do registry falha quando um import `@/` não corresponde a nenhum item e quando `BASE_PATH` está definido sem `REGISTRY_URL`.
+- `npm test` só verifica se `app/_data/contrast.json` e `tokens.json` estão em dia; `npm run contrast` regrava os dois.
+- Novo `npm run coverage`, com o relatório de cobertura do Vitest em `coverage/`.
+- Testes de unidade dos blocos `admin-shell` e `record-detail`, e teste e2e da página 404.
+- No CI, o job de qualidade fixa o Node 22 com cache, e a atualização de capturas roda lint e typecheck antes.
+- README lista todos os itens do registry, o bloco `record-detail` e mais ADRs entre as decisões principais.
+- Dependências atualizadas dentro das faixas: `lucide-react` 1.64. `postcss` entrou nas devDependencies, já que o build do registry o importa.
+
 ## [0.19.1] - 2026-10-28
 
 ### Mudou

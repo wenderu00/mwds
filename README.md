@@ -91,16 +91,19 @@ Todos os pares usados passam WCAG AA nos dois temas. A tabela completa está em 
 | Item | Tipo | Conteúdo |
 |---|---|---|
 | `marcio-tokens` | base | Tokens, fontes e `cn`. Use com `init` |
+| `marcio-tema` | file | Cria `app/tema.css` para sobrescrever tokens sem perder as mudanças no próximo `add` |
 | `marcio-strict` | item | Modo estrito: zera a paleta padrão do Tailwind e traz as regras de lint `mw/*` |
 | `font-bricolage`, `font-plex-sans`, `font-plex-mono` | font | Fontes via `next/font` |
 | `utils` | lib | Helper `cn` |
 | `br` | lib | Máscaras de CPF, CNPJ, telefone, CEP e moeda; validação de CPF e CNPJ |
+| `mw-tokens` | lib | Ponte de tokens para Motion, GSAP e Pixi, e `useReducedMotionPreference` |
 | `typography`, `kicker`, `section-title`, `code-comment`, `logo-block`, `dot-grid`, `typing-text`, `glitch-text` | ui | Identidade |
-| `button`, `icon-button`, `input`, `masked-input`, `textarea`, `number-input`, `separator`, `toggle-group`, `slider`, `kbd`, `label`, `checkbox`, `switch`, `radio-group`, `badge`, `avatar`, `skeleton`, `spinner`, `link` | ui | Primitivos |
-| `form-field`, `card`, `select`, `combobox`, `calendar`, `date-picker`, `file-upload`, `accordion`, `collapsible`, `data-table`, `stat-card`, `meter`, `icon-tile`, `stepper`, `feature-grid`, `command`, `popover`, `dropdown-menu`, `dialog`, `alert-dialog`, `sheet`, `toast`, `alert`, `tabs`, `table`, `pagination`, `breadcrumb`, `progress`, `tooltip`, `tour` | ui | Compostos |
+| `button`, `icon-button`, `input`, `masked-input`, `textarea`, `number-input`, `separator`, `toggle-group`, `slider`, `kbd`, `label`, `checkbox`, `switch`, `radio-group`, `badge`, `avatar`, `skeleton`, `spinner`, `link`, `password-input`, `search-input`, `scroll-area` | ui | Primitivos |
+| `form-field`, `card`, `select`, `combobox`, `calendar`, `date-picker`, `file-upload`, `accordion`, `collapsible`, `data-table`, `stat-card`, `meter`, `icon-tile`, `stepper`, `feature-grid`, `command`, `popover`, `dropdown-menu`, `dialog`, `alert-dialog`, `sheet`, `toast`, `alert`, `tabs`, `table`, `pagination`, `breadcrumb`, `progress`, `tooltip`, `tour`, `chart`, `context-menu`, `description-list`, `multi-select`, `timeline` | ui | Compostos |
 | `page-header`, `empty-state`, `theme-toggle`, `navbar`, `hero`, `footer`, `command-palette`, `app-shell` | ui | Padrões |
-| `login`, `not-found`, `dashboard`, `settings`, `landing` | block | Telas prontas (ver abaixo) |
-| `admin-shell` | block | Casca de painel usada por `dashboard` e `settings` |
+| `motion-provider`, `reveal`, `tilt`, `magnetic`, `scroll-progress`, `scramble-text`, `scene-canvas`, `dot-field`, `character-stage`, `character-sentinel` | ui | Movimento, fora do `marcio-ui` (ver acima) |
+| `login`, `not-found`, `dashboard`, `settings`, `landing`, `record-detail` | block | Telas prontas (ver abaixo) |
+| `admin-shell` | block | Casca de painel usada por `dashboard`, `settings` e `record-detail` |
 | `icons-base`, `icons-medieval`, `icon-<pacote>-<nome>` | item, component | Ícones autorais, um arquivo por ícone em `components/icons/` (ver [/icones](https://wenderu00.github.io/mwds/icones/)) |
 | `marcio-ui` | item | Todos os componentes |
 
@@ -120,9 +123,10 @@ npx shadcn@latest add @marcio/dashboard
 | `not-found` | `app/not-found.tsx` | Substitui a página 404 do projeto |
 | `dashboard` | `app/dashboard/page.tsx` | Dados de exemplo em `components/blocks/dashboard/data.ts` |
 | `settings` | `app/configuracoes/page.tsx` | Perfil, preferências (tema, densidade, fuso, notificações) e conta |
+| `record-detail` | `app/projeto/page.tsx` | Detalhe de um registro com dados, histórico e ações. Dados de exemplo em `components/blocks/record-detail/data.ts` |
 | `landing` | `app/page.tsx` | Página no estilo do portfólio: Navbar, Hero, serviços, stack, projetos e rodapé. Conteúdo em `components/blocks/landing/data.ts` |
 
-Dashboard e Configurações instalam também o `admin-shell`. Edite a lista `navigation` dele com as rotas do seu sistema. Os blocos usam toasts, então o `<Toaster />` precisa estar no layout raiz (ver [Primeiros passos](https://wenderu00.github.io/mwds/primeiros-passos/#tema)).
+Dashboard, Configurações e o detalhe de registro instalam também o `admin-shell`. Edite a lista `navigation` dele com as rotas do seu sistema. Os blocos usam toasts, então o `<Toaster />` precisa estar no layout raiz (ver [Primeiros passos](https://wenderu00.github.io/mwds/primeiros-passos/#tema)).
 
 ## Desenvolver o DS
 
@@ -140,8 +144,9 @@ npm run dev
 | `npm run build` | Gera o `registry.json`, roda `shadcn build` (saída em `public/r`) e o `next build`, que exporta o site estático para `out/` |
 | `npm run registry:build` | Só o registry |
 | `npm run lint` | ESLint, com as regras que proíbem cores e valores de forma, movimento e camada fora dos tokens, e a checagem de cores em CSS |
-| `npm run test` | Validação de contraste e testes (Vitest, Testing Library e vitest-axe) |
-| `npm run contrast` | Tabela de contraste de todos os pares nos dois temas |
+| `npm run test` | Validação de contraste, checagem de que `app/_data` está em dia e testes (Vitest, Testing Library e vitest-axe) |
+| `npm run coverage` | Os testes do Vitest com relatório de cobertura em `coverage/` |
+| `npm run contrast` | Tabela de contraste de todos os pares nos dois temas; regrava `app/_data/contrast.json` e `tokens.json` |
 | `npm run accent-scale` | Mostra a escala do accent gerada em OKLCH |
 | `npm run typecheck` | TypeScript sem emitir arquivos |
 | `npm run e2e` | Axe com contraste real e regressão visual (Playwright) em todas as páginas, nos dois temas. Precisa do `out/` do `npm run build` |
@@ -205,3 +210,7 @@ As decisões de design e arquitetura estão registradas em [docs/adr/](docs/adr/
 - [0006](docs/adr/0006-borda-de-controles.md): token `line-control` para bordas de 3:1
 - [0007](docs/adr/0007-validacao-de-contraste.md): contraste validado por script
 - [0013](docs/adr/0013-formato-do-registry.md): formato do registry e fluxo de instalação
+- [0018](docs/adr/0018-api-congelada.md): API congelada dos primitivos e status do 1.0
+- [0021](docs/adr/0021-modo-estrito.md): modo estrito no projeto consumidor
+- [0024](docs/adr/0024-sistema-de-movimento.md): sistema de movimento
+- [0027](docs/adr/0027-comentarios-no-codigo.md): comentários no código

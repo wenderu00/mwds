@@ -3,6 +3,7 @@
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/registry/marcio/ui/button";
+import { CodeComment } from "@/registry/marcio/ui/code-comment";
 
 export function NotFoundTerminal() {
   const pathname = usePathname() ?? "/";
@@ -24,11 +25,10 @@ export function NotFoundTerminal() {
             cd {pathname}
           </p>
           <p className="text-danger-text">erro: rota não encontrada</p>
-          <p className="text-ink-muted">
-            <span aria-hidden="true">{"// "}</span>
+          <CodeComment className="text-mono-sm">
             confira o endereço ou volte para o início
             <span className="mw-caret ml-1" aria-hidden="true" />
-          </p>
+          </CodeComment>
         </div>
       </div>
       <div className="flex flex-wrap gap-3">

@@ -1447,6 +1447,7 @@
       "description": "Estado vazio com comentário de código, título, descrição e ação. A versão decorated ganha a DotGrid.",
       "dependencies": [],
       "registryDependencies": [
+        "http://localhost:3000/r/code-comment.json",
         "http://localhost:3000/r/dot-grid.json",
         "http://localhost:3000/r/marcio-tokens.json",
         "http://localhost:3000/r/utils.json"
@@ -2629,6 +2630,7 @@
       "registryDependencies": [
         "http://localhost:3000/r/button.json",
         "http://localhost:3000/r/marcio-tokens.json",
+        "http://localhost:3000/r/mw-tokens.json",
         "http://localhost:3000/r/popover.json",
         "http://localhost:3000/r/utils.json"
       ],
@@ -2848,6 +2850,7 @@
       "dependencies": [],
       "registryDependencies": [
         "http://localhost:3000/r/button.json",
+        "http://localhost:3000/r/code-comment.json",
         "http://localhost:3000/r/dot-grid.json",
         "http://localhost:3000/r/glitch-text.json",
         "http://localhost:3000/r/logo-block.json",
