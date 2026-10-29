@@ -14,7 +14,7 @@ export function formatBytes(bytes: number) {
   return `${decimal.format(bytes / (1024 * 1024))} MB`;
 }
 
-// Mesma regra do atributo accept: extensões (.pdf), tipos exatos (application/pdf) e curingas (image/*).
+/** Mesma regra do atributo accept: extensões (.pdf), tipos exatos (application/pdf) e curingas (image/*). */
 export function matchesAccept(file: File, accept?: string) {
   if (!accept) return true;
   const name = file.name.toLowerCase();
@@ -32,7 +32,7 @@ export function matchesAccept(file: File, accept?: string) {
 
 export type FileRejection = { file: File; reason: "type" | "size" | "count"; message: string };
 
-// Estado do envio de um arquivo, controlado por quem faz o upload. progress null é progresso indeterminado.
+/** Estado do envio de um arquivo, controlado por quem faz o upload. progress null é progresso indeterminado. */
 export type FileUploadStatus = { progress?: number | null; error?: ReactNode; done?: boolean };
 
 const sameFile = (a: File, b: File) => a.name === b.name && a.size === b.size && a.lastModified === b.lastModified;

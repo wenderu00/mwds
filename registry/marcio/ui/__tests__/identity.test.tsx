@@ -85,12 +85,12 @@ describe("LogoBlock", () => {
   it("can wrap a link", () => {
     render(
       <LogoBlock asChild size="sm">
-        <a href="#topo" aria-label="Início">
+        <a href="#topo" aria-label="MW, início">
           MW
         </a>
       </LogoBlock>,
     );
-    const link = screen.getByRole("link", { name: "Início" });
+    const link = screen.getByRole("link", { name: "MW, início" });
     expect(link).toHaveClass("bg-accent", "min-h-9");
   });
 

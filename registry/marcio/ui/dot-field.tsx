@@ -44,7 +44,6 @@ const dotField: Scene<DotFieldOptions> = ({ app, PIXI, host, tokens, options }) 
     }
   };
 
-  // O campo fica atrás do conteúdo, sem ponteiro: escuta a janela e confere se o ponteiro está dentro dele.
   const local = (event: PointerEvent) => {
     const rect = host.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -66,7 +65,6 @@ const dotField: Scene<DotFieldOptions> = ({ app, PIXI, host, tokens, options }) 
   const tick = ({ deltaMS }: { deltaMS: number }) => {
     time += deltaMS;
     const { width, height } = app.screen;
-    // a área acesa passeia devagar, como a máscara do DotGrid animado
     const cx = width * (0.5 + 0.25 * Math.sin(time / 6000));
     const cy = height * (0.45 + 0.3 * Math.sin(time / 4700 + 1));
     const reach = Math.max(width, height) * 0.7;

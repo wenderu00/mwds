@@ -161,6 +161,7 @@ As capturas de referência ficam em `e2e/__screenshots__/` e são geradas no con
 - **Movimento opcional.** Toda animação usa `motion-safe:` ou fica dentro de `prefers-reduced-motion: no-preference`. As durações viram 0,01ms com `reduce`.
 - **Ícones do lucide-react**, em `size-4`, `size-5` ou `size-6`, com `aria-hidden` quando são decorativos. A regra `mw/icon-size` reprova outro tamanho no ícone, como `size-12`, `size-3.5`, `w-8 h-8` ou a prop `size={48}`. A única exceção é a marca do Checkbox, liberada no `eslint.config.mjs` só para `checkbox.tsx`.
 - **Acessibilidade testada.** Cada componente tem testes de comportamento e de axe nos dois temas.
+- **Comentários só como JSDoc da API pública.** Props, tipos e funções exportados podem ter `/** ... */`, que aparece no editor de quem instala. Comentários de linha não entram em `registry/marcio` ([ADR 0027](docs/adr/0027-comentarios-no-codigo.md)).
 
 ### Adicionar um componente
 

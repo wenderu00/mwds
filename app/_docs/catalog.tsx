@@ -292,17 +292,20 @@ export const docs: ComponentDoc[] = [
       },
       {
         title: "Como link para o início",
-        code: `<LogoBlock asChild>\n  <NextLink href="/" aria-label="Márcio Wendell, início">MW</NextLink>\n</LogoBlock>`,
+        code: `<LogoBlock asChild>\n  <NextLink href="/" aria-label="MW, Márcio Wendell, início">MW</NextLink>\n</LogoBlock>`,
         render: () => (
           <LogoBlock asChild>
-            <a href="#" aria-label="Márcio Wendell, início">
+            <a href="#" aria-label="MW, Márcio Wendell, início">
               MW
             </a>
           </LogoBlock>
         ),
       },
     ],
-    a11y: ["Quando for link, dê um aria-label com o nome completo: MW sozinho não diz nada."],
+    a11y: [
+      "Quando for link, dê um aria-label com o nome completo: MW sozinho não diz nada.",
+      'O aria-label começa pelas letras do bloco ("MW, Márcio Wendell, início"): quem usa comando de voz fala o que vê.',
+    ],
   },
   {
     slug: "dot-grid",
@@ -3243,7 +3246,7 @@ export const docs: ComponentDoc[] = [
         title: "Site com seções",
         className: "w-full",
         stacked: true,
-        code: `<Navbar\n  brand={<LogoBlock asChild size="sm"><a href="#topo" aria-label="Márcio Wendell, início">MW</a></LogoBlock>}\n  links={[\n    { href: "#quem-sou", label: "01 Quem sou eu", current: true },\n    { href: "#o-que-faco", label: "02 O que faço" },\n    { href: "#trabalhos", label: "03 Trabalhos" },\n  ]}\n  actions={<ThemeToggle />}\n/>`,
+        code: `<Navbar\n  brand={<LogoBlock asChild size="sm"><a href="#topo" aria-label="MW, Márcio Wendell, início">MW</a></LogoBlock>}\n  links={[\n    { href: "#quem-sou", label: "01 Quem sou eu", current: true },\n    { href: "#o-que-faco", label: "02 O que faço" },\n    { href: "#trabalhos", label: "03 Trabalhos" },\n  ]}\n  actions={<ThemeToggle />}\n/>`,
         render: (theme) => (
           <Navbar
             sticky={false}
@@ -3251,7 +3254,7 @@ export const docs: ComponentDoc[] = [
             label={`Seções, exemplo no tema ${theme === "dark" ? "escuro" : "claro"}`}
             brand={
               <LogoBlock asChild size="sm">
-                <a href="#topo" aria-label="Márcio Wendell, início">
+                <a href="#topo" aria-label="MW, Márcio Wendell, início">
                   MW
                 </a>
               </LogoBlock>
@@ -3268,7 +3271,7 @@ export const docs: ComponentDoc[] = [
         title: "Links e ações recolhidos no tablet",
         className: "w-full",
         stacked: true,
-        code: `<Navbar\n  collapseBelow="lg"\n  brand={<LogoBlock asChild size="sm"><a href="#topo" aria-label="XPomodoro, início">XP</a></LogoBlock>}\n  links={[\n    { href: "#sessao", label: "sessão", current: true },\n    { href: "#manual", label: "manual xp" },\n    { href: "#filosofia", label: "a filosofia" },\n  ]}\n  actions={<Badge tone="accent">12 XP</Badge>}\n/>`,
+        code: `<Navbar\n  collapseBelow="lg"\n  brand={<LogoBlock asChild size="sm"><a href="#topo" aria-label="XP, XPomodoro, início">XP</a></LogoBlock>}\n  links={[\n    { href: "#sessao", label: "sessão", current: true },\n    { href: "#manual", label: "manual xp" },\n    { href: "#filosofia", label: "a filosofia" },\n  ]}\n  actions={<Badge tone="accent">12 XP</Badge>}\n/>`,
         render: (theme) => (
           <Navbar
             sticky={false}
@@ -3278,7 +3281,7 @@ export const docs: ComponentDoc[] = [
             menuLabel={`Menu, exemplo no tema ${theme === "dark" ? "escuro" : "claro"}`}
             brand={
               <LogoBlock asChild size="sm">
-                <a href="#topo" aria-label="XPomodoro, início">
+                <a href="#topo" aria-label="XP, XPomodoro, início">
                   XP
                 </a>
               </LogoBlock>

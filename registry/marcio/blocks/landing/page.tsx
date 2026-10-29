@@ -42,7 +42,7 @@ export default function LandingPage() {
       <Navbar
         brand={
           <LogoBlock asChild size="sm">
-            <a href="#topo" aria-label={`${profile.name}, início`}>
+            <a href="#topo" aria-label={`MW, ${profile.name}, início`}>
               MW
             </a>
           </LogoBlock>

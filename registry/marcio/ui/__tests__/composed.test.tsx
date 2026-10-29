@@ -17,6 +17,7 @@ import {
 } from "@/registry/marcio/ui/dialog";
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { Input } from "@/registry/marcio/ui/input";
+import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from "@/registry/marcio/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/registry/marcio/ui/select";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/registry/marcio/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/registry/marcio/ui/tabs";
@@ -371,6 +372,62 @@ describe("Table", () => {
 
   it("has no axe violations", async () => {
     await expectAccessibleInThemes(table);
+  });
+});
+
+describe("Popover", () => {
+  const popover = (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="secondary">Filtros</Button>
+      </PopoverTrigger>
+      <PopoverContent aria-label="Filtros da lista">
+        <Checkbox aria-label="Só ativos" />
+        <PopoverClose asChild>
+          <Button size="sm">Aplicar</Button>
+        </PopoverClose>
+      </PopoverContent>
+    </Popover>
+  );
+
+  it("opens from the trigger and closes with Escape returning focus", async () => {
+    const user = userEvent.setup();
+    render(popover);
+    const trigger = screen.getByRole("button", { name: "Filtros" });
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    await user.click(trigger);
+    const content = await screen.findByRole("dialog", { name: "Filtros da lista" });
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(content).toContainElement(document.activeElement as HTMLElement);
+    await user.keyboard("{Escape}");
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    expect(trigger).toHaveFocus();
+  });
+
+  it("closes with PopoverClose", async () => {
+    const user = userEvent.setup();
+    render(popover);
+    await user.click(screen.getByRole("button", { name: "Filtros" }));
+    await user.click(await screen.findByRole("button", { name: "Aplicar" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+  });
+
+  it("has no axe violations when open", async () => {
+    for (const theme of themes) {
+      const { unmount } = renderInTheme(
+        theme,
+        <Popover defaultOpen>
+          <PopoverTrigger asChild>
+            <Button variant="secondary">Filtros</Button>
+          </PopoverTrigger>
+          <PopoverContent aria-label="Filtros da lista">
+            <Checkbox aria-label="Só ativos" />
+          </PopoverContent>
+        </Popover>,
+      );
+      expect(await axe(document.body)).toHaveNoViolations();
+      unmount();
+    }
   });
 });
 

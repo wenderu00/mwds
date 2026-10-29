@@ -45,7 +45,6 @@ export type TourProps = {
   className?: string;
 };
 
-// Folga entre o alvo e a borda do recorte, em px.
 const spotlightPadding = 8;
 
 const viewportCenter = {
@@ -70,7 +69,6 @@ function subscribeLayout(notify: () => void, element?: HTMLElement | null) {
   };
 }
 
-// Snapshot em texto: o useSyncExternalStore compara por igualdade, e um DOMRect novo a cada leitura nunca seria igual.
 const rectKeyOf = (rect: DOMRect) => [rect.top, rect.left, rect.width, rect.height].join(",");
 
 export function Tour({ steps, open, onOpenChange, step, onStepChange, onFinish, onSkip, labels, className }: TourProps) {
@@ -126,7 +124,6 @@ export function Tour({ steps, open, onOpenChange, step, onStepChange, onFinish, 
     onOpenChange(false);
   };
   const back = () => {
-    // O Voltar some no primeiro passo; o foco passa antes para o Avançar.
     if (current === 1) primaryRef.current?.focus();
     goTo(current - 1);
   };
@@ -139,7 +136,6 @@ export function Tour({ steps, open, onOpenChange, step, onStepChange, onFinish, 
           {center ? (
             <div data-slot="tour-overlay" aria-hidden="true" className="fixed inset-0 z-dialog bg-scrim motion-safe:animate-mw-fade-in" />
           ) : (
-            // O contorno largo escurece a tela em volta do recorte e acompanha o raio de card.
             <div
               data-slot="tour-spotlight"
               aria-hidden="true"

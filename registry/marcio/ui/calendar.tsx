@@ -16,7 +16,6 @@ const weekdays = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
 export type CalendarProps = ComponentProps<typeof DayPicker>;
 
 export function Calendar({ className, classNames, components, formatters, labels, showOutsideDays = true, ...props }: CalendarProps) {
-  // Com mais de um calendário na página, o aria-label distingue também a barra de navegação de cada um.
   const name = props["aria-label"];
   return (
     <DayPicker

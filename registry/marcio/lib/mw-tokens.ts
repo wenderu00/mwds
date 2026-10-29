@@ -63,7 +63,6 @@ export function toPixiColor(css: string) {
   const value = css.trim();
   const hex = value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)?.[1];
   if (hex) return parseInt(hex.length === 3 ? [...hex].map((c) => c + c).join("") : hex, 16);
-  // Outros formatos (oklch, rgb) passam pelo canvas, que normaliza para #rrggbb.
   if (probe === undefined) {
     try {
       probe = document.createElement("canvas").getContext("2d");
