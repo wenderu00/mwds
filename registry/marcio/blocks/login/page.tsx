@@ -15,7 +15,7 @@ export default function LoginPage() {
       <aside aria-label="Sobre o painel" className="relative isolate hidden flex-col justify-between overflow-hidden border-r border-line bg-band p-10 lg:flex">
         <DotGrid animated />
         <LogoBlock asChild className="self-start">
-          <NextLink href="/" aria-label="Página inicial">
+          <NextLink href="/" aria-label="MW, página inicial">
             MW
           </NextLink>
         </LogoBlock>
@@ -33,7 +33,7 @@ export default function LoginPage() {
       <main id="conteudo" className="flex items-center justify-center px-6 py-12">
         <div className="flex w-full max-w-sm flex-col gap-8">
           <LogoBlock asChild size="sm" className="self-start lg:hidden">
-            <NextLink href="/" aria-label="Página inicial">
+            <NextLink href="/" aria-label="MW, página inicial">
               MW
             </NextLink>
           </LogoBlock>

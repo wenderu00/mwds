@@ -12,7 +12,7 @@ export default function NotFound() {
     <main id="conteudo" className="relative isolate flex min-h-dvh flex-col justify-center gap-10 overflow-hidden bg-ground px-6 py-16 text-ink md:px-16">
       <DotGrid animated />
       <LogoBlock asChild className="self-start">
-        <NextLink href="/" aria-label="Página inicial">
+        <NextLink href="/" aria-label="MW, página inicial">
           MW
         </NextLink>
       </LogoBlock>
