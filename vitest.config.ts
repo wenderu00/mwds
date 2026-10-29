@@ -9,6 +9,12 @@ export default defineConfig({
   resolve: { alias },
   test: {
     globals: true,
+    coverage: {
+      provider: "v8",
+      include: ["registry/**/*.{ts,tsx}", "scripts/**/*.ts", "eslint-rules/**/*.js", "app/**/*.{ts,tsx}"],
+      exclude: ["**/*.test.{ts,tsx}", "**/__tests__/**"],
+      reporter: ["text-summary", "html"],
+    },
     projects: [
       {
         extends: true,

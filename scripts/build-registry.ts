@@ -26,7 +26,13 @@ type RegistryItem = {
 };
 
 const root = resolve(String(process.cwd()));
-const baseUrl = (process.env.REGISTRY_URL ?? "http://localhost:3000").replace(/\/$/, "");
+
+export function registryBaseUrl(env: Record<string, string | undefined> = process.env) {
+  if (env.BASE_PATH && !env.REGISTRY_URL) throw new Error("BASE_PATH definido sem REGISTRY_URL: o registry publicado apontaria para localhost");
+  return (env.REGISTRY_URL ?? "http://localhost:3000").replace(/\/$/, "");
+}
+
+const baseUrl = registryBaseUrl();
 const itemUrl = (name: string) => `${baseUrl}/r/${name}.json`;
 const ignoredPackages = new Set(["react", "react-dom", "next"]);
 
@@ -60,9 +66,14 @@ export function tokensCss(): { theme: Record<string, string>; css: CssTree } {
   return { theme, css: { ...rest, html, body, "@layer base": layered } };
 }
 
+const importPattern = /(?:^(?:import|export)\b[^"';]*?\bfrom\s*|^import\s*|\bimport\(\s*)(["'])([^"']+)\1/gm;
+
+export function importSpecifiers(source: string) {
+  return [...new Set([...source.matchAll(importPattern)].map((match) => match[2]!))];
+}
+
 export function importsOf(file: string) {
-  const source = readFileSync(join(root, file), "utf8");
-  return [...source.matchAll(/^import[^"]*"([^"]+)";?$/gm)].map((match) => match[1]!);
+  return importSpecifiers(readFileSync(join(root, file), "utf8"));
 }
 
 function packageName(specifier: string) {
@@ -73,13 +84,16 @@ function packageName(specifier: string) {
 export function dependenciesOf(file: string | string[], { withTokens = true, self }: { withTokens?: boolean; self?: string } = {}) {
   const dependencies = new Set<string>();
   const registryDependencies = new Set<string>(withTokens ? [itemUrl("marcio-tokens")] : []);
-  for (const specifier of (Array.isArray(file) ? file : [file]).flatMap(importsOf)) {
+  const files = Array.isArray(file) ? file : [file];
+  for (const [path, specifier] of files.flatMap((path) => importsOf(path).map((specifier) => [path, specifier] as const))) {
     const local = specifier.match(/^@\/registry\/marcio\/(ui|lib)\/([\w-]+)$/);
     const block = specifier.match(/^@\/registry\/marcio\/blocks\/([\w-]+)\//);
     if (local) registryDependencies.add(itemUrl(local[2]!));
     else if (block) {
       if (block[1] !== self) registryDependencies.add(itemUrl(block[1]!));
-    } else if (!specifier.startsWith(".") && !specifier.startsWith("@/")) {
+    } else if (specifier.startsWith("@/")) {
+      throw new Error(`${path}: import ${specifier} não corresponde a nenhum item do registry`);
+    } else if (!specifier.startsWith(".")) {
       const name = packageName(specifier);
       if (!ignoredPackages.has(name)) dependencies.add(name);
     }
@@ -123,6 +137,7 @@ export function buildRegistry() {
     },
   }));
 
+  const tokenStyles = tokensCss();
   const tokens: RegistryItem = {
     name: "marcio-tokens",
     type: "registry:base",
@@ -144,8 +159,8 @@ export function buildRegistry() {
     title: "Tokens do @mw/ui",
     description: "Cores, tipografia, foco, seleção e utilitários de identidade, nos temas escuro e claro.",
     registryDependencies: [...fonts.map((font) => itemUrl(font.name)), itemUrl("utils")],
-    cssVars: { theme: tokensCss().theme },
-    css: tokensCss().css,
+    cssVars: { theme: tokenStyles.theme },
+    css: tokenStyles.css,
   };
 
   // Separado do marcio-tokens: init e add sobrescrevem arquivos, e este é do projeto.

@@ -30,6 +30,13 @@ const pages: SitePage[] = [
   { name: "landing", path: "/landing/" },
 ];
 
+test("página 404", async ({ page }) => {
+  const response = await page.goto("/rota/que/nao/existe/", { waitUntil: "networkidle" });
+  expect(response?.status()).toBe(404);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Esta página não existe");
+  await expectNoAxeViolations(page);
+});
+
 for (const { name, path, capture, mask } of pages) {
   test(`página ${name}`, async ({ page }) => {
     await open(page, path);

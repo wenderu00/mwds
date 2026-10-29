@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { buildRegistry, importsOf, tokensCss } from "./build-registry";
+import { buildRegistry, importSpecifiers, importsOf, registryBaseUrl, tokensCss } from "./build-registry";
 
 const registry = buildRegistry();
 const byName = new Map(registry.items.map((item) => [item.name, item]));
@@ -44,6 +44,33 @@ describe("registry", () => {
     expect(byName.get("dashboard")?.registryDependencies?.map(nameFromUrl)).toContain("admin-shell");
     expect(byName.get("settings")?.registryDependencies?.map(nameFromUrl)).toContain("admin-shell");
     expect(byName.get("login")?.dependencies).toContain("react-hook-form");
+  });
+
+  it("finds static, re-exported, single-quoted and dynamic imports", () => {
+    const source = [
+      'import { a } from "pkg-a";',
+      "import b from 'pkg-b';",
+      'import "pkg-c";',
+      "import {\n  d,\n  e,\n} from \"pkg-d\";",
+      'import type { F } from "pkg-f";',
+      'export { g } from "pkg-g";',
+      'export * from "./local";',
+      'const h = await import("pkg-h");',
+      'const items = Array.from(list);',
+      'const label = "from here";',
+    ].join("\n");
+    expect(importSpecifiers(source)).toEqual(["pkg-a", "pkg-b", "pkg-c", "pkg-d", "pkg-f", "pkg-g", "./local", "pkg-h"]);
+  });
+
+  it("declares the packages loaded on demand", () => {
+    expect(byName.get("character-stage")?.dependencies).toContain("gsap");
+    expect(byName.get("scene-canvas")?.dependencies).toContain("pixi.js");
+  });
+
+  it("refuses a deploy base path without the registry URL", () => {
+    expect(() => registryBaseUrl({ BASE_PATH: "/mwds" })).toThrow(/REGISTRY_URL/);
+    expect(registryBaseUrl({ BASE_PATH: "/mwds", REGISTRY_URL: "https://example.com/mwds/" })).toBe("https://example.com/mwds");
+    expect(registryBaseUrl({})).toBe("http://localhost:3000");
   });
 
   it("makes every component pull the tokens", () => {

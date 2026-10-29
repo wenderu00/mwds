@@ -22,7 +22,10 @@ export default function LoginPage() {
         <div className="flex flex-col gap-4">
           <Kicker>painel de projetos</Kicker>
           <p className="max-w-md font-display text-display-lg font-extrabold">Tudo o que está em andamento, num lugar só.</p>
-          <TypingText text="// acesso restrito à equipe" delay={400} className="text-mono-xs text-ink-muted" />
+          <p className="text-mono-xs text-ink-muted">
+            <TypingText text="// acesso restrito à equipe" delay={400} aria-hidden="true" />
+            <span className="sr-only">acesso restrito à equipe</span>
+          </p>
         </div>
         <CodeComment>v0.1 · Recife, PE</CodeComment>
       </aside>

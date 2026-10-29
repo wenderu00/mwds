@@ -2,6 +2,7 @@
 
 import { Portal } from "radix-ui";
 import { type ReactNode, type RefObject, useCallback, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { prefersReducedMotion } from "@/registry/marcio/lib/mw-tokens";
 import { cn } from "@/registry/marcio/lib/utils";
 import { Button } from "@/registry/marcio/ui/button";
 import { Popover, PopoverAnchor, PopoverContent } from "@/registry/marcio/ui/popover";
@@ -100,8 +101,7 @@ export function Tour({ steps, open, onOpenChange, step, onStepChange, onFinish, 
 
   useLayoutEffect(() => {
     if (!element) return;
-    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    element.scrollIntoView({ block: "center", inline: "nearest", behavior: reduced ? "auto" : "smooth" });
+    element.scrollIntoView({ block: "center", inline: "nearest", behavior: prefersReducedMotion() ? "auto" : "smooth" });
   }, [element]);
 
   const placement: TourPlacement = element ? (data?.placement ?? "bottom") : "center";
