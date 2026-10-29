@@ -1,5 +1,5 @@
 import { Badge } from "@/registry/marcio/ui/badge";
-import { statusLabel, type DocStatus } from "./catalog";
+import { statusLabel, type DocStatus } from "./catalog-meta";
 
 const tones = { estavel: "neutral", beta: "accent", experimental: "warning" } as const;
 

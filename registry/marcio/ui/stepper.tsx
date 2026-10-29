@@ -34,7 +34,7 @@ export function Stepper({ steps, current, orientation = "horizontal", onStepChan
             aria-hidden="true"
             className={cn(
               "flex size-8 shrink-0 items-center justify-center rounded-full border-2 font-mono text-mono-sm font-medium",
-              status === "complete" && "border-accent-line bg-accent text-on-accent",
+              status === "complete" && "border-accent-edge bg-accent text-on-accent",
               status === "current" && "border-accent-line text-accent-text",
               status === "pending" && "border-line-control text-ink-muted",
             )}

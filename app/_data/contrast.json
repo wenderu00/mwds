@@ -169,6 +169,18 @@
   },
   {
     "theme": "dark",
+    "fg": "ink-soft",
+    "bg": "accent-soft",
+    "kind": "text",
+    "usage": "Célula de linha selecionada da Table",
+    "fgValue": "#d4d4d4",
+    "bgValue": "#29280d",
+    "ratio": 10.09,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
     "fg": "ink-muted",
     "bg": "accent-soft",
     "kind": "text",
@@ -236,6 +248,18 @@
     "fgValue": "#000000",
     "bgValue": "#ffffff",
     "ratio": 21,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "fg": "ink",
+    "bg": "line",
+    "kind": "text",
+    "usage": "Botão de remover do MultiSelect em hover",
+    "fgValue": "#ffffff",
+    "bgValue": "#262626",
+    "ratio": 15.13,
     "required": 4.5,
     "pass": true
   },
@@ -434,6 +458,18 @@
   {
     "theme": "dark",
     "fg": "category-1-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 1",
+    "fgValue": "#4890e9",
+    "bgValue": "#0a0a0a",
+    "ratio": 6.07,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "fg": "category-1-text",
     "bg": "surface",
     "kind": "text",
     "usage": "Texto da categoria 1",
@@ -500,6 +536,18 @@
     "fgValue": "#4da139",
     "bgValue": "#000000",
     "ratio": 6.47,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "fg": "category-2-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 2",
+    "fgValue": "#4da139",
+    "bgValue": "#0a0a0a",
+    "ratio": 6.1,
     "required": 4.5,
     "pass": true
   },
@@ -578,6 +626,18 @@
   {
     "theme": "dark",
     "fg": "category-3-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 3",
+    "fgValue": "#ed4fa7",
+    "bgValue": "#0a0a0a",
+    "ratio": 5.92,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "fg": "category-3-text",
     "bg": "surface",
     "kind": "text",
     "usage": "Texto da categoria 3",
@@ -644,6 +704,18 @@
     "fgValue": "#d37439",
     "bgValue": "#000000",
     "ratio": 6.33,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "fg": "category-4-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 4",
+    "fgValue": "#d37439",
+    "bgValue": "#0a0a0a",
+    "ratio": 5.96,
     "required": 4.5,
     "pass": true
   },
@@ -722,6 +794,18 @@
   {
     "theme": "dark",
     "fg": "category-5-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 5",
+    "fgValue": "#3f9f8f",
+    "bgValue": "#0a0a0a",
+    "ratio": 6.19,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "fg": "category-5-text",
     "bg": "surface",
     "kind": "text",
     "usage": "Texto da categoria 5",
@@ -788,6 +872,18 @@
     "fgValue": "#9978ea",
     "bgValue": "#000000",
     "ratio": 6.23,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "fg": "category-6-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 6",
+    "fgValue": "#9978ea",
+    "bgValue": "#0a0a0a",
+    "ratio": 5.87,
     "required": 4.5,
     "pass": true
   },
@@ -866,6 +962,18 @@
   {
     "theme": "dark",
     "fg": "category-7-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 7",
+    "fgValue": "#959239",
+    "bgValue": "#0a0a0a",
+    "ratio": 6.08,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "fg": "category-7-text",
     "bg": "surface",
     "kind": "text",
     "usage": "Texto da categoria 7",
@@ -932,6 +1040,18 @@
     "fgValue": "#ed5d60",
     "bgValue": "#000000",
     "ratio": 6.34,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "fg": "category-8-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 8",
+    "fgValue": "#ed5d60",
+    "bgValue": "#0a0a0a",
+    "ratio": 5.97,
     "required": 4.5,
     "pass": true
   },
@@ -1693,6 +1813,18 @@
   },
   {
     "theme": "light",
+    "fg": "ink-soft",
+    "bg": "accent-soft",
+    "kind": "text",
+    "usage": "Célula de linha selecionada da Table",
+    "fgValue": "#404040",
+    "bgValue": "#f9f9cc",
+    "ratio": 9.6,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
     "fg": "ink-muted",
     "bg": "accent-soft",
     "kind": "text",
@@ -1760,6 +1892,18 @@
     "fgValue": "#ffffff",
     "bgValue": "#000000",
     "ratio": 21,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "fg": "ink",
+    "bg": "line",
+    "kind": "text",
+    "usage": "Botão de remover do MultiSelect em hover",
+    "fgValue": "#000000",
+    "bgValue": "#e5e5e5",
+    "ratio": 16.67,
     "required": 4.5,
     "pass": true
   },
@@ -1958,6 +2102,18 @@
   {
     "theme": "light",
     "fg": "category-1-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 1",
+    "fgValue": "#1b69c1",
+    "bgValue": "#fafafa",
+    "ratio": 5.24,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "fg": "category-1-text",
     "bg": "surface",
     "kind": "text",
     "usage": "Texto da categoria 1",
@@ -2024,6 +2180,18 @@
     "fgValue": "#2d791a",
     "bgValue": "#ffffff",
     "ratio": 5.44,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "fg": "category-2-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 2",
+    "fgValue": "#2d791a",
+    "bgValue": "#fafafa",
+    "ratio": 5.21,
     "required": 4.5,
     "pass": true
   },
@@ -2102,6 +2270,18 @@
   {
     "theme": "light",
     "fg": "category-3-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 3",
+    "fgValue": "#bf2480",
+    "bgValue": "#fafafa",
+    "ratio": 5.32,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "fg": "category-3-text",
     "bg": "surface",
     "kind": "text",
     "usage": "Texto da categoria 3",
@@ -2168,6 +2348,18 @@
     "fgValue": "#a4521a",
     "bgValue": "#ffffff",
     "ratio": 5.53,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "fg": "category-4-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 4",
+    "fgValue": "#a4521a",
+    "bgValue": "#fafafa",
+    "ratio": 5.29,
     "required": 4.5,
     "pass": true
   },
@@ -2246,6 +2438,18 @@
   {
     "theme": "light",
     "fg": "category-5-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 5",
+    "fgValue": "#1e776a",
+    "bgValue": "#fafafa",
+    "ratio": 5.16,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "fg": "category-5-text",
     "bg": "surface",
     "kind": "text",
     "usage": "Texto da categoria 5",
@@ -2312,6 +2516,18 @@
     "fgValue": "#8239f1",
     "bgValue": "#ffffff",
     "ratio": 5.52,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "fg": "category-6-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 6",
+    "fgValue": "#8239f1",
+    "bgValue": "#fafafa",
+    "ratio": 5.29,
     "required": 4.5,
     "pass": true
   },
@@ -2390,6 +2606,18 @@
   {
     "theme": "light",
     "fg": "category-7-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 7",
+    "fgValue": "#726b1a",
+    "bgValue": "#fafafa",
+    "ratio": 5.25,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "fg": "category-7-text",
     "bg": "surface",
     "kind": "text",
     "usage": "Texto da categoria 7",
@@ -2456,6 +2684,18 @@
     "fgValue": "#ca2537",
     "bgValue": "#ffffff",
     "ratio": 5.48,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "fg": "category-8-text",
+    "bg": "band",
+    "kind": "text",
+    "usage": "Texto da categoria 8",
+    "fgValue": "#ca2537",
+    "bgValue": "#fafafa",
+    "ratio": 5.25,
     "required": 4.5,
     "pass": true
   },

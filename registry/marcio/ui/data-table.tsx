@@ -28,12 +28,16 @@ export type DataTableProps<T> = {
   getRowId: (row: T) => string;
   pageSize?: number;
   page?: number;
+  /** Página inicial quando page não é controlada. */
+  defaultPage?: number;
   onPageChange?: (page: number) => void;
   sort?: DataTableSort | null;
   defaultSort?: DataTableSort | null;
   onSortChange?: (sort: DataTableSort | null) => void;
   selectable?: boolean;
   selected?: ReadonlySet<string>;
+  /** Seleção inicial quando selected não é controlada. */
+  defaultSelected?: ReadonlySet<string>;
   onSelectedChange?: (selected: Set<string>) => void;
   rowLabel?: (row: T) => string;
   selectPageLabel?: string;
@@ -58,12 +62,14 @@ export function DataTable<T>({
   getRowId,
   pageSize = 10,
   page: controlledPage,
+  defaultPage = 1,
   onPageChange,
   sort: controlledSort,
   defaultSort = null,
   onSortChange,
   selectable = false,
   selected: controlledSelected,
+  defaultSelected,
   onSelectedChange,
   rowLabel = (row) => getRowId(row),
   selectPageLabel = "Selecionar as linhas desta página",
@@ -73,9 +79,9 @@ export function DataTable<T>({
   className,
   containerClassName,
 }: DataTableProps<T>) {
-  const [innerPage, setInnerPage] = useState(1);
+  const [innerPage, setInnerPage] = useState(defaultPage);
   const [innerSort, setInnerSort] = useState(defaultSort);
-  const [innerSelected, setInnerSelected] = useState<ReadonlySet<string>>(new Set());
+  const [innerSelected, setInnerSelected] = useState<ReadonlySet<string>>(() => new Set(defaultSelected));
   const sort = controlledSort === undefined ? innerSort : controlledSort;
   const selected = controlledSelected ?? innerSelected;
 
@@ -194,7 +200,7 @@ export function DataTable<T>({
       {pageCount > 1 || footer ? (
         <div className="flex flex-wrap items-center justify-between gap-3">
           {footer ? footer(range) : <span />}
-          {pageCount > 1 && <Pagination page={page} pageCount={pageCount} onPageChange={changePage} />}
+          {pageCount > 1 && <Pagination size="sm" page={page} pageCount={pageCount} onPageChange={changePage} />}
         </div>
       ) : null}
     </div>

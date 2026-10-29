@@ -37,6 +37,15 @@ describe("Pagination", () => {
     expect(paginationRange(page, count)).toEqual(expected);
   });
 
+  it.each([
+    [undefined, "h-control"],
+    ["sm", "h-9"],
+    ["lg", "h-12"],
+  ] as const)("size %s gives the buttons %s, like the Button", (size, height) => {
+    render(<Pagination page={1} pageCount={3} onPageChange={() => {}} size={size} />);
+    expect(screen.getByRole("button", { name: "Página 1" })).toHaveClass(height);
+  });
+
   it("navigates and marks the current page", async () => {
     const user = userEvent.setup();
     function Example() {

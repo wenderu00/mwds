@@ -3,7 +3,7 @@ import { basename, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import postcss, { type ChildNode, type Container } from "postcss";
 import { blocks } from "../app/_docs/blocks";
-import { docs } from "../app/_docs/catalog";
+import { componentMeta } from "../app/_docs/catalog-meta";
 import { componentName, loadPacks } from "./icons/packs";
 
 type CssTree = { [key: string]: string | CssTree };
@@ -217,8 +217,8 @@ export function buildRegistry() {
 
   const uiItems: RegistryItem[] = uiFiles.map((file) => {
     const name = basename(file, ".tsx");
-    const doc = docs.find((entry) => entry.slug === name);
-    if (!doc) throw new Error(`Componente sem documentação em app/_docs/catalog.tsx: ${name}`);
+    const doc = componentMeta.find((entry) => entry.slug === name);
+    if (!doc) throw new Error(`Componente sem metadados em app/_docs/catalog-meta.ts: ${name}`);
     const path = `registry/marcio/ui/${file}`;
     return {
       name,

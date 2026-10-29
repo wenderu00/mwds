@@ -3,12 +3,15 @@ import { cn } from "@/registry/marcio/lib/utils";
 
 type HeadingLevel = "h1" | "h2" | "h3" | "h4";
 
+const headingSizes = { sm: "text-display-sm", md: "text-display-md", lg: "text-display-lg" } as const;
+
 export type SectionTitleProps = Omit<ComponentProps<"div">, "title"> & {
   index?: string;
   kicker?: ReactNode;
   as?: HeadingLevel;
   line?: boolean;
-  size?: "lg" | "md";
+  /** sm usa display-sm, md usa display-md e lg usa display-lg. */
+  size?: "sm" | "md" | "lg";
 };
 
 export function SectionTitle({
@@ -16,7 +19,7 @@ export function SectionTitle({
   kicker,
   as: Heading = "h2",
   line = true,
-  size = "lg",
+  size = "md",
   className,
   children,
   ...props
@@ -35,7 +38,7 @@ export function SectionTitle({
       <Heading
         className={cn(
           "font-display font-extrabold text-ink",
-          size === "lg" ? "text-display-lg" : "text-display-md",
+          headingSizes[size],
         )}
       >
         {children}

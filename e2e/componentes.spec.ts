@@ -4,7 +4,7 @@ import { expect, expectNoAxeViolations, open, test } from "./fixtures";
 // As páginas vêm do site estático já gerado (out/), não do catálogo: importar o catálogo
 // carregaria todos os componentes, Recharts incluído, no processo do Playwright.
 const slugs = readdirSync("out/componentes", { withFileTypes: true })
-  .filter((entry) => entry.isDirectory())
+  .filter((entry) => entry.isDirectory() && !entry.name.startsWith("__next."))
   .map((entry) => entry.name)
   .sort();
 

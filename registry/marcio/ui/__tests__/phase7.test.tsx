@@ -184,13 +184,14 @@ describe("ContextMenu", () => {
         <ContextMenuContent>
           <ContextMenuItem onSelect={onSelect}>Editar</ContextMenuItem>
           <ContextMenuSeparator />
-          <ContextMenuItem variant="danger">Excluir</ContextMenuItem>
+          <ContextMenuItem tone="danger">Excluir</ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>,
     );
     fireEvent.contextMenu(screen.getByText("Linha do projeto"));
     const menu = await screen.findByRole("menu");
     expect(within(menu).getByRole("menuitem", { name: "Excluir" })).toHaveAttribute("data-variant", "danger");
+    expect(within(menu).getByRole("menuitem", { name: "Excluir" })).toHaveAttribute("data-tone", "danger");
     await user.click(within(menu).getByRole("menuitem", { name: "Editar" }));
     expect(onSelect).toHaveBeenCalled();
     expect(screen.queryByRole("menu")).not.toBeInTheDocument();

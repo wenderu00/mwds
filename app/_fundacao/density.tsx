@@ -11,8 +11,8 @@ const levels = [
 ];
 
 const affected = [
-  ["h-control", "size md de Button, IconButton, Input, Select, Combobox, DatePicker e NumberInput; busca do Command, Tabs, cabeçalho de Table"],
-  ["py-cell-y", "células e legenda de Table"],
+  ["h-control", "size md de Button, IconButton, Input, Select, Combobox, DatePicker e NumberInput; busca do Command, Tabs, cabeçalho de Table; links da Navbar, LogoBlock md e item da AppShell"],
+  ["py-cell-y", "células e legenda de Table; linhas da DescriptionList horizontal"],
 ];
 
 // size alinha Button e campos lado a lado: sm e lg são fixos, md acompanha a densidade.

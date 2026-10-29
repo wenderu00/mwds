@@ -21,18 +21,23 @@ export function ContextMenuContent({ className, ...props }: ComponentProps<typeo
 }
 
 export type ContextMenuItemProps = ComponentProps<typeof ContextMenuPrimitive.Item> & {
+  /** danger pinta o item de perigo, para ações destrutivas. */
+  tone?: "neutral" | "danger";
+  /** @deprecated Use tone. Sai na 0.21. */
   variant?: "default" | "danger";
   inset?: boolean;
 };
 
-export function ContextMenuItem({ className, variant = "default", inset = false, ...props }: ContextMenuItemProps) {
+export function ContextMenuItem({ className, tone, variant, inset = false, ...props }: ContextMenuItemProps) {
+  const resolvedTone = tone ?? (variant === "danger" ? "danger" : "neutral");
   return (
     <ContextMenuPrimitive.Item
       data-slot="context-menu-item"
-      data-variant={variant}
+      data-tone={resolvedTone}
+      data-variant={resolvedTone === "danger" ? "danger" : "default"}
       className={cn(
         menuItemClasses,
-        variant === "danger" ? "text-danger-text data-[highlighted]:bg-danger-soft" : "text-ink",
+        resolvedTone === "danger" ? "text-danger-text data-[highlighted]:bg-danger-soft" : "text-ink",
         inset && "pl-8",
         className,
       )}

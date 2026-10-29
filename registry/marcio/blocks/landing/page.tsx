@@ -75,7 +75,7 @@ export default function LandingPage() {
 
         <section id="quem-sou" aria-labelledby="quem-sou-titulo" className="scroll-mt-20 border-t border-line">
           <div className={container}>
-            <SectionTitle index="01" id="quem-sou-titulo">
+            <SectionTitle size="lg" index="01" id="quem-sou-titulo">
               Quem sou eu?
             </SectionTitle>
             <p className="max-w-measure text-lead text-ink-soft">{profile.about}</p>
@@ -92,7 +92,7 @@ export default function LandingPage() {
 
         <section id="o-que-faco" aria-labelledby="o-que-faco-titulo" className="scroll-mt-20 border-t border-line bg-band">
           <div className={container}>
-            <SectionTitle index="02" id="o-que-faco-titulo">
+            <SectionTitle size="lg" index="02" id="o-que-faco-titulo">
               O que faço?
             </SectionTitle>
             <FeatureGrid items={services.map((service) => ({ title: service.title, description: service.text, icon: icons[service.icon] }))} />
@@ -101,7 +101,7 @@ export default function LandingPage() {
 
         <section id="stack" aria-labelledby="stack-titulo" className="scroll-mt-20 border-t border-line">
           <div className={container}>
-            <SectionTitle index="03" id="stack-titulo">
+            <SectionTitle size="lg" index="03" id="stack-titulo">
               Stack de tecnologias
             </SectionTitle>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -123,7 +123,7 @@ export default function LandingPage() {
 
         <section id="trabalhos" aria-labelledby="trabalhos-titulo" className="scroll-mt-20 border-t border-line bg-band">
           <div className={container}>
-            <SectionTitle index="04" id="trabalhos-titulo">
+            <SectionTitle size="lg" index="04" id="trabalhos-titulo">
               Trabalhos já feitos
             </SectionTitle>
             <ul className="grid gap-4 md:grid-cols-2">

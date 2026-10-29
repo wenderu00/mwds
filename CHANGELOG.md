@@ -4,6 +4,68 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.20.0] - 2026-10-29
+
+### Novo
+
+- Token `tracking-display` (-0.02em), usado pelo LogoBlock no lugar de `tracking-[-0.02em]`.
+- DataTable aceita `defaultPage` e `defaultSelected` para escolher a página e a seleção iniciais sem controlar.
+- Tour aceita `defaultOpen` e funciona sem `open`; `onOpenChange` passa a ser opcional.
+- Tipos exportados `BreadcrumbLinkProps`, `BreadcrumbTrailProps` e `ToggleGroupSize`.
+- `npm run contrast` verifica mais 20 pares: `ink-soft` sobre `accent-soft` (linha selecionada da Table), `ink` sobre `line` (remover do MultiSelect em hover) e o texto de cada categoria sobre `band`.
+- A leitura dos tokens falha quando um token existe só no tema claro, além do caso inverso que já era verificado.
+
+### Mudou
+
+- ScrollProgress usa `accent-line`, como Progress e Meter: oliva no tema claro, onde o amarelo ficava com 1,3:1.
+- Navbar, LogoBlock md e o item da AppShell seguem a densidade com `h-control` (o item da AppShell passa de 40px para 44px na densidade normal). As linhas da DescriptionList horizontal usam `py-cell-y`.
+- Stepper concluído e o polegar do Slider contornam o amarelo com `accent-edge`, como pede o [ADR 0017](docs/adr/0017-contorno-do-accent.md). Hoje os valores são iguais aos de `accent-line`.
+- Spinner lg usa `border-3` no lugar de `border-[3px]`.
+- `docs/tokens.md` documenta `text-display-2xl`, o tracking do `display-sm`, `--mw-distance-*` e `--mw-stagger`.
+
+### Quebra compatibilidade
+
+- SectionTitle segue a escala `sm | md | lg` com padrão `md` ([ADR 0018](docs/adr/0018-api-congelada.md)). Sem `size`, o título passa de `display-lg` para `display-md`. O novo `sm` usa `display-sm`.
+- Pagination passa o padrão de `sm` para `md` (botões de 44px na densidade normal) e ganha `lg`. A do DataTable continua `sm`.
+- Meter troca `size="compact"` por `size="sm"`. `compact` continua aceito até a 0.21.
+- Itens de DropdownMenu e ContextMenu ganham `tone="danger"`, e `data-tone` no item. `variant="danger"` continua aceito até a 0.21.
+- O modo estrito ficou mais rígido.
+  - `mw/no-raw-color` reprova as classes da escala primitiva do accent, como `bg-accent-500`.
+  - `mw/no-raw-token` reprova `min-w`, `min-h` e `max-h` com medida em px ou rem entre colchetes, `border-[3px]` e `tracking-[...]`.
+  - As duas regras passam a ler também os mapas de classes cujo nome termina em `Sizes`, `Heights` ou `Tones`, além de `Classes`.
+
+**Como migrar**
+
+Rode o lint e troque cada valor solto por um token ou pela escala do Tailwind, que não usa colchetes:
+
+```tsx
+<Table className="min-w-160" />
+<span className="border-3 tracking-display" />
+<div className="bg-accent-soft text-accent-text" />
+```
+
+Para manter o visual de antes, passe o tamanho que era o padrão e troque os nomes descontinuados:
+
+```tsx
+<SectionTitle size="lg" index="01">Quem sou eu?</SectionTitle>
+<Pagination size="sm" page={page} pageCount={pageCount} onPageChange={setPage} />
+<Meter size="sm" label="Ouro" value={1234} max={5000} icon={<Coins />} />
+<DropdownMenuItem tone="danger">Excluir</DropdownMenuItem>
+```
+
+## [0.19.3] - 2026-10-29
+
+### Corrigido
+
+- Tour: fechado, não escuta mais rolagem e redimensionamento da página. Aberto, os listeners são passivos.
+
+### Mudou
+
+- Site de documentação carrega cerca de metade do JavaScript por página (de 1,5 MB para 730 KB sem compressão na maioria delas).
+  - Cabeçalho, rodapé, índice de componentes e Novidades leem os metadados de `app/_docs/catalog-meta.ts`, sem importar os exemplos.
+  - O catálogo virou um arquivo por componente em `app/_docs/catalog/`, e as demos, um arquivo por demo em `app/_docs/demos/`.
+  - Cada componente tem a sua rota em `app/componentes/<slug>/page.tsx`, no lugar da rota `[slug]`, para a página carregar só o JavaScript dos próprios exemplos. A do Chart continua levando o Recharts.
+
 ## [0.19.2] - 2026-10-29
 
 ### Corrigido

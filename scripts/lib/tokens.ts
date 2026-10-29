@@ -45,6 +45,8 @@ export function loadTokens(css = readFileSync(tokensPath, "utf8").replace(/\r\n/
   if (drift.length) throw new Error(`Tema claro do sistema difere de [data-theme="light"]: ${drift.join(", ")}`);
   const missing = Object.keys(dark).filter((k) => !(k in light));
   if (missing.length) throw new Error(`Tokens sem valor no tema claro: ${missing.join(", ")}`);
+  const lightOnly = Object.keys(light).filter((k) => !(k in dark) && !(k in primitives));
+  if (lightOnly.length) throw new Error(`Tokens sem valor no tema escuro: ${lightOnly.join(", ")}`);
 
   return {
     primitives: resolve(primitives),

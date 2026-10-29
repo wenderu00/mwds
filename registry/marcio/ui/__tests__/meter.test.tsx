@@ -23,8 +23,8 @@ describe("Meter", () => {
     expect(screen.getByRole("meter", { name: "Madeira" })).not.toContainElement(screen.getByText("+12/min"));
   });
 
-  it("keeps the label accessible but visually hidden when compact", () => {
-    render(<Meter label="Pedra" value={20} max={100} size="compact" icon={<Coins />} />);
+  it.each(["sm", "compact"] as const)("keeps the label accessible but visually hidden with size %s", (size) => {
+    render(<Meter label="Pedra" value={20} max={100} size={size} icon={<Coins />} />);
     expect(screen.getByRole("meter", { name: "Pedra" })).toBeInTheDocument();
     expect(screen.getByText("Pedra")).toHaveClass("sr-only");
   });
@@ -63,7 +63,7 @@ describe("Meter", () => {
     await expectAccessibleInThemes(
       <div>
         <Meter label="Ouro" value={1234} max={5000} rate="+40/min" icon={<Coins />} />
-        <Meter label="Pedra" value={20} max={100} size="compact" icon={<Coins />} />
+        <Meter label="Pedra" value={20} max={100} size="sm" icon={<Coins />} />
         <Meter label="População" value={42} />
       </div>,
     );

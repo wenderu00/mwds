@@ -16,7 +16,7 @@ export function ScrollProgress({ className }: ScrollProgressProps) {
       aria-hidden="true"
       data-slot="scroll-progress"
       style={{ scaleX: reduce ? scrollYProgress : smooth }}
-      className={cn("pointer-events-none h-0.5 w-full origin-left bg-accent", className)}
+      className={cn("pointer-events-none h-0.5 w-full origin-left bg-accent-line", className)}
     />
   );
 }

@@ -424,6 +424,7 @@
   --text-mono-xs--line-height: 1.5;
 
   --tracking-kicker: 0.04em;
+  --tracking-display: -0.02em;
 
   --spacing-control: var(--mw-control-h);
   --spacing-cell-y: var(--mw-cell-y);

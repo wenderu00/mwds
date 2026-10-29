@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Badge } from "@/registry/marcio/ui/badge";
 import { Link } from "@/registry/marcio/ui/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/marcio/ui/table";
-import { docs } from "../_docs/catalog";
+import { componentMeta } from "../_docs/catalog-meta";
 import { PageHeader } from "@/registry/marcio/ui/page-header";
 import { CodeBlock } from "../_docs/code-block";
 import { FoundationSection } from "../_docs/section";
@@ -23,7 +23,7 @@ const dateFormat = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-
 
 const formatDay = (date: string) => dateFormat.format(new Date(`${date}T00:00:00Z`));
 
-const componentNames = docs.flatMap((doc) => doc.name.split(" e "));
+const componentNames = componentMeta.flatMap((doc) => doc.name.split(" e "));
 
 const anchor = (version: string) => `v${version.replaceAll(".", "-")}`;
 
@@ -83,7 +83,7 @@ function Section({ section, version }: { section: ChangelogSection; version: str
 function ReleaseTable({ release }: { release: ChangelogRelease }) {
   const entries = entriesOf(release, componentNames);
   return (
-    <Table aria-label={`Mudanças da versão ${release.version}`} className="min-w-[640px]">
+    <Table aria-label={`Mudanças da versão ${release.version}`} className="min-w-160">
       <TableHeader>
         <TableRow>
           <TableHead className="w-40">tipo</TableHead>

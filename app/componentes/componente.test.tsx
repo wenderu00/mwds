@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import ComponentPage from "@/app/componentes/[slug]/page";
 import { docs, getDoc } from "@/app/_docs/catalog";
+import { ComponentPage } from "@/app/_docs/component-page";
 import { installInfo } from "@/app/_docs/install";
 import { TooltipProvider } from "@/registry/marcio/ui/tooltip";
 
@@ -13,22 +13,26 @@ vi.mock("next/navigation", () => ({
   },
 }));
 
-async function renderDoc(slug: string) {
-  render(<TooltipProvider>{await ComponentPage({ params: Promise.resolve({ slug }) })}</TooltipProvider>);
+function renderDoc(slug: string) {
+  render(
+    <TooltipProvider>
+      <ComponentPage doc={getDoc(slug)!} />
+    </TooltipProvider>,
+  );
 }
 
 describe("página de componente", () => {
   it.each(["alert-dialog", "icon-button"])("%s mostra uma tabela de teclado com uma linha por atalho documentado", async (slug) => {
     const doc = getDoc(slug)!;
     expect(doc.keyboard?.length).toBeGreaterThan(0);
-    await renderDoc(slug);
+    renderDoc(slug);
     const table = screen.getByRole("table", { name: "Teclado" });
     expect(within(table).getAllByRole("row")).toHaveLength(doc.keyboard!.length + 1);
   });
 
   it.each(docs.filter((doc) => doc.dosDonts).map((doc) => doc.slug))("%s mostra os exemplos certo e errado lado a lado", async (slug) => {
     const doc = getDoc(slug)!;
-    await renderDoc(slug);
+    renderDoc(slug);
     const section = screen.getByRole("heading", { name: /Quando usar/ }).closest("section")!;
     const figures = within(section).getAllByRole("figure");
     expect(figures).toHaveLength(doc.dosDonts!.length * 2);
@@ -41,7 +45,7 @@ describe("página de componente", () => {
   });
 
   it("mostra o comando de instalação e as dependências lidas do registry.json", async () => {
-    await renderDoc("date-picker");
+    renderDoc("date-picker");
     expect(screen.getByText("npx shadcn@latest add @marcio/date-picker")).toBeInTheDocument();
     expect(screen.getByText("lucide-react, react-day-picker")).toBeInTheDocument();
     expect(screen.getByText("br, calendar, form-field, icon-button, input, popover")).toBeInTheDocument();
@@ -53,7 +57,7 @@ describe("página de componente", () => {
 
   it("omite a seção de teclado em componente sem atalhos documentados", async () => {
     expect(getDoc("table")?.keyboard).toBeUndefined();
-    await renderDoc("table");
+    renderDoc("table");
     expect(screen.queryByRole("table", { name: "Teclado" })).not.toBeInTheDocument();
   });
 
@@ -62,7 +66,7 @@ describe("página de componente", () => {
     ["date-picker", "beta"],
   ])("%s mostra o selo de status e a seção Quando usar", async (slug, label) => {
     const doc = getDoc(slug)!;
-    await renderDoc(slug);
+    renderDoc(slug);
     expect(screen.getByText(label, { selector: "[data-slot=badge]" })).toHaveTextContent(`status: ${label}`);
     const section = screen.getByRole("heading", { name: /Quando usar/ }).closest("section")!;
     expect(within(section).getAllByRole("listitem")).toHaveLength(doc.usage.use.length + doc.usage.avoid.length);

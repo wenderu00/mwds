@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import NextLink from "next/link";
 import { CodeComment } from "@/registry/marcio/ui/code-comment";
 import { SectionTitle } from "@/registry/marcio/ui/section-title";
-import { docs, groups } from "../_docs/catalog";
+import { componentMeta, groups } from "../_docs/catalog-meta";
 import { container, SiteHeader } from "../_docs/site-header";
 import { SiteFooter } from "../_docs/site-footer";
 import { StatusBadge } from "../_docs/status-badge";
@@ -15,7 +15,7 @@ export default function ComponentsIndex() {
       <SiteHeader />
       <main id="conteudo" className={`${container} flex flex-col gap-16 py-16`}>
         <div className="flex flex-col gap-4">
-          <SectionTitle as="h1" kicker="catálogo">
+          <SectionTitle size="lg" as="h1" kicker="catálogo">
             Componentes
           </SectionTitle>
           <p className="max-w-measure text-lead text-ink-soft">
@@ -29,7 +29,7 @@ export default function ComponentsIndex() {
             </SectionTitle>
             <CodeComment>{group.description}</CodeComment>
             <ul className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3">
-              {docs
+              {componentMeta
                 .filter((doc) => doc.group === group.id)
                 .map((doc) => (
                   <li key={doc.slug}>

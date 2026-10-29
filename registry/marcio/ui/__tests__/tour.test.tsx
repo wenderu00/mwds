@@ -48,6 +48,30 @@ describe("Tour", () => {
     expect(within(tour()).getByRole("button", { name: "Avançar" })).toHaveFocus();
   });
 
+  it("só escuta rolagem e redimensionamento enquanto está aberto", async () => {
+    const user = userEvent.setup();
+    const add = vi.spyOn(window, "addEventListener");
+    const remove = vi.spyOn(window, "removeEventListener");
+    const listening = (spy: typeof add, type: string) => spy.mock.calls.filter(([event]) => event === type).length;
+    render(<Page />);
+    expect(listening(add, "scroll")).toBe(0);
+    expect(listening(add, "resize")).toBe(0);
+    await user.click(screen.getByRole("button", { name: "Ver tour" }));
+    expect(listening(add, "scroll")).toBeGreaterThan(0);
+    await user.keyboard("{Escape}");
+    expect(listening(remove, "scroll")).toBe(listening(add, "scroll"));
+  });
+
+  it("abre sozinho com defaultOpen e fecha sem open controlado", async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+    render(<Tour steps={steps} defaultOpen onOpenChange={onOpenChange} />);
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
   it("avança, volta e anuncia cada passo novo", async () => {
     const user = userEvent.setup();
     render(<Page initialOpen />);
