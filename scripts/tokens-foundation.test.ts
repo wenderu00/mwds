@@ -51,6 +51,14 @@ describe("tokens de fundação", () => {
     }
   });
 
+  it("recusa token definido só em um dos temas", () => {
+    const source = (dark: string, light: string) =>
+      [":root {", "  --mw-black: #000000;", "}", ":root,", '[data-theme="dark"] {', dark, "}", ':root:not([data-theme="dark"]) {', light, "}", '[data-theme="light"] {', light, "}"].join("\n");
+    expect(() => loadTokens(source("  --mw-ink: #ffffff;", "  --mw-ink: #000000;"))).not.toThrow();
+    expect(() => loadTokens(source("  --mw-ink: #ffffff;\n  --mw-extra: #111111;", "  --mw-ink: #000000;"))).toThrow(/tema claro: extra/);
+    expect(() => loadTokens(source("  --mw-ink: #ffffff;", "  --mw-ink: #000000;\n  --mw-extra: #111111;"))).toThrow(/tema escuro: extra/);
+  });
+
   it("deixa por último as categorias que colidem com accent e perigo", () => {
     const tokens = loadTokens();
     const hue = (hex: string) => hexToOklch(hex)[2];

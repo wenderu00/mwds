@@ -239,7 +239,7 @@ export function ProjectsView() {
           onSelectedChange={setSelected}
           rowLabel={(project) => project.name}
           selectPageLabel="Selecionar projetos desta página"
-          className="min-w-[760px]"
+          className="min-w-190"
           caption={({ first, last, total }) => `Mostrando ${first} a ${last} de ${total}`}
           footer={({ page: current, pageCount }) => (
             <p className="font-mono text-mono-xs text-ink-muted">
@@ -319,7 +319,7 @@ function ProjectActions({ project, onArchive, onDelete }: { project: Project; on
             Arquivar
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="danger" onSelect={() => onDelete(project)}>
+          <DropdownMenuItem tone="danger" onSelect={() => onDelete(project)}>
             Excluir
           </DropdownMenuItem>
         </DropdownMenuContent>

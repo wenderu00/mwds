@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { LogoBlock } from "@/registry/marcio/ui/logo-block";
 import { ThemeToggle } from "@/registry/marcio/ui/theme-toggle";
-import { docs, groups } from "./catalog";
+import { componentMeta, groups } from "./catalog-meta";
 import { SiteCommand, type SiteCommandEntry } from "./site-command";
 import { SiteMenu } from "./site-menu";
 
@@ -82,7 +82,7 @@ const commandEntries: SiteCommandEntry[] = [
   { href: "/esta-rota-nao-existe", label: "Bloco: 404", group: "Blocos", keywords: ["não encontrada", "erro"] },
   { href: "/exemplos/listagem", label: "Exemplo: listagem de projetos", group: "Páginas", keywords: ["tabela", "filtros"] },
   { href: "/exemplos/cadastro", label: "Exemplo: cadastro", group: "Páginas", keywords: ["formulário"] },
-  ...docs.map((doc) => ({
+  ...componentMeta.map((doc) => ({
     href: `/componentes/${doc.slug}`,
     label: doc.name,
     group: `Componentes: ${groupTitle[doc.group]}`,

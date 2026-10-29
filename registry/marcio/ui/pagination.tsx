@@ -41,7 +41,8 @@ export type PaginationProps = Omit<ComponentProps<"nav">, "onChange"> & {
   onPageChange: (page: number) => void;
   siblingCount?: number;
   labels?: Partial<PaginationLabels>;
-  size?: "sm" | "md";
+  /** Tamanho dos botões, como no Button. */
+  size?: "sm" | "md" | "lg";
 };
 
 export function Pagination({
@@ -50,7 +51,7 @@ export function Pagination({
   onPageChange,
   siblingCount = 1,
   labels,
-  size = "sm",
+  size = "md",
   className,
   ...props
 }: PaginationProps) {

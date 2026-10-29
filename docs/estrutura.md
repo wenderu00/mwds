@@ -13,7 +13,7 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 │   ├── _data/                     # tokens.json e contrast.json, gerados por npm run contrast
 │   ├── componentes/
 │   │   ├── page.tsx               # catálogo
-│   │   ├── [slug]/page.tsx
+│   │   ├── <slug>/page.tsx        # uma rota por componente, para cada página carregar só o JS dela
 │   │   └── cobertura.test.tsx     # todo item do registry.json aparece no site
 │   ├── exemplos/
 │   │   ├── page.tsx
@@ -28,8 +28,9 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 │   ├── escrita/                   # tom, rótulos, mensagens de erro e formatos pt-BR
 │   ├── novidades/                 # gerada a partir do CHANGELOG.md
 │   ├── icones/                    # pacotes autorais ao lado dos parecidos do lucide
-│   └── _docs/                     # componentes internos do site: preview, catálogo (catalog.tsx,
-│                                  # demos.tsx), cabeçalho, menu, rodapé, busca (site-command),
+│   └── _docs/                     # componentes internos do site: preview, catálogo (catalog-meta.ts,
+│                                  # leve, com nome, grupo e status; catalog/<slug>.tsx, com os exemplos;
+│                                  # demos/<demo>.tsx; component-page.tsx), cabeçalho, menu, rodapé, busca (site-command),
 │                                  # code-block (com copiar), section (seção numerada, SpecTable,
 │                                  # ThemePair), registry-url (URL publicada) e icons.generated.ts
 ├── registry/
@@ -118,7 +119,7 @@ Cada pasta vira um item `registry:block`. Os componentes de um bloco são instal
 
 ## Lista de componentes
 
-Os grupos são os do catálogo em `app/_docs/catalog.tsx`.
+Os grupos e os metadados de cada página ficam em `app/_docs/catalog-meta.ts`; exemplos, props e acessibilidade ficam em `app/_docs/catalog/<slug>.tsx`, e a rota em `app/componentes/<slug>/page.tsx`. Página nova entra nos três, e um teste confere que as listas batem.
 
 - Identidade: Kicker, SectionTitle, CodeComment, LogoBlock, DotGrid, TypingText, GlitchText, Heading e Text (em `typography.tsx`)
 - Primitivos: Button, IconButton, Input, MaskedInput, CurrencyInput, NumberInput, Textarea, Label, Checkbox, Switch, Badge, Spinner, Link, RadioGroup, Avatar, Skeleton, Separator, ToggleGroup, Slider, Kbd, PasswordInput, SearchInput, ScrollArea

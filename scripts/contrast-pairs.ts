@@ -27,19 +27,21 @@ export const pairs: Pair[] = [
   ...onSurfaces("accent-text", "text", "Link, Kicker e número de seção"),
   { fg: "accent-text", bg: "accent-soft", kind: "text", usage: "Badge suave e item selecionado" },
   { fg: "ink", bg: "accent-soft", kind: "text", usage: "Texto em item selecionado" },
+  { fg: "ink-soft", bg: "accent-soft", kind: "text", usage: "Célula de linha selecionada da Table" },
   { fg: "ink-muted", bg: "accent-soft", kind: "text", usage: "Atalho em item destacado de menu" },
   { fg: "accent-line", bg: "accent-soft", kind: "ui", usage: "Barra do item ativo da sidebar" },
   { fg: "on-accent", bg: "accent", kind: "text", usage: "Botão primário, LogoBlock e seleção" },
   { fg: "on-accent", bg: "accent-hover", kind: "text", usage: "Botão primário em hover" },
   { fg: "on-danger", bg: "danger-hover", kind: "text", usage: "Botão danger em hover" },
   { fg: "ground", bg: "ink", kind: "text", usage: "Tooltip invertido" },
+  { fg: "ink", bg: "line", kind: "text", usage: "Botão de remover do MultiSelect em hover" },
   ...onSurfaces("line-control", "ui", "Borda de input, checkbox e botão secundário"),
   ...onSurfaces("accent-line", "ui", "Borda acesa no hover e aba ativa"),
   ...onSurfaces("accent-edge", "ui", "Contorno do preenchimento amarelo: botão primário, checkbox, radio, switch, página atual e dia selecionado"),
   ...onSurfaces("focus", "ui", "Outline de foco"),
   ...[1, 2, 3, 4, 5, 6, 7, 8].flatMap((n): Pair[] => [
     ...onSurfaces(`category-${n}-line`, "ui", `Barra, borda e série ${n} de gráfico na categoria ${n}`),
-    ...(["ground", "surface", `category-${n}-soft`] as const).map(
+    ...(["ground", "band", "surface", `category-${n}-soft`] as const).map(
       (bg): Pair => ({ fg: `category-${n}-text`, bg, kind: "text", usage: `Texto da categoria ${n}` }),
     ),
   ]),

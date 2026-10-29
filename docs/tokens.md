@@ -22,7 +22,7 @@ Gerada em OKLCH com o matiz do `#ece41f` (H ≈ 107), mantendo a mesma proporç�
 | accent-900 | #444213 | gerado | 2,0 | 10,3 |
 | accent-950 | #29280d | gerado | 1,4 | 15,0 |
 
-Os primitivos ficam em `tokens.css` como `--mw-accent-*`, mas os componentes só usam os semânticos abaixo.
+Os primitivos ficam em `tokens.css` como `--mw-accent-*`, mas os componentes só usam os semânticos abaixo. A regra `mw/no-raw-color` reprova `bg-accent-500` e as outras classes da escala; só a página de fundação mostra a escala, montando as classes fora do lint.
 
 ## 2. Neutros
 
@@ -119,13 +119,15 @@ Contraste mínimo medido de cada `-text` sobre ground, band, surface e o própri
 | font-mono | IBM Plex Mono (400, 500) | portfólio |
 | text-base (corpo) | 17px / 1.6 | portfólio |
 | text-lead | 21px / 1.5 | tagline do hero |
+| text-display-2xl | clamp(96px, 20vw, 200px) / 1, tracking -0.04em | número do 404 |
 | text-display-xl | clamp(48px, 7vw, 92px) / 0.98, tracking -0.03em | hero |
 | text-display-lg | clamp(36px, 5vw, 52px) / 1.05, tracking -0.02em | SectionTitle |
 | text-display-md | clamp(28px, 3.5vw, 36px) / 1.15, tracking -0.02em | título de card em destaque |
-| text-display-sm | 22px / 1.25 | título de card |
+| text-display-sm | 22px / 1.25, tracking -0.01em | título de card |
 | text-mono-sm | 14px | Kicker, número de seção, nav |
 | text-mono-xs | 13px | metadados, `// comentários` |
 | tracking-kicker | 0.04em | Kicker do hero |
+| tracking-display | -0.02em | LogoBlock, com o mesmo espaçamento do display-lg |
 
 Todo título em `font-display` usa peso 800 (extrabold), como pede o prompt.
 
@@ -145,10 +147,12 @@ Decisões e motivos no ADR 0015. A página de fundação mostra cada grupo nos d
 | ease-standard | cubic-bezier(0.2, 0.7, 0.2, 1) |
 | ease-enter | cubic-bezier(0, 0, 0.2, 1) |
 | ease-exit | cubic-bezier(0.4, 0, 1, 1) |
+| `--mw-distance-sm` / `-md` / `-lg` | 4px / 12px / 24px: deslocamento de entrada do Reveal e da ponte `mw-tokens` |
+| `--mw-stagger` | 40ms entre itens, usado pelo utilitário `mw-stagger` e pelo Reveal |
 | z-behind … z-tooltip | -1, 0, 10 (sticky), 20 (sheet), 30 (dialog), 40 (popover), 50 (toast), 60 (tooltip) |
 | max-w-content / max-w-measure | 1200px / 680px |
-| h-control | 44px; 36px com `data-density="compacta"`, 48px com `"ampla"` |
-| py-cell-y | 12px; 8px compacta, 16px ampla |
+| h-control | 44px; 36px com `data-density="compacta"`, 48px com `"ampla"`. Também é a altura mínima dos links da Navbar, do LogoBlock md e do item da AppShell |
+| py-cell-y | 12px; 8px compacta, 16px ampla. Também separa as linhas da DescriptionList horizontal |
 | ícones | lucide-react, `size-4` / `size-5` / `size-6` |
 | dot-grid | pontos de 1.2px, passo 28px, `accent-line` a 55%, máscara radial 70% |
 

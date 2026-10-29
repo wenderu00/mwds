@@ -78,7 +78,7 @@ describe("ScrollProgress", () => {
     const { container } = render(<ScrollProgress className="absolute" />);
     const bar = container.querySelector("[data-slot=scroll-progress]")!;
     expect(bar).toHaveAttribute("aria-hidden", "true");
-    expect(bar).toHaveClass("bg-accent", "absolute");
+    expect(bar).toHaveClass("bg-accent-line", "absolute");
   });
 });
 

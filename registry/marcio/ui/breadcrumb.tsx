@@ -14,7 +14,9 @@ export function BreadcrumbItem({ className, ...props }: ComponentProps<"li">) {
   return <li data-slot="breadcrumb-item" className={cn("inline-flex items-center gap-2", className)} {...props} />;
 }
 
-export function BreadcrumbLink({ asChild = false, className, ...props }: ComponentProps<"a"> & { asChild?: boolean }) {
+export type BreadcrumbLinkProps = ComponentProps<"a"> & { asChild?: boolean };
+
+export function BreadcrumbLink({ asChild = false, className, ...props }: BreadcrumbLinkProps) {
   const Comp = asChild ? Slot.Root : "a";
   return (
     <Comp
@@ -39,7 +41,9 @@ export function BreadcrumbSeparator({ className, children = "/", ...props }: Com
 
 export type BreadcrumbTrailItem = { label: ReactNode; href?: string };
 
-export function BreadcrumbTrail({ items, ...props }: Omit<ComponentProps<"nav">, "children"> & { items: BreadcrumbTrailItem[] }) {
+export type BreadcrumbTrailProps = Omit<ComponentProps<"nav">, "children"> & { items: BreadcrumbTrailItem[] };
+
+export function BreadcrumbTrail({ items, ...props }: BreadcrumbTrailProps) {
   return (
     <Breadcrumb {...props}>
       <BreadcrumbList>

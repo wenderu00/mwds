@@ -36,8 +36,10 @@ export const tourLabels: TourLabels = {
 
 export type TourProps = {
   steps: TourStep[];
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open?: boolean;
+  /** Estado inicial quando open não é controlado. */
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
   step?: number;
   onStepChange?: (step: number) => void;
   onFinish?: () => void;
@@ -58,11 +60,13 @@ function resolveTarget(target: TourStep["target"]) {
   return target.current;
 }
 
+const subscribeNothing = () => () => {};
+
 function subscribeLayout(notify: () => void, element?: HTMLElement | null) {
   const observer = new ResizeObserver(notify);
   if (element) observer.observe(element);
-  window.addEventListener("resize", notify);
-  window.addEventListener("scroll", notify, true);
+  window.addEventListener("resize", notify, { passive: true });
+  window.addEventListener("scroll", notify, { capture: true, passive: true });
   return () => {
     observer.disconnect();
     window.removeEventListener("resize", notify);
@@ -72,8 +76,14 @@ function subscribeLayout(notify: () => void, element?: HTMLElement | null) {
 
 const rectKeyOf = (rect: DOMRect) => [rect.top, rect.left, rect.width, rect.height].join(",");
 
-export function Tour({ steps, open, onOpenChange, step, onStepChange, onFinish, onSkip, labels, className }: TourProps) {
+export function Tour({ steps, open: controlledOpen, defaultOpen = false, onOpenChange, step, onStepChange, onFinish, onSkip, labels, className }: TourProps) {
   const text = { ...tourLabels, ...labels };
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const open = controlledOpen ?? internalOpen;
+  const setOpen = (next: boolean) => {
+    if (controlledOpen === undefined) setInternalOpen(next);
+    onOpenChange?.(next);
+  };
   const [internalStep, setInternalStep] = useState(0);
   const [prevOpen, setPrevOpen] = useState(open);
   if (open !== prevOpen) {
@@ -90,8 +100,10 @@ export function Tour({ steps, open, onOpenChange, step, onStepChange, onFinish, 
   const contentId = useId();
 
   const target = open && data?.placement !== "center" ? data?.target : undefined;
-  const element = useSyncExternalStore(subscribeLayout, () => resolveTarget(target), () => null);
-  const subscribeElement = useCallback((notify: () => void) => subscribeLayout(notify, element), [element]);
+  const watching = target !== undefined;
+  const subscribeTarget = useMemo(() => (watching ? (notify: () => void) => subscribeLayout(notify) : subscribeNothing), [watching]);
+  const element = useSyncExternalStore(subscribeTarget, () => resolveTarget(target), () => null);
+  const subscribeElement = useCallback((notify: () => void) => (element ? subscribeLayout(notify, element) : subscribeNothing()), [element]);
   const rectKey = useSyncExternalStore(subscribeElement, () => (element ? rectKeyOf(element.getBoundingClientRect()) : ""), () => "");
   const [top = 0, left = 0, width = 0, height = 0] = rectKey ? rectKey.split(",").map(Number) : [];
 
@@ -116,12 +128,12 @@ export function Tour({ steps, open, onOpenChange, step, onStepChange, onFinish, 
   };
   const skip = () => {
     onSkip?.(current);
-    onOpenChange(false);
+    setOpen(false);
   };
   const next = () => {
     if (!last) return goTo(current + 1);
     onFinish?.();
-    onOpenChange(false);
+    setOpen(false);
   };
   const back = () => {
     if (current === 1) primaryRef.current?.focus();

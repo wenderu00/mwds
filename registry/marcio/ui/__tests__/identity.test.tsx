@@ -48,6 +48,16 @@ describe("SectionTitle", () => {
     expect(screen.getByText("Sobre")).toBeInTheDocument();
   });
 
+  it.each([
+    [undefined, "text-display-md"],
+    ["sm", "text-display-sm"],
+    ["md", "text-display-md"],
+    ["lg", "text-display-lg"],
+  ] as const)("size %s uses %s, with md as the default", (size, className) => {
+    render(<SectionTitle size={size}>Título</SectionTitle>);
+    expect(screen.getByRole("heading", { name: "Título" })).toHaveClass(className);
+  });
+
   it("supports other heading levels and sizes", () => {
     render(
       <SectionTitle as="h3" size="md">

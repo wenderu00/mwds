@@ -142,7 +142,7 @@ export function AdminShell({
                   ))}
                 </DropdownMenuRadioGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem variant="danger" onSelect={() => router.push("/login")}>
+                <DropdownMenuItem tone="danger" onSelect={() => router.push("/login")}>
                   Sair
                 </DropdownMenuItem>
               </DropdownMenuContent>

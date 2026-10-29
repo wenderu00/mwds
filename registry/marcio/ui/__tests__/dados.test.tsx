@@ -56,6 +56,27 @@ describe("DataTable", () => {
     expect(onSelectedChange).toHaveBeenLastCalledWith(new Set(["a", "b", "c"]));
   });
 
+  it("aceita página e seleção iniciais sem controlar", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        data={rows}
+        columns={columns}
+        getRowId={(row) => row.id}
+        pageSize={2}
+        defaultPage={2}
+        selectable
+        rowLabel={(row) => row.name}
+        defaultSelected={new Set(["c"])}
+        caption={({ first, last, total }) => `Mostrando ${first} a ${last} de ${total}`}
+      />,
+    );
+    expect(screen.getByRole("table")).toHaveAccessibleName("Mostrando 3 a 3 de 3");
+    expect(screen.getByRole("checkbox", { name: "Selecionar Bússola" })).toBeChecked();
+    await user.click(screen.getByRole("button", { name: "Página 1" }));
+    expect(screen.getByRole("table")).toHaveAccessibleName("Mostrando 1 a 2 de 3");
+  });
+
   it("pagina e informa o intervalo", async () => {
     const user = userEvent.setup();
     render(

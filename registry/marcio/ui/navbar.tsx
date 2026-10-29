@@ -27,7 +27,7 @@ const collapseClasses = {
 };
 
 const linkClasses =
-  "inline-flex min-h-11 items-center rounded-mark px-3 font-mono text-mono-sm text-ink-soft no-underline transition-colors duration-base hover:text-accent-text aria-[current=page]:text-accent-text aria-[current=page]:underline aria-[current=page]:underline-offset-8";
+  "inline-flex min-h-control items-center rounded-mark px-3 font-mono text-mono-sm text-ink-soft no-underline transition-colors duration-base hover:text-accent-text aria-[current=page]:text-accent-text aria-[current=page]:underline aria-[current=page]:underline-offset-8";
 
 export function Navbar({
   brand,

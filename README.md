@@ -172,7 +172,7 @@ As capturas de referência ficam em `e2e/__screenshots__/` e são geradas no con
 
 1. Crie `registry/marcio/ui/<nome>.tsx` usando só tokens semânticos, aceitando `className` e repassando as props nativas.
 2. Escreva os testes em `registry/marcio/ui/__tests__/`.
-3. Documente em `app/_docs/catalog.tsx`; a página `/componentes/<nome>` é gerada a partir disso.
+3. Documente em três lugares: os metadados em `app/_docs/catalog-meta.ts`, os exemplos em `app/_docs/catalog/<nome>.tsx` (com `...metaOf("<nome>")`) e a rota em `app/componentes/<nome>/page.tsx`, copiando a de outro componente. Cada página tem rota própria para carregar só o JavaScript dos seus exemplos.
 4. Rode `npm run registry:build`. O item entra no `registry.json` com as dependências lidas dos imports. O teste `scripts/build-registry.test.ts` falha se o passo 3 ou 4 for esquecido.
 
 ## Publicar o registry

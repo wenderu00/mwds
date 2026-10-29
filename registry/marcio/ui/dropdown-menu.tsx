@@ -32,18 +32,23 @@ export function DropdownMenuContent({ className, sideOffset = 6, align = "end", 
 }
 
 export type DropdownMenuItemProps = ComponentProps<typeof DropdownMenuPrimitive.Item> & {
+  /** danger pinta o item de perigo, para ações destrutivas. */
+  tone?: "neutral" | "danger";
+  /** @deprecated Use tone. Sai na 0.21. */
   variant?: "default" | "danger";
   inset?: boolean;
 };
 
-export function DropdownMenuItem({ className, variant = "default", inset = false, ...props }: DropdownMenuItemProps) {
+export function DropdownMenuItem({ className, tone, variant, inset = false, ...props }: DropdownMenuItemProps) {
+  const resolvedTone = tone ?? (variant === "danger" ? "danger" : "neutral");
   return (
     <DropdownMenuPrimitive.Item
       data-slot="dropdown-menu-item"
-      data-variant={variant}
+      data-tone={resolvedTone}
+      data-variant={resolvedTone === "danger" ? "danger" : "default"}
       className={cn(
         menuItemClasses,
-        variant === "danger" ? "text-danger-text data-[highlighted]:bg-danger-soft" : "text-ink",
+        resolvedTone === "danger" ? "text-danger-text data-[highlighted]:bg-danger-soft" : "text-ink",
         inset && "pl-8",
         className,
       )}

@@ -26,7 +26,7 @@ export function FoundationSection({ id, index, kicker, title, intro, band = fals
   return (
     <section id={id} aria-labelledby={titleId} className={cn("scroll-mt-20 border-t border-line", band && "bg-band")}>
       <div className={`${container} flex flex-col gap-10 py-20`}>
-        <SectionTitle id={titleId} index={index} kicker={kicker}>
+        <SectionTitle size="lg" id={titleId} index={index} kicker={kicker}>
           {title}
         </SectionTitle>
         {intro && <div className="flex max-w-measure flex-col gap-3 text-ink-soft">{intro}</div>}

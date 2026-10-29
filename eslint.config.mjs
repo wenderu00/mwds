@@ -25,5 +25,5 @@ export default defineConfig([
     files: ["registry/marcio/ui/checkbox.tsx"],
     rules: { "mw/icon-size": ["error", { allow: ["size-3.5"], sources: ["lucide-react", "@/registry/marcio/icons/"] }] },
   },
-  globalIgnores([".next/**", "out/**", "public/r/**", "next-env.d.ts", ".claude/**"]),
+  globalIgnores([".next/**", "out/**", "coverage/**", "public/r/**", "next-env.d.ts", ".claude/**"]),
 ]);

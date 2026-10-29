@@ -18,7 +18,7 @@ export function RecentActivity({ delay = 700 }: { delay?: number }) {
 
   return (
     <LoadingRegion loading={loading} label="Carregando atividade recente">
-      <Table className="min-w-[640px]">
+      <Table className="min-w-160">
         <TableCaption>Atividade das últimas 24 horas</TableCaption>
         <TableHeader>
           <TableRow>
