@@ -158,7 +158,8 @@ export function buildRegistry() {
       style: "new-york",
       rsc: true,
       tsx: true,
-      tailwind: { config: "", css: "app/globals.css", baseColor: "neutral", cssVariables: true },
+      // Sem tailwind.css: o shadcn acha o arquivo do projeto, que muda quando há src/.
+      tailwind: { config: "", baseColor: "neutral", cssVariables: true },
       aliases: {
         components: "@/components",
         ui: "@/components/ui",
@@ -189,7 +190,7 @@ export function buildRegistry() {
     type: "registry:file",
     title: "Aviso de versão nova",
     description: "Cria .github/workflows/mw-versao.yml, que toda semana abre uma issue no repositório quando houver versão nova do @mw/ui.",
-    files: [{ path: "registry/marcio/versao.yml", type: "registry:file", target: ".github/workflows/mw-versao.yml" }],
+    files: [{ path: "registry/marcio/versao.yml", type: "registry:file", target: "~/.github/workflows/mw-versao.yml" }],
   };
 
   // Os resets ficam num arquivo próprio: o shadcn acrescenta cssVars.theme no fim do @theme inline, e ali eles apagariam os tokens.
@@ -202,7 +203,8 @@ export function buildRegistry() {
     registryDependencies: [itemUrl("marcio-tokens")],
     files: [
       { path: "registry/marcio/mw-strict.css", type: "registry:file", target: "app/mw-strict.css" },
-      ...lintFiles.map((path) => ({ path, type: "registry:file", target: path })),
+      // O ~/ mantém na raiz em projeto com src/, onde o shadcn grava os outros destinos dentro dela.
+      ...lintFiles.map((path) => ({ path, type: "registry:file", target: `~/${path}` })),
     ],
     css: { '@import "./mw-strict.css"': {} },
     docs: 'Acrescente as regras ao eslint.config.mjs: import mw from "./eslint.mw.mjs" e espalhe ...mw no fim da lista.',

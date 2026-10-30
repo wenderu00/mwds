@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -81,6 +81,15 @@ writeFileSync(join(app, "eslint.config.mjs"), `import mw from "./eslint.mw.mjs";
 run(app, "npx", "eslint", ".");
 run(app, "npx", "tsc", "--noEmit");
 run(app, "npx", "next", "build");
+
+// Com src/, o shadcn grava dentro dela todo destino sem o prefixo ~/.
+const appWithSrc = join(workspace, "app-src");
+run(workspace, "npx", "--yes", `create-next-app@${nextVersion}`, "app-src", "--ts", "--tailwind", "--app", "--src-dir", "--eslint", "--import-alias", '"@/*"', "--use-npm", "--disable-git", "--yes");
+run(appWithSrc, "npx", "--yes", `shadcn@${shadcnVersion}`, "init", `${registry}/marcio-tokens.json`, "--yes");
+run(appWithSrc, "npx", "--yes", `shadcn@${shadcnVersion}`, "add", "@marcio/marcio-strict", "@marcio/marcio-versao", "--yes");
+for (const file of [".github/workflows/mw-versao.yml", "eslint.mw.mjs"]) {
+  if (!existsSync(join(appWithSrc, file))) throw new Error(`Num projeto com src/, ${file} não ficou na raiz.`);
+}
 
 rmSync(workspace, { recursive: true, force: true });
 console.log("\nInstalação limpa: lint estrito, tipos e build passaram.");

@@ -13,7 +13,6 @@
         "tsx": true,
         "tailwind": {
           "config": "",
-          "css": "app/globals.css",
           "baseColor": "neutral",
           "cssVariables": true
         },
@@ -666,7 +665,7 @@
         {
           "path": "registry/marcio/versao.yml",
           "type": "registry:file",
-          "target": ".github/workflows/mw-versao.yml"
+          "target": "~/.github/workflows/mw-versao.yml"
         }
       ]
     },
@@ -687,32 +686,32 @@
         {
           "path": "eslint.mw.mjs",
           "type": "registry:file",
-          "target": "eslint.mw.mjs"
+          "target": "~/eslint.mw.mjs"
         },
         {
           "path": "eslint-rules/class-context.js",
           "type": "registry:file",
-          "target": "eslint-rules/class-context.js"
+          "target": "~/eslint-rules/class-context.js"
         },
         {
           "path": "eslint-rules/icon-size.js",
           "type": "registry:file",
-          "target": "eslint-rules/icon-size.js"
+          "target": "~/eslint-rules/icon-size.js"
         },
         {
           "path": "eslint-rules/no-raw-color.js",
           "type": "registry:file",
-          "target": "eslint-rules/no-raw-color.js"
+          "target": "~/eslint-rules/no-raw-color.js"
         },
         {
           "path": "eslint-rules/no-raw-token.js",
           "type": "registry:file",
-          "target": "eslint-rules/no-raw-token.js"
+          "target": "~/eslint-rules/no-raw-token.js"
         },
         {
           "path": "eslint-rules/no-scene-lib.js",
           "type": "registry:file",
-          "target": "eslint-rules/no-scene-lib.js"
+          "target": "~/eslint-rules/no-scene-lib.js"
         }
       ],
       "css": {
