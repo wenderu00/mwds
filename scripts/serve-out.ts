@@ -2,8 +2,9 @@ import { createReadStream, existsSync, statSync } from "node:fs";
 import { createServer } from "node:http";
 import { extname, join, normalize, resolve } from "node:path";
 
-// Servidor estático mínimo para o out/ do next build, usado pelos testes do Playwright.
-const root = resolve(process.cwd(), "out");
+// Servidor estático mínimo para o out/ do next build, usado pelos testes do Playwright, ou para outra pasta com SERVE_ROOT.
+const rootName = process.env.SERVE_ROOT ?? "out";
+const root = resolve(process.cwd(), rootName);
 const port = Number(process.env.PORT ?? 4400);
 
 const types: Record<string, string> = {
@@ -25,15 +26,17 @@ function resolveFile(url: string) {
   return existsSync(file) ? file : null;
 }
 
-if (!existsSync(root)) throw new Error("out/ não existe: rode npm run build antes");
+if (!existsSync(root)) throw new Error(`${rootName}/ não existe: rode npm run build antes`);
 
 createServer((request, response) => {
   const file = resolveFile(request.url ?? "/");
   if (!file) {
     response.statusCode = 404;
-    createReadStream(join(root, "404.html")).pipe(response);
+    const notFound = join(root, "404.html");
+    if (existsSync(notFound)) createReadStream(notFound).pipe(response);
+    else response.end();
     return;
   }
   response.setHeader("content-type", types[extname(file)] ?? "application/octet-stream");
   createReadStream(file).pipe(response);
-}).listen(port, () => console.log(`out/ em http://localhost:${port}`));
+}).listen(port, () => console.log(`${rootName}/ em http://localhost:${port}`));

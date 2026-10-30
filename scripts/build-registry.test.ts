@@ -1,10 +1,13 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { buildRegistry, importSpecifiers, importsOf, registryBaseUrl, tokensCss } from "./build-registry";
+import { installInfo } from "../app/_docs/install";
+import { buildRegistry, importSpecifiers, importsOf, packageWithRange, registryBaseUrl, registryItemsUrl, tokensCss } from "./build-registry";
 
 const registry = buildRegistry();
 const byName = new Map(registry.items.map((item) => [item.name, item]));
 const nameFromUrl = (url: string) => url.split("/").pop()!.replace(/\.json$/, "");
+const manifest = JSON.parse(readFileSync("package.json", "utf8")) as { dependencies: Record<string, string> };
+const declared = (name: string) => `${name}@${manifest.dependencies[name]}`;
 
 describe("registry", () => {
   it("has one registry:ui item per component file", () => {
@@ -24,10 +27,26 @@ describe("registry", () => {
   it("declares the npm packages each component imports", () => {
     for (const item of registry.items.filter((entry) => entry.files?.length)) {
       const imports = importsOf(item.files![0]!.path);
-      if (imports.some((specifier) => specifier.startsWith("radix-ui"))) expect(item.dependencies).toContain("radix-ui");
-      if (imports.includes("class-variance-authority")) expect(item.dependencies).toContain("class-variance-authority");
-      expect(item.dependencies ?? []).not.toContain("react");
+      if (imports.some((specifier) => specifier.startsWith("radix-ui"))) expect(item.dependencies).toContain(declared("radix-ui"));
+      if (imports.includes("class-variance-authority")) expect(item.dependencies).toContain(declared("class-variance-authority"));
+      for (const name of ["react", "react-dom", "next"]) expect((item.dependencies ?? []).filter((dependency) => dependency.startsWith(`${name}@`))).toEqual([]);
     }
+  });
+
+  it("publishes each npm package with the range the DS was tested against", () => {
+    expect(byName.get("calendar")?.dependencies).toContain(`react-day-picker@${manifest.dependencies["react-day-picker"]}`);
+    for (const item of registry.items) {
+      for (const dependency of item.dependencies ?? []) expect(dependency, item.name).toMatch(/^(@[\w-]+\/)?[\w.-]+@\S+$/);
+    }
+  });
+
+  it("lists only the package names on the component pages", () => {
+    expect(installInfo("calendar")?.dependencies).toContain("react-day-picker");
+    expect(installInfo("dashboard")?.dependencies.every((dependency) => !dependency.includes("@"))).toBe(true);
+  });
+
+  it("refuses a package the DS does not declare", () => {
+    expect(() => packageWithRange("pacote-que-nao-existe", "registry/marcio/ui/x.tsx")).toThrow(/pacote-que-nao-existe/);
   });
 
   it("has one registry:block item per block folder, with page targets and component paths matching the rewritten imports", () => {
@@ -43,7 +62,7 @@ describe("registry", () => {
     }
     expect(byName.get("dashboard")?.registryDependencies?.map(nameFromUrl)).toContain("admin-shell");
     expect(byName.get("settings")?.registryDependencies?.map(nameFromUrl)).toContain("admin-shell");
-    expect(byName.get("login")?.dependencies).toContain("react-hook-form");
+    expect(byName.get("login")?.dependencies).toContain(declared("react-hook-form"));
   });
 
   it("finds static, re-exported, single-quoted and dynamic imports", () => {
@@ -63,8 +82,15 @@ describe("registry", () => {
   });
 
   it("declares the packages loaded on demand", () => {
-    expect(byName.get("character-stage")?.dependencies).toContain("gsap");
-    expect(byName.get("scene-canvas")?.dependencies).toContain("pixi.js");
+    expect(byName.get("character-stage")?.dependencies).toContain(declared("gsap"));
+    expect(byName.get("scene-canvas")?.dependencies).toContain(declared("pixi.js"));
+  });
+
+  it("points the items to the release folder when one is given, and to /r otherwise", () => {
+    const release = "https://github.com/wenderu00/mwds/releases/download/v0.21.0";
+    expect(registryItemsUrl({ REGISTRY_URL: "https://example.com/mwds", REGISTRY_ITEMS_URL: `${release}/` })).toBe(release);
+    expect(registryItemsUrl({ REGISTRY_URL: "https://example.com/mwds" })).toBe("https://example.com/mwds/r");
+    expect(registryItemsUrl({})).toBe("http://localhost:3000/r");
   });
 
   it("refuses a deploy base path without the registry URL", () => {

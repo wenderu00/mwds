@@ -32,9 +32,21 @@ export function registryBaseUrl(env: Record<string, string | undefined> = proces
   return (env.REGISTRY_URL ?? "http://localhost:3000").replace(/\/$/, "");
 }
 
+export function registryItemsUrl(env: Record<string, string | undefined> = process.env) {
+  return env.REGISTRY_ITEMS_URL?.replace(/\/$/, "") ?? `${registryBaseUrl(env)}/r`;
+}
+
 const baseUrl = registryBaseUrl();
-const itemUrl = (name: string) => `${baseUrl}/r/${name}.json`;
+const itemsUrl = registryItemsUrl();
+const itemUrl = (name: string) => `${itemsUrl}/${name}.json`;
 const ignoredPackages = new Set(["react", "react-dom", "next"]);
+const declaredPackages = (JSON.parse(readFileSync(join(root, "package.json"), "utf8")) as { dependencies: Record<string, string> }).dependencies;
+
+export function packageWithRange(name: string, path: string) {
+  const range = declaredPackages[name];
+  if (!range) throw new Error(`${path}: o pacote ${name} não está em dependencies no package.json`);
+  return `${name}@${range}`;
+}
 
 function toTree(container: Container<ChildNode>): CssTree {
   const tree: CssTree = {};
@@ -95,7 +107,7 @@ export function dependenciesOf(file: string | string[], { withTokens = true, sel
       throw new Error(`${path}: import ${specifier} não corresponde a nenhum item do registry`);
     } else if (!specifier.startsWith(".")) {
       const name = packageName(specifier);
-      if (!ignoredPackages.has(name)) dependencies.add(name);
+      if (!ignoredPackages.has(name)) dependencies.add(packageWithRange(name, path));
     }
   }
   return { dependencies: [...dependencies].sort(), registryDependencies: [...registryDependencies].sort() };
@@ -154,7 +166,7 @@ export function buildRegistry() {
         utils: "@/lib/utils",
         hooks: "@/hooks",
       },
-      registries: { "@marcio": `${baseUrl}/r/{name}.json` },
+      registries: { "@marcio": `${itemsUrl}/{name}.json` },
     },
     title: "Tokens do @mw/ui",
     description: "Cores, tipografia, foco, seleção e utilitários de identidade, nos temas escuro e claro.",

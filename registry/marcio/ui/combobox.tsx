@@ -26,6 +26,11 @@ export type ComboboxProps = Omit<ComponentProps<"button">, "value" | "defaultVal
   listLabel?: string;
   name?: string;
   size?: ControlSize;
+  /** Liga a busca no servidor: as opções não são filtradas aqui e cada tecla chega neste callback, com "" ao fechar. Aplique debounce em quem busca. */
+  onSearchChange?: (search: string) => void;
+  /** Mostra loadingText no lugar do estado vazio. */
+  loading?: boolean;
+  loadingText?: ReactNode;
 };
 
 export function Combobox({
@@ -39,6 +44,9 @@ export function Combobox({
   listLabel = "Opções",
   name,
   size = "md",
+  onSearchChange,
+  loading = false,
+  loadingText = "Carregando",
   className,
   disabled,
   ...props
@@ -47,18 +55,25 @@ export function Combobox({
   const contentId = useId();
   const [open, setOpen] = useState(false);
   const [innerValue, setInnerValue] = useState(defaultValue);
+  const [picked, setPicked] = useState<ComboboxOption>();
   const value = controlledValue ?? innerValue;
-  const selected = options.find((option) => option.value === value);
+  const selected = options.find((option) => option.value === value) ?? (picked?.value === value ? picked : undefined);
+
+  function changeOpen(next: boolean) {
+    setOpen(next);
+    if (!next) onSearchChange?.("");
+  }
 
   function select(next: string) {
     const resolved = next === value ? "" : next;
     if (controlledValue === undefined) setInnerValue(resolved);
+    setPicked(options.find((option) => option.value === resolved));
     onValueChange?.(resolved);
-    setOpen(false);
+    changeOpen(false);
   }
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={changeOpen}>
       <PopoverTrigger asChild>
         <button
           type="button"
@@ -88,10 +103,15 @@ export function Combobox({
         aria-label={field ? undefined : (props["aria-label"] ?? searchPlaceholder)}
         className="w-(--radix-popover-trigger-width) min-w-56 p-0"
       >
-        <Command label={searchPlaceholder}>
-          <CommandInput placeholder={searchPlaceholder} />
+        <Command label={searchPlaceholder} shouldFilter={onSearchChange ? false : undefined}>
+          <CommandInput placeholder={searchPlaceholder} onValueChange={onSearchChange} />
+          {loading && (
+            <div role="status" className="px-3 py-2 text-center font-mono text-mono-xs text-ink-muted">
+              {loadingText}
+            </div>
+          )}
           <CommandList label={listLabel}>
-            <CommandEmpty>{emptyText}</CommandEmpty>
+            {!loading && <CommandEmpty>{emptyText}</CommandEmpty>}
             {options.map((option) => (
               <CommandItem
                 key={option.value}

@@ -6,7 +6,7 @@ Status: aceito
 
 O `package.json` ficou em 0.1.0 desde o primeiro commit, embora dez PRs tenham mudado tokens, componentes e blocos. Uma dessas mudanças quebrou quem já tinha componentes instalados: depois da Etapa 1, um componente novo precisava de tokens novos. A Etapa 7 pede versão semântica, um CHANGELOG e instruções de migração.
 
-O registry do shadcn não tem versão por item. Quem instala recebe sempre o arquivo publicado no momento.
+O registry do shadcn não tem versão por item. Quem instala recebe sempre o arquivo publicado no momento. O [ADR 0028](0028-versoes-publicadas.md) resolve isso com uma URL fixa por versão.
 
 ## Decisão
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "lucide-react";
-import type { ComponentProps } from "react";
+import { useSyncExternalStore, type ComponentProps } from "react";
 import { DayPicker } from "react-day-picker";
 import { ptBR } from "react-day-picker/locale";
 import { cn } from "@/registry/marcio/lib/utils";
@@ -15,8 +15,16 @@ const weekdays = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
 
 export type CalendarProps = ComponentProps<typeof DayPicker>;
 
+const subscribeToNothing = () => () => {};
+
 export function Calendar({ className, classNames, components, formatters, labels, showOutsideDays = true, ...props }: CalendarProps) {
   const name = props["aria-label"];
+  const onClient = useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false,
+  );
+  if (!onClient) return <div data-slot="calendar" className={cn("w-fit text-ink", className)} />;
   return (
     <DayPicker
       data-slot="calendar"

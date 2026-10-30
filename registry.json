@@ -772,8 +772,8 @@
       "title": "cn",
       "description": "Helper cn com clsx e tailwind-merge ciente dos tamanhos de texto do @mw/ui.",
       "dependencies": [
-        "clsx",
-        "tailwind-merge"
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.7.0"
       ],
       "registryDependencies": [],
       "files": [
@@ -819,8 +819,8 @@
       "title": "Accordion",
       "description": "Lista de seções que abrem e fecham, separadas por linhas. Para perguntas frequentes e configurações longas.",
       "dependencies": [
-        "lucide-react",
-        "radix-ui"
+        "lucide-react@^1.64.0",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -842,7 +842,7 @@
       "title": "AlertDialog",
       "description": "Confirmação de ação destrutiva ou sem volta. Abre com o foco em Cancelar e não fecha com clique fora.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/button.json",
@@ -865,8 +865,8 @@
       "title": "Alert",
       "description": "Aviso fixo na página, com fundo suave do estado, ícone, título, ação e fechar opcional.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
@@ -889,8 +889,8 @@
       "title": "AppShell",
       "description": "Layout de painel: sidebar recolhível só com ícones, cabeçalho, conteúdo e painel lateral opcional. No mobile, a navegação abre num Sheet ou vira abas no rodapé.",
       "dependencies": [
-        "lucide-react",
-        "radix-ui"
+        "lucide-react@^1.64.0",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
@@ -915,8 +915,8 @@
       "title": "Avatar",
       "description": "Foto da pessoa ou iniciais em mono sobre surface. Nomeado pelo nome da pessoa.",
       "dependencies": [
-        "class-variance-authority",
-        "radix-ui"
+        "class-variance-authority@^0.7.1",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -938,8 +938,8 @@
       "title": "Badge",
       "description": "Etiqueta curta em mono para status e categorias. Combina tom e aparência.",
       "dependencies": [
-        "class-variance-authority",
-        "radix-ui"
+        "class-variance-authority@^0.7.1",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -961,7 +961,7 @@
       "title": "Breadcrumb",
       "description": "Trilha de navegação em mono com separador /. Use BreadcrumbTrail para o caso comum.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -983,8 +983,8 @@
       "title": "Button",
       "description": "Ação principal da interface. Primário amarelo com texto preto; secundário com borda que acende no hover.",
       "dependencies": [
-        "class-variance-authority",
-        "radix-ui"
+        "class-variance-authority@^0.7.1",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1007,8 +1007,8 @@
       "title": "Calendar",
       "description": "Calendário em português, semana começando no domingo, com seleção de um dia ou de um intervalo. Base do DatePicker.",
       "dependencies": [
-        "lucide-react",
-        "react-day-picker"
+        "lucide-react@^1.64.0",
+        "react-day-picker@^9.14.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1030,7 +1030,7 @@
       "title": "Card",
       "description": "Superfície com borda e rounded-card, sem sombra. A versão interactive acende a borda no hover.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1073,7 +1073,7 @@
       "title": "CharacterStage",
       "description": "Palco SVG para personagens e cenas animados com GSAP. Carrega o gsap sob demanda e separa a versão completa da reduzida.",
       "dependencies": [
-        "gsap"
+        "gsap@^3.15.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1096,7 +1096,7 @@
       "title": "Chart",
       "description": "Gráfico de barras, linha ou área sobre o Recharts, nas paletas chart-1 a chart-8 e seq-1 a seq-5, com legenda e tabela dos dados.",
       "dependencies": [
-        "recharts"
+        "recharts@^3.10.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1119,8 +1119,8 @@
       "title": "Checkbox",
       "description": "Caixa de marcação do Radix. Marcada, fica amarela com o check preto.",
       "dependencies": [
-        "lucide-react",
-        "radix-ui"
+        "lucide-react@^1.64.0",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1162,7 +1162,7 @@
       "title": "Collapsible",
       "description": "Um bloco que abre e fecha a partir de um gatilho, sem estilo próprio no gatilho. Base para mostrar mais e opções avançadas.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1184,7 +1184,7 @@
       "title": "Combobox",
       "description": "Select com busca para listas longas. Gatilho igual ao Input, busca sem acentos, funciona com Controller.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/command.json",
@@ -1210,7 +1210,7 @@
       "title": "CommandPalette",
       "description": "Busca de comandos e páginas com ⌘K ou Ctrl+K, no estilo prompt de terminal. Este site usa uma: experimente.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/command.json",
@@ -1235,7 +1235,7 @@
       "title": "Command",
       "description": "Lista filtrável com busca digitada, sobre o cmdk. Ignora acentos. Base do Combobox e do Command Palette.",
       "dependencies": [
-        "cmdk"
+        "cmdk@^1.1.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1257,8 +1257,8 @@
       "title": "ContextMenu",
       "description": "Menu de ações aberto com o botão direito, com os mesmos itens e estilos do DropdownMenu.",
       "dependencies": [
-        "lucide-react",
-        "radix-ui"
+        "lucide-react@^1.64.0",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/dropdown-menu.json",
@@ -1281,7 +1281,7 @@
       "title": "DataTable",
       "description": "Table com ordenação por coluna, seleção de linhas e paginação. Cada parte pode ser controlada por fora.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/checkbox.json",
@@ -1306,8 +1306,8 @@
       "title": "DatePicker",
       "description": "Campo de data em que se digita dd/mm/aaaa ou se escolhe no Calendar, aberto num Popover. Para períodos, veja o DateRangePicker.",
       "dependencies": [
-        "lucide-react",
-        "react-day-picker"
+        "lucide-react@^1.64.0",
+        "react-day-picker@^9.14.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/br.json",
@@ -1355,8 +1355,8 @@
       "title": "Dialog",
       "description": "Janela modal do Radix sobre o scrim. Card surface, título em display e botão de fechar.",
       "dependencies": [
-        "lucide-react",
-        "radix-ui"
+        "lucide-react@^1.64.0",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
@@ -1379,7 +1379,7 @@
       "title": "DotField",
       "description": "Grade de pontos em canvas que foge do mouse e ondula no clique. Versão interativa do DotGrid, que é o fallback.",
       "dependencies": [
-        "pixi.js"
+        "pixi.js@^8.22.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/dot-grid.json",
@@ -1424,8 +1424,8 @@
       "title": "DropdownMenu",
       "description": "Menu de ações com atalhos em mono, submenus, itens marcáveis e item destrutivo em vermelho.",
       "dependencies": [
-        "lucide-react",
-        "radix-ui"
+        "lucide-react@^1.64.0",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1489,7 +1489,7 @@
       "title": "FileUpload",
       "description": "Área de arrastar e soltar que também abre o seletor de arquivos, com lista, remoção, limites de tipo, tamanho e quantidade, e progresso e erro por arquivo.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
@@ -1534,8 +1534,8 @@
       "title": "FormField",
       "description": "Junta Label, controle, descrição e erro. Liga os ids e atributos ARIA sozinho e funciona com React Hook Form.",
       "dependencies": [
-        "lucide-react",
-        "radix-ui"
+        "lucide-react@^1.64.0",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/label.json",
@@ -1682,7 +1682,7 @@
       "title": "Kicker",
       "description": "Rótulo curto em mono, caixa alta e accent, acima de títulos. É a primeira coisa que o olho lê numa seção.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1704,7 +1704,7 @@
       "title": "Label",
       "description": "Rótulo de campo baseado no Radix Label. Clicar nele foca o controle.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1726,8 +1726,8 @@
       "title": "Link",
       "description": "Link em accent-text. Sublinhado sempre dentro de texto; só no hover em navegação.",
       "dependencies": [
-        "class-variance-authority",
-        "radix-ui"
+        "class-variance-authority@^0.7.1",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1749,8 +1749,8 @@
       "title": "LogoBlock",
       "description": "Bloco amarelo sólido com texto preto em display extrabold. Igual nos dois temas.",
       "dependencies": [
-        "class-variance-authority",
-        "radix-ui"
+        "class-variance-authority@^0.7.1",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1772,7 +1772,7 @@
       "title": "Magnetic",
       "description": "Puxa o filho na direção do mouse e volta com spring ao sair. Para uma ou duas chamadas principais.",
       "dependencies": [
-        "motion"
+        "motion@^14.7.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1836,7 +1836,7 @@
       "title": "MotionProvider",
       "description": "Configuração do Motion para o projeto: respeita o movimento reduzido e usa a duração e a curva dos tokens como transição padrão.",
       "dependencies": [
-        "motion"
+        "motion@^14.7.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -1859,7 +1859,7 @@
       "title": "MultiSelect",
       "description": "Escolha de várias opções com busca, mostradas como chips removíveis dentro do campo.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/badge.json",
@@ -1887,7 +1887,7 @@
       "title": "Navbar",
       "description": "Cabeçalho de site público: marca, links com a página atual marcada e ações. No celular, os links vão para um painel lateral.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
@@ -1911,7 +1911,7 @@
       "title": "NumberInput",
       "description": "Campo numérico com botões de diminuir e aumentar, mínimo, máximo, passo e formatação pt-BR.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
@@ -1976,7 +1976,7 @@
       "title": "PasswordInput",
       "description": "Campo de senha com botão de mostrar e ocultar, sobre o slot end do Input.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
@@ -2000,7 +2000,7 @@
       "title": "Popover",
       "description": "Painel flutuante ancorado num gatilho, em surface com borda. Base do Combobox.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2022,7 +2022,7 @@
       "title": "Progress",
       "description": "Barra de progresso em accent-line sobre surface, com rótulo e porcentagem. Sem valor, fica indeterminada.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2044,7 +2044,7 @@
       "title": "RadioGroup",
       "description": "Escolha única com todas as opções visíveis. Marcado, o círculo fica amarelo com ponto preto.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/form-field.json",
@@ -2068,7 +2068,7 @@
       "title": "Reveal",
       "description": "Conteúdo que sobe e aparece ao entrar na tela, uma vez, com stagger por índice. Duração, curva e distância vêm dos tokens.",
       "dependencies": [
-        "motion"
+        "motion@^14.7.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2090,7 +2090,7 @@
       "title": "SceneCanvas",
       "description": "Palco de cenas em canvas com PixiJS. Carrega o Pixi sob demanda, pausa fora da tela e entrega os tokens do tema para a cena.",
       "dependencies": [
-        "pixi.js"
+        "pixi.js@^8.22.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2134,7 +2134,7 @@
       "title": "ScrollArea",
       "description": "Área com rolagem própria e barra nos tokens, para listas longas dentro de Sheet, Popover e Card.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2156,7 +2156,7 @@
       "title": "ScrollProgress",
       "description": "Barra fina em accent que cresce com a rolagem da página, com spring.",
       "dependencies": [
-        "motion"
+        "motion@^14.7.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2179,7 +2179,7 @@
       "title": "SearchInput",
       "description": "Campo de busca com ícone de lupa e botão de limpar, que também limpa com Esc.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
@@ -2223,8 +2223,8 @@
       "title": "Select",
       "description": "Lista de opções do Radix com gatilho no formato do Input. Item destacado em accent-soft.",
       "dependencies": [
-        "lucide-react",
-        "radix-ui"
+        "lucide-react@^1.64.0",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/form-field.json",
@@ -2248,7 +2248,7 @@
       "title": "Separator",
       "description": "Linha de 1px em line, horizontal ou vertical, para separar grupos de conteúdo.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2270,9 +2270,9 @@
       "title": "Sheet",
       "description": "Painel lateral sobre a página, para filtros e edição rápida. Abre pela direita por padrão.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react",
-        "radix-ui"
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.64.0",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/dialog.json",
@@ -2316,7 +2316,7 @@
       "title": "Slider",
       "description": "Controle deslizante para um valor ou um intervalo dentro de uma faixa, com valor anunciado em pt-BR.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/form-field.json",
@@ -2339,7 +2339,7 @@
       "title": "Spinner",
       "description": "Indicador de carregamento. Herda a cor do texto ao redor.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2384,7 +2384,7 @@
       "title": "Stepper",
       "description": "Etapas numeradas de um fluxo, com estados concluída, atual e pendente. Horizontal ou vertical.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2406,7 +2406,7 @@
       "title": "Switch",
       "description": "Interruptor liga e desliga do Radix, para preferências com efeito imediato.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2448,7 +2448,7 @@
       "title": "Tabs",
       "description": "Abas em mono; a ativa ganha sublinhado em accent-line.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2512,7 +2512,7 @@
       "title": "Tilt",
       "description": "Inclina o conteúdo em 3D seguindo o mouse, com spring. Para cards de destaque.",
       "dependencies": [
-        "motion"
+        "motion@^14.7.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2554,9 +2554,9 @@
       "title": "Toast",
       "description": "Notificação temporária no canto inferior direito, com faixa na cor do estado. Chame toast() de qualquer lugar.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react",
-        "radix-ui"
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.64.0",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/icon-button.json",
@@ -2580,8 +2580,8 @@
       "title": "ToggleGroup",
       "description": "Botões agrupados em controle segmentado, para trocar a visualização ou ligar filtros. O item ativo fica amarelo.",
       "dependencies": [
-        "class-variance-authority",
-        "radix-ui"
+        "class-variance-authority@^0.7.1",
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2603,7 +2603,7 @@
       "title": "Tooltip",
       "description": "Dica curta invertida (fundo ink) que aparece no hover e no foco. Ideal para botões só com ícone.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2626,7 +2626,7 @@
       "title": "Tour",
       "description": "Tour de onboarding em passos, com recorte em volta do alvo, balão ancorado e os botões Pular, Voltar e Avançar.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/button.json",
@@ -2671,7 +2671,7 @@
       "title": "Heading e Text",
       "description": "Títulos em display e textos de corpo e mono com a escala do @mw/ui. A prop as escolhe a tag sem mudar o estilo.",
       "dependencies": [
-        "radix-ui"
+        "radix-ui@^1.8.1"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/marcio-tokens.json",
@@ -2693,7 +2693,7 @@
       "title": "AdminShell",
       "description": "Casca dos painéis: AppShell com navegação, busca ⌘K, menu do usuário com tema e saída. Usado pelo Dashboard e pelas Configurações.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/app-shell.json",
@@ -2769,7 +2769,7 @@
       "title": "Landing page",
       "description": "Página de apresentação no estilo do portfólio: Navbar com seções, Hero com DotGrid e TypingText, FeatureGrid de serviços, stack, projetos e Footer de contato.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/badge.json",
@@ -2808,7 +2808,7 @@
       "title": "Login",
       "description": "Entrar com e-mail e senha. Painel de marca com DotGrid e TypingText, validação, erro em Alert e toast de boas-vindas.",
       "dependencies": [
-        "react-hook-form"
+        "react-hook-form@^7.90.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/alert.json",
@@ -2879,7 +2879,7 @@
       "title": "Detalhe de registro",
       "description": "Tela de detalhe dentro do AdminShell: cabeçalho com ações, dados em DescriptionList, histórico em Timeline e confirmação de arquivamento.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/admin-shell.json",
@@ -2922,7 +2922,7 @@
       "title": "Configurações",
       "description": "Abas de perfil (formulário validado), preferências (tema, densidade, fuso, notificações) e conta (exclusão com confirmação).",
       "dependencies": [
-        "react-hook-form"
+        "react-hook-form@^7.90.0"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/admin-shell.json",
@@ -2966,7 +2966,7 @@
       "title": "Coin",
       "description": "Ícone coin do pacote base: moeda, ouro, dinheiro.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -2985,7 +2985,7 @@
       "title": "CrossedSwords",
       "description": "Ícone crossed-swords do pacote base: espadas, batalha, combate.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -3004,7 +3004,7 @@
       "title": "Shield",
       "description": "Ícone shield do pacote base: escudo, defesa, proteção.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -3023,7 +3023,7 @@
       "title": "Archer",
       "description": "Ícone archer do pacote medieval: arqueiro, arco, flecha, unidade.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -3042,7 +3042,7 @@
       "title": "Barracks",
       "description": "Ícone barracks do pacote medieval: quartel, tenda, edifício, treino.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -3061,7 +3061,7 @@
       "title": "Castle",
       "description": "Ícone castle do pacote medieval: castelo, edifício, fortaleza.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -3080,7 +3080,7 @@
       "title": "Farm",
       "description": "Ícone farm do pacote medieval: fazenda, celeiro, edifício.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -3099,7 +3099,7 @@
       "title": "Food",
       "description": "Ícone food do pacote medieval: comida, pão, alimento, recurso.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -3118,7 +3118,7 @@
       "title": "Iron",
       "description": "Ícone iron do pacote medieval: ferro, lingote, metal, recurso.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -3137,7 +3137,7 @@
       "title": "Spearman",
       "description": "Ícone spearman do pacote medieval: lanceiro, lança, unidade.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -3156,7 +3156,7 @@
       "title": "Stone",
       "description": "Ícone stone do pacote medieval: pedra, rocha, recurso.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {
@@ -3175,7 +3175,7 @@
       "title": "Wood",
       "description": "Ícone wood do pacote medieval: madeira, tora, recurso.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.64.0"
       ],
       "files": [
         {

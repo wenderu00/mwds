@@ -8,8 +8,10 @@ Demos interativas usadas nos exemplos do catálogo de componentes (`app/_docs/ca
 - `app-shell.tsx:AppShellDemo({ theme })` - `AppShell` com navegação lateral; `theme` compõe `mainId`, o `id` do main e o `aria-label` da nav.
 - `app-shell-bottom.tsx:AppShellBottomDemo({ theme })` - `AppShell` com navegação inferior; `theme` compõe o `data-testid`.
 - `character-stage.tsx:CharacterStageDemo()` - `CharacterStage` com rodadas.
+- `combobox-server.tsx:ComboboxServerDemo()` - `Combobox` com `onSearchChange`, filtrando uma lista local que faz o papel do servidor.
 - `command-palette.tsx:CommandPaletteDemo()` - `CommandPalette` com itens de exemplo.
 - `data-table.tsx:DataTableDemo()` - `DataTable` com seleção de linhas.
+- `data-table-server.tsx:DataTableServerDemo()` - `DataTable` com `rowCount`, recebendo só a página atual de uma lista local que faz o papel do servidor.
 - `dropdown-menu.tsx:DropdownMenuDemo()` - `DropdownMenu` com itens, opção de densidade e ordenação.
 - `file-upload-progress.tsx:FileUploadProgressDemo({ id })` - `FileUpload` em `FormField` com progresso simulado.
 - `meter.tsx:MeterDemo()` - `Meter` "Ouro" com botão "Saquear" (soma 250 até `max` 5000 e muda `highlightKey`).

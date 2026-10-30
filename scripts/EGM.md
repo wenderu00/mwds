@@ -12,18 +12,21 @@ Scripts de build e de verificação do design system, executados com `tsx` a par
 - `check-colors.ts` (segundo passo de `npm run lint`, depois do `eslint`): procura hex e funções de cor nos `.css` de `app/` e `registry/`, com exceção de `registry/marcio/tokens.css`.
 - `accent-scale.ts:accentScale`: escala `accent-50` a `accent-950` gerada em OKLCH a partir de `#ece41f`. Os passos 200, 300 e 700 são fixos (`pinned`). Com `npm run accent-scale`, imprime a escala com o contraste contra preto e branco.
 - `build-registry.ts:registryBaseUrl(env?)`: devolve `REGISTRY_URL` sem a barra final, ou `http://localhost:3000`; lança erro quando `BASE_PATH` está definido sem `REGISTRY_URL`.
+- `build-registry.ts:registryItemsUrl(env?)`: pasta onde ficam os itens, usada em `registryDependencies` e em `config.registries`. Devolve `REGISTRY_ITEMS_URL` sem a barra final, ou `${registryBaseUrl(env)}/r`.
+- `build-registry.ts:packageWithRange(name, path)`: devolve `nome@faixa` com a faixa de `dependencies` do `package.json`; lança erro se o pacote não estiver lá.
 - `build-registry.ts:tokensCss()`: converte `registry/marcio/tokens.css` em `{ theme, css }` para o item `marcio-tokens`.
 - `build-registry.ts:importSpecifiers(source)`: lista sem repetição os especificadores de `import ... from`, `export ... from`, `import "x"` (só efeito) e `import("x")`, com aspas simples ou duplas. `import type` também entra.
 - `build-registry.ts:importsOf(file)`: `importSpecifiers` aplicado ao arquivo lido a partir da raiz.
-- `build-registry.ts:dependenciesOf(file | files, { withTokens, self })`: separa dependências npm (nome do pacote, com escopo quando houver) de `registryDependencies` (`@/registry/marcio/ui/<x>`, `@/registry/marcio/lib/<x>` e `@/registry/marcio/blocks/<x>/...`). `withTokens` vale `true` por padrão e acrescenta `marcio-tokens`; `self` impede que um bloco dependa de si mesmo. Devolve as duas listas ordenadas.
+- `build-registry.ts:dependenciesOf(file | files, { withTokens, self })`: separa dependências npm (`nome@faixa`, com escopo quando houver) de `registryDependencies` (`@/registry/marcio/ui/<x>`, `@/registry/marcio/lib/<x>` e `@/registry/marcio/blocks/<x>/...`). `withTokens` vale `true` por padrão e acrescenta `marcio-tokens`; `self` impede que um bloco dependa de si mesmo. Devolve as duas listas ordenadas.
 - `build-registry.ts:buildRegistry()`: monta o registry `marcio` (`homepage` igual à URL base) com `marcio-tokens`, `marcio-tema`, `marcio-strict`, as fontes (`font-bricolage`, `font-plex-sans`, `font-plex-mono`), `utils`, `br`, `mw-tokens`, os itens de `registry/marcio/ui/*.tsx`, os blocos, os ícones (`icon-*`), os pacotes (`icons-*`) e `marcio-ui`. Detalhes:
   - Item de `ui/` usa `name` e `summary` de `app/_docs/catalog-meta.ts:componentMeta` (casado por `slug`) e `categories: [group]`.
   - Arquivo de bloco vira `registry:page` com o `target` de `doc.targets` quando listado ali; senão, `registry:component` com `target` `components/blocks/<bloco>/<arquivo>`.
   - `setupNotes` vira o `docs` dos itens `toast`, `tooltip`, `theme-toggle` e `motion-provider`.
-  - `marcio-tokens` leva em `config.registries` a entrada `@marcio` apontando para `${baseUrl}/r/{name}.json`.
+  - `marcio-tokens` leva em `config.registries` a entrada `@marcio` apontando para `${itemsUrl}/{name}.json`.
   - `marcio-strict` publica `registry/marcio/mw-strict.css` (`target` `app/mw-strict.css`) e também `eslint.mw.mjs` e todos os `eslint-rules/*.js` (`lintFiles`), estes com `target` igual ao caminho de origem.
 - `build-registry.ts` (execução direta, segundo passo de `npm run registry:build`): grava `registry.json`.
-- `serve-out.ts` (`webServer` em `playwright.config.ts`): servidor HTTP estático para `out/`.
+- `serve-out.ts` (`webServer` em `playwright.config.ts`): servidor HTTP estático para `out/`, ou para a pasta de `SERVE_ROOT`.
+- `smoke-consumidor.ts` (`npm run smoke`): recebe a URL dos itens, por padrão `http://localhost:4400/r`, e numa pasta temporária cria um app com `create-next-app`, roda `init` e `add` de `marcio-ui`, `marcio-strict` e dos blocos, grava o layout do guia e uma página com `Calendar`, liga `...mw` no ESLint e roda `eslint`, `tsc` e `next build`. Usa as versões de `next` e `shadcn` do repositório. Em falha, mantém a pasta e diz onde ela está.
 - `lib/`: [./lib/EGM.md](./lib/EGM.md), com cor (`contrast`, `hexToOklch`, `oklchToHex`, `maxChroma`) e tokens (`loadTokens`, `tokensPath`).
 - `icons/`: [./icons/EGM.md](./icons/EGM.md), com `loadPacks`, `componentName`, `validateSvg`, `validatePacks` e `generateFiles`.
 

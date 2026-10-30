@@ -56,12 +56,12 @@ Ações, exibição e tipografia:
 - `typography.tsx`: Heading, Text, HeadingProps, TextProps.
 
 Formulários e entrada de dados:
-- `combobox.tsx`: Combobox, ComboboxOption, ComboboxProps.
+- `combobox.tsx`: Combobox, ComboboxOption, ComboboxProps (inclui `onSearchChange`, que desliga o filtro local e recebe `""` ao fechar, e `loading`/`loadingText`).
 - `command.tsx`: Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandSeparator, CommandItem, CommandShortcut, normalizeSearch, commandFilter.
 - `command-palette.tsx`: CommandPalette, CommandPaletteProps, CommandPaletteItem, CommandPaletteItemProps, CommandPaletteTrigger, CommandPaletteTriggerProps, useIsMac.
-- `data-table.tsx`: DataTable, SortDirection, DataTableSort, DataTableColumn, DataTableRange, DataTableProps (inclui `defaultPage`, padrão 1, e `defaultSelected`).
+- `data-table.tsx`: DataTable, SortDirection, DataTableSort, DataTableColumn, DataTableRange, DataTableProps (inclui `defaultPage`, padrão 1, `defaultSelected`, `rowCount`, `loading` e `paginationLabel`).
 - `date-picker.tsx`: DatePicker, DateRangePicker, formatDate, DateRange, DatePickerProps, DateRangePickerProps.
-- `calendar.tsx`: Calendar, CalendarProps (react-day-picker com locale ptBR).
+- `calendar.tsx`: Calendar, CalendarProps (react-day-picker com locale ptBR; no servidor sai só o contêiner, porque o `DayPicker` lê o relógio no render).
 - `file-upload.tsx`: FileUpload, formatBytes, matchesAccept, FileRejection, FileUploadStatus, FileUploadProps.
 - `form-field.tsx`: FormField, useFormField, FormFieldControlProps, FormFieldProps.
 - `input.tsx`: Input, InputProps, fieldClasses, controlHeights, ControlSize, triggerClasses.
@@ -120,7 +120,7 @@ Acessibilidade imposta por tipo ou código:
 - `link.tsx:Link` com `external` força `target="_blank"` e `rel="noopener noreferrer"` e adiciona `newTabLabel` sr-only; com `asChild` essas props são ignoradas.
 - `breadcrumb.tsx:BreadcrumbTrail` renderiza como `BreadcrumbPage` (`aria-current="page"`, sem link) o último item e qualquer item sem `href` (`last || !item.href`), então pode haver mais de um `aria-current="page"`.
 - `chart.tsx:ChartProps` exige `kind`, `title`, `data`, `categoryKey` e `series`; as animações do recharts ficam desligadas; `String(row[categoryKey])` é a key da tabela (categorias únicas).
-- `data-table.tsx:DataTable` exige `data`, `columns` e `getRowId`; só colunas com `sortValue` ordenam e recebem `aria-sort`; a comparação textual usa `Intl.Collator("pt-BR", { numeric: true, sensitivity: "base" })` e números são comparados numericamente.
+- `data-table.tsx:DataTable` exige `data`, `columns` e `getRowId`; só colunas com `sortValue` ou `sortable` mostram o botão de ordenar e recebem `aria-sort`; com `rowCount`, `data` é a página atual e nada é ordenado nem cortado localmente; a comparação textual usa `Intl.Collator("pt-BR", { numeric: true, sensitivity: "base" })` e números são comparados numericamente.
 - `scroll-area.tsx:ScrollArea` (no viewport) e `table.tsx:Table` (no container) mantêm a área rolável com `tabIndex=0`.
 - `dot-grid.tsx:DotGrid`, `icon-tile.tsx:IconTile`, `scroll-progress.tsx:ScrollProgress` e `skeleton.tsx:Skeleton` são sempre `aria-hidden`; `scramble-text.tsx:ScrambleText` mantém o texto real em sr-only; `code-comment.tsx:CodeComment` esconde o prefixo `// ` com `aria-hidden`.
 

@@ -15,6 +15,8 @@ export type DataTableColumn<T> = {
   header: ReactNode;
   cell: (row: T) => ReactNode;
   sortValue?: (row: T) => string | number;
+  /** Mostra o botão de ordenar sem sortValue, para quando o servidor ordena. */
+  sortable?: boolean;
   align?: "left" | "right";
   className?: string;
   headerClassName?: string;
@@ -26,6 +28,10 @@ export type DataTableProps<T> = {
   data: T[];
   columns: DataTableColumn<T>[];
   getRowId: (row: T) => string;
+  /** Total de linhas no servidor. Com ele, data é só a página atual e a ordenação fica com quem busca os dados. */
+  rowCount?: number;
+  /** Marca a tabela com aria-busy e adia o estado vazio enquanto os dados não chegam. */
+  loading?: boolean;
   pageSize?: number;
   page?: number;
   /** Página inicial quando page não é controlada. */
@@ -41,6 +47,8 @@ export type DataTableProps<T> = {
   onSelectedChange?: (selected: Set<string>) => void;
   rowLabel?: (row: T) => string;
   selectPageLabel?: string;
+  /** Nome da navegação de páginas. Com mais de uma tabela paginada na página, dê um nome diferente a cada uma. */
+  paginationLabel?: string;
   caption?: ReactNode | ((range: DataTableRange) => ReactNode);
   empty?: ReactNode;
   footer?: (range: DataTableRange) => ReactNode;
@@ -60,6 +68,8 @@ export function DataTable<T>({
   data,
   columns,
   getRowId,
+  rowCount,
+  loading = false,
   pageSize = 10,
   page: controlledPage,
   defaultPage = 1,
@@ -73,6 +83,7 @@ export function DataTable<T>({
   onSelectedChange,
   rowLabel = (row) => getRowId(row),
   selectPageLabel = "Selecionar as linhas desta página",
+  paginationLabel,
   caption,
   empty,
   footer,
@@ -84,21 +95,23 @@ export function DataTable<T>({
   const [innerSelected, setInnerSelected] = useState<ReadonlySet<string>>(() => new Set(defaultSelected));
   const sort = controlledSort === undefined ? innerSort : controlledSort;
   const selected = controlledSelected ?? innerSelected;
+  const onServer = rowCount !== undefined;
 
   const sorted = useMemo(() => {
     const column = sort && columns.find((entry) => entry.id === sort.column);
-    if (!sort || !column?.sortValue) return data;
+    if (onServer || !sort || !column?.sortValue) return data;
     const factor = sort.direction === "asc" ? 1 : -1;
     return [...data].sort((a, b) => factor * compare(column.sortValue!(a), column.sortValue!(b)));
-  }, [data, columns, sort]);
+  }, [data, columns, sort, onServer]);
 
-  const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize));
+  const total = rowCount ?? sorted.length;
+  const pageCount = Math.max(1, Math.ceil(total / pageSize));
   const page = Math.min(controlledPage ?? innerPage, pageCount);
-  const visible = sorted.slice((page - 1) * pageSize, page * pageSize);
+  const visible = onServer ? sorted : sorted.slice((page - 1) * pageSize, page * pageSize);
   const range: DataTableRange = {
-    first: sorted.length === 0 ? 0 : (page - 1) * pageSize + 1,
-    last: Math.min(page * pageSize, sorted.length),
-    total: sorted.length,
+    first: total === 0 ? 0 : (page - 1) * pageSize + 1,
+    last: Math.min(page * pageSize, total),
+    total,
     page,
     pageCount,
   };
@@ -125,7 +138,7 @@ export function DataTable<T>({
     onSelectedChange?.(next);
   }
 
-  if (data.length === 0 && empty) return <>{empty}</>;
+  if (data.length === 0 && empty && !loading) return <>{empty}</>;
 
   const visibleIds = visible.map(getRowId);
   const allVisible = visibleIds.length > 0 && visibleIds.every((id) => selected.has(id));
@@ -133,7 +146,7 @@ export function DataTable<T>({
 
   return (
     <div data-slot="data-table" className="flex flex-col gap-4">
-      <Table className={className} containerClassName={containerClassName}>
+      <Table aria-busy={loading || undefined} className={className} containerClassName={containerClassName}>
         {caption !== undefined && <TableCaption>{typeof caption === "function" ? caption(range) : caption}</TableCaption>}
         <TableHeader>
           <TableRow>
@@ -149,13 +162,14 @@ export function DataTable<T>({
             {columns.map((column) => {
               const active = sort?.column === column.id ? sort.direction : null;
               const Icon = active === "asc" ? ArrowUp : active === "desc" ? ArrowDown : ArrowUpDown;
+              const sortable = column.sortable || column.sortValue;
               return (
                 <TableHead
                   key={column.id}
-                  aria-sort={column.sortValue ? (active ? ariaSort[active] : "none") : undefined}
+                  aria-sort={sortable ? (active ? ariaSort[active] : "none") : undefined}
                   className={cn(column.align === "right" && "text-right", column.headerClassName)}
                 >
-                  {column.sortValue ? (
+                  {sortable ? (
                     <button
                       type="button"
                       onClick={() => changeSort(column.id)}
@@ -200,7 +214,7 @@ export function DataTable<T>({
       {pageCount > 1 || footer ? (
         <div className="flex flex-wrap items-center justify-between gap-3">
           {footer ? footer(range) : <span />}
-          {pageCount > 1 && <Pagination size="sm" page={page} pageCount={pageCount} onPageChange={changePage} />}
+          {pageCount > 1 && <Pagination size="sm" page={page} pageCount={pageCount} onPageChange={changePage} labels={paginationLabel ? { navigation: paginationLabel } : undefined} />}
         </div>
       ) : null}
     </div>

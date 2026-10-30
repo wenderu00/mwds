@@ -4,6 +4,27 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.21.0] - 2026-10-30
+
+### Novo
+
+- Versões fixas: cada versão vira um GitHub Release com os itens do registry, e `init` pela URL do release grava a versão no `components.json` ([ADR 0028](docs/adr/0028-versoes-publicadas.md)).
+- DataTable aceita dados do servidor: `rowCount` faz de `data` só a página atual, `loading` marca `aria-busy` e adia o estado vazio, e `column.sortable` mostra o botão de ordenar sem `sortValue`.
+- DataTable aceita `paginationLabel`, para dar nomes diferentes à paginação de duas tabelas na mesma página.
+- Combobox aceita busca no servidor: `onSearchChange` desliga o filtro local, `loading` e `loadingText` anunciam o carregamento, e a escolha mantém o rótulo quando a lista muda.
+- `npm run smoke` instala o registry num app Next novo com o modo estrito e exige lint, tipos e build limpos. Agora roda no CI antes de qualquer deploy.
+
+### Mudou
+
+- Os itens do registry declaram a faixa do `package.json`, como `react-day-picker@^9.14.0`, em vez de só o nome do pacote. Um consumidor novo deixa de receber uma major que o DS não testou.
+
+### Corrigido
+
+- Calendar deixa de quebrar o `next build` em projetos com `cacheComponents`, que o template do Next 16.4 liga por padrão, e deixa de divergir na hidratação quando o dia da visita é outro que o do build. A grade passa a aparecer só no cliente.
+- O modo estrito deixa de reprovar o `checkbox.tsx` publicado pelo próprio DS em `mw/icon-size`.
+- `npm run dev` volta a compilar. O Tailwind lia os arquivos Markdown e gerava CSS inválido a partir de uma classe citada em `eslint-rules/EGM.md`; agora os `.md` ficam fora da varredura do site.
+- O bloco `landing` deixa de quebrar o `next build` em projetos com `cacheComponents`. O ano do rodapé agora vem de `profile.copyright` em `data.ts`, junto com o resto do conteúdo; atualize esse texto quando o ano virar.
+
 ## [0.20.1] - 2026-10-29
 
 ### Corrigido

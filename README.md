@@ -34,6 +34,16 @@ Não rode `npx shadcn init` sem a URL: o init padrão instala o tema do shadcn, 
 
 Requisitos: Next.js com App Router, React 19 e Tailwind CSS v4. Projetos em Vite migram para Next antes ([ADR 0025](docs/adr/0025-requisitos-do-consumidor.md)).
 
+### Versão fixa
+
+A URL acima sempre entrega a versão mais nova. Em sistema de produção, instale pela URL do release, que nunca muda de conteúdo ([ADR 0028](docs/adr/0028-versoes-publicadas.md)):
+
+```bash
+npx shadcn@latest init https://github.com/wenderu00/mwds/releases/download/v0.21.0/marcio-tokens.json
+```
+
+O `components.json` guarda a versão na entrada `@marcio`. Para subir de versão, troque a versão nessa linha e rode `npx shadcn@latest add @marcio/button --diff` para ver o que muda. Só existem versões fixas a partir da 0.21.0.
+
 ### Modo estrito
 
 O `init` não apaga a paleta padrão do Tailwind, para não quebrar projetos existentes. Para seguir o DS à risca, instale o modo estrito:
@@ -149,6 +159,7 @@ npm run dev
 | `npm run contrast` | Tabela de contraste de todos os pares nos dois temas; regrava `app/_data/contrast.json` e `tokens.json` |
 | `npm run accent-scale` | Mostra a escala do accent gerada em OKLCH |
 | `npm run typecheck` | TypeScript sem emitir arquivos |
+| `npm run smoke` | Instala o registry num app Next novo com o modo estrito e exige lint, tipos e build limpos. Recebe a URL dos itens, por padrão `http://localhost:4400/r`; sirva antes com `SERVE_ROOT=public npx tsx scripts/serve-out.ts` |
 | `npm run e2e` | Axe com contraste real e regressão visual (Playwright) em todas as páginas, nos dois temas. Precisa do `out/` do `npm run build` |
 | `npm run e2e:update` | Regrava as capturas localmente, só para conferir; as de referência vêm do CI |
 
@@ -179,7 +190,7 @@ As capturas de referência ficam em `e2e/__screenshots__/` e são geradas no con
 
 O registry é o próprio site de documentação, exportado como site estático e publicado no GitHub Pages em `https://wenderu00.github.io/mwds`. Os itens ficam em `https://wenderu00.github.io/mwds/r/<item>.json`.
 
-O workflow `.github/workflows/pages.yml` publica a cada push na `main` (ou manualmente, pela aba Actions). Ele roda lint, typecheck e testes e depois faz o build com duas variáveis:
+O workflow `.github/workflows/pages.yml` publica a cada push na `main` (ou manualmente, pela aba Actions). Depois do deploy, o job `release` cria o GitHub Release da versão, se ele ainda não existir. O workflow roda lint, typecheck e testes, instala o registry num app novo e faz o build com duas variáveis:
 
 - `BASE_PATH=/mwds`: o subcaminho do site no GitHub Pages;
 - `REGISTRY_URL=https://wenderu00.github.io/mwds`: a URL final, que entra nas dependências entre itens.
@@ -214,3 +225,4 @@ As decisões de design e arquitetura estão registradas em [docs/adr/](docs/adr/
 - [0021](docs/adr/0021-modo-estrito.md): modo estrito no projeto consumidor
 - [0024](docs/adr/0024-sistema-de-movimento.md): sistema de movimento
 - [0027](docs/adr/0027-comentarios-no-codigo.md): comentários no código
+- [0028](docs/adr/0028-versoes-publicadas.md): versões publicadas do registry

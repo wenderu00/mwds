@@ -104,7 +104,7 @@ describe("ícones no registry", () => {
   it("publica um item por ícone, num arquivo próprio do projeto consumidor", () => {
     const castle = byName.get("icon-medieval-castle")!;
     expect(castle.files).toEqual([{ path: "registry/marcio/icons/medieval/castle.tsx", type: "registry:component", target: "components/icons/medieval/castle.tsx" }]);
-    expect(castle.dependencies).toEqual(["lucide-react"]);
+    expect(castle.dependencies).toEqual([expect.stringMatching(/^lucide-react@/)]);
   });
 
   it("publica um item por pacote que traz todos os ícones e os pacotes dos quais depende", () => {

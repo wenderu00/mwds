@@ -1,6 +1,7 @@
 import { Combobox } from "@/registry/marcio/ui/combobox";
 import { FormField } from "@/registry/marcio/ui/form-field";
 import { metaOf } from "../catalog-meta";
+import { ComboboxServerDemo } from "../demos/combobox-server";
 import { type ComponentDoc, classNameProp } from "./shared";
 
 export const doc: ComponentDoc = {
@@ -23,6 +24,8 @@ export const doc: ComponentDoc = {
     { name: "placeholder", type: "ReactNode", default: '"Selecione"', description: "Texto sem seleção." },
     { name: "searchPlaceholder", type: "string", default: '"Buscar"', description: "Texto e nome do campo de busca." },
     { name: "emptyText", type: "ReactNode", default: '"Nada encontrado"', description: "Estado sem resultado." },
+    { name: "onSearchChange", type: "(search: string) => void", description: "Liga a busca no servidor: as opções não são filtradas aqui e cada tecla chega neste callback, com vazio ao fechar. Aplique debounce em quem busca. Um valor inicial precisa estar em options para mostrar o rótulo." },
+    { name: "loading / loadingText", type: "boolean / ReactNode", default: 'false / "Carregando"', description: "Anuncia o carregamento no lugar do estado vazio." },
     { name: "name", type: "string", description: "Cria um input escondido para formulários nativos." },
     { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Mesma altura do Button: 36px, a altura de controle da densidade (44px na padrão) e 48px." },
     classNameProp,
@@ -49,6 +52,12 @@ export const doc: ComponentDoc = {
           />
         </FormField>
       ),
+    },
+    {
+      title: "Busca no servidor",
+      className: "w-full max-w-sm",
+      code: `<Combobox\n  aria-label="Cidade"\n  options={resultados}\n  onSearchChange={buscarComDebounce}\n  loading={buscando}\n  placeholder="Escolha uma cidade"\n/>`,
+      render: () => <ComboboxServerDemo />,
     },
   ],
   a11y: [
