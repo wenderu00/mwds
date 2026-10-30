@@ -13,6 +13,9 @@ describe("cn", () => {
   it("does not treat custom font sizes as text colors", () => {
     expect(cn("text-ink text-display-lg")).toBe("text-ink text-display-lg");
     expect(cn("text-mono-xs", "text-mono-sm")).toBe("text-mono-sm");
+    expect(cn("text-ink", "text-display-2xl")).toBe("text-ink text-display-2xl");
+    expect(cn("text-display-2xl", "text-sm")).toBe("text-sm");
+    expect(cn("text-sm", "text-display-2xl")).toBe("text-display-2xl");
   });
 
   it("lets the last foundation token win over a conflicting one", () => {
@@ -24,6 +27,11 @@ describe("cn", () => {
     expect(cn("h-control", "h-9")).toBe("h-9");
     expect(cn("py-cell-y", "py-2")).toBe("py-2");
     expect(cn("max-w-content", "max-w-measure")).toBe("max-w-measure");
+    expect(cn("animate-mw-fade-in", "animate-mw-pulse")).toBe("animate-mw-pulse");
+    expect(cn("animate-mw-pulse", "animate-none")).toBe("animate-none");
+    expect(cn("tracking-display", "tracking-kicker")).toBe("tracking-kicker");
+    expect(cn("tracking-kicker", "tracking-display")).toBe("tracking-display");
+    expect(cn("tracking-display", "tracking-tight")).toBe("tracking-tight");
   });
 
   it("merges semantic text colors", () => {

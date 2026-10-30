@@ -4,6 +4,14 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.20.1] - 2026-10-29
+
+### Corrigido
+
+- O `cn` passa a reconhecer `text-display-2xl` como tamanho de fonte. Antes, `cn("text-ink", "text-display-2xl")` descartava a cor, e `cn("text-display-2xl", "text-sm")` mantinha as duas classes.
+- O `cn` passa a reconhecer `tracking-display` como espaçamento entre letras, e o último valor vence: `cn("tracking-display", "tracking-kicker")` resulta em `tracking-kicker`.
+- O `cn` passa a reconhecer as animações `animate-mw-*`, e a última animação vence: `cn("animate-mw-pulse", "animate-none")` resulta em `animate-none`.
+
 ## [0.20.0] - 2026-10-29
 
 ### Novo
