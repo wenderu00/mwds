@@ -39,7 +39,7 @@ Requisitos: Next.js com App Router, React 19 e Tailwind CSS v4. Projetos em Vite
 A URL acima sempre entrega a versão mais nova. Em sistema de produção, instale pela URL do release, que nunca muda de conteúdo ([ADR 0028](docs/adr/0028-versoes-publicadas.md)):
 
 ```bash
-npx shadcn@latest init https://github.com/wenderu00/mwds/releases/download/v0.22.0/marcio-tokens.json
+npx shadcn@latest init https://github.com/wenderu00/mwds/releases/download/v0.22.1/marcio-tokens.json
 ```
 
 O `components.json` guarda a versão na entrada `@marcio`. Para subir de versão, troque a versão nessa linha e rode `npx shadcn@latest add @marcio/button --diff` para ver o que muda. Só existem versões fixas a partir da 0.21.0.

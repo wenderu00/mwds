@@ -4,6 +4,13 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.22.1] - 2026-10-30
+
+### Corrigido
+
+- `init` deixa de falhar em projeto com `src/`. O `marcio-tokens` fixava `app/globals.css`; agora o shadcn acha o arquivo do projeto.
+- Em projeto com `src/`, `marcio-versao` gravava o workflow em `src/.github/workflows/`, onde o GitHub não o executa, e `marcio-strict` gravava `eslint.mw.mjs` e `eslint-rules/` em `src/`, fora de onde o guia manda importar. Agora os dois ficam na raiz, e `npm run smoke` também instala num app com `src/`. Quem instalou o modo estrito num projeto assim pode apagar as cópias de `src/` depois de reinstalar.
+
 ## [0.22.0] - 2026-10-30
 
 ### Novo

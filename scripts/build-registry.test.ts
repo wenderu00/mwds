@@ -47,9 +47,15 @@ describe("registry", () => {
 
   it("publishes the version check as an opt-in workflow", () => {
     const item = byName.get("marcio-versao");
-    expect(item?.files).toEqual([{ path: "registry/marcio/versao.yml", type: "registry:file", target: ".github/workflows/mw-versao.yml" }]);
+    expect(item?.files).toEqual([{ path: "registry/marcio/versao.yml", type: "registry:file", target: "~/.github/workflows/mw-versao.yml" }]);
     expect(readFileSync(item!.files![0]!.path, "utf8")).toContain("wenderu00/mwds/.github/workflows/verificar-versao.yml@main");
     expect(byName.get("marcio-tokens")?.registryDependencies ?? []).not.toContainEqual(expect.stringContaining("marcio-versao"));
+  });
+
+  it("installs the lint files at the project root, even in a project with src/", () => {
+    const lintFiles = byName.get("marcio-strict")!.files!.filter((file) => /eslint/.test(file.path));
+    expect(lintFiles.map((file) => file.target)).toContain("~/eslint.mw.mjs");
+    for (const file of lintFiles) expect(file.target, file.path).toBe(`~/${file.path}`);
   });
 
   it("refuses a package the DS does not declare", () => {

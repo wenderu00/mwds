@@ -42,7 +42,7 @@ describe("marcio-strict", () => {
         pending.push(new URL(specifier, `file:///${file}`).pathname.slice(1));
       }
     }
-    for (const file of needed) expect(strict.files, file).toContainEqual({ path: file, type: "registry:file", target: file });
+    for (const file of needed) expect(strict.files, file).toContainEqual({ path: file, type: "registry:file", target: `~/${file}` });
   });
 
   it("reprova cor, raio e texto fora dos tokens e ícone fora da escala no projeto consumidor", async () => {
