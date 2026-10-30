@@ -11,7 +11,7 @@ Casca de painel administrativo (sidebar, header com breadcrumb, paleta de comand
 - `admin-shell.tsx:AdminShellProps` exige `active`, `breadcrumb: BreadcrumbTrailItem[]` e `children`; `user?: AdminUser` (`{ name; email; avatarUrl? }`) cai para um usuário de exemplo em `admin-shell.tsx:AdminShell`.
 - `admin-shell.tsx:navigation` é constante interna com três itens fixos (`/dashboard`, `/dashboard#atividade`, `/configuracoes`); o item ativo é o de `id === active`.
 - `admin-shell.tsx:themeLabels` cobre exatamente as chaves de `ThemeChoice` (`system`, `dark`, `light`).
-- `admin-shell.tsx:AdminShell` marca "Sair" com `DropdownMenuItem tone="danger"`, a API atual (`variant="danger"` está descontinuado e sai na 0.21).
+- `admin-shell.tsx:AdminShell` marca "Sair" com `DropdownMenuItem tone="danger"`, a API atual (`variant="danger"` está descontinuado e sai na 0.23).
 
 ## Side Effects
 - `admin-shell.tsx:AdminShell` navega com `router.push` ao escolher item na paleta e no menu do usuário (`/configuracoes`, `/login` em "Sair"); não há logout real.

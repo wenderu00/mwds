@@ -45,6 +45,13 @@ describe("registry", () => {
     expect(installInfo("dashboard")?.dependencies.every((dependency) => !dependency.includes("@"))).toBe(true);
   });
 
+  it("publishes the version check as an opt-in workflow", () => {
+    const item = byName.get("marcio-versao");
+    expect(item?.files).toEqual([{ path: "registry/marcio/versao.yml", type: "registry:file", target: ".github/workflows/mw-versao.yml" }]);
+    expect(readFileSync(item!.files![0]!.path, "utf8")).toContain("wenderu00/mwds/.github/workflows/verificar-versao.yml@main");
+    expect(byName.get("marcio-tokens")?.registryDependencies ?? []).not.toContainEqual(expect.stringContaining("marcio-versao"));
+  });
+
   it("refuses a package the DS does not declare", () => {
     expect(() => packageWithRange("pacote-que-nao-existe", "registry/marcio/ui/x.tsx")).toThrow(/pacote-que-nao-existe/);
   });

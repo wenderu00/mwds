@@ -34,7 +34,7 @@ export function DropdownMenuContent({ className, sideOffset = 6, align = "end", 
 export type DropdownMenuItemProps = ComponentProps<typeof DropdownMenuPrimitive.Item> & {
   /** danger pinta o item de perigo, para ações destrutivas. */
   tone?: "neutral" | "danger";
-  /** @deprecated Use tone. Sai na 0.21. */
+  /** @deprecated Use tone. Sai na 0.23. */
   variant?: "default" | "danger";
   inset?: boolean;
 };

@@ -63,11 +63,14 @@ run(app, "npx", "--yes", `shadcn@${shadcnVersion}`, "init", `${registry}/marcio-
 const config = JSON.parse(readFileSync(join(app, "components.json"), "utf8")) as { registries?: Record<string, string> };
 if (config.registries?.["@marcio"] !== `${registry}/{name}.json`) throw new Error(`components.json não aponta para ${registry}: ${JSON.stringify(config.registries)}`);
 
-run(app, "npx", "--yes", `shadcn@${shadcnVersion}`, "add", "@marcio/marcio-ui", "@marcio/marcio-strict", ...blocks.map((block) => `@marcio/${block}`), "--yes", "--overwrite");
+run(app, "npx", "--yes", `shadcn@${shadcnVersion}`, "add", "@marcio/marcio-ui", "@marcio/marcio-strict", "@marcio/marcio-versao", ...blocks.map((block) => `@marcio/${block}`), "--yes", "--overwrite");
 
 const installed = (JSON.parse(readFileSync(join(app, "package.json"), "utf8")) as { dependencies: Record<string, string> }).dependencies;
 const expectedRange = manifest.dependencies["react-day-picker"];
 if (installed["react-day-picker"] !== expectedRange) throw new Error(`react-day-picker instalado como ${installed["react-day-picker"]}, esperado ${expectedRange}`);
+
+const versionWorkflow = readFileSync(join(app, ".github/workflows/mw-versao.yml"), "utf8");
+if (!versionWorkflow.includes("wenderu00/mwds/.github/workflows/verificar-versao.yml@main")) throw new Error("mw-versao.yml não chama o workflow reutilizável.");
 
 writeFileSync(join(app, "app/layout.tsx"), layout);
 mkdirSync(join(app, "app/calendario"));

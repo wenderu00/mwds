@@ -47,8 +47,8 @@ Mudar uma dessas props depois da 0.10 exige uma MAJOR.
 
 Uma auditoria da API encontrou componentes fora das convenções. Ficou assim:
 
-- `size` segue `sm | md | lg` com padrão `md` também fora dos campos. SectionTitle ganhou `sm` e passou o padrão de `lg` para `md`; Pagination passou o padrão de `sm` para `md` e ganhou `lg`; Meter trocou `compact` por `sm`, com `compact` aceito até a 0.21.
-- Itens de DropdownMenu e ContextMenu usam `tone="danger"`. `variant="danger"` continua aceito até a 0.21.
+- `size` segue `sm | md | lg` com padrão `md` também fora dos campos. SectionTitle ganhou `sm` e passou o padrão de `lg` para `md`; Pagination passou o padrão de `sm` para `md` e ganhou `lg`; Meter trocou `compact` por `sm`, com `compact` aceito até a 0.22.
+- Itens de DropdownMenu e ContextMenu usam `tone="danger"`. `variant="danger"` continua aceito até a 0.22.
 - O AlertDialog continua mais estreito que o Dialog no mesmo `size` (md 448px e lg 512px, contra 512px e 672px). Alerta é curto, e a largura menor é de propósito.
 - Alert e Toast não têm `tone="accent"`: falam de estado, e o amarelo não é um estado. O ponto concluído do Timeline usa `accent` por padrão, como progresso da marca.
 - No Spinner e no Progress, `className` vai para o elemento visual (o anel e o contêiner da barra) e as props nativas vão para o elemento com papel acessível. É de propósito: `aria-*` precisa chegar ao `role="status"` e à barra.

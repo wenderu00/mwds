@@ -37,6 +37,7 @@ mwds/                              # equivale ao marcio-ui/ do prompt
 │   └── marcio/
 │       ├── tokens.css
 │       ├── tema.css               # item marcio-tema: app/tema.css vazio para personalizar tokens
+│       ├── versao.yml             # item marcio-versao: workflow do aviso de versão nova (ADR 0029)
 │       ├── mw-strict.css          # resets do modo estrito (ADR 0021)
 │       ├── icons/<pacote>/        # componentes gerados a partir de icons/ (não editar)
 │       ├── lib/
