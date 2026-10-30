@@ -5,6 +5,7 @@ export const profile = {
   tagline:
     "Construo sistemas web de ponta a ponta, do Next.js ao banco de dados, com uma obsessão saudável por testes, arquitetura bem documentada e código que continua fácil de mudar.",
   education: "// graduando em Sistemas de Informação no CIn/UFPE",
+  copyright: "2026 Márcio Wendell · Recife, PE",
   about:
     "Atuo como desenvolvedor full-stack (PJ) na JOIN Tecnologia, alocado no time da Secretaria de Desenvolvimento Tecnológico de Pernambuco, onde cuido de sistemas da Secretaria da Mulher. Em paralelo, sou cofundador e responsável técnico da BioQuest.",
 };

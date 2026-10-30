@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ESLint, type Linter } from "eslint";
 import postcss from "postcss";
+import { parser as tsParser } from "typescript-eslint";
 import { describe, expect, it } from "vitest";
 import mw from "../eslint.mw.mjs";
 import { buildRegistry, importsOf } from "./build-registry";
@@ -55,5 +56,33 @@ export const B = () => <div className="bg-accent rounded-control text-mono-xs"><
     const [result] = await eslint.lintText(code, { filePath: "app/page.jsx" });
     const byRule = result!.messages.map((message) => `${message.line}:${message.ruleId}`).sort();
     expect(byRule).toEqual(["2:mw/icon-size", "2:mw/no-raw-color", "2:mw/no-raw-token"]);
+  });
+
+  describe("no código publicado, no caminho que ele ocupa no consumidor", () => {
+    const eslint = new ESLint({
+      overrideConfigFile: true,
+      overrideConfig: [...(mw as unknown as Linter.Config[]), { languageOptions: { parser: tsParser, parserOptions: { ecmaFeatures: { jsx: true } } } }],
+    });
+    const rewriteImports = (source: string) => source.replaceAll("@/registry/marcio/icons/", "@/components/icons/").replaceAll("@/registry/marcio/ui/", "@/components/ui/");
+
+    it("não reprova nenhum componente nem bloco do próprio DS", async () => {
+      const published = buildRegistry().items.flatMap((item) => (item.type === "registry:ui" || item.type === "registry:block" ? (item.files ?? []) : []));
+      const errors: string[] = [];
+      for (const file of published) {
+        const target = file.target ?? file.path.replace("registry/marcio/ui/", "components/ui/");
+        const [result] = await eslint.lintText(rewriteImports(readFileSync(file.path, "utf8")), { filePath: target });
+        errors.push(...result!.messages.filter((message) => message.ruleId?.startsWith("mw/")).map((message) => `${target}:${message.line} ${message.ruleId} ${message.message}`));
+      }
+      expect(errors).toEqual([]);
+    }, 60_000);
+
+    it("mantém a exceção do ícone só no Checkbox", async () => {
+      const code = `import { Check } from "lucide-react";
+export const A = () => <Check className="size-3.5" />;`;
+      const [checkbox] = await eslint.lintText(code, { filePath: "components/ui/checkbox.tsx" });
+      const [other] = await eslint.lintText(code, { filePath: "components/ui/outro.tsx" });
+      expect(checkbox!.messages).toEqual([]);
+      expect(other!.messages.map((message) => message.ruleId)).toEqual(["mw/icon-size"]);
+    });
   });
 });

@@ -64,8 +64,27 @@ jobs:
             test-results
           retention-days: 7
 
+  # Instala o registry num app Next novo, como faz quem consome o DS.
+  consumidor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run registry:build
+        env:
+          REGISTRY_URL: http://localhost:4400
+      - name: Serve o registry
+        run: |
+          SERVE_ROOT=public npx tsx scripts/serve-out.ts &
+          until curl -fs http://localhost:4400/r/marcio-tokens.json > /dev/null; do sleep 1; done
+      - run: npm run smoke
+
   deploy:
-    needs: [build, qualidade]
+    needs: [build, qualidade, consumidor]
     # O workflow_dispatch numa branch (disparado pelo atualizar-capturas) só valida, não publica.
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -75,3 +94,41 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Publica a versão como assets imutáveis: quem instala por esta URL não recebe mudanças da main.
+  release:
+    needs: deploy
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - id: versao
+        name: Decide se esta versão já foi publicada
+        run: |
+          VERSAO="v$(node -p "require('./package.json').version")"
+          echo "tag=$VERSAO" >> "$GITHUB_OUTPUT"
+          if gh release view "$VERSAO" > /dev/null 2>&1; then echo "existe=true" >> "$GITHUB_OUTPUT"; else echo "existe=false" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.versao.outputs.existe == 'false'
+        run: npm ci
+      - if: steps.versao.outputs.existe == 'false'
+        run: npm run registry:build
+        env:
+          REGISTRY_URL: https://wenderu00.github.io/mwds
+          REGISTRY_ITEMS_URL: https://github.com/${{ github.repository }}/releases/download/${{ steps.versao.outputs.tag }}
+      - if: steps.versao.outputs.existe == 'false'
+        name: Cria o release
+        env:
+          TAG: ${{ steps.versao.outputs.tag }}
+        run: |
+          awk -v versao="[${TAG#v}]" '/^## \[/ { dentro = index($0, versao) > 0; next } dentro' CHANGELOG.md > notas.md
+          gh release create "$TAG" public/r/*.json --target "$GITHUB_SHA" --title "$TAG" --notes-file notas.md
+      - if: steps.versao.outputs.existe == 'false'
+        run: npm run smoke -- "https://github.com/${{ github.repository }}/releases/download/${{ steps.versao.outputs.tag }}"

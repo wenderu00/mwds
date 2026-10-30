@@ -3,6 +3,8 @@ import registry from "@/registry.json";
 export type InstallInfo = { command: string; dependencies: string[]; registryDependencies: string[] };
 
 const itemName = (url: string) => url.replace(/^.*\/r\//, "").replace(/\.json$/, "");
+// A faixa muda a cada atualização de pacote; a página lista só o nome para não sair de sincronia com as capturas.
+const packageName = (dependency: string) => dependency.replace(/(?!^)@.*$/, "");
 // Tokens e utils entram em todo item; listar os dois em cada página só faz ruído.
 const implicit = new Set(["marcio-tokens", "utils"]);
 
@@ -12,7 +14,7 @@ export function installInfo(name: string): InstallInfo | undefined {
   if (!item) return undefined;
   return {
     command: `npx shadcn@latest add @marcio/${name}`,
-    dependencies: "dependencies" in item ? [...(item.dependencies ?? [])] : [],
+    dependencies: "dependencies" in item ? (item.dependencies ?? []).map(packageName) : [],
     registryDependencies: ("registryDependencies" in item ? (item.registryDependencies ?? []) : [])
       .map(itemName)
       .filter((dep) => !implicit.has(dep)),

@@ -162,7 +162,7 @@ export default function LandingPage() {
             <ProfileLinks />
           </>
         }
-        copyright={`${new Date().getFullYear()} ${profile.name} · Recife, PE`}
+        copyright={profile.copyright}
         backToTop={{ href: "#topo" }}
       />
     </div>

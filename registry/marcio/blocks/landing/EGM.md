@@ -15,7 +15,7 @@ Landing page de portfólio pessoal (hero, sobre, serviços, stack, trabalhos e r
 
 ## Side Effects
 - `page.tsx:ProfileLinks` e os links de projetos abrem URLs externas em nova aba (`target="_blank"`, com aviso sr-only); `Hero` e `Footer` usam `mailto:` com `contact.email`.
-- `page.tsx:LandingPage` usa `new Date().getFullYear()` no copyright.
+- `page.tsx:LandingPage` lê o copyright de `data.ts:profile`, sem consultar o relógio, para não quebrar o prerender com `cacheComponents`.
 
 ## Verification
 - Run: `npm test`

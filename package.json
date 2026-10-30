@@ -1,6 +1,6 @@
 {
   "name": "@mw/ui",
-  "version": "0.20.1",
+  "version": "0.21.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,6 +14,7 @@
     "typecheck": "tsc --noEmit",
     "icons:build": "tsx scripts/icons/generate.ts",
     "registry:build": "npm run icons:build && tsx scripts/build-registry.ts && shadcn build",
+    "smoke": "tsx scripts/smoke-consumidor.ts",
     "e2e": "playwright test",
     "e2e:update": "playwright test --update-snapshots"
   },

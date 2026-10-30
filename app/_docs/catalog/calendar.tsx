@@ -5,7 +5,7 @@ import { type ComponentDoc, classNameProp } from "./shared";
 export const doc: ComponentDoc = {
   ...metaOf("calendar"),
   usage: {
-    use: ["Calendário sempre visível na página, como numa agenda ou num filtro lateral.", "Base de DatePicker e DateRangePicker."],
+    use: ["Calendário sempre visível na página, como numa agenda ou num filtro lateral. A grade aparece só no cliente, porque o dia de hoje depende do relógio de quem visita.", "Base de DatePicker e DateRangePicker."],
     avoid: ["Campo de data em formulário: use DatePicker, que ocupa uma linha.", "Datas muito distantes, como nascimento: digitar é mais rápido que navegar mês a mês."],
   },
   props: [

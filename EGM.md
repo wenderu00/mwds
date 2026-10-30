@@ -1,7 +1,7 @@
 # @mw/ui Blueprint
 
 ## System Overview
-Design system `@mw/ui` (v0.20.1), distribuído como registry do shadcn (namespace `@marcio`) e documentado por um site Next.js 16 exportado estaticamente para o GitHub Pages. O código publicado vive em `registry/marcio/`. `scripts/` valida os tokens e monta o `registry.json`. `eslint-rules/` impõe o uso dos tokens a quem consome o DS. `app/` é o site de documentação, que só consome o registry. A visão de produto, a instalação e as decisões ficam no [README.md](./README.md) e nas ADRs em `docs/adr/`; o histórico fica no `CHANGELOG.md`.
+Design system `@mw/ui` (v0.21.0), distribuído como registry do shadcn (namespace `@marcio`) e documentado por um site Next.js 16 exportado estaticamente para o GitHub Pages. O código publicado vive em `registry/marcio/`. `scripts/` valida os tokens e monta o `registry.json`. `eslint-rules/` impõe o uso dos tokens a quem consome o DS. `app/` é o site de documentação, que só consome o registry. A visão de produto, a instalação e as decisões ficam no [README.md](./README.md) e nas ADRs em `docs/adr/`; o histórico fica no `CHANGELOG.md`.
 
 Scripts (`package.json:scripts`):
 - `dev`: `next dev`.
@@ -14,6 +14,7 @@ Scripts (`package.json:scripts`):
 - `typecheck`: `tsc --noEmit`.
 - `coverage`: `vitest run --coverage`.
 - `accent-scale`: `tsx scripts/accent-scale.ts` (só imprime).
+- `smoke`: `tsx scripts/smoke-consumidor.ts [url dos itens]`, que instala o registry num app Next novo.
 - `e2e` / `e2e:update`: `playwright test`, este último com `--update-snapshots`.
 
 ## Local Interface & Invariants
@@ -22,6 +23,7 @@ Scripts (`package.json:scripts`):
   - Vale para `**/*.{js,jsx,ts,tsx}`, ignorando `**/*.test.*` e `eslint-rules/**`.
   - `mw/icon-size` usa `sources: ["lucide-react", "@/components/icons/"]`.
   - `mw/no-scene-lib` fica desligado só em `components/ui/scene-canvas.tsx` e `components/ui/character-stage.tsx`.
+  - `components/ui/checkbox.tsx` também aceita `size-3.5`.
   - Este arquivo e `eslint-rules/*.js` são publicados para o consumidor no item `marcio-strict` (`scripts/build-registry.ts:lintFiles`).
 - `eslint.config.mjs:default`:
   - Estende `eslint-config-next` (`core-web-vitals` e `typescript`).
@@ -62,7 +64,7 @@ Scripts (`package.json:scripts`):
   - `e2e/`: Playwright (regressão visual e axe);
   - `__tests__/`: testes Vitest.
 - `.github/workflows/` (sem contrato):
-  - `pages.yml` roda `npm ci`, `lint`, `typecheck`, `test` e `build` com `BASE_PATH=/mwds` e `REGISTRY_URL=https://wenderu00.github.io/mwds`.
+  - `pages.yml` roda `npm ci`, `lint`, `typecheck`, `test` e `build` com `BASE_PATH=/mwds` e `REGISTRY_URL=https://wenderu00.github.io/mwds`. O job `consumidor` roda `smoke` contra o registry local, e o `deploy` depende dele. Depois do deploy, o job `release` cria o GitHub Release da versão, se ainda não existir, e roda `smoke` pela URL publicada ([ADR 0028](./docs/adr/0028-versoes-publicadas.md)).
   - `atualizar-capturas.yml` atualiza as capturas de regressão visual.
 
 ## Global Invariants
@@ -72,6 +74,8 @@ Scripts (`package.json:scripts`):
 - Cada `registry/marcio/ui/*.tsx` precisa de uma entrada em `app/_docs/catalog-meta.ts:componentMeta`, e cada bloco precisa de uma entrada em `app/_docs/blocks.ts:blocks`. Caso contrário, `scripts/build-registry.ts:buildRegistry` lança erro.
 - Todo import `@/...` de um item publicado precisa corresponder a um item do registry. Caso contrário, `scripts/build-registry.ts:dependenciesOf` lança erro.
 - `BASE_PATH` sem `REGISTRY_URL` faz `scripts/build-registry.ts:registryBaseUrl` lançar erro, para o registry publicado não apontar para localhost.
+- Todo pacote importado por um item publicado precisa estar em `dependencies` no `package.json`, de onde vem a faixa que o item declara. Caso contrário, `scripts/build-registry.ts:packageWithRange` lança erro.
+- Um release nunca é sobrescrito: o job `release` não faz nada quando a tag `v<versão>` já tem release.
 - `pixi.js` e `gsap` só são importados em tempo de execução por `scene-canvas.tsx` e `character-stage.tsx` (`mw/no-scene-lib`). Os itens do grupo `movimento` ficam fora de `marcio-ui` (`scripts/build-registry.ts:optionalGroups`).
 - Pastas sem contrato próprio, porque um `EGM.md` ali quebraria o build ou seria apagado:
   - `registry/marcio/icons/` e `app/_docs/icons.generated.ts` são gerados, e `icons:build` apaga `registry/marcio/icons/` inteira antes de regenerar. Os ícones estão documentados em [scripts/icons/EGM.md](./scripts/icons/EGM.md).
@@ -90,7 +94,8 @@ Scripts (`package.json:scripts`):
 - Variáveis de ambiente:
   - `BASE_PATH` (`next.config.ts` e `scripts/build-registry.ts:registryBaseUrl`), que vira `NEXT_PUBLIC_BASE_PATH` (`app/blocos/page.tsx`);
   - `REGISTRY_URL` (`scripts/build-registry.ts:registryBaseUrl`);
-  - `PORT` (`scripts/serve-out.ts`);
+  - `REGISTRY_ITEMS_URL` (`scripts/build-registry.ts:registryItemsUrl`);
+  - `PORT` e `SERVE_ROOT` (`scripts/serve-out.ts`);
   - `CI` (`playwright.config.ts`);
   - `NODE_ENV` (`registry/marcio/ui/app-shell.tsx`, aviso só fora de produção).
 - No navegador: `localStorage` (`mw-theme`, `mw-sidebar`), `data-theme` e `data-density` em `<html>`, área de transferência (`CodeBlock`) e canvas WebGL (`SceneCanvas`).
@@ -101,3 +106,4 @@ Scripts (`package.json:scripts`):
 - Tipos: `npm run typecheck`
 - Build e registry: `npm run build`
 - E2E (depois de `npm run build`): `npm run e2e`
+- Instalação (com o registry servido): `npm run smoke`

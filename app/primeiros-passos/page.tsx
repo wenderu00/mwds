@@ -79,6 +79,8 @@ export default function Home() {
   );
 }`;
 
+const releasesUrl = "https://github.com/wenderu00/mwds/releases/download";
+
 const registriesCode = `{
   "registries": {
     "@marcio": "${publishedRegistryUrl}/r/{name}.json"
@@ -180,6 +182,11 @@ export default function GettingStartedPage() {
           <CodeComment>
             não rode npx shadcn init sem a URL: o init padrão instala o tema do shadcn, que conflita com os tokens
           </CodeComment>
+          <p className="max-w-measure text-ink-soft">
+            Esse endereço sempre entrega a versão mais nova. Em sistema de produção, fixe uma versão: a URL dos releases nunca muda de conteúdo, e o components.json guarda a
+            versão que o projeto usa.
+          </p>
+          <CodeBlock title="terminal · instalar uma versão fixa" code={`npx shadcn@latest init ${releasesUrl}/vX.Y.Z/marcio-tokens.json`} />
           <div className="flex max-w-measure flex-col gap-3 text-ink-soft">
             <p>É este trecho, gravado pelo init no components.json, que faz os comandos com @marcio/ funcionarem nos próximos passos:</p>
           </div>
@@ -329,6 +336,10 @@ export default function GettingStartedPage() {
           }
         >
           <CodeBlock title="terminal · comparar e atualizar" code={`${add("@marcio/button --diff")}\n${add("@marcio/button --overwrite")}`} />
+          <p className="max-w-measure text-ink-soft">
+            Com uma versão fixa, os comandos acima comparam com a versão do components.json. Para subir de versão, troque a versão na entrada @marcio desse arquivo e rode os
+            mesmos comandos.
+          </p>
           <p className="max-w-measure text-ink-soft">
             Os tokens vêm junto. Todo componente depende do marcio-tokens, então qualquer add, mesmo de um componente novo e sem overwrite, reescreve as variáveis
             do @mw/ui no app/globals.css com os valores atuais do registry.

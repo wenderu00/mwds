@@ -23,6 +23,11 @@ const mw = [
     files: ["components/ui/scene-canvas.tsx", "components/ui/character-stage.tsx"],
     rules: { "mw/no-scene-lib": "off" },
   },
+  {
+    // A marca do Checkbox é menor que a escala de ícones, porque cabe na caixa de 20px.
+    files: ["components/ui/checkbox.tsx"],
+    rules: { "mw/icon-size": ["error", { allow: ["size-3.5"], sources: ["lucide-react", "@/components/icons/"] }] },
+  },
 ];
 
 export default mw;

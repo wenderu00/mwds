@@ -21,7 +21,7 @@ Estes arquivos também são publicados para os projetos consumidores: `scripts/b
 - `class-context.js:classRule` e `icon-size.js:check` ignoram valores que não são `string`.
 - `no-raw-token.js:inspect` testa `allowed` antes de `forbidden`; uma utilidade permitida nunca é reportada. Valores da escala do Tailwind sem colchetes (`min-w-160`, `border-3`) não são reportados.
 - `icon-size.js:check` reporta no máximo uma classe fora da escala por literal e só quando o literal pertence ao atributo `className` do próprio elemento de ícone (`iconAttributeOf` para no primeiro `JSXElement`).
-- `icon-size.js:allowed` sempre contém `size-4`, `size-5` e `size-6`; `allow` só acrescenta valores (no repositório, `registry/marcio/ui/checkbox.tsx` acrescenta `size-3.5`).
+- `icon-size.js:allowed` sempre contém `size-4`, `size-5` e `size-6`; `allow` só acrescenta valores (`checkbox.tsx` acrescenta `size-3.5`, em `registry/marcio/ui/` no repositório e em `components/ui/` no consumidor).
 - Como `scripts/build-registry.ts:lintFiles` copia só `eslint.mw.mjs` e `eslint-rules/*.js` para o consumidor, as regras precisam continuar em `.js` e só importar umas às outras (hoje o único import é `./class-context.js`). Qualquer `.js` novo neste diretório passa a ser publicado automaticamente.
 - `eslint.mw.mjs` ignora `eslint-rules/**` e `eslint.config.mjs` só liga as regras `mw/*` em `app/**` e `registry/**`, então as regras não se aplicam aos próprios arquivos deste diretório.
 
