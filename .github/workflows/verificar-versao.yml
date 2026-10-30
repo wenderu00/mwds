@@ -1,0 +1,44 @@
+name: Verificar versão do @mw/ui
+
+# Chamado pelo mw-versao.yml de cada sistema (item marcio-versao). Mantém no repositório
+# do sistema uma única issue com o rótulo mw-ds-versao, e a fecha quando ele fica em dia.
+on:
+  workflow_call:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: sistema
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: wenderu00/mwds
+          ref: main
+          path: mwds
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Sincroniza a issue
+        run: |
+          node mwds/scripts/verificar-versao.ts sistema/components.json > resultado.json
+          ESTADO="$(jq -r .estado resultado.json)"
+          ABERTA="$(gh issue list --repo "$GITHUB_REPOSITORY" --label mw-ds-versao --state open --json number --jq '.[0].number // empty')"
+          echo "Estado: $ESTADO"
+          if [ "$ESTADO" = "em-dia" ]; then
+            if [ -n "$ABERTA" ]; then gh issue close "$ABERTA" --repo "$GITHUB_REPOSITORY" --comment "Sistema em dia com a última versão."; fi
+            exit 0
+          fi
+          TITULO="$(jq -r .titulo resultado.json)"
+          jq -r .corpo resultado.json > corpo.md
+          if [ -n "$ABERTA" ]; then
+            gh issue edit "$ABERTA" --repo "$GITHUB_REPOSITORY" --title "$TITULO" --body-file corpo.md
+          else
+            gh label create mw-ds-versao --repo "$GITHUB_REPOSITORY" --color ece41f --description "Versão do @mw/ui neste sistema" --force
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITULO" --body-file corpo.md --label mw-ds-versao
+          fi

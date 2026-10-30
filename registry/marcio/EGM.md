@@ -1,10 +1,11 @@
 # marcio
 
 ## Overview
-Fonte do registry `@marcio` (design system `@mw/ui`, versão 0.20.x). `scripts/build-registry.ts:buildRegistry` lê esta pasta e gera o `registry.json` da raiz; `shadcn build` publica os itens em `public/r` (os dois rodam em `npm run registry:build`, depois de `npm run icons:build`). Além das subpastas de código, a pasta tem três arquivos CSS publicados como itens próprios:
+Fonte do registry `@marcio` (design system `@mw/ui`, versão 0.22.x). `scripts/build-registry.ts:buildRegistry` lê esta pasta e gera o `registry.json` da raiz; `shadcn build` publica os itens em `public/r` (os dois rodam em `npm run registry:build`, depois de `npm run icons:build`). Além das subpastas de código, a pasta tem três arquivos CSS e um workflow publicados como itens próprios:
 - `tokens.css`: cores, tipografia, foco, seleção e utilitários nos temas escuro e claro. Vira o item `marcio-tokens` (`registry:base`) por `scripts/build-registry.ts:tokensCss`, que exige um bloco `@theme inline` só com declarações e um `@layer base` com `html` e `body`. Todo token novo que gere utilitário Tailwind precisa entrar também no `twMerge` de [`./lib/utils.ts`](./lib/EGM.md) (na 0.20.1 entraram `text-display-2xl`, `tracking-display` e as animações `animate-mw-*`).
 - `mw-strict.css`: remove a paleta, raios, sombras e curvas padrão do Tailwind; precisa vir logo depois de `@import "tailwindcss"` e antes dos tokens. Vira o item `marcio-strict` junto com `eslint.mw.mjs` e as regras de `eslint-rules/`.
 - `tema.css`: arquivo de personalização do projeto consumidor, item `marcio-tema` (`registry:file`) instalado em `app/tema.css`.
+- `versao.yml`: item `marcio-versao` (`registry:file`) instalado em `.github/workflows/mw-versao.yml`. Chama `.github/workflows/verificar-versao.yml@main` deste repositório toda semana.
 
 ## Subdirectories & Boundaries
 - ui: [./ui/EGM.md](./ui/EGM.md) - 83 componentes `registry:ui` (primitivas Radix, formulários pt-BR, layout, toast, tema e a camada de movimento com motion, GSAP e pixi.js); o grupo `movimento` fica fora do pacote `marcio-ui`.

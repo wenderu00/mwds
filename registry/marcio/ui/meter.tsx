@@ -9,7 +9,7 @@ export type MeterProps = Omit<ComponentProps<"div">, "children"> & {
   max?: number;
   icon?: ReactNode;
   rate?: ReactNode;
-  /** sm esconde o rótulo, que continua para o leitor de tela. compact é o nome antigo de sm, descontinuado, e sai na 0.21. */
+  /** sm esconde o rótulo, que continua para o leitor de tela. compact é o nome antigo de sm, descontinuado, e sai na 0.23. */
   size?: "sm" | "md" | "compact";
   highlightKey?: string | number;
   formatOptions?: Intl.NumberFormatOptions;

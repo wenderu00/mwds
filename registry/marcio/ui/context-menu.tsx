@@ -23,7 +23,7 @@ export function ContextMenuContent({ className, ...props }: ComponentProps<typeo
 export type ContextMenuItemProps = ComponentProps<typeof ContextMenuPrimitive.Item> & {
   /** danger pinta o item de perigo, para ações destrutivas. */
   tone?: "neutral" | "danger";
-  /** @deprecated Use tone. Sai na 0.21. */
+  /** @deprecated Use tone. Sai na 0.23. */
   variant?: "default" | "danger";
   inset?: boolean;
 };

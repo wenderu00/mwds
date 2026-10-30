@@ -39,10 +39,18 @@ Requisitos: Next.js com App Router, React 19 e Tailwind CSS v4. Projetos em Vite
 A URL acima sempre entrega a versão mais nova. Em sistema de produção, instale pela URL do release, que nunca muda de conteúdo ([ADR 0028](docs/adr/0028-versoes-publicadas.md)):
 
 ```bash
-npx shadcn@latest init https://github.com/wenderu00/mwds/releases/download/v0.21.0/marcio-tokens.json
+npx shadcn@latest init https://github.com/wenderu00/mwds/releases/download/v0.22.0/marcio-tokens.json
 ```
 
 O `components.json` guarda a versão na entrada `@marcio`. Para subir de versão, troque a versão nessa linha e rode `npx shadcn@latest add @marcio/button --diff` para ver o que muda. Só existem versões fixas a partir da 0.21.0.
+
+Para ser avisado de versões novas, instale o workflow semanal, que mantém uma issue no repositório enquanto o sistema estiver atrás ([ADR 0029](docs/adr/0029-controle-de-versoes.md)):
+
+```bash
+npx shadcn@latest add @marcio/marcio-versao
+```
+
+A versão mostra o que o `components.json` escolheu, não o código de cada arquivo: quem troca a URL sem rodar `add --overwrite` aparece em dia com componentes antigos.
 
 ### Modo estrito
 
@@ -102,6 +110,7 @@ Todos os pares usados passam WCAG AA nos dois temas. A tabela completa está em 
 |---|---|---|
 | `marcio-tokens` | base | Tokens, fontes e `cn`. Use com `init` |
 | `marcio-tema` | file | Cria `app/tema.css` para sobrescrever tokens sem perder as mudanças no próximo `add` |
+| `marcio-versao` | file | Cria `.github/workflows/mw-versao.yml`, que abre uma issue quando houver versão nova |
 | `marcio-strict` | item | Modo estrito: zera a paleta padrão do Tailwind e traz as regras de lint `mw/*` |
 | `font-bricolage`, `font-plex-sans`, `font-plex-mono` | font | Fontes via `next/font` |
 | `utils` | lib | Helper `cn` |
@@ -160,6 +169,7 @@ npm run dev
 | `npm run accent-scale` | Mostra a escala do accent gerada em OKLCH |
 | `npm run typecheck` | TypeScript sem emitir arquivos |
 | `npm run smoke` | Instala o registry num app Next novo com o modo estrito e exige lint, tipos e build limpos. Recebe a URL dos itens, por padrão `http://localhost:4400/r`; sirva antes com `SERVE_ROOT=public npx tsx scripts/serve-out.ts` |
+| `npm run sistemas` | Lista a versão do @mw/ui em cada repositório da conta, pela busca de código do GitHub. Usa o login do `gh` |
 | `npm run e2e` | Axe com contraste real e regressão visual (Playwright) em todas as páginas, nos dois temas. Precisa do `out/` do `npm run build` |
 | `npm run e2e:update` | Regrava as capturas localmente, só para conferir; as de referência vêm do CI |
 
@@ -226,3 +236,8 @@ As decisões de design e arquitetura estão registradas em [docs/adr/](docs/adr/
 - [0024](docs/adr/0024-sistema-de-movimento.md): sistema de movimento
 - [0027](docs/adr/0027-comentarios-no-codigo.md): comentários no código
 - [0028](docs/adr/0028-versoes-publicadas.md): versões publicadas do registry
+- [0029](docs/adr/0029-controle-de-versoes.md): controle de versões nos sistemas
+
+## Licença
+
+[MIT](LICENSE). A licença cobre o código do @mw/ui; as dependências mantêm as próprias licenças. O GSAP, por exemplo, usa a licença padrão da Webflow, que não é uma licença aberta ([ADR 0026](docs/adr/0026-bibliotecas-de-movimento.md)).

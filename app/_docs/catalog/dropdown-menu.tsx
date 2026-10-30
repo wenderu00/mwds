@@ -17,7 +17,7 @@ export const doc: ComponentDoc = {
     { keys: "Esc", action: "Fecha e devolve o foco ao gatilho." },
   ],
   props: [
-    { name: "DropdownMenuItem tone", type: '"neutral" | "danger"', default: '"neutral"', description: "danger para ação destrutiva. variant=\"danger\" é o nome antigo, descontinuado, e sai na 0.21." },
+    { name: "DropdownMenuItem tone", type: '"neutral" | "danger"', default: '"neutral"', description: "danger para ação destrutiva. variant=\"danger\" é o nome antigo, descontinuado, e sai na 0.23." },
     { name: "DropdownMenuItem onSelect", type: "(event) => void", description: "Executa a ação e fecha o menu." },
     { name: "DropdownMenuContent align", type: '"start" | "center" | "end"', default: '"end"', description: "Alinhamento com o gatilho." },
     { name: "DropdownMenuShortcut", type: "componente", description: "Atalho exibido à direita. Só visual: registre o atalho no app." },

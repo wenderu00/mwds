@@ -19,7 +19,7 @@ export const doc: ComponentDoc = {
     { name: "value / max", type: "number", description: "Valor e teto. Sem max, mostra só o valor, sem barra e sem papel de medidor." },
     { name: "icon", type: "ReactNode", description: "Ícone do recurso, em size-4. Decorativo." },
     { name: "rate", type: "ReactNode", description: "Taxa em linha, em mono, como +40/min." },
-    { name: "size", type: '"sm" | "md"', default: '"md"', description: "No sm, o ícone toma o lugar do rótulo. compact é o nome antigo de sm, descontinuado, e sai na 0.21." },
+    { name: "size", type: '"sm" | "md"', default: '"md"', description: "No sm, o ícone toma o lugar do rótulo. compact é o nome antigo de sm, descontinuado, e sai na 0.23." },
     { name: "highlightKey", type: "string | number", description: "Quando muda, o valor pisca uma vez em accent-soft. Não pisca na montagem." },
     { name: "formatOptions", type: "Intl.NumberFormatOptions", description: "Formato dos números, sempre em pt-BR." },
     classNameProp,

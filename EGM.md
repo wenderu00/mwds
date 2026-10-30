@@ -15,6 +15,7 @@ Scripts (`package.json:scripts`):
 - `coverage`: `vitest run --coverage`.
 - `accent-scale`: `tsx scripts/accent-scale.ts` (só imprime).
 - `smoke`: `tsx scripts/smoke-consumidor.ts [url dos itens]`, que instala o registry num app Next novo.
+- `sistemas`: `tsx scripts/sistemas.ts`, que lista a versão do DS em cada repositório da conta.
 - `e2e` / `e2e:update`: `playwright test`, este último com `--update-snapshots`.
 
 ## Local Interface & Invariants
@@ -66,6 +67,7 @@ Scripts (`package.json:scripts`):
 - `.github/workflows/` (sem contrato):
   - `pages.yml` roda `npm ci`, `lint`, `typecheck`, `test` e `build` com `BASE_PATH=/mwds` e `REGISTRY_URL=https://wenderu00.github.io/mwds`. O job `consumidor` roda `smoke` contra o registry local, e o `deploy` depende dele. Depois do deploy, o job `release` cria o GitHub Release da versão, se ainda não existir, e roda `smoke` pela URL publicada ([ADR 0028](./docs/adr/0028-versoes-publicadas.md)).
   - `atualizar-capturas.yml` atualiza as capturas de regressão visual.
+  - `verificar-versao.yml` é reutilizável (`workflow_call`) e roda no repositório de cada sistema: mantém uma issue com o rótulo `mw-ds-versao` enquanto o sistema estiver atrás ([ADR 0029](./docs/adr/0029-controle-de-versoes.md)).
 
 ## Global Invariants
 - Cor só existe em `registry/marcio/tokens.css`. Isso é garantido por `scripts/check-colors.ts:allowed` (CSS) e por `mw/no-raw-color` / `mw/no-raw-token` (TS/TSX).

@@ -658,6 +658,19 @@
       ]
     },
     {
+      "name": "marcio-versao",
+      "type": "registry:file",
+      "title": "Aviso de versão nova",
+      "description": "Cria .github/workflows/mw-versao.yml, que toda semana abre uma issue no repositório quando houver versão nova do @mw/ui.",
+      "files": [
+        {
+          "path": "registry/marcio/versao.yml",
+          "type": "registry:file",
+          "target": ".github/workflows/mw-versao.yml"
+        }
+      ]
+    },
+    {
       "name": "marcio-strict",
       "type": "registry:item",
       "title": "Modo estrito",

@@ -341,6 +341,11 @@ export default function GettingStartedPage() {
             mesmos comandos.
           </p>
           <p className="max-w-measure text-ink-soft">
+            Para ser avisado de versões novas, instale o workflow semanal. Ele mantém uma issue no repositório do sistema enquanto houver versão nova, com o que mudou e o aviso de
+            quebra de compatibilidade, e fecha a issue quando o sistema fica em dia.
+          </p>
+          <CodeBlock title="terminal · aviso de versão nova" code={add("@marcio/marcio-versao")} />
+          <p className="max-w-measure text-ink-soft">
             Os tokens vêm junto. Todo componente depende do marcio-tokens, então qualquer add, mesmo de um componente novo e sem overwrite, reescreve as variáveis
             do @mw/ui no app/globals.css com os valores atuais do registry.
           </p>

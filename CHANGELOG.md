@@ -4,6 +4,18 @@ Todas as mudanças do @mw/ui, da mais nova para a mais antiga. O formato segue o
 
 Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds/novidades/).
 
+## [0.22.0] - 2026-10-30
+
+### Novo
+
+- Item `marcio-versao`: instala um workflow que toda semana compara o `components.json` com o último release e mantém uma issue no repositório do sistema enquanto houver versão nova, com as versões pendentes e o aviso de quebra de compatibilidade ([ADR 0029](docs/adr/0029-controle-de-versoes.md)).
+- `npm run sistemas` lista a versão do @mw/ui em cada repositório da conta.
+- O @mw/ui passa a ter licença MIT.
+
+### Mudou
+
+- `variant="danger"` em DropdownMenu e ContextMenu e `size="compact"` no Meter continuam aceitos e agora saem na 0.23. A previsão anterior era a 0.21, que saiu sem removê-los.
+
 ## [0.21.0] - 2026-10-30
 
 ### Novo

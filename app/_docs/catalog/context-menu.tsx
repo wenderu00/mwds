@@ -16,7 +16,7 @@ export const doc: ComponentDoc = {
   ],
   props: [
     { name: "ContextMenuTrigger asChild", type: "boolean", description: "Usa o filho, como uma linha de tabela, como área do clique direito." },
-    { name: "ContextMenuItem tone", type: '"neutral" | "danger"', default: '"neutral"', description: "danger para ação destrutiva. variant=\"danger\" é o nome antigo, descontinuado, e sai na 0.21." },
+    { name: "ContextMenuItem tone", type: '"neutral" | "danger"', default: '"neutral"', description: "danger para ação destrutiva. variant=\"danger\" é o nome antigo, descontinuado, e sai na 0.23." },
     { name: "ContextMenuItem inset", type: "boolean", default: "false", description: "Alinha com itens que têm indicador." },
     { name: "onSelect", type: "(event) => void", description: "Ação do item." },
   ],

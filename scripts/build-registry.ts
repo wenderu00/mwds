@@ -184,6 +184,14 @@ export function buildRegistry() {
     files: [{ path: "registry/marcio/tema.css", type: "registry:file", target: "app/tema.css" }],
   };
 
+  const versionCheck: RegistryItem = {
+    name: "marcio-versao",
+    type: "registry:file",
+    title: "Aviso de versão nova",
+    description: "Cria .github/workflows/mw-versao.yml, que toda semana abre uma issue no repositório quando houver versão nova do @mw/ui.",
+    files: [{ path: "registry/marcio/versao.yml", type: "registry:file", target: ".github/workflows/mw-versao.yml" }],
+  };
+
   // Os resets ficam num arquivo próprio: o shadcn acrescenta cssVars.theme no fim do @theme inline, e ali eles apagariam os tokens.
   const lintFiles = ["eslint.mw.mjs", ...readdirSync(join(root, "eslint-rules")).filter((file) => file.endsWith(".js")).sort().map((file) => `eslint-rules/${file}`)];
   const strict: RegistryItem = {
@@ -322,7 +330,7 @@ export function buildRegistry() {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "marcio",
     homepage: baseUrl,
-    items: [tokens, theme, strict, ...fontItems, utils, br, mwTokens, ...uiItems, ...blockItems, ...iconItems, ...packItems, all],
+    items: [tokens, theme, versionCheck, strict, ...fontItems, utils, br, mwTokens, ...uiItems, ...blockItems, ...iconItems, ...packItems, all],
   };
 }
 
