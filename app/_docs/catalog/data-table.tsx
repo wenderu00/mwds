@@ -20,6 +20,7 @@ export const doc: ComponentDoc = {
     { name: "sort / defaultSort / onSortChange", type: "{ column, direction } | null", description: "Ordenação. Clicar no cabeçalho alterna crescente e decrescente." },
     { name: "selectable / selected / defaultSelected / onSelectedChange", type: "boolean / Set<string> / Set<string> / (ids) => void", description: "Coluna de seleção com marcar a página inteira. defaultSelected define a seleção inicial sem controlar." },
     { name: "rowLabel / selectPageLabel", type: "(row) => string / string", description: "Nomes dos checkboxes: Selecionar <linha> e o da página." },
+    { name: "paginationLabel", type: "string", default: '"Paginação"', description: "Nome da navegação de páginas. Com mais de uma tabela paginada na página, dê um nome diferente a cada uma." },
     { name: "caption / footer / empty", type: "ReactNode | (range) => ReactNode", description: "Legenda, rodapé ao lado da paginação e o que mostrar sem dados." },
   ],
   examples: [
@@ -42,6 +43,7 @@ export const doc: ComponentDoc = {
     "Colunas ordenáveis têm um botão no cabeçalho e aria-sort no th, com ascending, descending ou none.",
     "Cada linha tem um checkbox com o nome dela; o da página fica indeterminado quando só parte está marcada.",
     "A legenda nomeia a tabela; prefira uma que diga o intervalo, como Mostrando 1 a 8 de 23.",
+    "Duas tabelas paginadas na mesma página precisam de paginationLabel diferentes, para os leitores de tela distinguirem as navegações.",
   ],
   keyboard: [
     { keys: "Tab", action: "Percorre os cabeçalhos ordenáveis, os checkboxes, o conteúdo das células e a paginação." },

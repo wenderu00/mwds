@@ -35,6 +35,7 @@ export function DataTableServerDemo() {
         setSort(next);
         setPage(1);
       }}
+      paginationLabel="Paginação dos projetos do servidor"
       caption={({ first, last, total }) => `Mostrando ${first} a ${last} de ${total}`}
     />
   );

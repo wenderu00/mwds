@@ -59,7 +59,7 @@ Formulários e entrada de dados:
 - `combobox.tsx`: Combobox, ComboboxOption, ComboboxProps (inclui `onSearchChange`, que desliga o filtro local e recebe `""` ao fechar, e `loading`/`loadingText`).
 - `command.tsx`: Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandSeparator, CommandItem, CommandShortcut, normalizeSearch, commandFilter.
 - `command-palette.tsx`: CommandPalette, CommandPaletteProps, CommandPaletteItem, CommandPaletteItemProps, CommandPaletteTrigger, CommandPaletteTriggerProps, useIsMac.
-- `data-table.tsx`: DataTable, SortDirection, DataTableSort, DataTableColumn, DataTableRange, DataTableProps (inclui `defaultPage`, padrão 1, `defaultSelected`, `rowCount` e `loading`).
+- `data-table.tsx`: DataTable, SortDirection, DataTableSort, DataTableColumn, DataTableRange, DataTableProps (inclui `defaultPage`, padrão 1, `defaultSelected`, `rowCount`, `loading` e `paginationLabel`).
 - `date-picker.tsx`: DatePicker, DateRangePicker, formatDate, DateRange, DatePickerProps, DateRangePickerProps.
 - `calendar.tsx`: Calendar, CalendarProps (react-day-picker com locale ptBR; no servidor sai só o contêiner, porque o `DayPicker` lê o relógio no render).
 - `file-upload.tsx`: FileUpload, formatBytes, matchesAccept, FileRejection, FileUploadStatus, FileUploadProps.

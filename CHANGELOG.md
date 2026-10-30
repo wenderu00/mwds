@@ -10,6 +10,7 @@ Este arquivo também gera a página [Novidades](https://wenderu00.github.io/mwds
 
 - Versões fixas: cada versão vira um GitHub Release com os itens do registry, e `init` pela URL do release grava a versão no `components.json` ([ADR 0028](docs/adr/0028-versoes-publicadas.md)).
 - DataTable aceita dados do servidor: `rowCount` faz de `data` só a página atual, `loading` marca `aria-busy` e adia o estado vazio, e `column.sortable` mostra o botão de ordenar sem `sortValue`.
+- DataTable aceita `paginationLabel`, para dar nomes diferentes à paginação de duas tabelas na mesma página.
 - Combobox aceita busca no servidor: `onSearchChange` desliga o filtro local, `loading` e `loadingText` anunciam o carregamento, e a escolha mantém o rótulo quando a lista muda.
 - `npm run smoke` instala o registry num app Next novo com o modo estrito e exige lint, tipos e build limpos. Agora roda no CI antes de qualquer deploy.
 

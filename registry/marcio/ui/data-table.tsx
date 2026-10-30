@@ -47,6 +47,8 @@ export type DataTableProps<T> = {
   onSelectedChange?: (selected: Set<string>) => void;
   rowLabel?: (row: T) => string;
   selectPageLabel?: string;
+  /** Nome da navegação de páginas. Com mais de uma tabela paginada na página, dê um nome diferente a cada uma. */
+  paginationLabel?: string;
   caption?: ReactNode | ((range: DataTableRange) => ReactNode);
   empty?: ReactNode;
   footer?: (range: DataTableRange) => ReactNode;
@@ -81,6 +83,7 @@ export function DataTable<T>({
   onSelectedChange,
   rowLabel = (row) => getRowId(row),
   selectPageLabel = "Selecionar as linhas desta página",
+  paginationLabel,
   caption,
   empty,
   footer,
@@ -211,7 +214,7 @@ export function DataTable<T>({
       {pageCount > 1 || footer ? (
         <div className="flex flex-wrap items-center justify-between gap-3">
           {footer ? footer(range) : <span />}
-          {pageCount > 1 && <Pagination size="sm" page={page} pageCount={pageCount} onPageChange={changePage} />}
+          {pageCount > 1 && <Pagination size="sm" page={page} pageCount={pageCount} onPageChange={changePage} labels={paginationLabel ? { navigation: paginationLabel } : undefined} />}
         </div>
       ) : null}
     </div>

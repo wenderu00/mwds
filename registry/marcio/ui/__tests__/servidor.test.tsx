@@ -55,6 +55,17 @@ describe("DataTable com dados do servidor", () => {
     expect(screen.getByText("Sem projetos")).toBeInTheDocument();
   });
 
+  it("dá nomes diferentes à paginação de duas tabelas na mesma página", async () => {
+    render(
+      <>
+        <DataTable data={page(1)} rowCount={95} paginationLabel="Paginação de projetos" columns={columns} getRowId={(row) => row.id} />
+        <DataTable data={page(1)} rowCount={95} paginationLabel="Paginação de contratos" columns={columns} getRowId={(row) => row.id} />
+      </>,
+    );
+    expect(screen.getByRole("navigation", { name: "Paginação de projetos" })).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Paginação de contratos" })).toBeInTheDocument();
+  });
+
   it("passa no axe nos dois temas", async () => {
     await expectAccessibleInThemes(<DataTable data={page(1)} rowCount={95} loading columns={columns} getRowId={(row) => row.id} caption="Projetos" />);
   });
